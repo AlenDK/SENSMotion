@@ -9,7 +9,7 @@ public class LoginSkærm extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_front_page);
+        setContentView(R.layout.activity_Login_Skærm);
     }
 
     @Override
