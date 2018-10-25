@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class FrontPage extends AppCompatActivity implements View.OnClickListener{
+public class LoginSkærm extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +14,6 @@ public class FrontPage extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        
+
     }
 }
