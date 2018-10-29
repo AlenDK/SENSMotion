@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".NyPatient_frag">
 
     <!-- TODO: Update blank fragment layout -->
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_custom"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Sensor ID"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_custom"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Patientens ID"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="202dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start måling nu"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="375dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ny patient"
+        android:textSize="36sp"
+        tools:layout_editor_absoluteX="110dp"
+        tools:layout_editor_absoluteY="49dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edittext_custom"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Patientens navn"
+        android:inputType="textPersonName"
+        android:padding="8dp"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="131dp" />
+</android.support.constraint.ConstraintLayout>
