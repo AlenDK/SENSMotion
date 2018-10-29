@@ -27,7 +27,7 @@ public class Instillinger_frag extends Fragment implements CompoundButton.OnChec
 
         LogOut = (Button) getView().findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
-        
+
         Popup = (Switch) getView().findViewById(R.id.Pop_switch);
         Popup.setOnCheckedChangeListener(this);
 
