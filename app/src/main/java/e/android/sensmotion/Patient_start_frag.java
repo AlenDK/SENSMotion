@@ -13,7 +13,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_patient.xml,container, false);
+        View view = inflater.inflate(R.layout.fragment_patient_throwaway.xml,container, false);
 
         return view;
     }
