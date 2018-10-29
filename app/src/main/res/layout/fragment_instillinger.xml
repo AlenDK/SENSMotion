@@ -38,7 +38,7 @@
         android:id="@+id/logud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/Logud_knap"
+        android:background="@drawable/logud_knap"
         android:text="Log ud"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="503dp" />
