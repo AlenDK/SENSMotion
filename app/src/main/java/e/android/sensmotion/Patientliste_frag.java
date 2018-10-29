@@ -39,7 +39,7 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
 
         if(view == Pat1 || view == Pat2)
             getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new BenytKnapperFragment())
+                    .replace(R.id.fragmentindhold, new PatientData_frag())
                     .addToBackStack(null)
                     .commit();
 
