@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--
+    Farvekoder til SENS-appen, defineret af SENS.
+    -->
+    <color name="colorBlack">#2A2A2A</color>
+    <color name="colorRed">#E82020</color>
+    <color name="colorBackground">##F1F0F0</color>
+    <color name="colorGray">#A6B9C5</color>
+    <color name="colorBlue">#1A91DC</color>
+    <color name="colorDarkBlue">#0B659D</color>
 </resources>

@@ -2,7 +2,6 @@ package e.android.sensmotion;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends Activity {
@@ -13,7 +12,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            Fragment fragment = new LoginSkærm();
+            Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();

@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class LoginSkærm extends Fragment implements View.OnClickListener {
+public class Login_frag extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_Login_Skærm, container, false);
+        View view = inflater.inflate(R.layout.login, container, false);
 
 
         return view;
