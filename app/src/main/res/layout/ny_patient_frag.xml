@@ -1,67 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    tools:context=".NyPatient_frag">
+    android:padding="8dp"
+    tools:context=".NyPatient_frag"
+    tools:layout_editor_absoluteY="25dp">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/edittext_custom"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Mobilitet"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText3"
+        app:layout_constraintStart_toStartOf="@+id/editText2"
+        app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
     <EditText
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
         android:hint="Sensor ID"
         android:inputType="textPersonName"
-        android:padding="8dp"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox3"
+        app:layout_constraintStart_toStartOf="@+id/editText4"
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
     <EditText
         android:id="@+id/editText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
         android:hint="Patientens ID"
         android:inputType="textPersonName"
-        android:padding="8dp"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="202dp" />
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText4"
+        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <CheckBox
         android:id="@+id/checkBox3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginStart="8dp"
         android:text="Start måling nu"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="375dp" />
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:layout_marginTop="50dp"
         android:text="Ny patient"
         android:textSize="36sp"
-        tools:layout_editor_absoluteX="110dp"
-        tools:layout_editor_absoluteY="49dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="@+id/editText"
+        app:layout_constraintStart_toStartOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
         android:hint="Patientens navn"
         android:inputType="textPersonName"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="67dp"
+        android:background="@drawable/opret_patient_knap"
+        android:gravity="center"
         android:padding="8dp"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="131dp" />
+        android:text="Opret patient"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editText3"
+        app:layout_constraintStart_toStartOf="@+id/editText3"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+
 </android.support.constraint.ConstraintLayout>
