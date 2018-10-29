@@ -51,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
+            android:id="@+id/newPat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -61,7 +62,8 @@
                 android:layout_height="78dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/edittext_custom"
-                android:text="Button" />
+                android:text="Benny Andersen"
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/button2"
@@ -69,39 +71,8 @@
                 android:layout_height="78dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/edittext_custom"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Button" />
+                android:text="Ida Hansen"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Instillinger_frag">
+
+    <TextView
+        android:id="@+id/Titel"
+        android:layout_width="394dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:background="@color/colorRed"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="Fornavn Efternavn"
+        android:textColor="@color/colorWhite"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <TextView
+        android:id="@+id/Indstillinger"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:text="Din profil"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="60dp" />
+
+    <Button
+        android:id="@+id/logud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logud_knap"
+        android:text="Log ud"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="503dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="342dp"
+        android:layout_height="2dp"
+        android:background="@color/colorBlack"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="282dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="213dp"
+        android:layout_height="38dp"
+        android:text="Notifikationer"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="304dp" />
+
+    <TextView
+        android:id="@+id/Pop-up"
+        android:layout_width="348dp"
+        android:layout_height="42dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:text="  Pop-up Notifikationer"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="362dp" />
+
+    <TextView
+        android:id="@+id/Info1"
+        android:layout_width="348dp"
+        android:layout_height="44dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="104dp" />
+
+    <TextView
+        android:id="@+id/Info2"
+        android:layout_width="348dp"
+        android:layout_height="44dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="158dp" />
+
+    <TextView
+        android:id="@+id/Info3"
+        android:layout_width="348dp"
+        android:layout_height="44dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="214dp" />
+
+    <TextView
+        android:id="@+id/Lydeffekter"
+        android:layout_width="348dp"
+        android:layout_height="42dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:text="  Lydeffekter"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="420dp" />
+
+    <Switch
+        android:id="@+id/Pop_switch"
+        android:layout_width="52dp"
+        android:layout_height="17dp"
+        android:checked="true"
+        android:showText="true"
+        android:splitTrack="true"
+        android:textOff="Off"
+        android:textOn="On"
+        tools:checked="true"
+        tools:layout_editor_absoluteX="297dp"
+        tools:layout_editor_absoluteY="370dp" />
+
+    <Switch
+        android:id="@+id/Lydswitch"
+        android:layout_width="52dp"
+        android:layout_height="17dp"
+        android:checked="true"
+        android:showText="true"
+        android:splitTrack="true"
+        android:textOff="Off"
+        android:textOn="On"
+        tools:checked="false"
+        tools:layout_editor_absoluteX="297dp"
+        tools:layout_editor_absoluteY="427dp" />
+
+</android.support.constraint.ConstraintLayout>
