@@ -29,7 +29,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        brugernavn = view.findViewById(R.id.logIndKnap).toString();
+        brugernavn = view.findViewById(R.id.brugernavn).toString();
         if (brugernavn == "admin") {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, new NyPatient_frag())
