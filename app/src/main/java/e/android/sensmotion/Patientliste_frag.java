@@ -11,13 +11,14 @@ import android.widget.Button;
 
 public class Patientliste_frag extends Fragment implements View.OnClickListener{
 
-    private Button newPat;
-    private Button Pat1;
-    private Button Pat2;
+    Button newPat;
+    Button Pat1;
+    Button Pat2;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_patientliste_frag, container, false);
+
         newPat = (Button) getView().findViewById(R.id.NyPatient);
         newPat.setOnClickListener(this);
         Pat1 = (Button) getView().findViewById(R.id.button1);
@@ -25,7 +26,7 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
         Pat2 = (Button) getView().findViewById(R.id.button2);
         Pat2.setOnClickListener(this);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_patientliste_frag, container, false);
+        return view;
     }
 
     @Override
