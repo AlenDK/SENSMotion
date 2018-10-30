@@ -52,7 +52,7 @@
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -93,10 +93,10 @@
     <fragment
         android:id="@+id/Kalenderfragment"
         android:name="e.android.sensmotion.Kalender_frag"
-        android:layout_width="335dp"
-        android:layout_height="236dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="327dp"
+        android:layout_height="246dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
