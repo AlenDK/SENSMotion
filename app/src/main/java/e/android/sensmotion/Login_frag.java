@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
 
@@ -18,11 +19,15 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
 
-        brugernavn =  view.findViewById(R.id.brugernavn);
+        brugernavn = view.findViewById(R.id.brugernavn);
 
+        TextView opret = (TextView) view.findViewById(R.id.opret);
+        TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
         Button login = (Button) view.findViewById(R.id.logIndKnap);
 
         login.setOnClickListener(this);
+        opret.setOnClickListener(this);
+        glemt.setOnClickListener(this);
 
         return view;
     }
@@ -32,18 +37,36 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
 
 
+        switch (view.getId()) {
 
-        if (brugernavn.getText().toString().matches("admin")) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new NyPatient_frag())
-                    .addToBackStack(null)
-                    .commit();
-        } else {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Patientliste_frag())
-                    .addToBackStack(null)
-                    .commit();
+            case R.id.logIndKnap:
+
+                if (brugernavn.getText().toString().matches("admin")) {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentindhold, new NyPatient_frag())
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                } else {
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentindhold, new Patientliste_frag())
+                            .addToBackStack(null)
+                            .commit();
+                    break;
+                }
+
+            case R.id.opret:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new IkkeImplementeret_frag())
+                        .addToBackStack(null)
+                        .commit();
+                break;
+            case R.id.glemtLogin:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new IkkeImplementeret_frag())
+                        .addToBackStack(null)
+                        .commit();
+                break;
         }
-
     }
 }
