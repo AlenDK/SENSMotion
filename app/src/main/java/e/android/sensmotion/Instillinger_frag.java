@@ -1,10 +1,8 @@
 package e.android.sensmotion;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,20 +20,20 @@ public class Instillinger_frag extends Fragment implements CompoundButton.OnChec
     boolean lyd = false;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_instillinger, container, false);
 
-        LogOut = (Button) getView().findViewById(R.id.logud);
+        LogOut = (Button) view.findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
 
-        Popup = (Switch) getView().findViewById(R.id.Pop_switch);
+        Popup = (Switch) view.findViewById(R.id.Pop_switch);
         Popup.setOnCheckedChangeListener(this);
 
-        Lydef = (Switch) getView().findViewById(R.id.Lydswitch);
+        Lydef = (Switch) view.findViewById(R.id.Lydswitch);
         Lydef.setOnCheckedChangeListener(this);
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_instillinger, container, false);
+        return view;
     }
 
     @Override
