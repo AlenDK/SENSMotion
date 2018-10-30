@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="eggwhite">#F3F1F1</color>
+    <color name="eggwhiteShadow">#bfbebe</color>
+
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
     -->
