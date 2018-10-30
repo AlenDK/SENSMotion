@@ -78,12 +78,12 @@
         tools:layout_editor_absoluteY="370dp" />
 
     <ImageView
-        android:layout_width="200dp"
-        android:layout_height="20dp"
+        android:layout_width="500dp"
+        android:layout_height="23dp"
+        android:background="@drawable/subsec_progbar"
         android:scaleType="centerCrop"
         android:src="@drawable/subsec_progbar"
-        android:background="@drawable/subsec_progbar"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="383dp" />
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="372dp" />
 
 </android.support.constraint.ConstraintLayout>
