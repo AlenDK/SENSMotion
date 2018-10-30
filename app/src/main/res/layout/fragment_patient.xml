@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eggwhite">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_bar_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/knap_profil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profil"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="@+id/imageView2"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Fornavn Efternavn"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/walking_stickman"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/walking_stickman"
+        app:layout_constraintTop_toBottomOf="@+id/sitting_stickman"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/sitting_stickman"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/walking_stickman"
+        app:layout_constraintTop_toBottomOf="@+id/laying_stickman"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/laying_stickman"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/walking_stickman"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="370dp" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/subsec_progbar"
+        android:background="@drawable/subsec_progbar"
+        tools:layout_editor_absoluteX="53dp"
+        tools:layout_editor_absoluteY="383dp" />
 
 </android.support.constraint.ConstraintLayout>
