@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/grafer"
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginEnd="28dp"
@@ -88,5 +88,15 @@
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+    <fragment
+        android:id="@+id/Kalenderfragment"
+        android:name="e.android.sensmotion.Kalender_frag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="240dp"
+        android:layout_marginStart="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
