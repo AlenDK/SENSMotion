@@ -13,7 +13,6 @@ import android.widget.EditText;
 public class Login_frag extends Fragment implements View.OnClickListener {
 
     EditText brugernavn;
-    String login;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
