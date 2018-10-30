@@ -3,7 +3,6 @@ package e.android.sensmotion;
 import android.app.Fragment;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +42,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
             case R.id.logIndKnap:
 
                 if (brugernavn.getText().toString().matches("admin")) {
-                    Intent intent2 = new Intent(getActivity(), PatientData.class);
+                    Intent intent2 = new Intent(getActivity(), PatientData_frag.class);
                     startActivity(intent2);
                     break;
                 } else {
