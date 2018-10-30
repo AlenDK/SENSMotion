@@ -1,6 +1,7 @@
 package e.android.sensmotion;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,10 +43,8 @@ public class Login_frag extends Fragment implements View.OnClickListener {
             case R.id.logIndKnap:
 
                 if (brugernavn.getText().toString().matches("admin")) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentindhold, new NyPatient_frag())
-                            .addToBackStack(null)
-                            .commit();
+                    Intent intent2 = new Intent(getActivity(), PatientData.class);
+                    startActivity(intent2);
                     break;
                 } else {
                     getFragmentManager().beginTransaction()

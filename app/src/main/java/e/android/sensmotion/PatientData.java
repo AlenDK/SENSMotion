@@ -1,29 +1,40 @@
 package e.android.sensmotion;
 
 import android.app.Fragment;
+import android.app.FragmentContainer;
+import android.app.FragmentManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.support.v4.app.FragmentTransaction;
 
-public class PatientData_frag extends Fragment implements View.OnClickListener {
+public class PatientData extends AppCompatActivity implements View.OnClickListener {
+
+    Fragment kalender = getFragmentManager().findFragmentById(R.id.kalender);
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.patient_data_frag, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.patient_data_frag);
 
-        Button periode = view.findViewById(R.id.periode);
-        Button graf = view.findViewById(R.id.grafer);
 
+
+
+        Button periode = (Button) findViewById(R.id.periode);
+        Button graf = (Button) findViewById(R.id.grafer);
 
         periode.setOnClickListener(this);
         graf.setOnClickListener(this);
 
-        return view;
+
     }
+
+
+
 
 
     @Override

@@ -1,7 +1,6 @@
 package e.android.sensmotion;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -39,12 +38,10 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
                     .addToBackStack(null)
                     .commit();
 
-        if(view != newPat)
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new PatientData_frag())
-                    .addToBackStack(null)
-                    .commit();
-
+        if(view != newPat) {
+            Intent intent2 = new Intent(getActivity(), PatientData.class);
+            startActivity(intent2);
+        }
     }
 
 }
