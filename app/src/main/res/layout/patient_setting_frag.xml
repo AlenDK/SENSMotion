@@ -2,45 +2,184 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/eggwhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/header_bar_red"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/knap_profil"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/profil"
-        android:background="@null"
-        app:layout_constraintEnd_toEndOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.94"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
         android:text="Indstillinger"
         android:textColor="#ffffff"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.196"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backarrow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/backarrow"
+        android:layout_width="37dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:background="@null"
+        android:src="@drawable/baseline_keyboard_backspace_white_48"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/actionbar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/dinProfilText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:text="Din Profil"
+        android:textSize="23sp"
+        android:textColor="@color/darkEggwhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/coloumn1"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dinProfilText"
+        app:srcCompat="@drawable/setting_column" />
+
+    <ImageView
+        android:id="@+id/coloumn2"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coloumn3"
+        app:srcCompat="@drawable/setting_column" />
+
+    <ImageView
+        android:id="@+id/coloumn3"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coloumn1"
+        app:srcCompat="@drawable/setting_column" />
+
+    <TextView
+        android:id="@+id/notificationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="Notifikationer"
+        android:textColor="@color/darkEggwhite"
+        android:textSize="23sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coloumn2" />
+
+    <ImageView
+        android:id="@+id/coloumn4"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notificationText"
+        app:srcCompat="@drawable/setting_column" />
+
+    <ImageView
+        android:id="@+id/coloumn5"
+        android:layout_width="375dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coloumn4"
+        app:srcCompat="@drawable/setting_column" />
+
+    <TextView
+        android:id="@+id/popupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Pop-up notifikationer"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintBottom_toBottomOf="@+id/coloumn4"
+        app:layout_constraintStart_toStartOf="@+id/coloumn4"
+        app:layout_constraintTop_toTopOf="@+id/coloumn4" />
+
+    <TextView
+        android:id="@+id/soundeffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Lyd effekter"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/coloumn5"
+        app:layout_constraintStart_toStartOf="@+id/coloumn5"
+        app:layout_constraintTop_toTopOf="@+id/coloumn5" />
+
+    <Switch
+        android:id="@+id/switchSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/soundeffect"
+        app:layout_constraintTop_toTopOf="@+id/coloumn5" />
+
+    <Switch
+        android:id="@+id/switchPOP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/popupText"
+        app:layout_constraintTop_toTopOf="@+id/coloumn4" />
 
 
 </android.support.constraint.ConstraintLayout>

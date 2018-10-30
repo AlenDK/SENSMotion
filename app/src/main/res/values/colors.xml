@@ -6,6 +6,8 @@
 
     <color name="eggwhite">#F3F1F1</color>
     <color name="eggwhiteShadow">#bfbebe</color>
+    <color name="darkEggwhite">#847d78</color>
+    <color name="lightBlack">#484848</color>
 
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
