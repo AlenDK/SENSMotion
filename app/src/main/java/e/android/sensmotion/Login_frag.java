@@ -40,10 +40,11 @@ public class Login_frag extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.logIndKnap:
-
                 if (brugernavn.getText().toString().matches("admin")) {
-                    Intent intent2 = new Intent(getActivity(), PatientData_frag.class);
-                    startActivity(intent2);
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentindhold, new Patientliste_frag())
+                            .addToBackStack(null)
+                            .commit();
                     break;
                 } else {
                     getFragmentManager().beginTransaction()
