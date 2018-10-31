@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
-    private ImageView imageView, stickman_walk, stickman_sit, stickman_lay;
+    private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
-    private ProgressBar walk, stand, sit;
+    private ProgressBar walk, stand, bike, train, other;
     private int walk_prog = 0;
 
     private Handler progHandle;
@@ -28,17 +28,19 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         View view = inflater.inflate(R.layout.fragment_patient,container, false);
 
-        imageView = view.findViewById(R.id.imageView2);
+        imageView = view.findViewById(R.id.actionbar_image);
         stickman_walk = view.findViewById(R.id.walking_stickman);
-        stickman_sit = view.findViewById(R.id.sitting_stickman);
-        stickman_lay = view.findViewById(R.id.laying_stickman);
+        stickman_stand = view.findViewById(R.id.standing_stickman);
+        stickman_bike = view.findViewById(R.id.biking_stickman);
+        stickman_train = view.findViewById(R.id.training_stickman);
+        stickman_other = view.findViewById(R.id.other_stickman);
 
         profile_button = view.findViewById(R.id.knap_profil);
 
-        textView = view.findViewById(R.id.textView);
+        textView = view.findViewById(R.id.nameText);
 
-        stand = view.findViewById(R.id.progbar_stand);
-        sit = view.findViewById(R.id.progbar_sit);
+        stand = view.findViewById(R.id.progbar_train);
+        sit = view.findViewById(R.id.progbar_stand);
         walk = view.findViewById(R.id.progbar_walk);
 
         new Thread(new Runnable() {
