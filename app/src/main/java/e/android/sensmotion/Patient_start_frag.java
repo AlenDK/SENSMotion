@@ -39,9 +39,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         textView = view.findViewById(R.id.nameText);
 
-        stand = view.findViewById(R.id.progbar_train);
-        sit = view.findViewById(R.id.progbar_stand);
         walk = view.findViewById(R.id.progbar_walk);
+        stand = view.findViewById(R.id.progbar_stand);
+        bike = view.findViewById(R.id.progbar_bike);
+        train = view.findViewById(R.id.progbar_train);
+        other = view.findViewById(R.id.progbar_other);
+
 
         new Thread(new Runnable() {
             @Override
