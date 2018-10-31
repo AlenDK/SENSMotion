@@ -1,6 +1,7 @@
 package e.android.sensmotion;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -45,9 +46,8 @@ public class patient_setting_frag extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Patient_start_frag())
-                        .commit();
+                Intent patient_start = new Intent(getActivity(), Patient_start_frag.class);
+                startActivity(patient_start);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

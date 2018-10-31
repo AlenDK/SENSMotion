@@ -1,49 +1,46 @@
 package e.android.sensmotion;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class Patient_start_frag extends Fragment implements View.OnClickListener{
+public class Patient_start_frag extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
-    private ProgressBar walk, stand, bike, train, other;
+    private ProgressBar walk,stand,bike,train,other;
     private int walk_prog = 0;
 
     private Handler progHandle = new Handler();
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_patient);
 
-        View view = inflater.inflate(R.layout.fragment_patient,container, false);
+        imageView = findViewById(R.id.actionbar_image);
+        stickman_walk = findViewById(R.id.walking_stickman);
+        stickman_stand = findViewById(R.id.standing_stickman);
+        stickman_bike = findViewById(R.id.biking_stickman);
+        stickman_train = findViewById(R.id.training_stickman);
+        stickman_other = findViewById(R.id.other_stickman);
 
-        imageView = view.findViewById(R.id.actionbar_image);
-        stickman_walk = view.findViewById(R.id.walking_stickman);
-        stickman_stand = view.findViewById(R.id.standing_stickman);
-        stickman_bike = view.findViewById(R.id.biking_stickman);
-        stickman_train = view.findViewById(R.id.training_stickman);
-        stickman_other = view.findViewById(R.id.other_stickman);
+        profile_button = findViewById(R.id.knap_profil);
 
-        profile_button = view.findViewById(R.id.knap_profil);
+        textView = findViewById(R.id.nameText);
 
-        textView = view.findViewById(R.id.nameText);
-
-        walk = view.findViewById(R.id.progbar_walk);
-        stand = view.findViewById(R.id.progbar_stand);
-        bike = view.findViewById(R.id.progbar_bike);
-        train = view.findViewById(R.id.progbar_train);
-        other = view.findViewById(R.id.progbar_other);
+        walk = findViewById(R.id.progbar_walk);
+        stand = findViewById(R.id.progbar_stand);
+        bike = findViewById(R.id.progbar_bike);
+        train = findViewById(R.id.progbar_train);
+        other = findViewById(R.id.progbar_other);
 
 
         new Thread(new Runnable() {
@@ -59,10 +56,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         }
                     });
                 }
-            }
+
+                if(walk_prog == 100){
+                    Popup popup = new Popup();
+                    popup.show(getSupportFragmentManager(), "task complete!");
+                }}
         }).start();
 
-        return view;
     }
 
     @Override

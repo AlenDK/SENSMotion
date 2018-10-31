@@ -47,10 +47,12 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                             .commit();
                     break;
                 } else {
-                    getFragmentManager().beginTransaction()
+                  /*  getFragmentManager().beginTransaction()
                             .replace(R.id.fragmentindhold, new Patient_start_frag())
                             .addToBackStack(null)
-                            .commit();
+                            .commit();*/
+                    Intent patient_start = new Intent(getActivity(), Patient_start_frag.class);
+                    startActivity(patient_start);
                     break;
                 }
 
