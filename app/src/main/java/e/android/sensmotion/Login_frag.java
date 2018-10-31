@@ -48,7 +48,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     break;
                 } else {
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentindhold, new Patientliste_frag())
+                            .replace(R.id.fragmentindhold, new Patient_start_frag())
                             .addToBackStack(null)
                             .commit();
                     break;

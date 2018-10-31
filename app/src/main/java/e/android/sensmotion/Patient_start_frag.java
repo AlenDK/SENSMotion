@@ -20,7 +20,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ProgressBar walk, stand, bike, train, other;
     private int walk_prog = 0;
 
-    private Handler progHandle;
+    private Handler progHandle = new Handler();
 
     @Nullable
     @Override
