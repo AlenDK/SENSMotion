@@ -4,12 +4,18 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="eggwhite">#F3F1F1</color>
+    <color name="eggwhiteShadow">#bfbebe</color>
+    <color name="darkEggwhite">#847d78</color>
+    <color name="lightBlack">#484848</color>
+
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
     -->
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#2A2A2A</color>
     <color name="colorRed">#E82020</color>
-    <color name="colorBackground">#F1F0F0</color>
+    <color name="colorBackground">#F2F2F2</color>
     <color name="colorGray">#A6B9C5</color>
     <color name="colorBlue">#1A91DC</color>
     <color name="colorDarkBlue">#0B659D</color>
