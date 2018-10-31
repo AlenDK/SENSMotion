@@ -13,7 +13,7 @@
     Farvekoder til SENS-appen, defineret af SENS.
     -->
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#2A2A2A</color>
+    <color name="colorBlack">#2a2a2a</color>
     <color name="colorRed">#E82020</color>
     <color name="colorBackground">#F2F2F2</color>
     <color name="colorGray">#A6B9C5</color>
