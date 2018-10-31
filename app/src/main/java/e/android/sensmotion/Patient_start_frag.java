@@ -62,7 +62,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-
+        switch(view.getId()){
+            case R.id.knap_profil:
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new patient_setting_frag())
+                        .commit();
+        }
     }
 
 

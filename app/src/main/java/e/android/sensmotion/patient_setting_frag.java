@@ -12,10 +12,10 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-public class patient_setting_frag extends Fragment implements CompoundButton.OnCheckedChangeListener {
+public class patient_setting_frag extends Fragment {
 
     Switch pop_switch, sound_switch;
-    Button back;
+    Button back, logout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -24,26 +24,39 @@ public class patient_setting_frag extends Fragment implements CompoundButton.OnC
 
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
-        back = (Button) view.findViewById(R.id.backarrow);
 
-        pop_switch.setOnCheckedChangeListener(this);
-        sound_switch.setOnCheckedChangeListener(this);
+        back = (Button) view.findViewById(R.id.backarrow);
+        logout = (Button) view.findViewById(R.id.logUd);
+
+        //Kan det gøres smartere?
+        pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+            }
+        });
+        sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new Patient_start_frag())
+                        .commit();
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+            }
+        });
 
         return view;
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (compoundButton.getId()){
-            case R.id.switchPOP:
-                if(pop_switch.isChecked()){
-                    Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
-                }
-
-            case R.id.switchSound:
-                if(sound_switch.isChecked()){
-                    Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
-                }
-        }
     }
 }
