@@ -22,7 +22,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private int walk_prog = 0;
     double dailyProgress = 80;
     int circleDailyProgress;
-    Toast toast;
 
     private Handler progHandle = new Handler();
 
@@ -38,6 +37,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         //Burde måske have sin egen klasse
         circleDailyProgress = (int)(-dailyProgress/100*360);
 
+        final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
+                "daglige mål for i dag!", Toast.LENGTH_LONG);
 
         new Thread(new Runnable() {
             @Override
@@ -54,8 +55,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 }
 
                 if(walk_prog == 100){
-                    Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
-                            "daglige mål for i dag!", Toast.LENGTH_LONG).show();
+                   akt_klaret.show();
                 }}
         }).start();
 
