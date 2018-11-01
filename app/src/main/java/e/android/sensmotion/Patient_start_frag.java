@@ -28,7 +28,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
-        //Burde måske have sin egen klasse 
+        //Burde måske have sin egen klasse
         circleDailyProgress = (int)(270-dailyProgress/100*360);
 
         createText(view);
@@ -73,7 +73,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-    public void createProgressbar(View view){
+    private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
         stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
@@ -84,7 +84,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         circlebar.setRotation(circleDailyProgress);
     }
 
-    public void createImages(View view){
+    private void createImages(View view){
         actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
         today_smiley = (ImageView) view.findViewById(R.id.facetoday_image);
         stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
@@ -94,11 +94,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
     }
 
-    public void createText(View view){
+    private void createText(View view){
         textView = (TextView) view.findViewById(R.id.nameText);
     }
 
-    public void createButtons(View view){
+    private void createButtons(View view){
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }

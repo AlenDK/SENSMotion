@@ -59,43 +59,43 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/coloumn1"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
+        android:id="@+id/column1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        android:src="@drawable/setting_column"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dinProfilText"
-        app:srcCompat="@drawable/setting_column" />
+        app:layout_constraintTop_toBottomOf="@+id/dinProfilText" />
 
     <ImageView
-        android:id="@+id/coloumn2"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
+        android:id="@+id/column2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        android:src="@drawable/setting_column"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coloumn3"
-        app:srcCompat="@drawable/setting_column" />
+        app:layout_constraintTop_toBottomOf="@+id/column3" />
 
     <ImageView
-        android:id="@+id/coloumn3"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
+        android:id="@+id/column3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        android:src="@drawable/setting_column"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coloumn1"
-        app:srcCompat="@drawable/setting_column" />
+        app:layout_constraintTop_toBottomOf="@+id/column1" />
 
     <TextView
         android:id="@+id/notificationText"
@@ -107,33 +107,33 @@
         android:textColor="@color/darkEggwhite"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coloumn2" />
+        app:layout_constraintTop_toBottomOf="@+id/column2" />
 
     <ImageView
-        android:id="@+id/coloumn4"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/column4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        android:src="@drawable/setting_column"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationText"
-        app:srcCompat="@drawable/setting_column" />
+        app:layout_constraintTop_toBottomOf="@+id/notificationText" />
 
     <ImageView
-        android:id="@+id/coloumn5"
-        android:layout_width="375dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
+        android:id="@+id/column5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:background="@null"
         android:scaleType="centerCrop"
+        android:src="@drawable/setting_column"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/coloumn4"
-        app:srcCompat="@drawable/setting_column" />
+        app:layout_constraintTop_toBottomOf="@+id/column4" />
 
     <TextView
         android:id="@+id/popupText"
@@ -145,9 +145,9 @@
         android:text="Pop-up notifikationer"
         android:textSize="18sp"
         android:textColor="@color/lightBlack"
-        app:layout_constraintBottom_toBottomOf="@+id/coloumn4"
-        app:layout_constraintStart_toStartOf="@+id/coloumn4"
-        app:layout_constraintTop_toTopOf="@+id/coloumn4" />
+        app:layout_constraintBottom_toBottomOf="@+id/column4"
+        app:layout_constraintStart_toStartOf="@+id/column4"
+        app:layout_constraintTop_toTopOf="@+id/column4" />
 
     <TextView
         android:id="@+id/soundeffect"
@@ -159,9 +159,9 @@
         android:text="Lyd effekter"
         android:textColor="@color/lightBlack"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/coloumn5"
-        app:layout_constraintStart_toStartOf="@+id/coloumn5"
-        app:layout_constraintTop_toTopOf="@+id/coloumn5" />
+        app:layout_constraintBottom_toBottomOf="@+id/column5"
+        app:layout_constraintStart_toStartOf="@+id/column5"
+        app:layout_constraintTop_toTopOf="@+id/column5" />
 
     <Switch
         android:id="@+id/switchSound"
@@ -170,7 +170,7 @@
         android:layout_marginStart="216dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@+id/soundeffect"
-        app:layout_constraintTop_toTopOf="@+id/coloumn5" />
+        app:layout_constraintTop_toTopOf="@+id/column5" />
 
     <Switch
         android:id="@+id/switchPOP"
@@ -179,7 +179,7 @@
         android:layout_marginStart="148dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@+id/popupText"
-        app:layout_constraintTop_toTopOf="@+id/coloumn4" />
+        app:layout_constraintTop_toTopOf="@+id/column4" />
 
     <Button
         android:id="@+id/logUd"
