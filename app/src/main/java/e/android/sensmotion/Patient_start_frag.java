@@ -43,6 +43,7 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
         other = findViewById(R.id.progbar_other);
 
 
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -62,7 +63,7 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
                     popup.show(getSupportFragmentManager(), "task complete!");
                 }}
         }).start();
-
+        */
     }
 
     @Override
