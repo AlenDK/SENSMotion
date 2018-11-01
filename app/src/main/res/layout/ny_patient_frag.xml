@@ -16,7 +16,7 @@
         android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="18dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
@@ -31,7 +31,6 @@
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
@@ -61,11 +60,11 @@
         android:id="@+id/checkBox3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="25dp"
         android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
         android:text="Start måling nu"
         android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/opret_P"
+        app:layout_constraintBottom_toTopOf="@+id/Opret_P"
         app:layout_constraintStart_toStartOf="@+id/editText3"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -73,12 +72,12 @@
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="66dp"
         android:layout_marginBottom="48dp"
-        android:layout_marginTop="50dp"
         android:text="Ny patient"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
         app:layout_constraintStart_toStartOf="@+id/editText"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,7 +85,7 @@
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/edittext_custom"
         android:ems="10"
         android:gravity="center"
@@ -99,10 +98,10 @@
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
     <Button
-        android:id="@+id/opret_P"
+        android:id="@+id/Opret_P"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="67dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="82dp"
         android:background="@drawable/opret_patient_knap"
         android:gravity="center"
         android:padding="8dp"
