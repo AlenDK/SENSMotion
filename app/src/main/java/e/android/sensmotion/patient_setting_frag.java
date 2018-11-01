@@ -10,13 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
 public class patient_setting_frag extends Fragment {
 
     Switch pop_switch, sound_switch;
-    Button back, logout;
+    Button logout;
+    ImageButton back;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,7 +28,7 @@ public class patient_setting_frag extends Fragment {
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
 
-        back = (Button) view.findViewById(R.id.backarrow);
+        back = (ImageButton) view.findViewById(R.id.backarrow);
         logout = (Button) view.findViewById(R.id.logUd);
 
         //Kan det gøres smartere?
@@ -46,8 +48,8 @@ public class patient_setting_frag extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent patient_start = new Intent(getActivity(), Patient_start_frag.class);
-                startActivity(patient_start);
+                Intent act = new Intent(getActivity(), PatientActivity.class);
+                startActivity(act);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
