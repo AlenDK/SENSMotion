@@ -26,7 +26,7 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
         Pat2 = view.findViewById(R.id.button2);
         Pat2.setOnClickListener(this);
 
-        Pat3 = view.findViewById(R.id.opret_P);
+        Pat3 = view.findViewById(R.id.button3);
         Pat3.setOnClickListener(this);
 
         Pat4 = view.findViewById(R.id.button4);
