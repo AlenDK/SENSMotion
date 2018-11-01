@@ -1,17 +1,19 @@
 package e.android.sensmotion;
 
 
-import android.content.Intent;
+import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Patient_start_frag extends AppCompatActivity implements View.OnClickListener{
+public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
     private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
@@ -20,13 +22,13 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
     private int walk_prog = 0;
     double dailyProgress = 80;
     int circleDailyProgress;
+    Toast toast;
 
     private Handler progHandle = new Handler();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_patient);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
         //Burde måske have sin egen klasse
         circleDailyProgress = (int)(-dailyProgress/100*360);
@@ -35,6 +37,14 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
         createImages();
         createButtons();
         createProgressbar();
+
+        textView = findViewById(R.id.nameText);
+
+        walk = findViewById(R.id.progbar_walk);
+        stand = findViewById(R.id.progbar_stand);
+        bike = findViewById(R.id.progbar_bike);
+        train = findViewById(R.id.progbar_train);
+        other = findViewById(R.id.progbar_other);
 
 
         new Thread(new Runnable() {
@@ -52,11 +62,14 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
                 }
 
                 if(walk_prog == 100){
-                    Popup popup = new Popup();
-                    popup.show(getSupportFragmentManager(), "task complete!");
+                    Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
+                            "daglige mål for i dag!", Toast.LENGTH_LONG).show();
                 }}
         }).start();
 
+        */
+
+        return view;
     }
 
     @Override
