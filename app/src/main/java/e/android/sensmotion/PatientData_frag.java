@@ -60,7 +60,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        if(view == periode) {
+        if (view == periode) {
             if (!calendar) {
                 calendarView.setVisibility(View.VISIBLE);
                 calendar = true;
@@ -72,13 +72,17 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
             //en masse kode.
 
-
+        /*
         } else if (view == ImgBtn) {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, new Terapeut_setting_frag())
                         .addToBackStack(null)
                         .commit();
-        }
-        }
-    }
 
+        }
+        */
+
+        }
+
+    }
+}
