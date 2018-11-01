@@ -18,8 +18,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
-    private ProgressBar walk,stand,bike,train,other;
+    private ProgressBar circlebar, walk,stand,bike,train,other;
     private int walk_prog = 0;
+    double dailyProgress = 80;
+    int circleDailyProgress;
     Toast toast;
 
     private Handler progHandle = new Handler();
@@ -28,24 +30,22 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
-        imageView = view.findViewById(R.id.actionbar_image);
-        stickman_walk = view.findViewById(R.id.walking_stickman);
-        stickman_stand = view.findViewById(R.id.standing_stickman);
-        stickman_bike = view.findViewById(R.id.biking_stickman);
-        stickman_train = view.findViewById(R.id.training_stickman);
-        stickman_other = view.findViewById(R.id.other_stickman);
+        //Burde måske have sin egen klasse
+        circleDailyProgress = (int)(-dailyProgress/100*360);
 
-        profile_button = view.findViewById(R.id.knap_profil);
+        createText();
+        createImages();
+        createButtons();
+        createProgressbar();
 
-        textView = view.findViewById(R.id.nameText);
+        textView = findViewById(R.id.nameText);
 
-        walk = view.findViewById(R.id.progbar_walk);
-        stand = view.findViewById(R.id.progbar_stand);
-        bike = view.findViewById(R.id.progbar_bike);
-        train = view.findViewById(R.id.progbar_train);
-        other = view.findViewById(R.id.progbar_other);
+        walk = findViewById(R.id.progbar_walk);
+        stand = findViewById(R.id.progbar_stand);
+        bike = findViewById(R.id.progbar_bike);
+        train = findViewById(R.id.progbar_train);
+        other = findViewById(R.id.progbar_other);
 
-        /*
 
         new Thread(new Runnable() {
             @Override
@@ -76,11 +76,46 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.knap_profil:
+                Intent i = new Intent(view.getContext(),patient_setting_frag.class);
+                startActivity(i);
+                break;
+
+
+                /*
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, new patient_setting_frag())
                         .commit();
+                */
         }
     }
 
 
+    public void createProgressbar(){
+        circlebar = findViewById(R.id.circlebar);
+        walk = findViewById(R.id.progbar_walk);
+        stand = findViewById(R.id.progbar_stand);
+        bike = findViewById(R.id.progbar_bike);
+        train = findViewById(R.id.progbar_train);
+        other = findViewById(R.id.progbar_other);
+
+        circlebar.setRotation(circleDailyProgress);
+    }
+
+    public void createImages(){
+        imageView = findViewById(R.id.actionbar_image);
+        stickman_walk = findViewById(R.id.walking_stickman);
+        stickman_stand = findViewById(R.id.standing_stickman);
+        stickman_bike = findViewById(R.id.biking_stickman);
+        stickman_train = findViewById(R.id.training_stickman);
+        stickman_other = findViewById(R.id.other_stickman);
+    }
+
+    public void createText(){
+        textView = findViewById(R.id.nameText);
+    }
+
+    public void createButtons(){
+        profile_button = findViewById(R.id.knap_profil);
+        profile_button.setOnClickListener(this);
+    }
 }

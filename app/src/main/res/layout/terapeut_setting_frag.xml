@@ -62,11 +62,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Tilføj_enhed" />
 
+<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
+    <ProgressBar
+        android:id="@+id/circlebar"
+        style="?android:attr/progressBarStyleHorizontal"
+=======
     <Button
         android:id="@+id/Patientoplysninger"
+>>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
         android:layout_width="0dp"
         android:layout_height="0dp"
+<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="28dp"
+        android:text="Notifikationer"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/Pop_switch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circlebar" />
+
+    <TextView
+        android:id="@+id/Pop-up"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="58dp"
+=======
         android:layout_marginBottom="10dp"
+>>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/edittext_custom"
@@ -116,6 +139,24 @@
         android:layout_height="0dp"
         android:layout_marginBottom="22dp"
         android:layout_marginEnd="16dp"
+<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/edittext_custom"
+        android:fontFamily="sans-serif"
+        android:text="     Something else"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/circlebar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Info2" />
+
+    <TextView
+        android:id="@+id/Lydeffekter"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+=======
+>>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
         android:layout_marginStart="16dp"
         android:background="@drawable/edittext_custom"
         android:text="     Tilføj Enhed"
