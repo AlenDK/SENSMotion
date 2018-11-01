@@ -11,7 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 
-public class Instillinger_frag extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
+public class Terapeut_setting_frag extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
 
     Switch Popup;
     Switch Lydef;
@@ -21,7 +21,7 @@ public class Instillinger_frag extends Fragment implements CompoundButton.OnChec
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_instillinger, container, false);
+        View view = inflater.inflate(R.layout.terapeut_Setting_frag, container, false);
 
         LogOut = (Button) view.findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
