@@ -30,21 +30,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
+        createText(view);
+        createImages(view);
+        createButtons(view);
+        createProgressbar(view);
+
         //Burde måske have sin egen klasse
         circleDailyProgress = (int)(-dailyProgress/100*360);
-
-        createText();
-        createImages();
-        createButtons();
-        createProgressbar();
-
-        textView = findViewById(R.id.nameText);
-
-        walk = findViewById(R.id.progbar_walk);
-        stand = findViewById(R.id.progbar_stand);
-        bike = findViewById(R.id.progbar_bike);
-        train = findViewById(R.id.progbar_train);
-        other = findViewById(R.id.progbar_other);
 
 
         new Thread(new Runnable() {
@@ -67,55 +59,47 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 }}
         }).start();
 
-        */
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.knap_profil:
-                Intent i = new Intent(view.getContext(),patient_setting_frag.class);
-                startActivity(i);
-                break;
+        if(view == profile_button){
+            getFragmentManager().beginTransaction()
+            .replace(R.id.fragmentindhold, new patient_setting_frag())
+            .commit();
 
-
-                /*
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new patient_setting_frag())
-                        .commit();
-                */
         }
     }
 
 
-    public void createProgressbar(){
-        circlebar = findViewById(R.id.circlebar);
-        walk = findViewById(R.id.progbar_walk);
-        stand = findViewById(R.id.progbar_stand);
-        bike = findViewById(R.id.progbar_bike);
-        train = findViewById(R.id.progbar_train);
-        other = findViewById(R.id.progbar_other);
+    public void createProgressbar(View view){
+        circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
+        walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
+        stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
+        bike = (ProgressBar) view.findViewById(R.id.progbar_bike);
+        train = (ProgressBar) view.findViewById(R.id.progbar_train);
+        other = (ProgressBar) view.findViewById(R.id.progbar_other);
 
         circlebar.setRotation(circleDailyProgress);
     }
 
-    public void createImages(){
-        imageView = findViewById(R.id.actionbar_image);
-        stickman_walk = findViewById(R.id.walking_stickman);
-        stickman_stand = findViewById(R.id.standing_stickman);
-        stickman_bike = findViewById(R.id.biking_stickman);
-        stickman_train = findViewById(R.id.training_stickman);
-        stickman_other = findViewById(R.id.other_stickman);
+    public void createImages(View view){
+        imageView = (ImageView) view.findViewById(R.id.actionbar_image);
+        stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
+        stickman_stand = (ImageView) view.findViewById(R.id.standing_stickman);
+        stickman_bike = (ImageView) view.findViewById(R.id.biking_stickman);
+        stickman_train = (ImageView) view.findViewById(R.id.training_stickman);
+        stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
     }
 
-    public void createText(){
-        textView = findViewById(R.id.nameText);
+    public void createText(View view){
+        textView = (TextView) view.findViewById(R.id.nameText);
     }
 
-    public void createButtons(){
-        profile_button = findViewById(R.id.knap_profil);
+    public void createButtons(View view){
+        profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
 }
