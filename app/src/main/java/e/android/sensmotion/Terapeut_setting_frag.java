@@ -19,7 +19,7 @@ public class Terapeut_setting_frag extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.terapeut_Setting_frag, container, false);
+        View view = inflater.inflate(R.layout.terapeut_setting_frag, container, false);
 
         LogOut = (Button) view.findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
@@ -35,9 +35,7 @@ public class Terapeut_setting_frag extends Fragment implements View.OnClickListe
                     .replace(R.id.fragmentindhold, new Login_frag())
                     .addToBackStack(null)
                     .commit();
-        } else if () {
-
-        }
+        } 
 
     }
 }
