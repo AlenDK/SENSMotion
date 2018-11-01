@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Patient_start_frag" />
-        <activity android:name=".PatientActivity"></activity>
+        <activity android:name=".PatientActivity" />
+        <activity android:name=".Terapeut_activity"></activity>
     </application>
 
 </manifest>
