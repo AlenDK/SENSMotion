@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class Login_frag extends Fragment implements View.OnClickListener {
 
     EditText brugernavn;
+    Intent act;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,18 +42,12 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
             case R.id.logIndKnap:
                 if (brugernavn.getText().toString().matches("admin")) {
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentindhold, new Patientliste_frag())
-                            .addToBackStack(null)
-                            .commit();
+                    act = new Intent(getActivity(), Terapeut_activity.class);
+                    startActivity(act);
                     break;
                 } else {
-                  /*  getFragmentManager().beginTransaction()
-                            .replace(R.id.fragmentindhold, new Patient_start_frag())
-                            .addToBackStack(null)
-                            .commit();*/
-                    Intent patient_start = new Intent(getActivity(), Patient_start_frag.class);
-                    startActivity(patient_start);
+                    act = new Intent(getActivity(), PatientActivity.class);
+                    startActivity(act);
                     break;
                 }
 
