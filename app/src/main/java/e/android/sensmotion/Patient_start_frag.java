@@ -45,6 +45,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         train = view.findViewById(R.id.progbar_train);
         other = view.findViewById(R.id.progbar_other);
 
+        /*
 
         new Thread(new Runnable() {
             @Override
@@ -65,6 +66,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             "daglige mål for i dag!", Toast.LENGTH_LONG).show();
                 }}
         }).start();
+
+        */
 
         return view;
     }
