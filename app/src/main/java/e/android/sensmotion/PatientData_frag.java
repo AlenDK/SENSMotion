@@ -71,17 +71,16 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
             //en masse kode.
 
-        /*
+
         } else if (view == ImgBtn) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Terapeut_setting_frag())
+                        .replace(R.id.fragmentindhold, new Terapeut_setting())
                         .addToBackStack(null)
                         .commit();
 
         }
-        */
+
 
         }
-
     }
-}
+
