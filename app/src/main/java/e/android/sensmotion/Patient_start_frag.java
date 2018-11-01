@@ -1,6 +1,5 @@
 package e.android.sensmotion;
 
-
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
-    private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
+    private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
     private ProgressBar circlebar, walk,stand,bike,train,other;
@@ -29,13 +28,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
+        //Burde måske have sin egen klasse
+        circleDailyProgress = (int)(270-dailyProgress/100*360);
+
         createText(view);
         createImages(view);
         createButtons(view);
         createProgressbar(view);
 
-        //Burde måske have sin egen klasse
-        circleDailyProgress = (int)(-dailyProgress/100*360);
 
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
@@ -73,8 +73,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-
-    public void createProgressbar(View view){
+    private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
         stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
@@ -85,8 +84,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         circlebar.setRotation(circleDailyProgress);
     }
 
-    public void createImages(View view){
-        imageView = (ImageView) view.findViewById(R.id.actionbar_image);
+    private void createImages(View view){
+        actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
+        today_smiley = (ImageView) view.findViewById(R.id.facetoday_image);
         stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
         stickman_stand = (ImageView) view.findViewById(R.id.standing_stickman);
         stickman_bike = (ImageView) view.findViewById(R.id.biking_stickman);
@@ -94,11 +94,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
     }
 
-    public void createText(View view){
+    private void createText(View view){
         textView = (TextView) view.findViewById(R.id.nameText);
     }
 
-    public void createButtons(View view){
+    private void createButtons(View view){
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }

@@ -10,23 +10,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
 public class patient_setting_frag extends Fragment {
 
     Switch pop_switch, sound_switch;
-    Button back, logout;
+    Button logout;
+    ImageButton back;
+    ImageView column1, column2, column3, column4, column5;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_setting_frag, container, false);
 
+        createImage(view);
+
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
 
-        back = (Button) view.findViewById(R.id.backarrow);
+        back = (ImageButton) view.findViewById(R.id.backarrow);
         logout = (Button) view.findViewById(R.id.logUd);
 
         //Kan det gøres smartere?
@@ -46,8 +52,8 @@ public class patient_setting_frag extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent patient_start = new Intent(getActivity(), Patient_start_frag.class);
-                startActivity(patient_start);
+                Intent act = new Intent(getActivity(), PatientActivity.class);
+                startActivity(act);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
@@ -58,5 +64,14 @@ public class patient_setting_frag extends Fragment {
         });
 
         return view;
+    }
+
+
+    private void createImage(View view){
+        column1 = (ImageView) view.findViewById(R.id.column1);
+        column2 = (ImageView) view.findViewById(R.id.column2);
+        column3 = (ImageView) view.findViewById(R.id.column3);
+        column4 = (ImageView) view.findViewById(R.id.column4);
+        column5 = (ImageView) view.findViewById(R.id.column5);
     }
 }
