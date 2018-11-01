@@ -110,6 +110,7 @@
     <ProgressBar
         android:id="@+id/progbar_other"
         style="?android:attr/progressBarStyleHorizontal"
+        android:progress="40"
         android:layout_width="300dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
@@ -120,6 +121,7 @@
     <ProgressBar
         android:id="@+id/progbar_train"
         style="?android:attr/progressBarStyleHorizontal"
+        android:progress="90"
         android:layout_width="300dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
@@ -140,6 +142,7 @@
     <ProgressBar
         android:id="@+id/progbar_bike"
         style="?android:attr/progressBarStyleHorizontal"
+        android:progress="70"
         android:layout_width="300dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
@@ -150,6 +153,7 @@
     <ProgressBar
         android:id="@+id/progbar_stand"
         style="?android:attr/progressBarStyleHorizontal"
+        android:progress="80"
         android:layout_width="300dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
@@ -158,8 +162,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
+        android:id="@+id/circlebar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progress="80"
         android:layout_width="201dp"
         android:layout_height="170dp"
         android:layout_marginEnd="8dp"
@@ -168,7 +173,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:progressDrawable="@drawable/circle_progress"/>
 
     <TextView
         android:id="@+id/progressBarText"
@@ -178,12 +184,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="100%"
+        android:text="80%"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar" />
+        app:layout_constraintBottom_toBottomOf="@+id/circlebar"
+        app:layout_constraintEnd_toEndOf="@+id/circlebar"
+        app:layout_constraintStart_toStartOf="@+id/circlebar"
+        app:layout_constraintTop_toTopOf="@+id/circlebar" />
 
     <ImageView
         android:id="@+id/facetoday_image"

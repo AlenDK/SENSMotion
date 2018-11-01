@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login_frag" />
+        <activity android:name=".Patient_start_frag" />
+        <activity android:name=".PatientActivity" />
+        <activity android:name=".Terapeut_activity"></activity>
     </application>
 
 </manifest>

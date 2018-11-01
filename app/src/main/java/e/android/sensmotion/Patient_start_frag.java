@@ -1,50 +1,44 @@
 package e.android.sensmotion;
 
+
 import android.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
     private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
-    private ProgressBar walk, stand, bike, train, other;
+    private ProgressBar circlebar, walk,stand,bike,train,other;
     private int walk_prog = 0;
+    double dailyProgress = 80;
+    int circleDailyProgress;
 
-    private Handler progHandle;
+    private Handler progHandle = new Handler();
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_patient,container, false);
+        createText(view);
+        createImages(view);
+        createButtons(view);
+        createProgressbar(view);
 
-        imageView = view.findViewById(R.id.actionbar_image);
-        stickman_walk = view.findViewById(R.id.walking_stickman);
-        stickman_stand = view.findViewById(R.id.standing_stickman);
-        stickman_bike = view.findViewById(R.id.biking_stickman);
-        stickman_train = view.findViewById(R.id.training_stickman);
-        stickman_other = view.findViewById(R.id.other_stickman);
+        //Burde måske have sin egen klasse
+        circleDailyProgress = (int)(-dailyProgress/100*360);
 
-        profile_button = view.findViewById(R.id.knap_profil);
-
-        textView = view.findViewById(R.id.nameText);
-
-        walk = view.findViewById(R.id.progbar_walk);
-        stand = view.findViewById(R.id.progbar_stand);
-        bike = view.findViewById(R.id.progbar_bike);
-        train = view.findViewById(R.id.progbar_train);
-        other = view.findViewById(R.id.progbar_other);
-
+        final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
+                "daglige mål for i dag!", Toast.LENGTH_LONG);
 
         new Thread(new Runnable() {
             @Override
@@ -59,21 +53,53 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         }
                     });
                 }
-            }
+
+                if(walk_prog == 100){
+                   akt_klaret.show();
+                }}
         }).start();
+
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
-            case R.id.knap_profil:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new patient_setting_frag())
-                        .commit();
+        if(view == profile_button){
+            getFragmentManager().beginTransaction()
+            .replace(R.id.fragmentindhold, new patient_setting_frag())
+            .commit();
+
         }
     }
 
 
+    public void createProgressbar(View view){
+        circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
+        walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
+        stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
+        bike = (ProgressBar) view.findViewById(R.id.progbar_bike);
+        train = (ProgressBar) view.findViewById(R.id.progbar_train);
+        other = (ProgressBar) view.findViewById(R.id.progbar_other);
+
+        circlebar.setRotation(circleDailyProgress);
+    }
+
+    public void createImages(View view){
+        imageView = (ImageView) view.findViewById(R.id.actionbar_image);
+        stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
+        stickman_stand = (ImageView) view.findViewById(R.id.standing_stickman);
+        stickman_bike = (ImageView) view.findViewById(R.id.biking_stickman);
+        stickman_train = (ImageView) view.findViewById(R.id.training_stickman);
+        stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
+    }
+
+    public void createText(View view){
+        textView = (TextView) view.findViewById(R.id.nameText);
+    }
+
+    public void createButtons(View view){
+        profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
+        profile_button.setOnClickListener(this);
+    }
 }
