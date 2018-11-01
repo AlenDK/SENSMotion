@@ -10,8 +10,7 @@ import android.widget.Button;
 public class Patientliste_frag extends Fragment implements View.OnClickListener{
 
     Button newPat;
-    Button Pat1;
-    Button Pat2;
+    Button Pat1, Pat2, Pat3, Pat4, Pat5;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -20,10 +19,21 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
 
         newPat = view.findViewById(R.id.NyPatient);
         newPat.setOnClickListener(this);
+        
         Pat1 = view.findViewById(R.id.button1);
         Pat1.setOnClickListener(this);
+
         Pat2 = view.findViewById(R.id.button2);
         Pat2.setOnClickListener(this);
+
+        Pat3 = view.findViewById(R.id.button3);
+        Pat3.setOnClickListener(this);
+
+        Pat4 = view.findViewById(R.id.button4);
+        Pat4.setOnClickListener(this);
+
+        Pat5 = view.findViewById(R.id.button5);
+        Pat5.setOnClickListener(this);
 
         return view;
     }
