@@ -13,7 +13,6 @@
         android:id="@+id/Titel"
         android:layout_width="394dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
         android:background="@color/colorRed"
         android:gravity="center_vertical"
         android:paddingBottom="5dp"
@@ -21,150 +20,95 @@
         android:paddingTop="5dp"
         android:text="Indstillinger"
         android:textColor="@color/colorWhite"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Patientindstillinger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/Patientindstillinger"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="1dp"
         android:text="Patientindstillinger"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Patientoplysninger"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Titel" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/Endhedsindstillinger"
         android:layout_width="213dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="1dp"
         android:text="Enhedsindstillinger"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Rediger_enhed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Patientkontakt" />
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/logud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:background="@drawable/logud_knap"
         android:text="Log ud"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Tilføj_enhed" />
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="373dp" />
 
-<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
     <ProgressBar
         android:id="@+id/circlebar"
         style="?android:attr/progressBarStyleHorizontal"
-=======
+
     <Button
         android:id="@+id/Patientoplysninger"
->>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
         android:layout_width="0dp"
         android:layout_height="0dp"
-<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
         android:text="Notifikationer"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Pop_switch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circlebar" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/Pop-up"
-        android:layout_width="0dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="58dp"
-=======
-        android:layout_marginBottom="10dp"
->>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="352dp"
+        android:layout_height="39dp"
         android:background="@drawable/edittext_custom"
         android:text="     Rediger oplysninger"
         android:textAlignment="textStart"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Patientkontakt"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Patientindstillinger" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="152dp" />
 
     <Button
         android:id="@+id/Patientkontakt"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="39dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:background="@drawable/edittext_custom"
         android:text="     Kontakt patient"
         android:textAlignment="textStart"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Endhedsindstillinger"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Patientoplysninger" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/Rediger_enhed"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:background="@drawable/edittext_custom"
         android:text="     Rediger enheder"
         android:textAlignment="textStart"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Tilføj_enhed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Endhedsindstillinger" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/Tilføj_enhed"
-        android:layout_width="0dp"
+        android:layout_width="368dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="22dp"
-        android:layout_marginEnd="16dp"
-<<<<<<< HEAD:app/src/main/res/layout/fragment_instillinger.xml
-        android:layout_marginBottom="24dp"
         android:background="@drawable/edittext_custom"
         android:fontFamily="sans-serif"
         android:text="     Something else"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/circlebar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Info2" />
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="314dp" />
 
     <TextView
         android:id="@+id/Lydeffekter"
-        android:layout_width="0dp"
+        android:layout_width="368dp"
         android:layout_height="42dp"
-=======
->>>>>>> Development:app/src/main/res/layout/terapeut_setting_frag.xml
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/edittext_custom"
         android:text="     Tilføj Enhed"
         android:textAlignment="textStart"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/logud"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Rediger_enhed" />
+        app:layout_constraintTop_toBottomOf="@+id/Titel" />
 
 </android.support.constraint.ConstraintLayout>
