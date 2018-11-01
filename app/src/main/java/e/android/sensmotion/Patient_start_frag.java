@@ -26,7 +26,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_patientliste_frag, container, false);
+        View view = inflater.inflate(R.layout.patientliste_frag, container, false);
 
         imageView = view.findViewById(R.id.actionbar_image);
         stickman_walk = view.findViewById(R.id.walking_stickman);
