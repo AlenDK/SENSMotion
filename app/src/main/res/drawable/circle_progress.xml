@@ -10,8 +10,8 @@
     </item>
     <item>
         <rotate
-            android:fromDegrees="0"
-            android:toDegrees="0"
+            android:fromDegrees="270"
+            android:toDegrees="270"
             android:pivotX="50%"
             android:pivotY="50%" >
             >

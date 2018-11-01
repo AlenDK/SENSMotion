@@ -29,7 +29,7 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.fragment_patient);
 
         //Burde måske have sin egen klasse
-        circleDailyProgress = (int)(dailyProgress/100*360);
+        circleDailyProgress = (int)(-dailyProgress/100*360);
 
         createText();
         createImages();
@@ -85,7 +85,7 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
         train = findViewById(R.id.progbar_train);
         other = findViewById(R.id.progbar_other);
 
-        circlebar.setRotation(270-circleDailyProgress);
+        circlebar.setRotation(circleDailyProgress);
     }
 
     public void createImages(){
