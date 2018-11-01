@@ -36,7 +36,6 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
         periode.setOnClickListener(this);
         graf.setOnClickListener(this);
-        calendarView.setVisibility(View.GONE);
         ImgBtn.setOnClickListener(this);
 
         return view;
