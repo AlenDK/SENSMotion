@@ -35,7 +35,7 @@ public class Terapeut_setting_frag extends Fragment implements View.OnClickListe
                     .replace(R.id.fragmentindhold, new Login_frag())
                     .addToBackStack(null)
                     .commit();
-        } 
+        }
 
     }
 }
