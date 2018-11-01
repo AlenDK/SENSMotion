@@ -31,7 +31,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
         periode = (Button) view.findViewById(R.id.periode);
         graf = (Button) view.findViewById(R.id.grafer);
-        calendarView = (CalendarView) view.findViewById(R.id.calendarView);
+        //calendarView = (CalendarView) view.findViewById(R.id.calendarView);
         ImgBtn = (ImageButton) view.findViewById(R.id.knap_profil);
 
         periode.setOnClickListener(this);
