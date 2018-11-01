@@ -1,6 +1,7 @@
 package e.android.sensmotion;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,10 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
     private ImageView imageView, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView;
-    private ProgressBar walk,stand,bike,train,other;
+    private ProgressBar circlebar, walk,stand,bike,train,other;
     private int walk_prog = 0;
+    double dailyProgress = 80;
+    int circleDailyProgress;
 
     private Handler progHandle = new Handler();
 
@@ -25,22 +28,13 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_patient);
 
-        imageView = findViewById(R.id.actionbar_image);
-        stickman_walk = findViewById(R.id.walking_stickman);
-        stickman_stand = findViewById(R.id.standing_stickman);
-        stickman_bike = findViewById(R.id.biking_stickman);
-        stickman_train = findViewById(R.id.training_stickman);
-        stickman_other = findViewById(R.id.other_stickman);
+        //Burde måske have sin egen klasse
+        circleDailyProgress = (int)(dailyProgress/100*360);
 
-        profile_button = findViewById(R.id.knap_profil);
-
-        textView = findViewById(R.id.nameText);
-
-        walk = findViewById(R.id.progbar_walk);
-        stand = findViewById(R.id.progbar_stand);
-        bike = findViewById(R.id.progbar_bike);
-        train = findViewById(R.id.progbar_train);
-        other = findViewById(R.id.progbar_other);
+        createText();
+        createImages();
+        createButtons();
+        createProgressbar();
 
 
         new Thread(new Runnable() {
@@ -69,11 +63,46 @@ public class Patient_start_frag extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.knap_profil:
+                Intent i = new Intent(view.getContext(),patient_setting_frag.class);
+                startActivity(i);
+                break;
+
+
+                /*
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, new patient_setting_frag())
                         .commit();
+                */
         }
     }
 
 
+    public void createProgressbar(){
+        circlebar = findViewById(R.id.circlebar);
+        walk = findViewById(R.id.progbar_walk);
+        stand = findViewById(R.id.progbar_stand);
+        bike = findViewById(R.id.progbar_bike);
+        train = findViewById(R.id.progbar_train);
+        other = findViewById(R.id.progbar_other);
+
+        circlebar.setRotation(270-circleDailyProgress);
+    }
+
+    public void createImages(){
+        imageView = findViewById(R.id.actionbar_image);
+        stickman_walk = findViewById(R.id.walking_stickman);
+        stickman_stand = findViewById(R.id.standing_stickman);
+        stickman_bike = findViewById(R.id.biking_stickman);
+        stickman_train = findViewById(R.id.training_stickman);
+        stickman_other = findViewById(R.id.other_stickman);
+    }
+
+    public void createText(){
+        textView = findViewById(R.id.nameText);
+    }
+
+    public void createButtons(){
+        profile_button = findViewById(R.id.knap_profil);
+        profile_button.setOnClickListener(this);
+    }
 }

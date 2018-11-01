@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/Lydswitch" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/circlebar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="4dp"
@@ -73,7 +73,7 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/Pop_switch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/circlebar" />
 
     <TextView
         android:id="@+id/Pop-up"
@@ -139,7 +139,7 @@
         android:text="     Something else"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar"
+        app:layout_constraintBottom_toTopOf="@+id/circlebar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Info2" />
