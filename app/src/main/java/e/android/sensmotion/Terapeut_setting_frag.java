@@ -11,59 +11,33 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 
-public class Terapeut_setting_frag extends Fragment implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
+public class Terapeut_setting_frag extends Fragment implements View.OnClickListener{
 
-    Switch Popup;
-    Switch Lydef;
     Button LogOut;
-    boolean notif = false;
-    boolean lyd = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.terapeut_Setting_frag, container, false);
 
         LogOut = (Button) view.findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
 
-        Popup = (Switch) view.findViewById(R.id.Pop_switch);
-        Popup.setOnCheckedChangeListener(this);
 
-        Lydef = (Switch) view.findViewById(R.id.Lydswitch);
-        Lydef.setOnCheckedChangeListener(this);
-
-        // Inflate the layout for this fragment
         return view;
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-        if(compoundButton == Popup) {
-
-            if(isChecked) {
-                notif = true;
-                System.out.print("notif: " + notif);
-            } else {
-                notif = false;
-                System.out.print("notif: " + notif);
-            }
-        } else if(compoundButton == Lydef){
-
-            if(isChecked) {
-                notif = true;
-                System.out.print("Lydeffekt: " + lyd);
-            } else {
-                notif = false;
-                System.out.print("Lydeffekt: " + lyd);
-            }
-        }
-    }
-
-    @Override
     public void onClick(View view) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.fragmentindhold, new Login_frag())
-                .addToBackStack(null)
-                .commit();
+        if (view == LogOut) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentindhold, new Login_frag())
+                    .addToBackStack(null)
+                    .commit();
+        } else if () {
+
+        }
+
     }
 }
