@@ -16,7 +16,7 @@ public class NyPatient_frag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ny_patient_frag, container, false);
 
-        opret = (Button) view.findViewById(R.id.opret_P);
+        opret = (Button) view.findViewById(R.id.Opret_P);
         opret.setOnClickListener(this);
 
         return view;
