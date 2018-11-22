@@ -1,21 +1,17 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Fragment;
-import android.app.FragmentContainer;
-import android.app.FragmentManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import java.util.Calendar;
+import e.android.sensmotion.R;
+import e.android.sensmotion.views.Terapeut_setting;
 
 public class PatientData_frag extends Fragment implements View.OnClickListener {
 

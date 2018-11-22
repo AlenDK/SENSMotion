@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import e.android.sensmotion.R;
 
 
 public class Terapeut_setting extends Fragment implements View.OnClickListener {
@@ -45,7 +47,7 @@ public class Terapeut_setting extends Fragment implements View.OnClickListener {
                     .commit();
         } else if (view != LogOut) {
             getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new IkkeImplementeret_frag())
+                    .replace(R.id.fragmentindhold, new Login_frag.IkkeImplementeret_frag())
                     .addToBackStack(null)
                     .commit();
         }

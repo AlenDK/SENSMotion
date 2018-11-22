@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import e.android.sensmotion.R;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 

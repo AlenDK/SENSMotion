@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

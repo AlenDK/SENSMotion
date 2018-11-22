@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {
 

@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import e.android.sensmotion.R;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
 
@@ -63,6 +65,15 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                         .addToBackStack(null)
                         .commit();
                 break;
+        }
+    }
+
+    public static class IkkeImplementeret_frag extends Fragment {
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.ikke_implementeret, container, false);
+
+
+            return view;
         }
     }
 }
