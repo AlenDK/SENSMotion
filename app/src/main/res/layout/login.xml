@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login_frag"
+    tools:context=".views.Login_frag"
     android:background="@color/colorBackground">
 
     <ImageView
