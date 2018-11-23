@@ -1,18 +1,17 @@
 package e.android.sensmotion.JDBC_Implementations;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import e.android.sensmotion.DTO.PatientDTO;
-import e.android.sensmotion.DTO.SensorDTO;
+import e.android.sensmotion.JDBC_DataTransferObjects.PatientDTO;
+import e.android.sensmotion.JDBC_DataTransferObjects.SensorDTO;
 import e.android.sensmotion.JDBC_Interfaces.DALException;
 import e.android.sensmotion.JDBC_Interfaces.PatientDAO;
-import e.android.sensmotion.connector.Connector;
+import e.android.sensmotion.JDBC_Connection.Connector;
 
 public class MySQLPatientDAO implements PatientDAO {
     private DatabaseReference mDatabase;

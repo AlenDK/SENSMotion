@@ -1,4 +1,4 @@
-package e.android.sensmotion.DTO;
+package e.android.sensmotion.JDBC_DataTransferObjects;
 
 public class SensorDTO {
 

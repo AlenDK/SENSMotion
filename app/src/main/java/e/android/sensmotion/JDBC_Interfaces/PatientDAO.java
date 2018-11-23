@@ -2,8 +2,7 @@ package e.android.sensmotion.JDBC_Interfaces;
 
 import java.util.List;
 
-import e.android.sensmotion.DTO.PatientDTO;
-import e.android.sensmotion.DTO.SensorDTO;
+import e.android.sensmotion.JDBC_DataTransferObjects.PatientDTO;
 
 public interface PatientDAO {
 

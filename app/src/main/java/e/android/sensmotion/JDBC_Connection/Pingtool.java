@@ -1,4 +1,4 @@
-package e.android.sensmotion.connector;
+package e.android.sensmotion.JDBC_Connection;
 
 import e.android.sensmotion.JDBC_Interfaces.DALException;
 
