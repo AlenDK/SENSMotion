@@ -5,7 +5,7 @@ import java.util.List;
 public class PatientDTO {
 
     public String CPR;
-    public List<SensorDTO> Sensorer;
+//    public List<SensorDTO> Sensorer;
     public String Mobilitet;
     public String Projekt;
     public String Navn;
@@ -13,9 +13,9 @@ public class PatientDTO {
     public boolean isActive;
 
 
-    public PatientDTO(String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
+    public PatientDTO(String CPR, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
         this.CPR = CPR;
-        this.Sensorer = Sensorer;
+  //      this.Sensorer = Sensorer;
         this.Mobilitet = Mobilitet;
         this.Projekt = Projekt;
         this.isActive = isActive;
@@ -39,14 +39,14 @@ public class PatientDTO {
         this.CPR = CPR;
     }
 
-    public List<SensorDTO> getSensorer() {
+ /*   public List<SensorDTO> getSensorer() {
         return Sensorer;
     }
 
     public void setSensorer(List<SensorDTO> sensorer) {
         Sensorer = sensorer;
     }
-
+*/
     public String getMobilitet() {
         return Mobilitet;
     }
