@@ -13,10 +13,10 @@ public class PatientDAO {
     private PatientDTO Patient;
 
 
-    public void createUser (String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Navn, boolean isActive) {
+    public void createUser (String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
 
 
-        Patient = new PatientDTO(CPR, Sensorer, Mobilitet, Projekt, Navn, isActive);
+        Patient = new PatientDTO(CPR, Sensorer, Mobilitet, Projekt, Terapeut, Navn, isActive);
 
         mDatabase.child(CPR).setValue(Patient);
 

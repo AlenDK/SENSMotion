@@ -9,15 +9,17 @@ public class PatientDTO {
     public String Mobilitet;
     public String Projekt;
     public String Navn;
+    public String Terapeut;
     public boolean isActive;
 
 
-    public PatientDTO(String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Navn, boolean isActive) {
+    public PatientDTO(String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
         this.CPR = CPR;
         this.Sensorer = Sensorer;
         this.Mobilitet = Mobilitet;
         this.Projekt = Projekt;
         this.isActive = isActive;
+        this.Terapeut = Terapeut;
         this.Navn = Navn;
     }
 
