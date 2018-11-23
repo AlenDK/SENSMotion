@@ -5,6 +5,7 @@ import java.util.List;
 public class PatientDTO {
 
     public String CPR;
+    public int Id;
 //    public List<SensorDTO> Sensorer;
     public String Mobilitet;
     public String Projekt;
@@ -13,14 +14,19 @@ public class PatientDTO {
     public boolean isActive;
 
 
-    public PatientDTO(String CPR, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
+    public PatientDTO(int Id, String CPR, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
         this.CPR = CPR;
+        this.Id = Id;
   //      this.Sensorer = Sensorer;
         this.Mobilitet = Mobilitet;
         this.Projekt = Projekt;
         this.isActive = isActive;
         this.Terapeut = Terapeut;
         this.Navn = Navn;
+    }
+
+    public int getId() {
+        return Id;
     }
 
     public String getTerapeut() {

@@ -5,6 +5,7 @@ import java.util.List;
 public class TerapeutDTO {
 
     List<PatientDTO> Patienter;
+    String Navn;
 
 
     public TerapeutDTO(List<PatientDTO> Patienter) {

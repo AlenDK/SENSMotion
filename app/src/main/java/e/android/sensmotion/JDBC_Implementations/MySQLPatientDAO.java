@@ -19,7 +19,7 @@ public class MySQLPatientDAO implements PatientDAO {
 
     /*public void Connect(String Path) {
            mDatabase = FirebaseDatabase.getInstance().getReference("" + Path);
-       }*/
+       }
     public void createUser (String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
 
 
@@ -28,8 +28,7 @@ public class MySQLPatientDAO implements PatientDAO {
         mDatabase.child(CPR).setValue(Patient);
 
     }
-
-
+*/
     @Override
     public List<PatientDTO> getPatienter() throws DALException {
         List<PatientDTO> List = new ArrayList<PatientDTO>();
@@ -38,7 +37,7 @@ public class MySQLPatientDAO implements PatientDAO {
         {
             while (rs.next())
             {
-                List.add(new PatientDTO(rs.getString("CPR"), rs.getString("Mobilitet"), rs.getString("Projekt"), rs.getString("Terapuet"), rs.getString("Navn"), rs.getBoolean("aktiv")));
+                List.add(new PatientDTO(rs.getInt("Patient_id"), rs.getString("CPR"), rs.getString("Mobilitet"), rs.getString("Projekt"), rs.getString("Terapuet"), rs.getString("Navn"), rs.getBoolean("aktiv")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +51,7 @@ public class MySQLPatientDAO implements PatientDAO {
         try {
             if (!rs.first())
                 throw new DALException("Patienten med CPR-nummeret " + CPR + ", findes ikke");
-            return new PatientDTO(rs.getString("CPR"), rs.getString("Mobilitet"), rs.getString("Projekt"), rs.getString("Terapuet"), rs.getString("Navn"), rs.getBoolean("aktiv"));
+            return new PatientDTO(rs.getInt("Patient_id"), rs.getString("CPR"), rs.getString("Mobilitet"), rs.getString("Projekt"), rs.getString("Terapuet"), rs.getString("Navn"), rs.getBoolean("aktiv"));
         } catch (SQLException e) {
             throw new DALException(e);
         }
@@ -62,15 +61,9 @@ public class MySQLPatientDAO implements PatientDAO {
     public void opretPatient(PatientDTO Patient) throws DALException {
         Connector.getInstance().doUpdate(
                 "INSERT INTO patient VALUES " +
-                        "(" + Patient.getCPR() + "', '" + Patient.getMobilitet() + "', '"
+                        "(" + Patient.getId() + "', '" + Patient.getCPR() + "', '" + Patient.getMobilitet() + "', '"
                         + Patient.getProjekt() + "', '" + Patient.getTerapeut() + "', '"
                         + Patient.getNavn() + "', '" + Patient.isActive() + "')"
         );
     }
 }
-
-
-
-
-
-
