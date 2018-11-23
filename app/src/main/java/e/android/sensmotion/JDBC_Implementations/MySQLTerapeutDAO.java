@@ -1,18 +1,15 @@
-package e.android.sensmotion.DAO;
+package e.android.sensmotion.JDBC_Implementations;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.List;
 
 import e.android.sensmotion.DTO.PatientDTO;
 
-public class TerapeutDAO {
+public class MySQLTerapeutDAO {
     private DatabaseReference mDatabase;
 
 
     public PatientDTO showUsers() {
-
+        return null;
     }
 
 
