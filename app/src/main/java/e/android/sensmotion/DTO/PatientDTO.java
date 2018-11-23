@@ -23,6 +23,14 @@ public class PatientDTO {
         this.Navn = Navn;
     }
 
+    public String getTerapeut() {
+        return Terapeut;
+    }
+
+    public void setTerapeut(String terapeut) {
+        Terapeut = terapeut;
+    }
+
     public String getCPR() {
         return CPR;
     }
