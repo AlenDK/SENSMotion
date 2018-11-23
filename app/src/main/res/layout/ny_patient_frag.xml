@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:padding="8dp"
-    tools:context=".NyPatient_frag"
+    tools:context=".views.NyPatient_frag"
     tools:layout_editor_absoluteY="25dp">
 
     <!-- TODO: Update blank fragment layout -->

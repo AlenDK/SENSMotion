@@ -1,8 +1,10 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+
+import e.android.sensmotion.R;
 
 public class MainActivity extends Activity {
 

@@ -1,4 +1,4 @@
-package e.android.sensmotion;
+package e.android.sensmotion.views;
 
 import android.os.Bundle;
 import android.app.Fragment;
@@ -6,6 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import e.android.sensmotion.R;
+import e.android.sensmotion.views.NyPatient_frag;
+import e.android.sensmotion.views.PatientData_frag;
 
 public class Patientliste_frag extends Fragment implements View.OnClickListener{
 
@@ -26,7 +30,7 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
         Pat2 = view.findViewById(R.id.button2);
         Pat2.setOnClickListener(this);
 
-        Pat3 = view.findViewById(R.id.opret_P);
+        Pat3 = view.findViewById(R.id.button3);
         Pat3.setOnClickListener(this);
 
         Pat4 = view.findViewById(R.id.button4);

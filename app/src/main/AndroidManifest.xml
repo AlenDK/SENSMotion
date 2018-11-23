@@ -9,16 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity android:name=".views.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Patient_start_frag" />
-        <activity android:name=".PatientActivity" />
-        <activity android:name=".Terapeut_activity"></activity>
+        <activity android:name=".views.PatientActivity" />
+        <activity android:name=".views.Terapeut_activity"></activity>
     </application>
 
 </manifest>
