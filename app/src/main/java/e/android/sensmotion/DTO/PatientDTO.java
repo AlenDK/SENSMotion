@@ -4,15 +4,15 @@ import java.util.List;
 
 public class PatientDTO {
 
-    String CPR;
-    List<SensorDTO> Sensorer;
-    String Mobilitet;
-    String Projekt;
-    String Navn;
-    boolean isActive;
+    public String CPR;
+    public List<SensorDTO> Sensorer;
+    public String Mobilitet;
+    public String Projekt;
+    public String Navn;
+    public boolean isActive;
 
 
-    PatientDTO(String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Navn, boolean isActive) {
+    public PatientDTO(String CPR, List<SensorDTO> Sensorer, String Mobilitet, String Projekt, String Navn, boolean isActive) {
         this.CPR = CPR;
         this.Sensorer = Sensorer;
         this.Mobilitet = Mobilitet;
