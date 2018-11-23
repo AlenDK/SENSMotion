@@ -33,7 +33,7 @@ public class MySQLPatientDAO implements PatientDAO {
     @Override
     public List<PatientDTO> getPatienter() throws DALException {
         List<PatientDTO> List = new ArrayList<PatientDTO>();
-        ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM PATIENT");
+        ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM patient");
         try
         {
             while (rs.next())
@@ -48,7 +48,7 @@ public class MySQLPatientDAO implements PatientDAO {
 
     @Override
     public PatientDTO getPatient(String CPR) throws DALException {
-        ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM PATIENT WHERE CPR = " + CPR);
+        ResultSet rs = Connector.getInstance().doQuery("SELECT * FROM patient WHERE CPR = " + CPR);
         try {
             if (!rs.first())
                 throw new DALException("Patienten med CPR-nummeret " + CPR + ", findes ikke");
@@ -61,7 +61,7 @@ public class MySQLPatientDAO implements PatientDAO {
     @Override
     public void opretPatient(PatientDTO Patient) throws DALException {
         Connector.getInstance().doUpdate(
-                "INSERT INTO raavare(raavare_id, raavare_navn, leverandoer) VALUES " +
+                "INSERT INTO patient VALUES " +
                         "(" + Patient.getCPR() + "', '" + Patient.getMobilitet() + "', '"
                         + Patient.getProjekt() + "', '" + Patient.getTerapeut() + "', '"
                         + Patient.getNavn() + "', '" + Patient.isActive() + "')"
