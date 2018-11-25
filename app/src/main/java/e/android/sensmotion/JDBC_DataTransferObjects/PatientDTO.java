@@ -7,23 +7,29 @@ public class PatientDTO {
     public String CPR;
     public int Id;
 //    public List<SensorDTO> Sensorer;
-    public String Mobilitet;
+    public int Mobilitet;
     public String Projekt;
     public String Navn;
     public String Terapeut;
     public boolean isActive;
 
 
-    public PatientDTO(int Id, String CPR, String Mobilitet, String Projekt, String Terapeut, String Navn, boolean isActive) {
+    public PatientDTO () {
+
+    }
+
+
+    public PatientDTO(int Id, String CPR, String Projekt, String Terapeut, String Navn, int Mobilitet) {
         this.CPR = CPR;
         this.Id = Id;
   //      this.Sensorer = Sensorer;
-        this.Mobilitet = Mobilitet;
         this.Projekt = Projekt;
-        this.isActive = isActive;
         this.Terapeut = Terapeut;
         this.Navn = Navn;
+        this.Mobilitet = Mobilitet;
     }
+
+    public void setId(int Id) {Id = Id; }
 
     public int getId() {
         return Id;
@@ -53,11 +59,11 @@ public class PatientDTO {
         Sensorer = sensorer;
     }
 */
-    public String getMobilitet() {
+    public int getMobilitet() {
         return Mobilitet;
     }
 
-    public void setMobilitet(String mobilitet) {
+    public void setMobilitet(int mobilitet) {
         Mobilitet = mobilitet;
     }
 
@@ -77,11 +83,5 @@ public class PatientDTO {
         Navn = navn;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
 
-    public void setActive(boolean active) {
-        isActive = active;
-    }
 }
