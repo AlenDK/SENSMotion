@@ -1,8 +1,8 @@
 package e.android.sensmotion.serviceTest;
 
-import e.android.sensmotion.dataTest.Values;
+import e.android.sensmotion.dataTest.Value;
 
 public interface SENScallback {
-    void serviceSuccess(Values values);
+    void serviceSuccess(Value value);
     void serviceFailure(Exception exception);
 }

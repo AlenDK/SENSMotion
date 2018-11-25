@@ -7,16 +7,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.net.URLConnection;
 
-import e.android.sensmotion.dataTest.JSONPopulator;
-import e.android.sensmotion.dataTest.Values;
+import e.android.sensmotion.dataTest.Value;
 
 public class SENSservice {
     private SENScallback callback;
@@ -81,10 +77,10 @@ public class SENSservice {
                         return;
                     }
 
-                    Values values = new Values();
-                    values.populate(queryResults.optJSONObject("value").optJSONObject("values"));
+                    Value value = new Value();
+                    value.populate(queryResults.optJSONObject("value").optJSONObject("values"));
 
-                    callback.serviceSuccess(values);
+                    callback.serviceSuccess(value);
 
                 } catch (JSONException e) {
                     callback.serviceFailure(e);
