@@ -9,6 +9,12 @@ public interface PatientDAO {
     List<PatientDTO> getPatienter() throws  DALException;
     PatientDTO getPatient(String CPR) throws DALException;
 
+
+
+
     void opretPatient(PatientDTO Patient) throws DALException;
+
+
+
 
 }
