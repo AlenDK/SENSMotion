@@ -1,6 +1,8 @@
 package e.android.sensmotion.JDBC_Connection;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -22,6 +24,20 @@ public class Connector {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("", "");
+        int responseCode = connection.getResponseCode();
+
+        if(responseCode == HttpURLConnection.HTTP_OK){
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuffer response = new StringBuffer();
+
+            while((readline = in.readLine()) != null){
+                response.append(readline);
+            }
+            in.close();
+            System.out.println("JSON String Result: " + response.toString());
+        }else{
+            System.out.println("GET DIDNT WORK");
+        }
     }
 
     /**
