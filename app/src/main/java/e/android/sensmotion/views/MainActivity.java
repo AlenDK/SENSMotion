@@ -13,11 +13,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }
+        */
+
+
+
     }
 }

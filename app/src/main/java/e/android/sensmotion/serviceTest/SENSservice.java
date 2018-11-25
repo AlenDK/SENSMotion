@@ -32,9 +32,9 @@ public class SENSservice {
             @Override
             protected String doInBackground(String... strings) {
 
-                String query = String.format("SELECT * FROM ... WHERE patient_key = %s", patient_key);
+                //String query = String.format("SELECT * FROM ... WHERE patient_key = %s", patient_key);
 
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key=k5W2uX&patient_key=6rT39u&day_count=7", Uri.encode(query));
+                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key=k5W2uX&patient_key=6rT39u&day_count=7");
 
                 try{
                     URL url = new URL(endpoint);
@@ -90,7 +90,7 @@ public class SENSservice {
         }.execute(patient_key);
     }
 
-    //Lokal error
+    //Lokal error exception
     public class LocalPatientException extends Exception{
         public LocalPatientException(String detailMessage) {
             super(detailMessage);
