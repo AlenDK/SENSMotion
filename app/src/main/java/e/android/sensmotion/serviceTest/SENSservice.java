@@ -1,7 +1,10 @@
 package e.android.sensmotion.serviceTest;
 
+import android.annotation.SuppressLint;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,28 +16,34 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.dataTest.Value;
+import e.android.sensmotion.dataTest.Values;
 
 public class SENSservice {
     private SENScallback callback;
-    private String patient;
+    private String values;
     private Exception error;
 
     public SENSservice(SENScallback callback) {
         this.callback = callback;
     }
 
-    public String getPatient() {
-        return patient;
+    public String getValues() {
+        return values;
     }
 
-    public void refreshPatient(final String patient_key){
+    @SuppressLint("StaticFieldLeak")
+    public void refreshPatient(final String PROJECT_KEY, final String PATIENT_KEY, final String DAY_COUNT){
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
 
                 //String query = String.format("SELECT * FROM ... WHERE patient_key = %s", patient_key);
 
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key=k5W2uX&patient_key=6rT39u&day_count=7");
+                // project_key = k5W2uX
+                // patient_key = 6rT39u
+                // day_count = 7
+
+                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key="+ PROJECT_KEY +"&patient_key="+ PATIENT_KEY +"&date="+ DAY_COUNT);
 
                 try{
                     URL url = new URL(endpoint);
@@ -43,17 +52,28 @@ public class SENSservice {
                     InputStream stream = connection.getInputStream();
 
                     BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                    StringBuilder restult = new StringBuilder();
+                    StringBuilder result = new StringBuilder();
                     String line;
 
                     while((line = reader.readLine()) != null){
-                        restult.append(line);
+                        result.append(line);
                     }
 
-                    return restult.toString();
+                    /*
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("----");
+                    System.out.println(result.toString());
+                    System.out.println("----");
+                    System.out.println();
+                    System.out.println();
+                    System.out.println();
+                    */
+
+                    return result.toString();
 
                 } catch (Exception e) {
-                    error.printStackTrace();
+                    e.printStackTrace();
                 }
                 return null;
             }
@@ -69,16 +89,33 @@ public class SENSservice {
 
                 try{
                     JSONObject data = new JSONObject(s);
-                    JSONObject queryResults = data.optJSONObject("query");
 
-                    int count = queryResults.optInt("count");
-                    if(count == 0){
-                        callback.serviceFailure(new LocalPatientException("Ingen patienter fundet for følgende nøgle: " + patient_key));
+
+                    System.out.println("----");
+                    System.out.println(data.toString(2));
+                    System.out.println("----");
+
+
+                    JSONObject queryResults = data.optJSONObject("values");
+                    System.out.println(queryResults);
+
+                    /*
+                    if(queryResults == null){
+                        System.out.println("fuck mig?");
+                        callback.serviceFailure(new LocalPatientException("Ingen patienter fundet for følgende nøgle: " + PATIENT_KEY));
                         return;
                     }
+                    */
 
                     Value value = new Value();
-                    value.populate(queryResults.optJSONObject("value").optJSONObject("values"));
+                    value.populate(data);
+                    values = value.getValues().toString();
+
+                    /*
+                    System.out.println("---");
+                    System.out.println(value.toString());
+                    System.out.println("---");
+                    */
 
                     callback.serviceSuccess(value);
 
@@ -87,7 +124,7 @@ public class SENSservice {
                 }
             }
 
-        }.execute(patient_key);
+        }.execute(PATIENT_KEY);
     }
 
     //Lokal error exception

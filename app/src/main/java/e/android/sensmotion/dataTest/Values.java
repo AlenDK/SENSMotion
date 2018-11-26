@@ -1,21 +1,24 @@
 package e.android.sensmotion.dataTest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Values implements JSONPopulator {
-    private double rest;
-    private double stand;
+    private JSONObject rest;
+    private JSONObject stand;
     private double walk;
-    private double exercise;
-    private double other;
-    private double steps;
-    //private double nodata;
+    private JSONObject exercise;
+    private String other;
+    private String steps;
+    private String cycling;
+    private String nodata;
 
-    public double getRest() {
+
+    public JSONObject getRest() {
         return rest;
     }
 
-    public double getStand() {
+    public JSONObject getStand() {
         return stand;
     }
 
@@ -23,27 +26,54 @@ public class Values implements JSONPopulator {
         return walk;
     }
 
-    public double getExercise() {
+    public String getCycling() {
+        return cycling;
+    }
+
+    public JSONObject getExercise() {
         return exercise;
     }
 
-    public double getOther() {
+    public String getOther() {
         return other;
     }
 
-    public double getSteps() {
+    public String getSteps() {
         return steps;
     }
+
 
     @Override
     public void populate(JSONObject data) {
 
-        rest = data.optDouble("rest");
-        stand = data.optDouble("stand");
-        walk = data.optDouble("walk");
-        exercise = data.optDouble("exercise");
-        other = data.optDouble("other");
-        steps = data.optDouble("steps");
+
+        try {
+            System.out.println(data.getString("values"));
+            //JSONObject penis = data.getJSONObject("values");
+            // System.out.println(penis.get("1   "+"activity\\/resting\\/time"));
+            // System.out.println(penis.get("2   "+"activity/resting/time"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("////////");
+        System.out.println(data);
+        System.out.println("------");
+
+            rest = data.optJSONObject("activity\\/resting\\/time");
+            stand = data.optJSONObject("activity\\/standing\\/time");
+            walk = data.optDouble("activity/walking/time");
+            cycling = data.optString("activity/cycling/time");
+            exercise = data.optJSONObject("activity/exercise/time");
+        try {
+            other = data.getString("activity/other/time");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        nodata = data.optString("general/nodata/time");
+            steps = data.optString("activity/steps/count");
+
 
     }
 }
