@@ -1,15 +1,17 @@
-package e.android.sensmotion.dataTest;
+package e.android.sensmotion.entities;
 
 import org.json.JSONObject;
 
-public class Value implements JSONPopulator {
+import e.android.sensmotion.entities.Values;
+
+public class Value {
+
     private Values values;
 
     public Values getValues() {
         return values;
     }
 
-    @Override
     public void populate(JSONObject data) {
 
         values = new Values();
