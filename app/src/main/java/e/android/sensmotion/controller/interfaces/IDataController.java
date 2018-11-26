@@ -4,7 +4,7 @@ import e.android.sensmotion.entities.Value;
 
 public interface IDataController {
 
-    void refreshPatient(final String PATIENT_KEY, final String PROJECT_KEY, final int DAY_COUNT);
+    void refreshPatient(final String PATIENT_KEY, final String PROJECT_KEY, final String DAY_COUNT);
     void serviceSuccess(Value value);
     void serviceFailure(Exception exception);
 

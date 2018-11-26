@@ -16,16 +16,15 @@ import e.android.sensmotion.entities.Value;
 
 public class DataController implements IDataController {
 
-    private String patient;
+    private String values;
     private Exception error;
-    private AsyncTask asyncTask;
 
     public DataController(){
         //tom contstructor
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void refreshPatient(final String PATIENT_KEY, final String PROJECT_KEY, final int DAY_COUNT){
+    public void refreshPatient(final String PROJECT_KEY, final String PATIENT_KEY, final String DAY_COUNT){
         new AsyncTask<String, Void, String>() {
             @Override
             protected String doInBackground(String... strings) {
@@ -36,7 +35,10 @@ public class DataController implements IDataController {
                 int dayCount = 7;
                 */
 
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key="+PROJECT_KEY+"&patient_key="+PATIENT_KEY+"&day_count="+DAY_COUNT);
+                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?"
+                        +"project_key="+PROJECT_KEY
+                        +"&patient_key="+PATIENT_KEY
+                        +"&day_count="+DAY_COUNT);
 
                 try{
                     URL url = new URL(endpoint);
@@ -55,7 +57,7 @@ public class DataController implements IDataController {
                     return restult.toString();
 
                 } catch (Exception e) {
-                    error.printStackTrace();
+                    e.printStackTrace();
                 }
                 return null;
             }
@@ -71,16 +73,20 @@ public class DataController implements IDataController {
 
                 try{
                     JSONObject data = new JSONObject(s);
-                    JSONObject queryResults = data.optJSONObject("query");
 
+                    JSONObject queryResults = data.optJSONObject("values");
+
+                    /*
                     int count = queryResults.optInt("count");
                     if(count == 0){
                         serviceFailure(new LocalPatientException("Ingen patienter fundet for følgende nøgle: " + PATIENT_KEY));
                         return;
                     }
+                    */
 
                     Value value = new Value();
-                    value.populate(queryResults.optJSONObject("value").optJSONObject("values"));
+                    value.populate(data);
+                    values = value.getValues();
 
                     serviceSuccess(value);
 

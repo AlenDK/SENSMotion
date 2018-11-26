@@ -2,20 +2,22 @@ package e.android.sensmotion.entities;
 
 import org.json.JSONObject;
 
-import e.android.sensmotion.entities.Values;
-
 public class Value {
 
     private Values values;
 
-    public Values getValues() {
-        return values;
+    public String getValues() {
+        return values.toString();
     }
 
     public void populate(JSONObject data) {
 
+        System.out.println("data;");
+        System.out.println(data);
+
         values = new Values();
         values.populate(data.optJSONObject("values"));
+        System.out.println(values);
 
     }
 }
