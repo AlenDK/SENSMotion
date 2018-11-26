@@ -27,7 +27,7 @@ public class SENSservice {
         this.callback = callback;
     }
 
-    public String getValues() {
+    public String getPeriode() {
         return values;
     }
 
@@ -109,7 +109,7 @@ public class SENSservice {
 
                     Value value = new Value();
                     value.populate(data);
-                    values = value.getValues().toString();
+                    values = value.getValues();
 
                     /*
                     System.out.println("---");

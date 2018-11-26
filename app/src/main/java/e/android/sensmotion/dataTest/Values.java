@@ -1,28 +1,31 @@
 package e.android.sensmotion.dataTest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 public class Values implements JSONPopulator {
-    private JSONObject rest;
-    private JSONObject stand;
-    private double walk;
-    private JSONObject exercise;
+    private String rest;
+    private String stand;
+    private String walk;
+    private String exercise;
     private String other;
     private String steps;
     private String cycling;
     private String nodata;
 
 
-    public JSONObject getRest() {
+    public String getRest() {
         return rest;
     }
 
-    public JSONObject getStand() {
+    public String getStand() {
         return stand;
     }
 
-    public double getWalk() {
+    public String getWalk() {
         return walk;
     }
 
@@ -30,7 +33,7 @@ public class Values implements JSONPopulator {
         return cycling;
     }
 
-    public JSONObject getExercise() {
+    public String getExercise() {
         return exercise;
     }
 
@@ -44,35 +47,31 @@ public class Values implements JSONPopulator {
 
 
     @Override
-    public void populate(JSONObject data) {
-
+    public void populate(JSONObject data1) {
 
         try {
-            System.out.println(data.getString("values"));
-            //JSONObject penis = data.getJSONObject("values");
-            // System.out.println(penis.get("1   "+"activity\\/resting\\/time"));
-            // System.out.println(penis.get("2   "+"activity/resting/time"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            JSONObject jsonVALUE = data1.getJSONObject("value");
+            System.out.println("////////  \n"+jsonVALUE);
+            JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
+            System.out.println("////\n"+jsonDATA);
+            JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(0);
+            System.out.println("////\n"+jsonVALUES);
+            JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
+            System.out.println("////\n"+jsonVALUES1);
 
 
-        System.out.println("////////");
-        System.out.println(data);
-        System.out.println("------");
-
-            rest = data.optJSONObject("activity\\/resting\\/time");
-            stand = data.optJSONObject("activity\\/standing\\/time");
-            walk = data.optDouble("activity/walking/time");
-            cycling = data.optString("activity/cycling/time");
-            exercise = data.optJSONObject("activity/exercise/time");
-        try {
-            other = data.getString("activity/other/time");
+            rest = jsonVALUES1.getString("activity/resting/time");
+            stand = jsonVALUES1.getString("activity/standing/time");
+            walk = jsonVALUES1.getString("activity/walking/time");
+            cycling = jsonVALUES1.getString("activity/cycling/time");
+            exercise = jsonVALUES1.getString("activity/exercise/time");
+            other = jsonVALUES1.getString("activity/other/time");
+            nodata = jsonVALUES1.getString("general/nodata/time");
+            steps = jsonVALUES1.getString("activity/steps/count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        nodata = data.optString("general/nodata/time");
-            steps = data.optString("activity/steps/count");
 
 
     }

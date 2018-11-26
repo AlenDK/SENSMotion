@@ -1,13 +1,11 @@
 package e.android.sensmotion.views;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.dataTest.Value;
-import e.android.sensmotion.dataTest.Values;
 import e.android.sensmotion.serviceTest.SENScallback;
 import e.android.sensmotion.serviceTest.SENSservice;
 
@@ -43,7 +41,7 @@ public class MainActivity extends Activity implements SENScallback {
 
     @Override
     public void serviceSuccess(Value value) {
-        tv6.setText(service.getValues());
+        tv6.setText(service.getPeriode());
     }
 
     @Override

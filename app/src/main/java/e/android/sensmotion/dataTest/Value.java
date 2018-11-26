@@ -5,8 +5,8 @@ import org.json.JSONObject;
 public class Value implements JSONPopulator {
     private Values values;
 
-    public Values getValues() {
-        return values;
+    public String getValues() {
+        return values.toString();
     }
 
     @Override
@@ -17,15 +17,6 @@ public class Value implements JSONPopulator {
 
         values = new Values();
         values.populate(data);
-
-        System.out.println("values R: " + values.getRest());
-        System.out.println("values C: " + values.getCycling());
-        System.out.println("values O: " + values.getOther());
-        System.out.println("values S: " + values.getSteps());
-        System.out.println("values E: " + values.getExercise());
-        System.out.println("valuesStand: " + values.getStand());
-        System.out.println("values W: " + values.getWalk());
-
-
+        System.out.println(values);
     }
 }
