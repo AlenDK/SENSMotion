@@ -56,6 +56,7 @@ public class Values implements JSONPopulator {
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
             System.out.println("////\n"+jsonDATA);
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(0);
+            //Mangler for loop
             System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
             System.out.println("////\n"+jsonVALUES1);
