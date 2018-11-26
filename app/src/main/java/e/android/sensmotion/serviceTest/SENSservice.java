@@ -1,10 +1,7 @@
 package e.android.sensmotion.serviceTest;
 
 import android.annotation.SuppressLint;
-import android.content.pm.PackageInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,8 +12,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import e.android.sensmotion.controller.interfaces.SENScallback;
 import e.android.sensmotion.dataTest.Value;
-import e.android.sensmotion.dataTest.Values;
 
 public class SENSservice {
     private SENScallback callback;

@@ -5,21 +5,22 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.dataTest.Value;
-import e.android.sensmotion.serviceTest.SENScallback;
-import e.android.sensmotion.serviceTest.SENSservice;
+import e.android.sensmotion.controller.interfaces.SENScallback;
+import e.android.sensmotion.controller.interfaces.IDataController;
 
 public class MainActivity extends Activity implements SENScallback {
 
     TextView tv6;
-    SENSservice service;
+    IDataController service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        service = new SENSservice(this);
+        service = new DataController(this);
 
 
         tv6 = findViewById(R.id.textView6);
