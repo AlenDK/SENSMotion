@@ -8,6 +8,7 @@ import android.widget.TextView;
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.impl.DataController;
+import e.android.sensmotion.controller.interfaces.IDataController;
 
 public class MainActivity extends Activity {
 
@@ -16,10 +17,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DataController dc = (DataController) ControllerRegistry.getDataController();
+        IDataController dc = ControllerRegistry.getDataController();
 
         TextView tv6 = findViewById(R.id.textView6);
-        dc.refreshPatient("k5W2uX", "6rT39u", "2018-10-01");
+        dc.refreshPatient("k5W2uX", "u64Rtz", "2018-10-01");
 
         System.out.println();
 
