@@ -1,7 +1,6 @@
 package e.android.sensmotion.controller.interfaces;
 
-import e.android.sensmotion.dataTest.Value;
-import e.android.sensmotion.dataTest.Values;
+import e.android.sensmotion.data.Value;
 
 public interface SENScallback {
     void serviceSuccess(Value value);

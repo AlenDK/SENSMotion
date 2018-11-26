@@ -1,10 +1,8 @@
-package e.android.sensmotion.dataTest;
+package e.android.sensmotion.data;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 public class Values implements JSONPopulator {
     private String rest;

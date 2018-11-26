@@ -7,8 +7,6 @@ import e.android.sensmotion.controller.interfaces.IBrugerController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
 import e.android.sensmotion.controller.interfaces.SENScallback;
-import e.android.sensmotion.controller.interfaces.SENScallback;
-import e.android.sensmotion.dataTest.Value;
 
 public class ControllerRegistry {
 

@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.dataTest.Value;
+import e.android.sensmotion.data.Value;
 import e.android.sensmotion.controller.interfaces.SENScallback;
 
 public class DataController implements IDataController {

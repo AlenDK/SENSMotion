@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.impl.DataController;
-import e.android.sensmotion.dataTest.Value;
+import e.android.sensmotion.data.Value;
 import e.android.sensmotion.controller.interfaces.SENScallback;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
