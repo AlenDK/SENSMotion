@@ -6,12 +6,10 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.entities.Value;
-import e.android.sensmotion.controller.interfaces.SENScallback;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
-public class MainActivity extends Activity implements SENScallback {
+public class MainActivity extends Activity {
 
     TextView tv6;
     IDataController service;
@@ -22,7 +20,7 @@ public class MainActivity extends Activity implements SENScallback {
         setContentView(R.layout.activity_main);
 
         //service = new DataController(this);
-        ControllerRegistry control = new ControllerRegistry(this);
+
         service = ControllerRegistry.getDataController();
 
         tv6 = findViewById(R.id.textView6);
@@ -42,13 +40,4 @@ public class MainActivity extends Activity implements SENScallback {
 
     }
 
-    @Override
-    public void serviceSuccess(Value value) {
-        tv6.setText(service.getPeriode());
-    }
-
-    @Override
-    public void serviceFailure(Exception exception) {
-        tv6.setText("Error");
-    }
 }

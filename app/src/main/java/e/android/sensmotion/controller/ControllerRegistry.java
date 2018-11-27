@@ -6,17 +6,14 @@ import e.android.sensmotion.controller.impl.SensorController;
 import e.android.sensmotion.controller.interfaces.IBrugerController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
-import e.android.sensmotion.controller.interfaces.SENScallback;
 
 public class ControllerRegistry {
 
     private static IBrugerController brugerController;
     private static IDataController dataController;
     private static ISensorController sensorController;
-    private static SENScallback callback;
 
-    public ControllerRegistry(SENScallback callback) {
-        this.callback = callback;
+    public ControllerRegistry() {
         // Needs to be here to prevent instantiation.
     }
 
@@ -26,7 +23,7 @@ public class ControllerRegistry {
     }
 
     public static synchronized IDataController getDataController(){
-        if(dataController == null) dataController = new DataController(callback);
+        if(dataController == null) dataController = new DataController();
         return dataController;
     }
 

@@ -14,17 +14,14 @@ import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.Value;
-import e.android.sensmotion.controller.interfaces.SENScallback;
 
 public class DataController implements IDataController {
 
-    private SENScallback callback;
     private String values;
     private Exception error;
 
-    public DataController(SENScallback callback) {
-        this.callback = callback;
-    }
+    public DataController() {//Skal ikke instantieres.
+        }
 
     public String getPeriode() {
         return values;
@@ -82,7 +79,7 @@ public class DataController implements IDataController {
                 super.onPostExecute(s);
 
                 if(s == null && error != null){
-                    callback.serviceFailure(error);
+                    serviceFailure(error);
                     return;
                 }
 
@@ -102,14 +99,24 @@ public class DataController implements IDataController {
                     value.populate(data);
                     values = value.getValues();
 
-                    callback.serviceSuccess(value);
+                    serviceSuccess(value);
 
                 } catch (JSONException e) {
-                    callback.serviceFailure(e);
+                    serviceFailure(e);
                 }
             }
 
         }.execute(PATIENT_KEY);
+    }
+
+    @Override
+    public void serviceSuccess(Value value) {
+        System.out.println("serviceSuccess!");
+    }
+
+    @Override
+    public void serviceFailure(Exception exception) {
+        System.out.println("serviceFailure!");
     }
 
 }
