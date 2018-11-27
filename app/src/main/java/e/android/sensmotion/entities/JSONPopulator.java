@@ -1,4 +1,4 @@
-package e.android.sensmotion.data;
+package e.android.sensmotion.entities;
 
 import org.json.JSONObject;
 

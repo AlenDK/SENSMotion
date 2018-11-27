@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.impl.DataController;
-import e.android.sensmotion.data.Value;
+import e.android.sensmotion.entities.Value;
 import e.android.sensmotion.controller.interfaces.SENScallback;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
@@ -20,8 +21,9 @@ public class MainActivity extends Activity implements SENScallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        service = new DataController(this);
-
+        //service = new DataController(this);
+        ControllerRegistry control = new ControllerRegistry(this);
+        service = ControllerRegistry.getDataController();
 
         tv6 = findViewById(R.id.textView6);
         service.refreshPatient("k5W2uX", "6rT39u", "2018-10-01");

@@ -1,8 +1,10 @@
-package e.android.sensmotion.data;
+package e.android.sensmotion.entities;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import e.android.sensmotion.entities.JSONPopulator;
 
 public class Values implements JSONPopulator {
     private String rest;
@@ -68,6 +70,24 @@ public class Values implements JSONPopulator {
             other = jsonVALUES1.getString("activity/other/time");
             nodata = jsonVALUES1.getString("general/nodata/time");
             steps = jsonVALUES1.getString("activity/steps/count");
+
+            System.out.println("rest:");
+            System.out.println(rest);
+            System.out.println("stand");
+            System.out.println(stand);
+            System.out.println("walk:");
+            System.out.println(walk);
+            System.out.println("cycling:");
+            System.out.println(cycling);
+            System.out.println("exercise");
+            System.out.println(exercise);
+            System.out.println("other:");
+            System.out.println(other);
+            System.out.println("nodata:");
+            System.out.println(nodata);
+            System.out.println("steps");
+            System.out.println(steps);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
