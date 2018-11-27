@@ -8,6 +8,7 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.entities.Value;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.entities.bruger.Patient;
 
 public class MainActivity extends Activity {
 
@@ -24,7 +25,11 @@ public class MainActivity extends Activity {
         service = ControllerRegistry.getDataController();
 
         tv6 = findViewById(R.id.textView6);
-        service.refreshPatient("k5W2uX", "6rT39u", "2018-10-01");
+
+
+        Patient patient = new Patient(null, null, null, null, null, "k5W2uX", "6rT39u");
+
+        service.refreshPatient(patient, "2018-10-01");
 
         System.out.println();
         /*
