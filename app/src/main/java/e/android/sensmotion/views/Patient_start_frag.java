@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
+
+
+        LinearLayout dates = view.findViewById(R.id.dates);
+
+        for (int i = 0; i <6; i++) {
+            View views = inflater.inflate(R.layout.array_adapter, dates, false);
+            TextView textview = views.findViewById(R.id.facetoday_text);
+            textview.setText("Dag: " + 1);
+
+            ImageView imageView = views.findViewById(R.id.facetoday_image);
+            imageView.setImageResource(R.drawable.patient_ikon);
+
+            dates.addView(views);
+        }
+
+
+
 
         //Burde måske have sin egen klasse
         circleDailyProgress = (int)(270-dailyProgress/100*360);
