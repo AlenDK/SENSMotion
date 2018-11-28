@@ -23,6 +23,7 @@ public class patient_setting_frag extends Fragment {
     Button logout;
     ImageButton back;
     ImageView column1, column2, column3, column4, column5;
+    Intent act;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,14 +55,17 @@ public class patient_setting_frag extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent act = new Intent(getActivity(), PatientActivity.class);
+                act = new Intent(getActivity(), PatientActivity.class);
                 startActivity(act);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                act = new Intent(getActivity(), MainActivity.class);
+                act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(act);
             }
         });
 
