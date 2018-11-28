@@ -8,7 +8,7 @@
     android:background="@color/colorBackground">
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/dataHandling"
         android:layout_width="302dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/brugernavn" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/HuskBruger"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
         android:layout_marginStart="8dp"
@@ -81,7 +81,7 @@
         android:text="Forbliv logget ind"
         android:textColor="@color/colorGray"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintBottom_toTopOf="@+id/dataHandling"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
