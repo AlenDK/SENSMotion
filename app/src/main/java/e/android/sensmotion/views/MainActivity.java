@@ -1,6 +1,7 @@
 package e.android.sensmotion.views;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class MainActivity extends Activity {
 
         //service = new DataController(this);
 
-        service = ControllerRegistry.getDataController();
+       /* service = ControllerRegistry.getDataController();
 
         tv6 = findViewById(R.id.textView6);
 
@@ -30,15 +31,15 @@ public class MainActivity extends Activity {
 
         service.refreshPatient(patient, "2018-10-01");
 
-        System.out.println();
-        /*
+        System.out.println();*/
+
         if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }
-        */
+
 
 
 
