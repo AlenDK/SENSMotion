@@ -22,23 +22,23 @@ public class MainActivity extends Activity {
 
         //service = new DataController(this);
 
-       service = ControllerRegistry.getDataController();
+    //    service = ControllerRegistry.getDataController();
 
         //tv6 = findViewById(R.id.textView6);
 
 
-        Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
+   //     Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
 
-        service.refreshPatient(patient, "2018-10-01");
+    //    service.refreshPatient(patient, "2018-10-01");
 
-        System.out.println();
+     //   System.out.println();
 
-        /*if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
-        }*/
+        }
 
 
 

@@ -13,7 +13,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.impl.BrugerController;
+import e.android.sensmotion.controller.impl.DataController;
+import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.entities.Value;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
@@ -24,6 +32,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private int walk_prog = 0;
     double dailyProgress = 80;
     int circleDailyProgress;
+    IDataController data = ControllerRegistry.getDataController();
+    IBrugerController bruger = ControllerRegistry.getBrugerController();
 
     private Handler progHandle = new Handler();
 
@@ -34,13 +44,44 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
-        for (int i = 0; i <6; i++) {
+        data.refreshPatient(bruger.getPatient("p1"),"10");
+
+        if(data != null) {
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println("Alen ");
+            System.out.println(data);
+            System.out.println("Alen ");
+            System.out.println(" ");
+            System.out.println(data);
+            System.out.println("test");
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println("Burhan");
+            System.out.println(data.getPeriode().getValuesList().size());
+            System.out.println("Buran");
+
+        } else {
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println(" ");
+            System.out.println("DRÆB MIG");
+            System.out.println(" ");
+            System.out.println(" ");
+
+        }
+
+
+
+
+        for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
+
             View views = inflater.inflate(R.layout.array_adapter, dates, false);
             TextView textview = views.findViewById(R.id.facetoday_text);
             textview.setText("Dag: " + 1);
 
             ImageView imageView = views.findViewById(R.id.facetoday_image);
-            imageView.setImageResource(R.drawable.patient_ikon);
+            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
 
             dates.addView(views);
         }
@@ -60,8 +101,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
-
-        //Burde være en AsyncTask hvordan stopper vi den for at fortsætte med at indlæse???
         new Thread(new Runnable() {
             @Override
             public void run() {

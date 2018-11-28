@@ -11,6 +11,7 @@ public class Value {
     private Values values;
     private int day_count;
 
+
     public Value(int day_count){
         this.day_count = day_count;
 
