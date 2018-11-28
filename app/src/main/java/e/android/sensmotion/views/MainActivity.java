@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.ResourceBundle;
+
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IBrugerController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.bruger.Patient;
 
 public class MainActivity extends Activity {
 
     TextView tv6;
-    IDataController service;
+    IDataController dataController;
+    IBrugerController brugerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +25,14 @@ public class MainActivity extends Activity {
 
         //service = new DataController(this);
 
-        service = ControllerRegistry.getDataController();
+        dataController = ControllerRegistry.getDataController();
+        brugerController = ControllerRegistry.getBrugerController();
 
         tv6 = findViewById(R.id.textView6);
 
+        Patient patient1 = brugerController.getPatient("p1");
 
-        Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
-
-        service.refreshPatient(patient, "7");
+        dataController.refreshPatient(patient1, "7");
 
         /*
         if (savedInstanceState == null) {

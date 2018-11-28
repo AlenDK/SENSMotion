@@ -11,6 +11,7 @@ import e.android.sensmotion.entities.bruger.Terapeut;
 public class BrugerController implements IBrugerController {
 
     private List<Bruger> brugerListe = new ArrayList<Bruger>();
+    private List<Patient> patientList = new ArrayList<Patient>();
 
     public BrugerController(){
 
@@ -26,7 +27,6 @@ public class BrugerController implements IBrugerController {
                 null, null, null, null);
         brugerListe.add(patient3);
 
-        List<Patient> patientList = new ArrayList<Patient>();
         patientList.add(patient1);
         patientList.add(patient2);
         patientList.add(patient3);
@@ -43,6 +43,15 @@ public class BrugerController implements IBrugerController {
         for(Bruger b : brugerListe){
             if(b.getId().equals(id)){
                 return b;
+            }
+        }
+        return null;
+    }
+
+    public Patient getPatient(String id){
+        for(Patient p : patientList){
+            if(p.getId().equals(id)){
+                return p;
             }
         }
         return null;
