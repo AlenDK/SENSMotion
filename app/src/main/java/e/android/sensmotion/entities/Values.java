@@ -44,7 +44,7 @@ public class Values {
     }
 
 
-    public void populate(JSONObject data1) {
+    public void populate(JSONObject data1, int count) {
 
         try {
 
@@ -52,7 +52,7 @@ public class Values {
             System.out.println("////////  \n"+jsonVALUE);
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
             System.out.println("////\n"+jsonDATA);
-            JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(0);
+            JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
             //Mangler for loop
             System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
@@ -68,22 +68,14 @@ public class Values {
             nodata = jsonVALUES1.getString("general/nodata/time");
             steps = jsonVALUES1.getString("activity/steps/count");
 
-            System.out.println("rest:");
-            System.out.println(rest);
-            System.out.println("stand");
-            System.out.println(stand);
-            System.out.println("walk:");
-            System.out.println(walk);
-            System.out.println("cycling:");
-            System.out.println(cycling);
-            System.out.println("exercise");
-            System.out.println(exercise);
-            System.out.println("other:");
-            System.out.println(other);
-            System.out.println("nodata:");
-            System.out.println(nodata);
-            System.out.println("steps");
-            System.out.println(steps);
+            System.out.println("rest: " +rest);
+            System.out.println("stand: " +stand);
+            System.out.println("walk: " +walk);
+            System.out.println("cycling: " +cycling);
+            System.out.println("exercise: " +exercise);
+            System.out.println("other: " +other);
+            System.out.println("nodata: " +nodata);
+            System.out.println("steps: " +steps);
 
         } catch (JSONException e) {
             e.printStackTrace();

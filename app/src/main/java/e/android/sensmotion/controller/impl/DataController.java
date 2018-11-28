@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.entities.Value;
 import e.android.sensmotion.entities.Values;
 import e.android.sensmotion.entities.bruger.Patient;
 
@@ -22,6 +23,8 @@ public class DataController implements IDataController {
 
     private String values, project_key, patient_key;
     private Exception error;
+    private Value value;
+    private String period_name;
 
     public DataController() {//Skal ikke instantieres.
         }
@@ -46,7 +49,11 @@ public class DataController implements IDataController {
                 // patient_key = 6rT39u
                 // day_count = 7
 
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key="+ project_key +"&patient_key="+ patient_key +"&date="+ DAY_COUNT);
+                checkPeriode(DAY_COUNT);
+                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
+                        "project_key="+ project_key +
+                        "&patient_key="+ patient_key +
+                        period_name + DAY_COUNT);
 
                 try{
                     URL url = new URL(endpoint);
@@ -99,12 +106,8 @@ public class DataController implements IDataController {
                     System.out.println("----");
 
 
-                    JSONObject queryResults = data.optJSONObject("values");
-                    System.out.println(queryResults);
-
-                    Values value = new Values();
+                    value = new Value(checkPeriode(DAY_COUNT));
                     value.populate(data);
-                    values = value.toString();
 
                     serviceSuccess(value);
 
@@ -117,7 +120,7 @@ public class DataController implements IDataController {
     }
 
     @Override
-    public void serviceSuccess(Values value) {
+    public void serviceSuccess(Value value) {
         System.out.println("serviceSuccess!");
     }
 
@@ -126,4 +129,15 @@ public class DataController implements IDataController {
         System.out.println("serviceFailure!");
     }
 
+
+    public int checkPeriode(String periode){
+        if(periode.length()>2){
+            System.out.println("---\n" +periode+ "\n---");
+            period_name = "&date=";
+            return 1;
+        }
+        System.out.println("---\nLængden af perioden: " +periode+ " er: " +Integer.parseInt(periode)+ "\n---");
+        period_name = "&day_count=";
+        return Integer.parseInt(periode);
+    }
 }

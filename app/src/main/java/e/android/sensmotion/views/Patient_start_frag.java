@@ -42,6 +42,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
+
+        //Burde være en AsyncTask hvordan stopper vi den for at fortsætte med at indlæse???
         new Thread(new Runnable() {
             @Override
             public void run() {

@@ -28,9 +28,8 @@ public class MainActivity extends Activity {
 
         Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
 
-        service.refreshPatient(patient, "2018-10-01");
+        service.refreshPatient(patient, "7");
 
-        System.out.println();
         /*
         if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();

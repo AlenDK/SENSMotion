@@ -40,7 +40,6 @@ public class BrugerController implements IBrugerController {
     }
 
     public Bruger getBruger(String id){
-
         for(Bruger b : brugerListe){
             if(b.getId().equals(id)){
                 return b;
