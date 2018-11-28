@@ -29,8 +29,8 @@ public class DataController implements IDataController {
     public DataController() {//Skal ikke instantieres.
         }
 
-    public String getPeriode() {
-        return values;
+    public Value getPeriode() {
+        return value;
     }
 
     @SuppressLint("StaticFieldLeak")
