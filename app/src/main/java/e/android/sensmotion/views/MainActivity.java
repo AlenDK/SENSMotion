@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
         tv6 = findViewById(R.id.textView6);
 
 
-        Patient patient = new Patient(null, null, null, null, null, "k5W2uX", "6rT39u");
+        Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
 
         service.refreshPatient(patient, "2018-10-01");
 

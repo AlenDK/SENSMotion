@@ -9,8 +9,8 @@ public class Patient extends Bruger {
     private String cpr, mobilitet, project_key, patient_key;
     private List<Sensor> sensorer;
 
-    public Patient(String brugernavn, String adgangskode, String cpr, List<Sensor> sensorer, String mobilitet, String project_key, String patient_key) {
-        super(brugernavn, adgangskode);
+    public Patient(String id, String brugernavn, String adgangskode, String cpr, List<Sensor> sensorer, String mobilitet, String project_key, String patient_key) {
+        super(id, brugernavn, adgangskode);
         this.cpr = cpr;
         this.sensorer = sensorer;
         this.mobilitet = mobilitet;
