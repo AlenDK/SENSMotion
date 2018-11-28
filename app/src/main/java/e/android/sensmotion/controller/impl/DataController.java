@@ -14,10 +14,11 @@ import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.Value;
+import e.android.sensmotion.entities.bruger.Patient;
 
 public class DataController implements IDataController {
 
-    private String values;
+    private String values, project_key, patient_key;
     private Exception error;
 
     public DataController() {//Skal ikke instantieres.
@@ -28,10 +29,14 @@ public class DataController implements IDataController {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void refreshPatient(final String PROJECT_KEY, final String PATIENT_KEY, final String DAY_COUNT){
+    public void refreshPatient(final Patient patient, final String DAY_COUNT){
         new AsyncTask<String, Void, String>() {
+
             @Override
             protected String doInBackground(String... strings) {
+
+                project_key = patient.getProject_key();
+                patient_key = patient.getPatient_key();
 
                 //String query = String.format("SELECT * FROM ... WHERE patient_key = %s", patient_key);
 
@@ -39,7 +44,7 @@ public class DataController implements IDataController {
                 // patient_key = 6rT39u
                 // day_count = 7
 
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key="+ PROJECT_KEY +"&patient_key="+ PATIENT_KEY +"&date="+ DAY_COUNT);
+                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?project_key="+ project_key +"&patient_key="+ patient_key +"&date="+ DAY_COUNT);
 
                 try{
                     URL url = new URL(endpoint);
@@ -106,7 +111,7 @@ public class DataController implements IDataController {
                 }
             }
 
-        }.execute(PATIENT_KEY);
+        }.execute(patient_key);
     }
 
     @Override
