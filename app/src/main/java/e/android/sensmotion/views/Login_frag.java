@@ -8,14 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import e.android.sensmotion.R;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
 
     EditText brugernavn;
+    CheckBox dataHandling;
     Intent act;
 
     @Override
@@ -27,6 +30,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
         TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
         Button login = (Button) view.findViewById(R.id.logIndKnap);
+        dataHandling = (CheckBox) view.findViewById(R.id.dataHandling);
 
         login.setOnClickListener(this);
         opret.setOnClickListener(this);
@@ -48,6 +52,12 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     startActivity(act);
                     break;
                 } else {
+                    if (!dataHandling.isChecked()) {
+                        Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
+                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
+
+                        break;
+                    }
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);
                     break;
