@@ -13,7 +13,7 @@ public class ControllerRegistry {
     private static IDataController dataController;
     private static ISensorController sensorController;
 
-    protected ControllerRegistry() {
+    public ControllerRegistry() {
         // Needs to be here to prevent instantiation.
     }
 

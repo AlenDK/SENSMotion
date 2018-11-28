@@ -6,8 +6,8 @@ public class Terapeut extends Bruger {
 
     private List<Patient> patienter;
 
-    public Terapeut(String brugernavn, String adgangskode, List<Patient> patienter) {
-        super(brugernavn, adgangskode);
+    public Terapeut(String id, String brugernavn, String adgangskode, List<Patient> patienter) {
+        super(id, brugernavn, adgangskode);
         this.patienter = patienter;
     }
 
@@ -15,7 +15,13 @@ public class Terapeut extends Bruger {
         return patienter;
     }
 
-    public void setPatienter(List<Patient> patienter) {
-        this.patienter = patienter;
+    public Patient getPatient(String id){
+        for(Patient p : patienter){
+            if(p.getId().equals(id)){
+                return p;
+            }
+        }
+        return null;
     }
+
 }

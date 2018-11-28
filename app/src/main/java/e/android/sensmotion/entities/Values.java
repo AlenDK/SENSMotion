@@ -5,7 +5,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Values {
-
     private String rest;
     private String stand;
     private String walk;
@@ -14,6 +13,7 @@ public class Values {
     private String steps;
     private String cycling;
     private String nodata;
+
 
     public String getRest() {
         return rest;
@@ -25,6 +25,10 @@ public class Values {
 
     public String getWalk() {
         return walk;
+    }
+
+    public String getCycling() {
+        return cycling;
     }
 
     public String getExercise() {
@@ -39,28 +43,21 @@ public class Values {
         return steps;
     }
 
-    public String getCycling() {
-        return cycling;
-    }
-
-    public String getNodata() {
-        return nodata;
-    }
 
     public void populate(JSONObject data1) {
 
         try {
-            JSONObject jsonVALUE = data1.getJSONObject("value");
-            System.out.println("/////// \n" +jsonVALUE);
 
+            JSONObject jsonVALUE = data1.getJSONObject("value");
+            System.out.println("////////  \n"+jsonVALUE);
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
             System.out.println("////\n"+jsonDATA);
-
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(0);
+            //Mangler for loop
             System.out.println("////\n"+jsonVALUES);
-
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
             System.out.println("////\n"+jsonVALUES1);
+
 
             rest = jsonVALUES1.getString("activity/resting/time");
             stand = jsonVALUES1.getString("activity/standing/time");
@@ -69,7 +66,24 @@ public class Values {
             exercise = jsonVALUES1.getString("activity/exercise/time");
             other = jsonVALUES1.getString("activity/other/time");
             nodata = jsonVALUES1.getString("general/nodata/time");
-            steps = jsonVALUES1.getString("activity/steps/time");
+            steps = jsonVALUES1.getString("activity/steps/count");
+
+            System.out.println("rest:");
+            System.out.println(rest);
+            System.out.println("stand");
+            System.out.println(stand);
+            System.out.println("walk:");
+            System.out.println(walk);
+            System.out.println("cycling:");
+            System.out.println(cycling);
+            System.out.println("exercise");
+            System.out.println(exercise);
+            System.out.println("other:");
+            System.out.println(other);
+            System.out.println("nodata:");
+            System.out.println(nodata);
+            System.out.println("steps");
+            System.out.println(steps);
 
         } catch (JSONException e) {
             e.printStackTrace();

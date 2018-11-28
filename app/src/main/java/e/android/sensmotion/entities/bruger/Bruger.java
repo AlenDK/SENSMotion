@@ -2,13 +2,23 @@ package e.android.sensmotion.entities.bruger;
 
 public abstract class Bruger {
 
+    private String id;
     private String brugernavn;
     private String adgangskode;
 
 
-    public Bruger(String brugernavn, String adgangskode){
+    public Bruger(String id, String brugernavn, String adgangskode){
+        this.id = id;
         this.brugernavn = brugernavn;
         this.adgangskode = adgangskode;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getBrugernavn() {

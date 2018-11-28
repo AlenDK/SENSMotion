@@ -193,14 +193,13 @@
 
     <ImageView
         android:id="@+id/facetoday_image"
-        android:layout_width="89dp"
-        android:layout_height="82dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/baseline_sentiment_very_satisfied_black_48"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actionbar_image"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image" />
 
     <TextView
         android:id="@+id/facetoday_text"
@@ -213,6 +212,22 @@
         app:layout_constraintEnd_toEndOf="@+id/facetoday_image"
         app:layout_constraintStart_toStartOf="@+id/facetoday_image"
         app:layout_constraintTop_toBottomOf="@+id/facetoday_image" />
+
+    <HorizontalScrollView
+        android:layout_width="271dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/facetoday_image"
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+    </HorizontalScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
