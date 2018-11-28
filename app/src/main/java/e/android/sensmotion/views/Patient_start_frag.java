@@ -29,11 +29,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ImageButton profile_button;
     private TextView textView;
     private ProgressBar circlebar, walk,stand,bike,train,other;
+    int overallProgress;
     private int walk_prog = 0;
     double dailyProgress = 80;
     int circleDailyProgress;
     IDataController data = ControllerRegistry.getDataController();
     IBrugerController bruger = ControllerRegistry.getBrugerController();
+    ImageView imageView;
 
     private Handler progHandle = new Handler();
 
@@ -80,7 +82,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             TextView textview = views.findViewById(R.id.facetoday_text);
             textview.setText("Dag: " + 1);
 
-            ImageView imageView = views.findViewById(R.id.facetoday_image);
+
+            imageView = views.findViewById(R.id.facetoday_image);
             imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
 
             dates.addView(views);
@@ -133,7 +136,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         }
     }
-
+/*
+    private void changeSmiley(overallProgess) {
+        if(overallProgress <= 33.33) {
+            imageView.setImageResource(R.drawable.baseline_sentiment_very_unsatisfied_red_48);
+        } else if (33.33 < overallProgress | overallProgress <= 66.66) {
+            imageView.setImageResource(R.drawable.baseline_sentiment_very_moderat_yellow_48);
+        } else if (66.66 < overallProgress | overallProgress <= 100) {
+            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        }
+    }
+*/
     private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
