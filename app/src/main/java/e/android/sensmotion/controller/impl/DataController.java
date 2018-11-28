@@ -13,7 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.Value;
+import e.android.sensmotion.entities.Values;
 import e.android.sensmotion.entities.bruger.Patient;
 
 public class DataController implements IDataController {
@@ -100,9 +100,9 @@ public class DataController implements IDataController {
                     JSONObject queryResults = data.optJSONObject("values");
                     System.out.println(queryResults);
 
-                    Value value = new Value();
+                    Values value = new Values();
                     value.populate(data);
-                    values = value.getValues();
+                    values = value.toString();
 
                     serviceSuccess(value);
 
@@ -115,7 +115,7 @@ public class DataController implements IDataController {
     }
 
     @Override
-    public void serviceSuccess(Value value) {
+    public void serviceSuccess(Values value) {
         System.out.println("serviceSuccess!");
     }
 
