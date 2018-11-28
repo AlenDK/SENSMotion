@@ -16,6 +16,8 @@ import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.Values;
 import e.android.sensmotion.entities.bruger.Patient;
 
+
+
 public class DataController implements IDataController {
 
     private String values, project_key, patient_key;
