@@ -4,9 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import e.android.sensmotion.entities.JSONPopulator;
-
-public class Values implements JSONPopulator {
+public class Values {
     private String rest;
     private String stand;
     private String walk;
@@ -46,7 +44,6 @@ public class Values implements JSONPopulator {
     }
 
 
-    @Override
     public void populate(JSONObject data1) {
 
         try {
