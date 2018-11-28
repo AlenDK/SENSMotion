@@ -7,6 +7,21 @@
     tools:context=".views.Login_frag"
     android:background="@color/colorBackground">
 
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="302dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="200dp"
+        android:text="@string/PersData"
+        android:textColor="@color/colorGray"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="226dp"
@@ -57,54 +72,60 @@
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:checked="false"
         android:text="Forbliv logget ind"
         android:textColor="@color/colorGray"
-        android:textStyle="italic|bold"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/checkBox2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kodeord" />
+        app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
 
     <Button
         android:id="@+id/logIndKnap"
         android:layout_width="300dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/login_knap"
         android:text="Log ind"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/kodeord" />
 
     <TextView
         android:id="@+id/glemtLogin"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
-        android:layout_marginBottom="120dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="120dp"
         android:background="@color/colorBackground"
         android:text="Glemt dit log ind?"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
+        app:layout_constraintTop_toBottomOf="@+id/logIndKnap"
+        app:layout_constraintVertical_bias="0.919" />
 
     <TextView
         android:id="@+id/opret"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorBackground"
         android:text="Har du ikke en Konto? Opret en her!"
         app:layout_constraintEnd_toEndOf="parent"
