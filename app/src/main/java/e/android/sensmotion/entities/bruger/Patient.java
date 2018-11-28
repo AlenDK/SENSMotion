@@ -6,15 +6,16 @@ import e.android.sensmotion.entities.Sensor;
 
 public class Patient extends Bruger {
 
-    private String cpr, mobilitet, projekt;
+    private String cpr, mobilitet, project_key, patient_key;
     private List<Sensor> sensorer;
 
-    public Patient(String brugernavn, String adgangskode, String cpr, List<Sensor> sensorer, String mobilitet, String projekt) {
+    public Patient(String brugernavn, String adgangskode, String cpr, List<Sensor> sensorer, String mobilitet, String project_key, String patient_key) {
         super(brugernavn, adgangskode);
         this.cpr = cpr;
         this.sensorer = sensorer;
         this.mobilitet = mobilitet;
-        this.projekt = projekt;
+        this.project_key = project_key;
+        this.patient_key = patient_key;
     }
 
     public String getCpr() {
@@ -33,12 +34,20 @@ public class Patient extends Bruger {
         this.mobilitet = mobilitet;
     }
 
-    public String getProjekt() {
-        return projekt;
+    public String getProject_key() {
+        return project_key;
     }
 
-    public void setProjekt(String projekt) {
-        this.projekt = projekt;
+    public void setProject_key(String project_key) {
+        this.project_key = project_key;
+    }
+
+    public String getPatient_key() {
+        return patient_key;
+    }
+
+    public void setPatient_key(String patient_key) {
+        this.patient_key = patient_key;
     }
 
     public List<Sensor> getSensorer() {
