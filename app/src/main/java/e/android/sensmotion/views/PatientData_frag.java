@@ -25,13 +25,13 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.patient_data_frag, container, false);
 
 
-        periode = (Button) view.findViewById(R.id.periode);
-        graf = (Button) view.findViewById(R.id.grafer);
+       /* periode = (Button) view.findViewById(R.id.periode);
+        graf = (Button) view.findViewById(R.id.grafer);*/
         //calendarView = (CalendarView) view.findViewById(R.id.calendarView);
         ImgBtn = (ImageButton) view.findViewById(R.id.knap_profil);
 
-        periode.setOnClickListener(this);
-        graf.setOnClickListener(this);
+     /*   periode.setOnClickListener(this);
+        graf.setOnClickListener(this);*/
         ImgBtn.setOnClickListener(this);
 
         return view;
