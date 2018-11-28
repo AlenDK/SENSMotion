@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.entities.Value;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.bruger.Patient;
 
