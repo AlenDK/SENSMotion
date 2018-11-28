@@ -53,7 +53,10 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     break;
                 } else {
                     if (!dataHandling.isChecked()) {
+                        Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
+                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
 
+                        break;
                     }
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);
