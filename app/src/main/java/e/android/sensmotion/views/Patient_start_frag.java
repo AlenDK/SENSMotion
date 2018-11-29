@@ -1,6 +1,7 @@
 package e.android.sensmotion.views;
 
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -33,9 +34,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private int walk_prog = 0;
     double dailyProgress = 80;
     int circleDailyProgress;
-    IDataController data = ControllerRegistry.getDataController();
-    IBrugerController bruger = ControllerRegistry.getBrugerController();
+    IDataController dc = ControllerRegistry.getDataController();
+    IBrugerController bc = ControllerRegistry.getBrugerController();
     ImageView imageView;
+    String jsonString;
+    boolean asyncDone = false;
 
     private Handler progHandle = new Handler();
 
@@ -46,52 +49,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
-        System.out.println(bruger.getPatient("p1"));
-        System.out.println(bruger.getPatient("p1").getSensor("s1"));
+        System.out.println(bc.getPatient("p1"));
+        System.out.println(bc.getPatient("p1").getSensor("s1"));
 
-        data.refreshPatient(bruger.getPatient("p1"),bruger.getPatient("p1").getSensor("s1"),"10");
-/*
-        if(data != null) {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Alen ");
-            System.out.println(data);
-            System.out.println("Alen ");
-            System.out.println(" ");
-            System.out.println(data);
-            System.out.println("test");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Burhan");
-            System.out.println(data.getPeriode().getValuesList().size());
-            System.out.println("Buran");
+        dc.refreshPatient(bc.getPatient("p1"),bc.getPatient("p1").getSensor("s1"),"10");
 
-        } else {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("DRÆB MIG");
-            System.out.println(" ");
-            System.out.println(" ");
-
-        }
-
-*/
 
 
       //  for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
-            for (int i = 0; i <6; i++) {
-
-            View views = inflater.inflate(R.layout.array_adapter, dates, false);
-            TextView textview = views.findViewById(R.id.facetoday_text);
-            textview.setText("Dag: " + 1);
-
-
-            imageView = views.findViewById(R.id.facetoday_image);
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
-
-            dates.addView(views);
-        }
 
 
 
@@ -108,7 +73,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 while (walk_prog < 100){
@@ -125,7 +90,47 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 if(walk_prog == 100){
                    akt_klaret.show();
                 }}
-        }).start();
+        }).start();*/
+
+
+        new AsyncTask<String, Void, String>() {
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                jsonString = dc.getDataString(bc.getPatient("p1"));
+                return jsonString;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+                System.out.println("//////////////////////////////////////////////////////////////////////////");
+
+                dc.saveData(jsonString, bc.getPatient("p1").getSensor("s1"));
+
+                System.out.println("/////////////////////////////// REST /////////////////////////////////////");
+                System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
+                asyncDone = true;
+            }
+        };
+        while(!asyncDone) {
+            if (asyncDone == true) {
+                for (int i = 0; i < 10; i++) {
+
+                    View views = inflater.inflate(R.layout.array_adapter, dates, false);
+                    TextView textview = views.findViewById(R.id.facetoday_text);
+                    textview.setText(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(i).getRest());
+
+
+                    imageView = views.findViewById(R.id.facetoday_image);
+                    imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+
+                    dates.addView(views);
+                }
+            }
+        }
 
 
         return view;
@@ -151,6 +156,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 */
+
+
+
     private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);

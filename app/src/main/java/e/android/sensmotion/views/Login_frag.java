@@ -29,7 +29,6 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     Intent act;
     IDataController dc;
     IBrugerController bc;
-    String jsonString;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,29 +63,6 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     startActivity(act);
                     break;
                 } else {
-
-                    new AsyncTask<String, Void, String>() {
-                        @Override
-                        protected String doInBackground(String... strings) {
-
-                            jsonString = dc.getDataString(bc.getPatient("p1"));
-                            return jsonString;
-                        }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-                            super.onPostExecute(s);
-
-                            System.out.println("//////////////////////////////////////////////////////////////////////////");
-
-                            dc.saveData(jsonString, bc.getPatient("p1").getSensor("s1"));
-
-                            System.out.println("/////////////////////////////// REST /////////////////////////////////////");
-                            System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
-                        }
-                    };
-
-
                     if (!dataHandling.isChecked()) {
                         Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
                                 "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
