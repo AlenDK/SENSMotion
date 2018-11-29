@@ -47,7 +47,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         LinearLayout dates = view.findViewById(R.id.dates);
 
         data.refreshPatient(bruger.getPatient("p1"),"10");
-
+/*
         if(data != null) {
             System.out.println(" ");
             System.out.println(" ");
@@ -73,10 +73,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         }
 
+*/
 
 
-
-        for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
+      //  for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
+            for (int i = 0; i <6; i++) {
 
             View views = inflater.inflate(R.layout.array_adapter, dates, false);
             TextView textview = views.findViewById(R.id.facetoday_text);
