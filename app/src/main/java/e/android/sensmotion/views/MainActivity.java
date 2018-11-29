@@ -25,14 +25,10 @@ public class MainActivity extends Activity {
         dc = ControllerRegistry.getDataController();
         bc = ControllerRegistry.getBrugerController();
 
-        dc.refreshPatient(bc.getPatient("p1"), bc.getPatient("p1").getSensor("s1"), "1");
+        //dc.refreshPatient(bc.getPatient("p1"), bc.getPatient("p1").getSensor("s1"), "1");
 
 
-        System.out.println("VALUESLIST SIZE: ///////////////////////////");
-        System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().toString());
 
-
-        /*
         if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
@@ -40,7 +36,7 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
-        */
+
 
 
 

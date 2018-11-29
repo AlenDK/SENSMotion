@@ -1,7 +1,9 @@
 package e.android.sensmotion.views;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,19 +15,29 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ResourceBundle;
+
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IDataController;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
 
     EditText brugernavn;
     CheckBox dataHandling;
     Intent act;
+    IDataController dc;
+    IBrugerController bc;
+    String jsonString;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
 
         brugernavn = view.findViewById(R.id.brugernavn);
+        dc = ControllerRegistry.getDataController();
+        bc = ControllerRegistry.getBrugerController();
 
         TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
@@ -40,9 +52,9 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(View view) {
-
 
         switch (view.getId()) {
 
@@ -52,6 +64,29 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     startActivity(act);
                     break;
                 } else {
+
+                    new AsyncTask<String, Void, String>() {
+                        @Override
+                        protected String doInBackground(String... strings) {
+
+                            jsonString = dc.getDataString(bc.getPatient("p1"));
+                            return jsonString;
+                        }
+
+                        @Override
+                        protected void onPostExecute(String s) {
+                            super.onPostExecute(s);
+
+                            System.out.println("//////////////////////////////////////////////////////////////////////////");
+
+                            dc.saveData(jsonString, bc.getPatient("p1").getSensor("s1"));
+
+                            System.out.println("/////////////////////////////// REST /////////////////////////////////////");
+                            System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
+                        }
+                    };
+
+
                     if (!dataHandling.isChecked()) {
                         Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
                                 "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();

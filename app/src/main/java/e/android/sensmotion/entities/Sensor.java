@@ -1,5 +1,7 @@
 package e.android.sensmotion.entities;
 
+import org.json.JSONObject;
+
 public class Sensor {
 
     private String id;
@@ -31,7 +33,10 @@ public class Sensor {
         return currentValue;
     }
 
-    public void setCurrentValue(Value currentValue) {
-        this.currentValue = currentValue;
+    public void populate(JSONObject json) {
+        Value value = new Value(13);
+        value.populate(json);
+        currentValue = value;
+
     }
 }

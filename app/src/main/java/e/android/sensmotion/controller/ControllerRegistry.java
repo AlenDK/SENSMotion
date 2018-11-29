@@ -17,17 +17,17 @@ public class ControllerRegistry {
         // Needs to be here to prevent instantiation.
     }
 
-    public static IBrugerController getBrugerController(){
+    public static synchronized IBrugerController getBrugerController(){
         if(brugerController == null) brugerController = new BrugerController();
         return brugerController;
     }
 
-    public static IDataController getDataController(){
+    public static synchronized IDataController getDataController(){
         if(dataController == null) dataController = new DataController();
         return dataController;
     }
 
-    public static ISensorController getSensorController(){
+    public static synchronized ISensorController getSensorController(){
         if(sensorController == null) sensorController = new SensorController();
         return sensorController;
     }
