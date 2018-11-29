@@ -15,8 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ResourceBundle;
-
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IBrugerController;
@@ -65,6 +63,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     break;
                 } else {
 
+
                     new AsyncTask<String, Void, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
@@ -84,6 +83,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                             System.out.println("/////////////////////////////// REST /////////////////////////////////////");
                             System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
                         }
+
                     };
 
 
