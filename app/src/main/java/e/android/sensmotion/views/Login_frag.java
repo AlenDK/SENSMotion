@@ -64,7 +64,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                 } else {
 
 
-                    new AsyncTask<String, Void, String>() {
+                  /*  new AsyncTask<String, Void, String>() {
                         @Override
                         protected String doInBackground(String... strings) {
 
@@ -84,7 +84,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                             System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
                         }
 
-                    };
+                    };*/
 
 
                     if (!dataHandling.isChecked()) {
