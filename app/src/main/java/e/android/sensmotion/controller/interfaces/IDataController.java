@@ -6,7 +6,7 @@ import e.android.sensmotion.entities.Values;
 import e.android.sensmotion.entities.bruger.Patient;
 
 public interface IDataController {
-    void refreshPatient(final Patient patient, final Sensor sensor, final String DAY_COUNT);
+    void refreshPatient(final Patient patient, Sensor sensor, final String DAY_COUNT);
     void serviceSuccess(Value value);
     void serviceFailure(Exception exception);
 }

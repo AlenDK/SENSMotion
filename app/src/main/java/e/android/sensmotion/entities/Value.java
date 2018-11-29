@@ -35,4 +35,8 @@ public class Value {
             valuesList.add(values);
         }
     }
+
+    public String toString(){
+        return "Day count: " + day_count;
+    }
 }

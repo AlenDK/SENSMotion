@@ -7,32 +7,32 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IBrugerController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.bruger.Patient;
 
 public class MainActivity extends Activity {
 
     TextView tv6;
-    IDataController service;
+    IDataController dc;
+    IBrugerController bc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //service = new DataController(this);
+        dc = ControllerRegistry.getDataController();
+        bc = ControllerRegistry.getBrugerController();
 
-    //    service = ControllerRegistry.getDataController();
-
-        //tv6 = findViewById(R.id.textView6);
+        dc.refreshPatient(bc.getPatient("p1"), bc.getPatient("p1").getSensor("s1"), "1");
 
 
-   //     Patient patient = new Patient("test", null, null, null, null, null, "k5W2uX", "6rT39u");
+        System.out.println("VALUESLIST SIZE: ///////////////////////////");
+        System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().toString());
 
-    //    service.refreshPatient(patient, "2018-10-01");
 
-     //   System.out.println();
-
+        /*
         if (savedInstanceState == null) {
             Fragment fragment = new Login_frag();
             getFragmentManager().beginTransaction()
@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
                     .commit();
         }
 
+        */
 
 
 
