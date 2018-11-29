@@ -3,7 +3,10 @@ package e.android.sensmotion.controller.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.ISensorController;
+import e.android.sensmotion.entities.Sensor;
 import e.android.sensmotion.entities.bruger.Bruger;
 import e.android.sensmotion.entities.bruger.Patient;
 import e.android.sensmotion.entities.bruger.Terapeut;
@@ -12,11 +15,17 @@ public class BrugerController implements IBrugerController {
 
     private List<Bruger> brugerListe = new ArrayList<Bruger>();
     private List<Patient> patientList = new ArrayList<Patient>();
+    private ISensorController sc;
 
     public BrugerController(){
 
-        Patient patient1 = new Patient("p1","p1", "p1", "p1",
-                null, null, "k5W2uX", "6rT39u");
+        sc = ControllerRegistry.getSensorController();
+
+        List<Sensor> p1Sensorer = new ArrayList<>();
+        p1Sensorer.add(sc.getSensor("s1"));
+
+        Patient patient1 = new Patient("p1","p1", "p1", "p1", p1Sensorer,
+                null, "k5W2uX", "6rT39u");
         brugerListe.add(patient1);
 
         Patient patient2 = new Patient("p2", "p2", "p2", "p2",

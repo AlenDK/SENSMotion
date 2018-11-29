@@ -4,6 +4,7 @@ public class Sensor {
 
     private String id;
     private int placering;
+    private Value currentValue;
 
     public Sensor(String id, int placering){
         this.id = id;
@@ -24,5 +25,13 @@ public class Sensor {
 
     public void setPlacering(int placering) {
         this.placering = placering;
+    }
+
+    public Value getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(Value currentValue) {
+        this.currentValue = currentValue;
     }
 }

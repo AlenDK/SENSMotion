@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.entities.Sensor;
 import e.android.sensmotion.entities.Value;
 import e.android.sensmotion.entities.Values;
 import e.android.sensmotion.entities.bruger.Patient;
@@ -21,20 +22,20 @@ import e.android.sensmotion.entities.bruger.Patient;
 
 public class DataController implements IDataController {
 
-    private String values, project_key, patient_key;
+    private String project_key, patient_key;
     private Exception error;
-    private Value value;
     private String period_name;
+    private Sensor sensor;
 
-    public DataController() {//Skal ikke instantieres.
+    public DataController() {
+
         }
 
-    public Value getPeriode() {
-        return value;
-    }
-
     @SuppressLint("StaticFieldLeak")
-    public void refreshPatient(final Patient patient, final String DAY_COUNT){
+    public void refreshPatient(final Patient patient, Sensor sensor, final String DAY_COUNT){
+
+        this.sensor = sensor;
+
         new AsyncTask<String, Void, String>() {
 
             @Override
@@ -106,8 +107,10 @@ public class DataController implements IDataController {
                     System.out.println("----");
 
 
-                    value = new Value(checkPeriode(DAY_COUNT));
+                    Value value = new Value(checkPeriode(DAY_COUNT));
                     value.populate(data);
+
+
 
                     serviceSuccess(value);
 
@@ -121,6 +124,9 @@ public class DataController implements IDataController {
 
     @Override
     public void serviceSuccess(Value value) {
+
+        sensor.setCurrentValue(value);
+
         System.out.println("serviceSuccess!");
     }
 

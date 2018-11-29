@@ -57,4 +57,15 @@ public class Patient extends Bruger {
     public void setSensorer(List<Sensor> sensorer) {
         this.sensorer = sensorer;
     }
+
+    public Sensor getSensor(String id){
+
+        for(Sensor s : sensorer){
+            if(s.getId().equals(id)){
+                return s;
+            }
+        }
+
+        return null;
+    }
 }
