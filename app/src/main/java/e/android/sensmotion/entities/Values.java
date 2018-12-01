@@ -53,7 +53,6 @@ public class Values {
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
             System.out.println("////\n"+jsonDATA);
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
-            //Mangler for loop
             System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
             System.out.println("////\n"+jsonVALUES1);
@@ -67,15 +66,6 @@ public class Values {
             other = jsonVALUES1.getString("activity/other/time");
             nodata = jsonVALUES1.getString("general/nodata/time");
             steps = jsonVALUES1.getString("activity/steps/count");
-
-            System.out.println("rest: " +rest);
-            System.out.println("stand: " +stand);
-            System.out.println("walk: " +walk);
-            System.out.println("cycling: " +cycling);
-            System.out.println("exercise: " +exercise);
-            System.out.println("other: " +other);
-            System.out.println("nodata: " +nodata);
-            System.out.println("steps: " +steps);
 
         } catch (JSONException e) {
             e.printStackTrace();

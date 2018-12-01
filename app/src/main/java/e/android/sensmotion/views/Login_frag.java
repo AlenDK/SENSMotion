@@ -83,38 +83,16 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                         e.printStackTrace();
                     }
 
-
                     System.out.println("/////////////////////////////// REST /////////////////////////////////////");
                     System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
+
+                    System.out.println("/////////////////////////////// Other /////////////////////////////////////");
+                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getOther());
 
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);
 
                     break;
-
-                    /*
-                    new AsyncTask<String, Void, String>() {
-
-                        @Override
-                        protected String doInBackground(String... strings) {
-
-                            jsonString = dc.getDataString(bc.getPatient("p1"));
-                            return jsonString;
-                        }
-
-                        @Override
-                        protected void onPostExecute(String s) {
-                            super.onPostExecute(s);
-
-                            System.out.println("//////////////////////////////////////////////////////////////////////////");
-
-                            dc.saveData(jsonString, bc.getPatient("p1").getSensor("s1"));
-
-                            System.out.println("/////////////////////////////// REST /////////////////////////////////////");
-                            System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
-
-                    };*/
-
 
                 }
 

@@ -28,8 +28,6 @@ public class Value {
         for(int i = 0; i<day_count; i++){
             values = new Values();
             values.populate(data, i);
-            //System.out.println(values);
-
             valuesList.add(values);
         }
     }
