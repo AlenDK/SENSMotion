@@ -171,58 +171,6 @@ public class DataController implements IDataController {
         }.execute(patient_key);
 
 
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                project_key = patient.getProject_key();
-                patient_key = patient.getPatient_key();
-
-
-                checkPeriode(DAY_COUNT);
-                String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
-                        "project_key=" + project_key +
-                        "&patient_key=" + patient_key +
-                        period_name + DAY_COUNT);
-
-                try {
-                    URL url = new URL(endpoint);
-                    URLConnection connection = url.openConnection();
-
-                    InputStream stream = connection.getInputStream();
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-                    StringBuilder result = new StringBuilder();
-                    String line;
-
-                    while ((line = reader.readLine()) != null) {
-                        result.append(line);
-                    }
-
-                    String s = result.toString();
-
-                    JSONObject data = new JSONObject(s);
-
-                    System.out.println("----");
-                    System.out.println(data.toString(2));
-                    System.out.println("----");
-
-                    Value value = new Value(checkPeriode(DAY_COUNT));
-                    value.populate(data);
-
-                    serviceSuccess(value);
-
-
-                } catch (Exception e) {
-                    serviceFailure(e);
-                }
-
-            }
-        }).start();
-
-        */
-
     }
 
 

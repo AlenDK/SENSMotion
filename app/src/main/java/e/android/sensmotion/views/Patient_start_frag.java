@@ -49,7 +49,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         System.out.println(bruger.getPatient("p1"));
         System.out.println(bruger.getPatient("p1").getSensor("s1"));
 
-       // data.refreshPatient(bruger.getPatient("p1"),bruger.getPatient("p1").getSensor("s1"),"10");
+       data.refreshPatient(bruger.getPatient("p1"),bruger.getPatient("p1").getSensor("s1"),"10");
 /*
         if(data != null) {
             System.out.println(" ");
