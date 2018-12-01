@@ -1,5 +1,7 @@
 package e.android.sensmotion.views;
 
+/*
+
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -51,3 +53,5 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
     }
 
 }
+
+*/

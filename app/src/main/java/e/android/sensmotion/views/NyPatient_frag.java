@@ -28,9 +28,12 @@ public class NyPatient_frag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
+        /*
         getFragmentManager().beginTransaction()
                 .replace(R.id.fragmentindhold, new Patientliste_frag())
                 .commit();
 
+
+        */
     }
 }

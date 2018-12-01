@@ -10,7 +10,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IBrugerController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.bruger.Patient;
-import io.realm.Realm;
+
 
 public class MainActivity extends Activity {
 
@@ -22,7 +22,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Realm realm = Realm.getDefaultInstance();
 
         dc = ControllerRegistry.getDataController();
         bc = ControllerRegistry.getBrugerController();

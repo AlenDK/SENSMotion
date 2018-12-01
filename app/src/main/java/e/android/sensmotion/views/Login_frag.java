@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
@@ -63,8 +66,35 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     break;
                 } else {
 
+                    if (!dataHandling.isChecked()) {
+                        Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
+                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
 
-                  /*  new AsyncTask<String, Void, String>() {
+                        break;
+                    }
+
+                    try {
+                        String hentDataResult = new HentDataAsyncTask().execute().get();
+                        dc.saveData(hentDataResult, bc.getPatient("p1").getSensor("s1"));
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    System.out.println("/////////////////////////////// REST /////////////////////////////////////");
+                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
+
+                    act = new Intent(getActivity(), PatientActivity.class);
+                    startActivity(act);
+
+                    break;
+
+                    /*
+                    new AsyncTask<String, Void, String>() {
+
                         @Override
                         protected String doInBackground(String... strings) {
 
@@ -82,20 +112,10 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
                             System.out.println("/////////////////////////////// REST /////////////////////////////////////");
                             System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
-                        }
 
                     };*/
 
 
-                    if (!dataHandling.isChecked()) {
-                        Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
-                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
-
-                        break;
-                    }
-                    act = new Intent(getActivity(), PatientActivity.class);
-                    startActivity(act);
-                    break;
                 }
 
             case R.id.opret:
@@ -121,4 +141,17 @@ public class Login_frag extends Fragment implements View.OnClickListener {
             return view;
         }
     }
+
+    class HentDataAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            jsonString = dc.getDataString(bc.getPatient("p1"));
+
+            return jsonString;
+        }
+    }
 }
+
+
