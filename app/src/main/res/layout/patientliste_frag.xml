@@ -10,13 +10,14 @@
     tools:layout_editor_absoluteY="25dp">
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:id="@+id/nameText"
         android:layout_width="274dp"
         android:layout_height="46dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="Patientliste"
         android:textAlignment="center"
         android:textSize="36sp"
@@ -38,72 +39,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ScrollView
-        android:layout_width="327dp"
-        android:layout_height="443dp"
-        android:layout_marginStart="8dp"
+    <ListView
+        android:id="@+id/patientliste"
+        android:layout_width="0dp"
+        android:layout_height="406dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/NyPatient"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText"
-        app:layout_constraintVertical_bias="0.24">
-
-        <LinearLayout
-            android:id="@+id/newPat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Hans-Ole Nordschou"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Johnny Kaspersen"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Kenny Østergaard"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Benny Andersen"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="78dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/edittext_custom"
-                android:text="Ida Hansen"
-                android:textSize="18sp" />
-
-        </LinearLayout>
-    </ScrollView>
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

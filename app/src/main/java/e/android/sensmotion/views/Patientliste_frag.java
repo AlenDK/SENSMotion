@@ -5,13 +5,16 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import e.android.sensmotion.R;
-import e.android.sensmotion.views.NyPatient_frag;
-import e.android.sensmotion.views.PatientData_frag;
 
-public class Patientliste_frag extends Fragment implements View.OnClickListener{
+public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener{
 
     Button newPat;
     Button Pat1, Pat2, Pat3, Pat4, Pat5;
@@ -21,42 +24,30 @@ public class Patientliste_frag extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patientliste_frag, container, false);
 
-        newPat = view.findViewById(R.id.NyPatient);
-        newPat.setOnClickListener(this);
+        String[] navne = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
 
-        Pat1 = view.findViewById(R.id.button1);
-        Pat1.setOnClickListener(this);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.patient_list_item, R.id.name, navne) {
 
-        Pat2 = view.findViewById(R.id.button2);
-        Pat2.setOnClickListener(this);
+            @Override
+            public View getView(int position, View cachedView, ViewGroup parent) {
+                View view = super.getView(position, cachedView, parent);
 
-        Pat3 = view.findViewById(R.id.button3);
-        Pat3.setOnClickListener(this);
 
-        Pat4 = view.findViewById(R.id.button4);
-        Pat4.setOnClickListener(this);
+                TextView rank = view.findViewById(R.id.position);
+                rank.setText("1" + 1 + "." + position);
+                TextView navntv = view.findViewById(R.id.name);
 
-        Pat5 = view.findViewById(R.id.button5);
-        Pat5.setOnClickListener(this);
+                ImageView baggrund = view.findViewById(R.id.bagground);
+                baggrund.setImageResource(R.drawable.patient_list_bar);
 
-        return view;
-    }
+                return view;
+            }
+        };
 
-    @Override
-    public void onClick(View view) {
+        ListView listView = (ListView) findViewById(R.id.patientliste);
+        listView.setOnItemClickListener(getActivity());
+        listView.setAdapter(adapter);
 
-        if(view == newPat)
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new NyPatient_frag())
-                    .addToBackStack(null)
-                    .commit();
-
-        if(view != newPat) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new PatientData_frag())
-                    .addToBackStack(null)
-                    .commit();
-        }
     }
 
 }
