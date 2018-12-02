@@ -74,7 +74,6 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
             }
         });
 
-
         return view;
     }
 

@@ -47,19 +47,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/profil"
+        android:id="@+id/editPatient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
-        android:text="Din Profil"
+        android:text="Patient Indstillinger"
         android:textSize="23sp"
         android:textColor="@color/darkEggwhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/column1"
+        android:id="@+id/columnT1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -69,10 +69,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profil" />
+        app:layout_constraintTop_toBottomOf="@+id/editPatient" />
 
     <ImageView
-        android:id="@+id/column2"
+        android:id="@+id/columnT2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -82,35 +82,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column3" />
-
-    <ImageView
-        android:id="@+id/column3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/setting_column"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column1" />
+        app:layout_constraintTop_toBottomOf="@+id/columnT1" />
 
     <TextView
-        android:id="@+id/notification"
+        android:id="@+id/editInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Rediger oplysninger"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/columnT1"
+        app:layout_constraintStart_toStartOf="@+id/columnT1"
+        app:layout_constraintTop_toTopOf="@+id/columnT1" />
+
+    <TextView
+        android:id="@+id/contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Klients kontaktinformation"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/columnT2"
+        app:layout_constraintStart_toStartOf="@+id/columnT2"
+        app:layout_constraintTop_toTopOf="@+id/columnT2" />
+
+
+    <TextView
+        android:id="@+id/sensorSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="Notifikationer"
+        android:text="Sensor Indstillinger"
         android:textColor="@color/darkEggwhite"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column2" />
+        app:layout_constraintTop_toBottomOf="@+id/columnT2" />
 
     <ImageView
-        android:id="@+id/column4"
+        android:id="@+id/columnT3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -120,10 +136,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notification" />
+        app:layout_constraintTop_toBottomOf="@+id/sensorSettings" />
 
     <ImageView
-        android:id="@+id/column5"
+        android:id="@+id/columnT4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -133,53 +149,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column4" />
+        app:layout_constraintTop_toBottomOf="@+id/columnT3" />
 
     <TextView
-        android:id="@+id/popupText"
+        android:id="@+id/addSensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Pop-up notifikationer"
+        android:text="Tilføj Sensor"
         android:textSize="18sp"
         android:textColor="@color/lightBlack"
-        app:layout_constraintBottom_toBottomOf="@+id/column4"
-        app:layout_constraintStart_toStartOf="@+id/column4"
-        app:layout_constraintTop_toTopOf="@+id/column4" />
+        app:layout_constraintBottom_toBottomOf="@+id/columnT3"
+        app:layout_constraintStart_toStartOf="@+id/columnT3"
+        app:layout_constraintTop_toTopOf="@+id/columnT3" />
 
     <TextView
-        android:id="@+id/soundEffects"
+        android:id="@+id/editSensor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Lyd effekter"
+        android:text="Rediger Sensor"
         android:textColor="@color/lightBlack"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/column5"
-        app:layout_constraintStart_toStartOf="@+id/column5"
-        app:layout_constraintTop_toTopOf="@+id/column5" />
-
-    <Switch
-        android:id="@+id/switchSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="216dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/soundEffects"
-        app:layout_constraintTop_toTopOf="@+id/column5" />
-
-    <Switch
-        android:id="@+id/switchPOP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/popupText"
-        app:layout_constraintTop_toTopOf="@+id/column4" />
+        app:layout_constraintBottom_toBottomOf="@+id/columnT4"
+        app:layout_constraintStart_toStartOf="@+id/columnT4"
+        app:layout_constraintTop_toTopOf="@+id/columnT4" />
 
     <Button
         android:id="@+id/logUd"
