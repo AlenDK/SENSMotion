@@ -1,7 +1,5 @@
 package e.android.sensmotion.views;
 
-/*
-
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,10 +11,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import e.android.sensmotion.R;
 
-public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener{
+public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
 
     Button newPat;
     Button Pat1, Pat2, Pat3, Pat4, Pat5;
@@ -28,7 +29,9 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
 
         String[] navne = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.patient_list_item, R.id.name, navne) {
+        final ListView listView = (ListView) view.findViewById(R.id.patientliste);
+
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.patient_list_item, R.id.name, navne) {
 
             @Override
             public View getView(int position, View cachedView, ViewGroup parent) {
@@ -36,7 +39,7 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
 
 
                 TextView rank = view.findViewById(R.id.position);
-                rank.setText("1" + 1 + "." + position);
+                rank.setText(position + 1 + ".");
                 TextView navntv = view.findViewById(R.id.name);
 
                 ImageView baggrund = view.findViewById(R.id.bagground);
@@ -46,12 +49,26 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
             }
         };
 
-        ListView listView = (ListView) findViewById(R.id.patientliste);
-        listView.setOnItemClickListener(getActivity());
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getActivity(), "yes Hello", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Set seperation between list elements
+        listView.setDivider(null);
+        listView.setDividerHeight(15);
+
         listView.setAdapter(adapter);
 
+
+        return view;
     }
 
+    @Override
+    public void onClick(View view) {
+        //dunno
+    }
 }
-
-*/

@@ -15,14 +15,11 @@ public class Terapeut_activity extends AppCompatActivity {
         setContentView(R.layout.activity_terapeut_activity);
 
 
-        /*
         if (savedInstanceState == null) {
             Fragment fragment = new Patientliste_frag();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }
-
-        */
     }
 }
