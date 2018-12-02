@@ -19,8 +19,7 @@ import e.android.sensmotion.R;
 
 public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
 
-    Button newPat;
-    Button Pat1, Pat2, Pat3, Pat4, Pat5;
+    Button newPatient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,6 +61,18 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
         listView.setDividerHeight(15);
 
         listView.setAdapter(adapter);
+
+
+        newPatient = view.findViewById(R.id.NyPatient);
+        newPatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new NyPatient_frag())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
 
         return view;
