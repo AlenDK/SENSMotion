@@ -52,7 +52,10 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getActivity(), "yes Hello", Toast.LENGTH_SHORT).show();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new PatientData_frag())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

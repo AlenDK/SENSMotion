@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,7 +60,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
             case R.id.logIndKnap:
                 if (brugernavn.getText().toString().matches("admin")) {
-                    act = new Intent(getActivity(), Terapeut_activity.class);
+                    act = new Intent(getActivity(), Terapuet_activity.class);
                     startActivity(act);
                     break;
                 } else {

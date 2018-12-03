@@ -7,7 +7,7 @@ import android.os.Bundle;
 import e.android.sensmotion.R;
 //import e.android.sensmotion.views.Patientliste_frag;
 
-public class Terapeut_activity extends AppCompatActivity {
+public class Terapuet_activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

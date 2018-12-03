@@ -11,7 +11,6 @@ import android.widget.CalendarView;
 import android.widget.ImageButton;
 
 import e.android.sensmotion.R;
-import e.android.sensmotion.views.Terapeut_setting;
 
 public class PatientData_frag extends Fragment implements View.OnClickListener {
 
@@ -70,7 +69,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
         } else if (view == ImgBtn) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Terapeut_setting())
+                        .replace(R.id.fragmentindhold, new Terapuet_setting())
                         .addToBackStack(null)
                         .commit();
 
