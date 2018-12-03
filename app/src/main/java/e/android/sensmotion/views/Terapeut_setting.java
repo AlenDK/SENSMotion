@@ -18,8 +18,12 @@ public class Terapeut_setting extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.terapeut_setting_frag, container, false);
+        View view = inflater.inflate(R.layout.terapuet_setting_frag, container, false);
 
+
+        // HUSK AT NAVNGIVE KNAPPERNE KORREKT I XML-FILERNE.
+        // btw der er en stavefejl i layoutets navn: "terapuet" i stedet for "terapeut"
+        /*
         LogOut = (Button) view.findViewById(R.id.logud);
         LogOut.setOnClickListener(this);
 
@@ -34,6 +38,8 @@ public class Terapeut_setting extends Fragment implements View.OnClickListener {
 
         addUnit = (Button) view.findViewById(R.id.Enhed_tilføj);
         addUnit.setOnClickListener(this);
+        */
+
 
         return view;
     }
