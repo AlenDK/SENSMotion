@@ -37,7 +37,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
         brugernavn = view.findViewById(R.id.brugernavn);
         dc = ControllerRegistry.getDataController();
-        bc = ControllerRegistry.getBrugerController();
+        bc = ControllerRegistry.getUserController();
 
         TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
