@@ -2,13 +2,13 @@ package e.android.sensmotion.controller.interfaces;
 
 import java.util.List;
 
-import e.android.sensmotion.entities.bruger.Bruger;
+import e.android.sensmotion.entities.bruger.User;
 import e.android.sensmotion.entities.bruger.Patient;
 
-public interface IBrugerController {
+public interface IUserController {
 
-    List<Bruger> getBrugerListe();
-    Bruger getBruger(String id);
+    List<User> getUserList();
+    User getUser(String id);
     Patient getPatient(String id);
 
 

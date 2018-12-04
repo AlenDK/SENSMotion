@@ -13,15 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.impl.BrugerController;
-import e.android.sensmotion.controller.impl.DataController;
-import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.Value;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
@@ -34,7 +29,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     double dailyProgress = 80;
     int circleDailyProgress;
     IDataController data = ControllerRegistry.getDataController();
-    IBrugerController bruger = ControllerRegistry.getBrugerController();
+    IUserController bruger = ControllerRegistry.getBrugerController();
     ImageView imageView;
 
     private Handler progHandle = new Handler();

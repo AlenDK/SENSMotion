@@ -5,12 +5,12 @@ import org.json.JSONObject;
 public class Sensor {
 
     private String id;
-    private int placering;
-    private Value currentValue;
+    private int placement;
+    private Period currentPeriod;
 
-    public Sensor(String id, int placering){
+    public Sensor(String id, int placement){
         this.id = id;
-        this.placering = placering;
+        this.placement = placement;
     }
 
     public String getId() {
@@ -21,22 +21,22 @@ public class Sensor {
         this.id = id;
     }
 
-    public int getPlacering() {
-        return placering;
+    public int getPlacement() {
+        return placement;
     }
 
-    public void setPlacering(int placering) {
-        this.placering = placering;
+    public void setPlacement(int placement) {
+        this.placement = placement;
     }
 
-    public Value getCurrentValue() {
-        return currentValue;
+    public Period getCurrentPeriod() {
+        return currentPeriod;
     }
 
     public void populate(JSONObject json) {
-        Value value = new Value(13);
-        value.populate(json);
-        currentValue = value;
+        Period period = new Period(13);
+        period.populate(json);
+        currentPeriod = period;
 
     }
 }

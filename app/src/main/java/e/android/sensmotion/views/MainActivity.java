@@ -7,16 +7,15 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.bruger.Patient;
 
 
 public class MainActivity extends Activity {
 
     TextView tv6;
     IDataController dc;
-    IBrugerController bc;
+    IUserController bc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

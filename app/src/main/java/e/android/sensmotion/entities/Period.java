@@ -5,14 +5,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Value {
+public class Period {
 
     private List<Values> valuesList;
     private Values values;
     private int day_count;
 
 
-    public Value(int day_count){
+    public Period(int day_count){
         this.day_count = day_count;
 
         valuesList = new ArrayList<Values>();

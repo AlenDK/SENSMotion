@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
@@ -28,7 +28,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     CheckBox dataHandling;
     Intent act;
     IDataController dc;
-    IBrugerController bc;
+    IUserController bc;
     String jsonString;
 
     @Override
@@ -83,10 +83,10 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     }
 
                     System.out.println("/////////////////////////////// REST /////////////////////////////////////");
-                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getRest());
+                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getRest());
 
                     System.out.println("/////////////////////////////// Other /////////////////////////////////////");
-                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentValue().getValuesList().get(0).getOther());
+                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
 
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);

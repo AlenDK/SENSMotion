@@ -1,25 +1,19 @@
 package e.android.sensmotion.controller.impl;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IBrugerController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.Sensor;
-import e.android.sensmotion.entities.Value;
-import e.android.sensmotion.entities.Values;
+import e.android.sensmotion.entities.Period;
 import e.android.sensmotion.entities.bruger.Patient;
 
 
@@ -30,7 +24,7 @@ public class DataController implements IDataController {
     private Exception error;
     private String period_name;
     private Sensor sensor;
-    private IBrugerController bc;
+    private IUserController uc;
 
     public DataController() {
 
@@ -77,11 +71,11 @@ public class DataController implements IDataController {
         try{
             JSONObject data = new JSONObject(s);
 
-            bc = ControllerRegistry.getBrugerController();
+            uc = ControllerRegistry.getBrugerController();
 
             sensor.populate(data);
 
-            serviceSuccess(sensor.getCurrentValue());
+            serviceSuccess(sensor.getCurrentPeriod());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,7 +83,7 @@ public class DataController implements IDataController {
     }
 
     @Override
-    public void serviceSuccess (Value value){
+    public void serviceSuccess (Period period){
 
         System.out.println("serviceSuccess!");
     }

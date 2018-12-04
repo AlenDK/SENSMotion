@@ -4,16 +4,16 @@ import java.util.List;
 
 import e.android.sensmotion.entities.Sensor;
 
-public class Patient extends Bruger {
+public class Patient extends User {
 
-    private String cpr, mobilitet, project_key, patient_key;
-    private List<Sensor> sensorer;
+    private String cpr, mobility, project_key, patient_key;
+    private List<Sensor> sensors;
 
-    public Patient(String id, String brugernavn, String adgangskode, String cpr, List<Sensor> sensorer, String mobilitet, String project_key, String patient_key) {
+    public Patient(String id, String brugernavn, String adgangskode, String cpr, List<Sensor> sensors, String mobility, String project_key, String patient_key) {
         super(id, brugernavn, adgangskode);
         this.cpr = cpr;
-        this.sensorer = sensorer;
-        this.mobilitet = mobilitet;
+        this.sensors = sensors;
+        this.mobility = mobility;
         this.project_key = project_key;
         this.patient_key = patient_key;
     }
@@ -26,12 +26,12 @@ public class Patient extends Bruger {
         this.cpr = cpr;
     }
 
-    public String getMobilitet() {
-        return mobilitet;
+    public String getMobility() {
+        return mobility;
     }
 
-    public void setMobilitet(String mobilitet) {
-        this.mobilitet = mobilitet;
+    public void setMobility(String mobility) {
+        this.mobility = mobility;
     }
 
     public String getProject_key() {
@@ -51,16 +51,16 @@ public class Patient extends Bruger {
     }
 
     public List<Sensor> getSensorer() {
-        return sensorer;
+        return sensors;
     }
 
-    public void setSensorer(List<Sensor> sensorer) {
-        this.sensorer = sensorer;
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
     }
 
     public Sensor getSensor(String id){
 
-        for(Sensor s : sensorer){
+        for(Sensor s : sensors){
             if(s.getId().equals(id)){
                 return s;
             }
