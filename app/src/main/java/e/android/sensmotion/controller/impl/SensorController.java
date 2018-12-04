@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import e.android.sensmotion.controller.interfaces.ISensorController;
-import e.android.sensmotion.entities.Sensor;
+import e.android.sensmotion.entities.sensor.Sensor;
 
 public class SensorController implements ISensorController {
 

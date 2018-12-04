@@ -2,7 +2,7 @@ package e.android.sensmotion.entities.user;
 
 import java.util.List;
 
-import e.android.sensmotion.entities.Sensor;
+import e.android.sensmotion.entities.sensor.Sensor;
 
 public class Patient extends User {
 

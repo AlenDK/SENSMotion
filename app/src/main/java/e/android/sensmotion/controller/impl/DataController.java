@@ -12,8 +12,8 @@ import java.net.URLConnection;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.Sensor;
-import e.android.sensmotion.entities.Period;
+import e.android.sensmotion.entities.sensor.Sensor;
+import e.android.sensmotion.entities.sensor.Period;
 import e.android.sensmotion.entities.user.Patient;
 
 
