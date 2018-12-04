@@ -1,4 +1,4 @@
-package e.android.sensmotion.entities.bruger;
+package e.android.sensmotion.entities.user;
 
 public abstract class User {
 

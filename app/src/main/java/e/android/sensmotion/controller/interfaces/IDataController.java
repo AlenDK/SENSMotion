@@ -2,8 +2,7 @@ package e.android.sensmotion.controller.interfaces;
 
 import e.android.sensmotion.entities.Sensor;
 import e.android.sensmotion.entities.Period;
-import e.android.sensmotion.entities.Values;
-import e.android.sensmotion.entities.bruger.Patient;
+import e.android.sensmotion.entities.user.Patient;
 
 public interface IDataController {
     String getDataString(Patient patient);

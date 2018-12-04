@@ -2,8 +2,8 @@ package e.android.sensmotion.controller.interfaces;
 
 import java.util.List;
 
-import e.android.sensmotion.entities.bruger.User;
-import e.android.sensmotion.entities.bruger.Patient;
+import e.android.sensmotion.entities.user.User;
+import e.android.sensmotion.entities.user.Patient;
 
 public interface IUserController {
 

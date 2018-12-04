@@ -14,7 +14,7 @@ import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.Sensor;
 import e.android.sensmotion.entities.Period;
-import e.android.sensmotion.entities.bruger.Patient;
+import e.android.sensmotion.entities.user.Patient;
 
 
 
@@ -71,7 +71,7 @@ public class DataController implements IDataController {
         try{
             JSONObject data = new JSONObject(s);
 
-            uc = ControllerRegistry.getBrugerController();
+            uc = ControllerRegistry.getUserController();
 
             sensor.populate(data);
 

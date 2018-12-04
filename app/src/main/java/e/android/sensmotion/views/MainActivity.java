@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         dc = ControllerRegistry.getDataController();
-        bc = ControllerRegistry.getBrugerController();
+        bc = ControllerRegistry.getUserController();
 
         //dc.refreshPatient(bc.getPatient("p1"), bc.getPatient("p1").getSensor("s1"), "1");
 

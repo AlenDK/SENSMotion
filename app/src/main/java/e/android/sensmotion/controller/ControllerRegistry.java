@@ -9,7 +9,7 @@ import e.android.sensmotion.controller.interfaces.ISensorController;
 
 public class ControllerRegistry {
 
-    private static IUserController brugerController;
+    private static IUserController userController;
     private static IDataController dataController;
     private static ISensorController sensorController;
 
@@ -17,9 +17,9 @@ public class ControllerRegistry {
         // Needs to be here to prevent instantiation.
     }
 
-    public static IUserController getBrugerController(){
-        if(brugerController == null) brugerController = new UserController();
-        return brugerController;
+    public static IUserController getUserController(){
+        if(userController == null) userController = new UserController();
+        return userController;
     }
 
     public static IDataController getDataController(){

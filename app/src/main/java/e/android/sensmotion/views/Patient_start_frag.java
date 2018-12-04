@@ -29,7 +29,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     double dailyProgress = 80;
     int circleDailyProgress;
     IDataController data = ControllerRegistry.getDataController();
-    IUserController bruger = ControllerRegistry.getBrugerController();
+    IUserController bruger = ControllerRegistry.getUserController();
     ImageView imageView;
 
     private Handler progHandle = new Handler();

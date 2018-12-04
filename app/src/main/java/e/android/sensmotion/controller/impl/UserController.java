@@ -7,9 +7,9 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
 import e.android.sensmotion.entities.Sensor;
-import e.android.sensmotion.entities.bruger.User;
-import e.android.sensmotion.entities.bruger.Patient;
-import e.android.sensmotion.entities.bruger.Therapist;
+import e.android.sensmotion.entities.user.User;
+import e.android.sensmotion.entities.user.Patient;
+import e.android.sensmotion.entities.user.Therapist;
 
 public class UserController implements IUserController {
 
