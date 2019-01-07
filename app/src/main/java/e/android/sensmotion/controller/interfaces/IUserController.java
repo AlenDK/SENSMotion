@@ -10,6 +10,7 @@ public interface IUserController {
     List<User> getUserList();
     User getUser(String id);
     Patient getPatient(String id);
+    void savePatient(Patient p);
 
 
 }
