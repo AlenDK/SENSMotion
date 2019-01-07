@@ -24,8 +24,8 @@
         android:inputType="textPersonName"
         android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/editText3"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintStart_toStartOf="@+id/patientID"
+        app:layout_constraintTop_toBottomOf="@+id/patientID" />
 
     <EditText
         android:id="@+id/editText3"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/patientID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
@@ -92,7 +92,7 @@
         android:hint="Patientens navn"
         android:inputType="textPersonName"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/patientID"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText" />

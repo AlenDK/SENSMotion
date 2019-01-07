@@ -67,6 +67,15 @@ public class Values {
             nodata = jsonVALUES1.getString("general/nodata/time");
             steps = jsonVALUES1.getString("activity/steps/count");
 
+
+            System.out.println("Resting time: " + rest);
+            System.out.println("Standing time: " + stand);
+            System.out.println("Walking time: " + walk);
+            System.out.println("Cycling time: " + cycling);
+            System.out.println("Exercise time: " + exercise);
+            System.out.println("Other: " + other);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

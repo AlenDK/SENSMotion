@@ -37,7 +37,7 @@ public class DataController implements IDataController {
         String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
                 "project_key="+ project_key +
                 "&patient_key="+ patient_key +
-                "&day_count=" + 13);
+                "&date=2018-10-02");
 
         try{
             URL url = new URL(endpoint);

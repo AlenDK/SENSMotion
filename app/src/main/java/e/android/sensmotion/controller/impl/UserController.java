@@ -65,4 +65,8 @@ public class UserController implements IUserController {
         }
         return null;
     }
+
+    public void savePatient(Patient p){
+        patientList.add(p);
+    }
 }
