@@ -41,37 +41,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
-        System.out.println(bruger.getPatient("p1"));
-        System.out.println(bruger.getPatient("p1").getSensor("s1"));
+        System.out.println("Bruger: "+bruger.getPatient("p1").toString());
+        System.out.println("Sensor: "+bruger.getPatient("p1").getSensor("s1").toString());
 
-       //data.refreshPatient(bruger.getPatient("p1"),bruger.getPatient("p1").getSensor("s1"),"10");
-/*
-        if(data != null) {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Alen ");
-            System.out.println(data);
-            System.out.println("Alen ");
-            System.out.println(" ");
-            System.out.println(data);
-            System.out.println("test");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Burhan");
-            System.out.println(data.getPeriode().getValuesList().size());
-            System.out.println("Buran");
 
-        } else {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("DRÆB MIG");
-            System.out.println(" ");
-            System.out.println(" ");
-
-        }
-
-*/
 
 
       //  for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
@@ -153,6 +126,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         bike = (ProgressBar) view.findViewById(R.id.progbar_bike);
         train = (ProgressBar) view.findViewById(R.id.progbar_train);
         other = (ProgressBar) view.findViewById(R.id.progbar_other);
+
+        //walk.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk()));
 
         circlebar.setRotation(circleDailyProgress);
     }

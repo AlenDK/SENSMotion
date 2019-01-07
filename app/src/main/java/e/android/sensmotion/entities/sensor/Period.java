@@ -31,4 +31,13 @@ public class Period {
             valuesList.add(values);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Period{"+
+                "valuesList: "+valuesList+
+                ", values: "+values+
+                ", day_count: "+day_count+
+                '}';
+    }
 }

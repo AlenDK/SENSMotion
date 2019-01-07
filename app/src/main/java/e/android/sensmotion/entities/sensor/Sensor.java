@@ -39,4 +39,13 @@ public class Sensor {
         currentPeriod = period;
 
     }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id: "+id +
+                ", placement: "+placement+
+                ", currentPeriod: "+currentPeriod+
+                '}';
+    }
 }

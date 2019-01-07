@@ -73,4 +73,18 @@ public class Values {
 
 
     }
+
+    @Override
+    public String toString() {
+        return "Values{" +
+                "rest: "+rest+
+                ", stand: "+stand+
+                ", walk: "+walk+
+                ", exercise: "+exercise+
+                ", other: "+other+
+                ", steps: "+steps+
+                ", cycling: "+cycling+
+                ", nodata: "+nodata+
+                '}';
+    }
 }
