@@ -26,7 +26,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ProgressBar circlebar, walk,stand,bike,train,other;
     int overallProgress;
     private int walk_prog = 0;
-    double dailyProgress = 80;
+    double dailyProgress = 100;
     int circleDailyProgress;
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
@@ -46,7 +46,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
 
-
       //  for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
             for (int i = 0; i <6; i++) {
 
@@ -60,12 +59,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             dates.addView(views);
         }
-
-
-
-
-        //Burde måske have sin egen klasse
-        circleDailyProgress = (int)(270-dailyProgress/100*360);
 
         createText(view);
         createImages(view);
@@ -128,8 +121,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         other = (ProgressBar) view.findViewById(R.id.progbar_other);
 
         //walk.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk()));
+        //stand.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand()));
+        //bike.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getBike()));
+        //train.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getTrain()));
+        //other.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther()));
 
+
+        circleDailyProgress = (int)(270-(dailyProgress/100*360));
         circlebar.setRotation(circleDailyProgress);
+        circlebar.setProgress(10);
     }
 
     private void createImages(View view){
