@@ -85,7 +85,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy";
+        String myFormat = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         patientinformation.setText(sdf.format(calendar.getTime()));
