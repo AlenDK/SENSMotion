@@ -48,6 +48,8 @@ public class UserController implements IUserController {
         return userList;
     }
 
+    public List<Patient> getPatientList() { return patientList; }
+
     public User getUser(String id){
         for(User b : userList){
             if(b.getId().equals(id)){

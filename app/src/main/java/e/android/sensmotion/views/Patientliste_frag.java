@@ -16,6 +16,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.entities.user.Patient;
 
 public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
 
@@ -26,7 +28,13 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patientliste_frag, container, false);
 
-        String[] navne = {"Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test", "Test"};
+        List<Patient> patientList = ControllerRegistry.getUserController().getPatientList();
+
+        String[] navne = new String[patientList.size()];
+
+        for(int i = 0; i < ControllerRegistry.getUserController().getPatientList().size(); i++){
+            navne[i] = patientList.get(i).getId();
+        }
 
         final ListView listView = (ListView) view.findViewById(R.id.patientliste);
 
