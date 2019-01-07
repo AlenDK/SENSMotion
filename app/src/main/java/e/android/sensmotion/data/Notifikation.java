@@ -6,8 +6,8 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 public class Notifikation extends Application {
-    final static String CHANNEL_ID1 = "Channel1";
-    final static String CHANNEL_ID2 = "Channel2";
+    final public static String CHANNEL_ID1 = "Channel1";
+    final public static String CHANNEL_ID2 = "Channel2";
 
     @Override
     public void onCreate() {
@@ -27,7 +27,7 @@ public class Notifikation extends Application {
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_ID2,
                     "channel 2",
-                    NotificationManager.IMPORTANCE_LOW
+                    NotificationManager.IMPORTANCE_HIGH
             );
             channel2.setDescription("This is channel 2");
 
