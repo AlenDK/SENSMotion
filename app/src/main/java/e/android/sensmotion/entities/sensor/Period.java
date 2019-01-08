@@ -22,8 +22,7 @@ public class Period {
 
     public void populate(JSONObject data) {
 
-        System.out.println("data;");
-        System.out.println(data);
+        System.out.println("data: "+data);
 
         for(int i = 0; i<day_count; i++){
             values = new Values();

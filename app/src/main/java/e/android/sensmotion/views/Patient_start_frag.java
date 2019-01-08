@@ -22,7 +22,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
-    private TextView textView;
+    private TextView textView, textView1, textView2, textView3, textView4, textView5;
     private ProgressBar circlebar, walk,stand,bike,train,other;
     int overallProgress;
     private int walk_prog = 0;
@@ -144,6 +144,24 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private void createText(View view){
         textView = (TextView) view.findViewById(R.id.nameText);
+        textView1 = (TextView) view.findViewById(R.id.textView1);
+        textView2 = (TextView) view.findViewById(R.id.textView2);
+        textView3 = (TextView) view.findViewById(R.id.textView3);
+        textView4 = (TextView) view.findViewById(R.id.textView4);
+        textView5 = (TextView) view.findViewById(R.id.textView5);
+
+        double walkAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk());
+        double standAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand());
+        double cyclingAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getCycling());
+        double exerciseAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getExercise());
+        double otherAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
+
+        textView1.setText(Math.round(walkAmount)+"");
+        textView2.setText(Math.round(standAmount)+"");
+        textView3.setText(Math.round(cyclingAmount)+"");
+        textView4.setText(Math.round(exerciseAmount)+"");
+        textView5.setText(Math.round(otherAmount)+"");
+
     }
 
     private void createButtons(View view){
