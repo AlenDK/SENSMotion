@@ -14,6 +14,9 @@ public class Values {
     private String cycling;
     private String nodata;
 
+    public Values() {
+
+    }
 
     public String getRest() {
         return rest;

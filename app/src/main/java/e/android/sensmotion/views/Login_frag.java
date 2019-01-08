@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.data.Firebase;
+import e.android.sensmotion.entities.sensor.Period;
+import e.android.sensmotion.entities.user.Patient;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
 
@@ -30,6 +34,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     IDataController dc;
     IUserController bc;
     String jsonString;
+    Firebase firebasee = new Firebase();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class Login_frag extends Fragment implements View.OnClickListener {
         login.setOnClickListener(this);
         opret.setOnClickListener(this);
         glemt.setOnClickListener(this);
+
+
+
 
         return view;
     }
@@ -88,10 +96,30 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     System.out.println("/////////////////////////////// Other /////////////////////////////////////");
                     System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
 
+                 //   for (int i = 0; i < 10; i++){
+
+//                        Log.d("testtt", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)));
+
+
+                        Log.d("Første", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList()));
+
+
+// bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)
+                  //      firebasee.newPeriod(null, null , 5 );
+
+                    Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
+                        firebasee.newBruger(p);
+                       // firebasee.newTest(null, 5);
+
+                   //     }
+
+
+
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);
 
                     break;
+
 
                 }
 

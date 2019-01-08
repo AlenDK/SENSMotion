@@ -12,11 +12,15 @@ public class Period {
     private int day_count;
 
 
+
+
     public Period(int day_count){
         this.day_count = day_count;
 
         valuesList = new ArrayList<Values>();
     }
+
+
 
     public List<Values> getValuesList() { return valuesList; }
 
