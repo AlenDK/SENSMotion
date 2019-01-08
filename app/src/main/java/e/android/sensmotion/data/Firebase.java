@@ -16,13 +16,18 @@ public class Firebase {
     private DatabaseReference mDatabase, dTest;
 
     public Firebase() {
-        mDatabase = FirebaseDatabase.getInstance().getReference("Period");
         dTest = FirebaseDatabase.getInstance().getReference("test");
+        mDatabase = FirebaseDatabase.getInstance().getReference("Period");
     }
 
     public DatabaseReference mDatabase() {
         return mDatabase;
     }
+
+    public DatabaseReference dTest() {
+        return dTest;
+    }
+
 
     public void newPeriod(List<Values> valuesList, Values values, int day_count) {
         Period period = new Period(day_count);

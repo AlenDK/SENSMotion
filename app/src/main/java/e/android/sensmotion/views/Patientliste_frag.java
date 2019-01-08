@@ -1,7 +1,9 @@
 package e.android.sensmotion.views;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +15,47 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.adapters.Patientliste_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.user.Patient;
 
 public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
 
+
+    Firebase firebase = new Firebase();
     Button newPatient;
+    List<Patient> patientList; //=  ControllerRegistry.getUserController().getPatientList();
+    Patientliste_adapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patientliste_frag, container, false);
 
-        List<Patient> patientList = ControllerRegistry.getUserController().getPatientList();
+        ListView listView = (ListView) view.findViewById(R.id.patientliste);
+        //Set seperation between list elements
+        listView.setDivider(null);
+        listView.setDividerHeight(15);
+
+        patientList = new ArrayList<>();
+
+        adapter = new Patientliste_adapter(getActivity(), patientList);
+
+        listView.setAdapter(adapter);
+
+        new AsyncTaskBackground().execute();
+
+  /*
 
         String[] navne = new String[patientList.size()];
 
@@ -36,26 +63,8 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
             navne[i] = patientList.get(i).getId();
         }
 
-        final ListView listView = (ListView) view.findViewById(R.id.patientliste);
 
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.patient_list_item, R.id.name, navne) {
-
-            @Override
-            public View getView(int position, View cachedView, ViewGroup parent) {
-                View view = super.getView(position, cachedView, parent);
-
-
-                TextView rank = view.findViewById(R.id.position);
-                rank.setText(position + 1 + ".");
-                TextView navntv = view.findViewById(R.id.name);
-
-                ImageView baggrund = view.findViewById(R.id.bagground);
-                baggrund.setImageResource(R.drawable.patient_list_bar);
-
-                return view;
-            }
-        };
-
+*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,11 +76,8 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
             }
         });
 
-        //Set seperation between list elements
-        listView.setDivider(null);
-        listView.setDividerHeight(15);
 
-        listView.setAdapter(adapter);
+
 
 
         newPatient = view.findViewById(R.id.NyPatient);
@@ -92,4 +98,60 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
     public void onClick(View view) {
         //dunno
     }
+
+    private class AsyncTaskBackground extends AsyncTask {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected Object doInBackground(Object... arg0) {
+            try {
+                firebase.dTest().addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        for (DataSnapshot brugerSnapshot : dataSnapshot.getChildren()) {
+                            Patient patient = brugerSnapshot.getValue(Patient.class);
+
+                            patientList.add((patient));
+
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+                return "HighScore listen er loaded";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Noget gik galt";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object arg0) {
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
