@@ -108,7 +108,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                   //      firebasee.newPeriod(null, null , 5 );
 
                     Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
-                        firebasee.newBruger(p);
+
                        // firebasee.newTest(null, 5);
 
                    //     }

@@ -37,7 +37,7 @@ public class Firebase {
         dTest.child("patient").setValue(patient);
     } */
 
-    public void newBruger(Patient p) {
+    public void newPatient (Patient p) {
 
         dTest.child(p.getId()).setValue(p);
     }
