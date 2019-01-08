@@ -49,13 +49,13 @@ public class Values {
         try {
 
             JSONObject jsonVALUE = data1.getJSONObject("value");
-            System.out.println("////////  \n"+jsonVALUE);
+            //System.out.println("////////  \n"+jsonVALUE);
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
-            System.out.println("////\n"+jsonDATA);
+            //System.out.println("////\n"+jsonDATA);
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
             System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
-            System.out.println("////\n"+jsonVALUES1);
+            //System.out.println("////\n"+jsonVALUES1);
 
 
             rest = jsonVALUES1.getString("activity/resting/time");
