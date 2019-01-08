@@ -22,12 +22,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
-    private TextView textView, textView1, textView2, textView3, textView4, textView5;
+    private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
     private ProgressBar circlebar, walk,stand,bike,train,other;
-    int overallProgress;
+    int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
-    double dailyProgress = 100;
-    int circleDailyProgress;
+    double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     ImageView imageView;
@@ -59,6 +58,16 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             dates.addView(views);
         }
+
+
+        walkAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk());
+        standAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand());
+        cyclingAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getCycling());
+        exerciseAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getExercise());
+        otherAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
+
+        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount +otherAmount;
+        circleProgress = (int) Math.round(dailyProgress/totalProgressGoal*100);
 
         createText(view);
         createImages(view);
@@ -127,9 +136,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         //other.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther()));
 
 
-        circleDailyProgress = (int)(270-(dailyProgress/100*360));
-        circlebar.setRotation(circleDailyProgress);
-        circlebar.setProgress(10);
+        circlebar.setProgress(circleProgress);
+        circlebar.setRotation(270);
+
     }
 
     private void createImages(View view){
@@ -149,19 +158,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         textView3 = (TextView) view.findViewById(R.id.textView3);
         textView4 = (TextView) view.findViewById(R.id.textView4);
         textView5 = (TextView) view.findViewById(R.id.textView5);
+        circleText =(TextView) view.findViewById(R.id.progressBarText);
 
-        double walkAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk());
-        double standAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand());
-        double cyclingAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getCycling());
-        double exerciseAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getExercise());
-        double otherAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
-
-        textView1.setText(Math.round(walkAmount)+"");
-        textView2.setText(Math.round(standAmount)+"");
-        textView3.setText(Math.round(cyclingAmount)+"");
-        textView4.setText(Math.round(exerciseAmount)+"");
-        textView5.setText(Math.round(otherAmount)+"");
-
+        textView1.setText(Math.round(walkAmount)+"/100m");
+        textView2.setText(Math.round(standAmount)+"/100min");
+        textView3.setText(Math.round(cyclingAmount)+"/100m");
+        textView4.setText(Math.round(exerciseAmount)+"/100min");
+        textView5.setText(Math.round(otherAmount)+"/100min");
+        circleText.setText(circleProgress+"%");
     }
 
     private void createButtons(View view){
