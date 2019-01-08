@@ -112,6 +112,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
                     //Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
 
+                    /*
                     Period pp = new Period(2);
 
 
@@ -125,7 +126,11 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     sensors.add(s1);
 
                     Patient p = new Patient("Tobias",null, null, "3333", sensors, null, null, null);
-                   firebasee.newPatient(p);
+                    firebasee.newPatient(p);
+                    */
+
+                    Patient p1 = ControllerRegistry.getUserController().getPatient("p1");
+                    firebasee.newPatient(p1);
 
 
                        // firebasee.newTest(null, 5);
