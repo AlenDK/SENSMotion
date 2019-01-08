@@ -27,6 +27,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
     double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
+    int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     ImageView imageView;
@@ -129,15 +130,27 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         train = (ProgressBar) view.findViewById(R.id.progbar_train);
         other = (ProgressBar) view.findViewById(R.id.progbar_other);
 
-        //walk.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk()));
-        //stand.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand()));
-        //bike.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getBike()));
-        //train.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getTrain()));
-        //other.setProgress(Integer.parseInt(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther()));
+        int walkPercent = (int) Math.round(walkAmount/totalwalk*100);
+        int standPercent = (int) Math.round(standAmount/totalstand*100);
+        int cyclingPercent = (int) Math.round(cyclingAmount/totalcycling*100);
+        int exercisePercent = (int) Math.round(exerciseAmount/totalexercise*100);
+        int otherPercent = (int) Math.round(otherAmount/totalother*100);
+
+        System.out.println(walkPercent);
+        System.out.println(standPercent);
+        System.out.println(cyclingPercent);
+        System.out.println(exercisePercent);
+        System.out.println(otherPercent);
+
+        walk.setProgress(walkPercent);
+        stand.setProgress(standPercent);
+        bike.setProgress(cyclingPercent);
+        train.setProgress(exercisePercent);
+        other.setProgress(otherPercent);
 
 
         circlebar.setProgress(circleProgress);
-        circlebar.setRotation(270);
+        circlebar.setRotation(270); //Make the progressbar start at the top
 
     }
 
@@ -160,11 +173,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         textView5 = (TextView) view.findViewById(R.id.textView5);
         circleText =(TextView) view.findViewById(R.id.progressBarText);
 
-        textView1.setText(Math.round(walkAmount)+"/100m");
+        textView1.setText(Math.round(otherAmount)+"/100m");
         textView2.setText(Math.round(standAmount)+"/100min");
         textView3.setText(Math.round(cyclingAmount)+"/100m");
         textView4.setText(Math.round(exerciseAmount)+"/100min");
-        textView5.setText(Math.round(otherAmount)+"/100min");
+        textView5.setText(Math.round(walkAmount)+"/100min");
         circleText.setText(circleProgress+"%");
     }
 
