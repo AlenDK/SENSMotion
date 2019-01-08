@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
@@ -24,6 +26,7 @@ import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.sensor.Period;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 public class Login_frag extends Fragment implements View.OnClickListener {
@@ -107,7 +110,23 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 // bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)
                   //      firebasee.newPeriod(null, null , 5 );
 
-                    Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
+                    //Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
+
+                    Period pp = new Period(2);
+
+
+
+                    Sensor s = new Sensor("hejsa", 0);
+                    Sensor s1 = new Sensor("hejsav2", 1);
+
+                    List<Sensor> sensors = new ArrayList<>();
+
+                    sensors.add(s);
+                    sensors.add(s1);
+
+                    Patient p = new Patient("Tobias",null, null, "3333", sensors, null, null, null);
+                   firebasee.newPatient(p);
+
 
                        // firebasee.newTest(null, 5);
 

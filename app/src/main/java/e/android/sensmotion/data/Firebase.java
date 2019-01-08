@@ -40,9 +40,16 @@ public class Firebase {
     public void newPatient (Patient p) {
 
         dTest.child(p.getId()).setValue(p);
+
     }
 
 
+    public void newSensor ( List<Sensor> sensors) {
+
+        for (int i = 0; i < sensors.size(); i++) {
+            dTest.child(""+i).child(sensors.get(i).getId()).setValue(sensors.get(i));
+        }
+    }
 
 
    // public void newTest() {
