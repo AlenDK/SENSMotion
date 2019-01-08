@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.List;
+
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 public class NyPatient_frag extends Fragment implements View.OnClickListener {
@@ -34,7 +37,7 @@ public class NyPatient_frag extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        Patient p = new Patient(patientID.getText().toString(), null, null, null, null, null, null, null);
+        Patient p = new Patient(patientID.getText().toString(), null, null, null, null, null, "k5W2uX", null);
 
         ControllerRegistry.getUserController().savePatient(p);
 

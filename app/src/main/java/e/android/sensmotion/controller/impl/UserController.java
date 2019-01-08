@@ -6,6 +6,7 @@ import java.util.List;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
+import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.User;
 import e.android.sensmotion.entities.user.Patient;
@@ -69,6 +70,9 @@ public class UserController implements IUserController {
     }
 
     public void savePatient(Patient p){
-        patientList.add(p);
+
+        Firebase firebase = new Firebase();
+        firebase.newPatient(p);
+
     }
 }
