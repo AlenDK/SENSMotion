@@ -89,6 +89,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -107,6 +108,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                    akt_klaret.show();
                 }}
         }).start();
+        */
 
 
         return view;

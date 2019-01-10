@@ -1,6 +1,5 @@
 package e.android.sensmotion.views;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
@@ -9,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,7 +16,6 @@ import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,8 +24,6 @@ import java.util.List;
 import java.util.Locale;
 
 import e.android.sensmotion.R;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.entities.sensor.Values;
 
 public class PatientData_frag extends Fragment implements View.OnClickListener {
 
@@ -83,7 +77,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         ImgBtn = view.findViewById(R.id.knap_profil);
         ImgBtn.setOnClickListener(this);
 
-        patientinformation = view.findViewById(R.id.patientinformation);
+        patientinformation = view.findViewById(R.id.textView2);
 
         return view;
     }

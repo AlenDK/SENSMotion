@@ -253,7 +253,7 @@
         app:layout_constraintTop_toBottomOf="@+id/circlebar" />
 
     <TextView
-        android:id="@+id/patientinformation"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -268,8 +268,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/progbar_bike"
-        app:layout_constraintEnd_toEndOf="@+id/patientinformation"
-        app:layout_constraintStart_toStartOf="@+id/patientinformation"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/progbar_stand" />
 
     <TextView
