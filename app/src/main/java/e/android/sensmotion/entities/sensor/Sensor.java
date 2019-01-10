@@ -1,5 +1,7 @@
 package e.android.sensmotion.entities.sensor;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Sensor {
@@ -34,7 +36,22 @@ public class Sensor {
     }
 
     public void populate(JSONObject json) {
-        Period period = new Period(1);
+
+        ////////////////////////////////////////////////////////////////////////////////////////
+        //Elendig kode!
+
+        JSONObject jsonVALUE = null;
+        int length=1;
+        try {
+            jsonVALUE = json.getJSONObject("value");
+            JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
+            length = jsonDATA.length();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////
+
+        Period period = new Period(length);
         period.populate(json);
         currentPeriod = period;
 
