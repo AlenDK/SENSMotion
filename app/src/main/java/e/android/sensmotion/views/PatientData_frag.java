@@ -15,17 +15,28 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.entities.sensor.Values;
 
 public class PatientData_frag extends Fragment implements View.OnClickListener {
 
     Button periode, graf;
     ImageButton ImgBtn;
     TextView patientinformation;
+    HorizontalBarChart barChart;
 
     final Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -41,6 +52,27 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.patient_data_frag, container, false);
+
+
+        barChart = view.findViewById(R.id.chart);
+
+        List<BarEntry> entries = new ArrayList<BarEntry>();
+
+        //Values values = ControllerRegistry.getUserController().getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+
+        entries.add(new BarEntry(0f, 10f));
+        entries.add(new BarEntry(1f, 11f));
+        entries.add(new BarEntry(2f, 12f));
+        entries.add(new BarEntry(3f, 13f));
+
+        BarDataSet dataSet = new BarDataSet(entries, "Værdier");
+        BarData data = new BarData(dataSet);
+        data.setBarWidth(0.9f);
+        barChart.setData(data);
+        barChart.setFitBars(true);
+        barChart.invalidate();
+
+
 
         periode = view.findViewById(R.id.dato_knap);
         periode.setOnClickListener(this);

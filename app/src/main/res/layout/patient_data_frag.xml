@@ -13,8 +13,10 @@
         android:id="@+id/actionbar_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="182dp"
         android:scaleType="centerCrop"
         android:src="@drawable/header_bar_red"
+        app:layout_constraintBottom_toTopOf="@+id/dato_knap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,40 +74,50 @@
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <WebView
-        android:id="@+id/webView2"
-        android:layout_width="367dp"
-        android:layout_height="273dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
         android:id="@+id/dato_knap"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginEnd="55dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="287dp"
         android:background="@drawable/edittext_custom"
         android:text="Dato"
-        app:layout_constraintBottom_toTopOf="@+id/webView2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/patientinformation"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image" />
 
     <Button
         android:id="@+id/graf_knap"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
         android:background="@drawable/edittext_custom"
         android:text="Graf"
-        app:layout_constraintBottom_toTopOf="@+id/webView2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/dato_knap"
         app:layout_constraintEnd_toEndOf="@+id/patientinformation"
         app:layout_constraintStart_toStartOf="@+id/patientinformation" />
+
+    <FrameLayout
+        android:layout_width="344dp"
+        android:layout_height="271dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 
 </android.support.constraint.ConstraintLayout>
