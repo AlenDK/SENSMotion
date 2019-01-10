@@ -28,17 +28,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
-    private TextView textView;
+    private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
     private ProgressBar circlebar, walk,stand,bike,train,other;
-    ImageView imageView;
-
-    int overallProgress;
+    int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
-    double dailyProgress = 80;
-    int circleDailyProgress;
-    String Notifikation_Titel;
-    String Notifikation_Besked;
-
+    double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
+    int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
@@ -51,37 +46,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
-        System.out.println(bruger.getPatient("p1"));
-        System.out.println(bruger.getPatient("p1").getSensor("s1"));
+        System.out.println("Bruger: "+bruger.getPatient("p1").toString());
+        System.out.println("Sensor: "+bruger.getPatient("p1").getSensor("s1").toString());
 
-       //data.refreshPatient(bruger.getPatient("p1"),bruger.getPatient("p1").getSensor("s1"),"10");
-/*
-        if(data != null) {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Alen ");
-            System.out.println(data);
-            System.out.println("Alen ");
-            System.out.println(" ");
-            System.out.println(data);
-            System.out.println("test");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("Burhan");
-            System.out.println(data.getPeriode().getValuesList().size());
-            System.out.println("Buran");
-
-        } else {
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println(" ");
-            System.out.println("DRÆB MIG");
-            System.out.println(" ");
-            System.out.println(" ");
-
-        }
-
-*/
 
 
       //  for (int i = 0; i <data.getPeriode().getValuesList().size(); i++) {
@@ -99,10 +66,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
 
 
+        walkAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk());
+        standAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand());
+        cyclingAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getCycling());
+        exerciseAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getExercise());
+        otherAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
 
-
-        //Burde måske have sin egen klasse
-        circleDailyProgress = (int)(270-dailyProgress/100*360);
+        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount +otherAmount;
+        circleProgress = (int) Math.round(dailyProgress/totalProgressGoal*100);
 
         createText(view);
         createImages(view);
@@ -164,7 +135,28 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         train = (ProgressBar) view.findViewById(R.id.progbar_train);
         other = (ProgressBar) view.findViewById(R.id.progbar_other);
 
-        circlebar.setRotation(circleDailyProgress);
+        int walkPercent = (int) Math.round(walkAmount/totalwalk*100);
+        int standPercent = (int) Math.round(standAmount/totalstand*100);
+        int cyclingPercent = (int) Math.round(cyclingAmount/totalcycling*100);
+        int exercisePercent = (int) Math.round(exerciseAmount/totalexercise*100);
+        int otherPercent = (int) Math.round(otherAmount/totalother*100);
+
+        System.out.println(walkPercent);
+        System.out.println(standPercent);
+        System.out.println(cyclingPercent);
+        System.out.println(exercisePercent);
+        System.out.println(otherPercent);
+
+        walk.setProgress(walkPercent);
+        stand.setProgress(standPercent);
+        bike.setProgress(cyclingPercent);
+        train.setProgress(exercisePercent);
+        other.setProgress(otherPercent);
+
+
+        circlebar.setProgress(circleProgress);
+        circlebar.setRotation(270); //Make the progressbar start at the top
+
     }
 
     private void createImages(View view){
@@ -179,6 +171,19 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private void createText(View view){
         textView = (TextView) view.findViewById(R.id.nameText);
+        textView1 = (TextView) view.findViewById(R.id.textView1);
+        textView2 = (TextView) view.findViewById(R.id.textView2);
+        textView3 = (TextView) view.findViewById(R.id.textView3);
+        textView4 = (TextView) view.findViewById(R.id.textView4);
+        textView5 = (TextView) view.findViewById(R.id.textView5);
+        circleText =(TextView) view.findViewById(R.id.progressBarText);
+
+        textView1.setText(Math.round(otherAmount)+"/100m");
+        textView2.setText(Math.round(standAmount)+"/100min");
+        textView3.setText(Math.round(cyclingAmount)+"/100m");
+        textView4.setText(Math.round(exerciseAmount)+"/100min");
+        textView5.setText(Math.round(walkAmount)+"/100min");
+        circleText.setText(circleProgress+"%");
     }
 
     private void createButtons(View view){
