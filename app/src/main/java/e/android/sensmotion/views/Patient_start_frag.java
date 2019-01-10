@@ -30,10 +30,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ImageButton profile_button;
     private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
     private ProgressBar circlebar, walk,stand,bike,train,other;
+
+    String Notifikation_Titel, Notifikation_Besked;
+
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
     double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
     int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
+
+
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
@@ -59,8 +64,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             textview.setText("Dag: " + 1);
 
 
-            imageView = views.findViewById(R.id.facetoday_image);
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+            today_smiley = views.findViewById(R.id.facetoday_image);
+            today_smiley.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
 
             dates.addView(views);
         }
