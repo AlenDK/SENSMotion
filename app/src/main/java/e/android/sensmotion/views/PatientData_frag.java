@@ -58,12 +58,12 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
         List<BarEntry> entries = new ArrayList<BarEntry>();
 
-        //Values values = ControllerRegistry.getUserController().getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        Values values = ControllerRegistry.getUserController().getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
-        entries.add(new BarEntry(0f, 10f));
-        entries.add(new BarEntry(1f, 11f));
-        entries.add(new BarEntry(2f, 12f));
-        entries.add(new BarEntry(3f, 13f));
+        entries.add(new BarEntry(0f, Float.valueOf(values.getStand())));
+        entries.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
+        entries.add(new BarEntry(2f, Float.valueOf(values.getRest())));
+        entries.add(new BarEntry(3f, Float.valueOf(values.getOther())));
 
         BarDataSet dataSet = new BarDataSet(entries, "Værdier");
         BarData data = new BarData(dataSet);
