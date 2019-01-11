@@ -1,5 +1,7 @@
 package e.android.sensmotion.controller.impl;
 
+import com.google.android.gms.common.util.Strings;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,15 +32,27 @@ public class DataController implements IDataController {
 
     }
 
-    public String getDataString(Patient patient){
+    public String getDataString(Patient patient, String date){
         project_key = patient.getProject_key();
         patient_key = patient.getPatient_key();
 
-        String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
-                "project_key=" + project_key +
-                "&patient_key="+ patient_key +
-                //"&day_count="  + 10);
-                "&date=2018-10-02");
+        String endpoint;
+
+        if(!Strings.isEmptyOrWhitespace(date)){
+            endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
+                    "project_key=" + project_key +
+                    "&patient_key=" + patient_key +
+                    "&date=" + date);
+            System.out.println("den her metoder BURDE funke");
+        }
+        else{
+            endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
+                    "project_key=" + project_key +
+                    "&patient_key="+ patient_key +
+                    //"&day_count="  + 10);
+                    "&date=2018-10-02");
+            System.out.println("den her metode funker ikke");
+        }
 
         try{
             URL url = new URL(endpoint);

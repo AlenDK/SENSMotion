@@ -69,8 +69,18 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String id = patientList.get(i).getId();
+
+                PatientData_frag pdf = new PatientData_frag();
+                Bundle pdf_args = new Bundle();
+
+                pdf_args.putString("id", id);
+
+                pdf.setArguments(pdf_args);
+
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new PatientData_frag())
+                        .replace(R.id.fragmentindhold, pdf)
                         .addToBackStack(null)
                         .commit();
             }

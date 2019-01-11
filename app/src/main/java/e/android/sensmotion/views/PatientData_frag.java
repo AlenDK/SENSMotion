@@ -18,6 +18,7 @@ import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.google.android.gms.common.util.Strings;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
     private HorizontalBarChart barChart;
     private IDataController dc;
     private IUserController uc;
-    private String jsonString;
+    private String jsonString, dateChosen, id;
     private ProgressDialog loading;
 
     final Calendar calendar = Calendar.getInstance();
@@ -58,11 +59,15 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.patient_data_frag, container, false);
 
+        if(getArguments() != null){
+            id = getArguments().getString("id");
+        }
+
         dc = ControllerRegistry.getDataController();
         uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
 
-        updateSensorData();
+        updateSensorData(id);
 
         barChart = view.findViewById(R.id.chart);
         updateBarChart();
@@ -104,40 +109,49 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
                         .commit();
 
         }
-
-
-        }
+    }
 
 
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        patientinformation.setText(sdf.format(calendar.getTime()));
+        dateChosen = sdf.format(calendar.getTime());
+        patientinformation.setText(dateChosen);
+        updateSensorData(id);
+        updateBarChart();
     }
 
     public void updateBarChart(){
         List<BarEntry> entries = new ArrayList<BarEntry>();
 
-        Values values = ControllerRegistry.getUserController().getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        if(ControllerRegistry.getUserController().getPatient(id) != null) {
+            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
-        entries.add(new BarEntry(0f, Float.valueOf(values.getStand())));
-        entries.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
-        entries.add(new BarEntry(2f, Float.valueOf(values.getRest())));
-        entries.add(new BarEntry(3f, Float.valueOf(values.getOther())));
+            entries.add(new BarEntry(0f, Float.valueOf(values.getStand())));
+            entries.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
+            entries.add(new BarEntry(2f, Float.valueOf(values.getRest())));
+            entries.add(new BarEntry(3f, Float.valueOf(values.getOther())));
 
-        BarDataSet dataSet = new BarDataSet(entries, "Værdier");
-        BarData data = new BarData(dataSet);
-        data.setBarWidth(0.9f);
-        barChart.setData(data);
-        barChart.setFitBars(true);
-        barChart.invalidate();
+            BarDataSet dataSet = new BarDataSet(entries, "Værdier");
+            BarData data = new BarData(dataSet);
+            data.setBarWidth(0.9f);
+            barChart.setData(data);
+            barChart.setFitBars(true);
+            barChart.invalidate();
+        }
+
+
+
     }
 
-    public void updateSensorData(){
+    public void updateSensorData(String id){
         try {
             String hentDataResult = new HentDataAsyncTask().execute().get();
-            dc.saveData(hentDataResult, uc.getPatient("p1").getSensor("s1"));
+
+            if(uc.getPatient(id) != null) {
+                dc.saveData(hentDataResult, uc.getPatient(id).getSensor("s1"));
+            }
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -158,7 +172,19 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... strings) {
 
-            jsonString = dc.getDataString(uc.getPatient("p1"));
+            if(Strings.isEmptyOrWhitespace(dateChosen)){
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                dateChosen = sdf.format(calendar.getTime());
+                System.out.println(dateChosen);
+            }
+            else{
+                System.out.println("dateChosen er ikke empty");
+            }
+
+            jsonString = dc.getDataString(uc.getPatient("p1"), dateChosen);
+            System.out.println("jsonString: " + jsonString);
 
             return jsonString;
         }

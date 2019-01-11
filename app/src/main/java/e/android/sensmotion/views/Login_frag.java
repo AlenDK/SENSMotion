@@ -176,7 +176,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(String... strings) {
 
-            jsonString = dc.getDataString(bc.getPatient("p1"));
+            jsonString = dc.getDataString(bc.getPatient("p1"), null);
 
             return jsonString;
         }
