@@ -1,11 +1,11 @@
-package e.android.sensmotion.data;
+package e.android.sensmotion.Notification;
 
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-public class Notifikation extends Application {
+public class NotifikationChannels extends Application {
     final public static String CHANNEL_ID1 = "Channel1";
     final public static String CHANNEL_ID2 = "Channel2";
 
