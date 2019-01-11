@@ -72,4 +72,15 @@ public class Patient extends User {
 
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "cpr: "+cpr+
+                ", mobility: "+mobility+
+                ", project_key: "+project_key+
+                ", patient_key: "+patient_key+
+                ", sensors: "+sensors+
+                '}';
+    }
 }

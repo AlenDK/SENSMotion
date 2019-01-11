@@ -34,9 +34,18 @@ public class Sensor {
     }
 
     public void populate(JSONObject json) {
-        Period period = new Period(13);
+        Period period = new Period(1);
         period.populate(json);
         currentPeriod = period;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Sensor{" +
+                "id: "+id +
+                ", placement: "+placement+
+                ", currentPeriod: "+currentPeriod+
+                '}';
     }
 }

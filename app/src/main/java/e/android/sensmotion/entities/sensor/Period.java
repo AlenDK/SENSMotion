@@ -26,13 +26,20 @@ public class Period {
 
     public void populate(JSONObject data) {
 
-        System.out.println("data;");
-        System.out.println(data);
-
+        System.out.println("data: "+data);
         for(int i = 0; i<day_count; i++){
             values = new Values();
             values.populate(data, i);
             valuesList.add(values);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Period{"+
+                "valuesList: "+valuesList+
+                ", values: "+values+
+                ", day_count: "+day_count+
+                '}';
     }
 }

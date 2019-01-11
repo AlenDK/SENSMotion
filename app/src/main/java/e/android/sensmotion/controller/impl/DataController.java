@@ -35,8 +35,9 @@ public class DataController implements IDataController {
         patient_key = patient.getPatient_key();
 
         String endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
-                "project_key="+ project_key +
+                "project_key=" + project_key +
                 "&patient_key="+ patient_key +
+                //"&day_count="  + 10);
                 "&date=2018-10-02");
 
         try{

@@ -52,11 +52,11 @@ public class Values {
         try {
 
             JSONObject jsonVALUE = data1.getJSONObject("value");
-            System.out.println("////////  \n"+jsonVALUE);
+            //System.out.println("////////  \n"+jsonVALUE);
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
-            System.out.println("////\n"+jsonDATA);
+            //System.out.println("////\n"+jsonDATA);
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
-            System.out.println("////\n"+jsonVALUES);
+            //System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
             System.out.println("////\n"+jsonVALUES1);
 
@@ -70,13 +70,14 @@ public class Values {
             nodata = jsonVALUES1.getString("general/nodata/time");
             steps = jsonVALUES1.getString("activity/steps/count");
 
-
+            /*
             System.out.println("Resting time: " + rest);
             System.out.println("Standing time: " + stand);
             System.out.println("Walking time: " + walk);
             System.out.println("Cycling time: " + cycling);
             System.out.println("Exercise time: " + exercise);
             System.out.println("Other: " + other);
+            */
 
 
         } catch (JSONException e) {
@@ -84,5 +85,19 @@ public class Values {
         }
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "Values{" +
+                "rest: "+rest+
+                ", stand: "+stand+
+                ", walk: "+walk+
+                ", exercise: "+exercise+
+                ", other: "+other+
+                ", steps: "+steps+
+                ", cycling: "+cycling+
+                ", nodata: "+nodata+
+                '}';
     }
 }
