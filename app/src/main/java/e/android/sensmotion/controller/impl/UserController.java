@@ -71,7 +71,9 @@ public class UserController implements IUserController {
     }
 
     public Patient getPatient(String id){
-        ArrayList<Patient> patientList = new ArrayList<>();
+        //ArrayList<Patient> patientList = new ArrayList<>();
+
+        /*
         final ArrayList<Object> obj = new ArrayList<>();
 
         database.addValueEventListener(new ValueEventListener() {
@@ -93,6 +95,7 @@ public class UserController implements IUserController {
 
             }
         });
+        */
 
 
         for(Patient p : patientList){

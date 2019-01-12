@@ -17,8 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
@@ -26,8 +24,6 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.data.Firebase;
-import e.android.sensmotion.entities.sensor.Period;
-import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
@@ -52,6 +48,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
 
         if (!EMULATOR) {
+
             Fabric.with(getActivity(), new Crashlytics());
         }
 /*
@@ -110,17 +107,17 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     }
 
                     System.out.println("/////////////////////////////// REST /////////////////////////////////////");
-                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getRest());
+                    //System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getRest());
 
                     System.out.println("/////////////////////////////// Other /////////////////////////////////////");
-                    System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
+                    //System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
 
                  //   for (int i = 0; i < 10; i++){
 
 //                        Log.d("testtt", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)));
 
 
-                        Log.d("Første", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList()));
+                        //Log.d("Første", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList()));
 
 
 // bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)
