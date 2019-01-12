@@ -34,7 +34,7 @@ public class Sensor {
     }
 
     public void populate(JSONObject json) {
-        Period period = new Period(13);
+        Period period = new Period(1);
         period.populate(json);
         currentPeriod = period;
 

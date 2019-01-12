@@ -1,6 +1,9 @@
 package e.android.sensmotion.views;
 
 import android.app.Fragment;
+import android.app.Notification;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -18,21 +21,28 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
+//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
+//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
+
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
     private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
     private ImageButton profile_button;
     private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
     private ProgressBar circlebar, walk,stand,bike,train,other;
+
+    String Notifikation_Titel, Notifikation_Besked;
+
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
     double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
     int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
+
+
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
-    ImageView imageView;
-
     private Handler progHandle = new Handler();
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,8 +64,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             textview.setText("Dag: " + 1);
 
 
-            imageView = views.findViewById(R.id.facetoday_image);
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+            today_smiley = views.findViewById(R.id.facetoday_image);
+            today_smiley.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
 
             dates.addView(views);
         }
@@ -79,6 +89,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Toast akt_klaret =  Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -97,6 +108,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                    akt_klaret.show();
                 }}
         }).start();
+        */
 
 
         return view;
@@ -185,4 +197,37 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
+/*
+    public void NotifyWhenDone() {
+        Notifikation_Titel = "Mega sejt gået!!";
+        Notifikation_Besked = "Du har klaret én af dagens udfordinger";
+
+        Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID1)
+                .setSmallIcon(R.drawable.sensmotionblack)
+                .setContentTitle(Notifikation_Titel)
+                .setContentText(Notifikation_Besked)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManagerCompat.notify(1, notification);
+    }
+
+    public void NotifyHalfWayThere() {
+        Notifikation_Titel = "Du er der næsten!";
+        Notifikation_Besked = "Du er nu halvejs gennem én af dagens udfordinger. \n" +
+                "Keep up the good work";
+
+        Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID2)
+                .setSmallIcon(R.drawable.sensmotionblack)
+                .setContentTitle(Notifikation_Titel)
+                .setContentText(Notifikation_Besked)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManagerCompat.notify(2, notification);
+    }
+
+    */
 }

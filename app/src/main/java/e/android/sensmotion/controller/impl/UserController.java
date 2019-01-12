@@ -1,11 +1,21 @@
 package e.android.sensmotion.controller.impl;
 
+import android.support.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
+import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.User;
 import e.android.sensmotion.entities.user.Patient;
@@ -16,6 +26,7 @@ public class UserController implements IUserController {
     private List<User> userList = new ArrayList<User>();
     private List<Patient> patientList = new ArrayList<Patient>();
     private ISensorController sc;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     public UserController(){
 
@@ -48,6 +59,8 @@ public class UserController implements IUserController {
         return userList;
     }
 
+    public List<Patient> getPatientList() { return patientList; }
+
     public User getUser(String id){
         for(User b : userList){
             if(b.getId().equals(id)){
@@ -58,6 +71,33 @@ public class UserController implements IUserController {
     }
 
     public Patient getPatient(String id){
+        //ArrayList<Patient> patientList = new ArrayList<>();
+
+        /*
+        final ArrayList<Object> obj = new ArrayList<>();
+
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot d : dataSnapshot.getChildren()){
+                    //Fordi vi ikke har tømt databasen endnu
+                    if(d.getValue() == "test")
+                        obj.add(d.getValue());
+                }
+                for(Object o : obj){
+
+                }
+                System.out.println("Penis: "+obj.toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        */
+
+
         for(Patient p : patientList){
             if(p.getId().equals(id)){
                 return p;
@@ -67,6 +107,7 @@ public class UserController implements IUserController {
     }
 
     public void savePatient(Patient p){
-        patientList.add(p);
+        Firebase firebase = new Firebase();
+        firebase.newPatient(p);
     }
 }

@@ -1,67 +1,102 @@
 package e.android.sensmotion.views;
 
+import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.google.android.gms.common.util.Strings;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.entities.sensor.Values;
 
 public class PatientData_frag extends Fragment implements View.OnClickListener {
 
-    Button periode, graf;
-    boolean calendar = false;
-    CalendarView calendarView;
-    ImageButton ImgBtn;
+    private Button periode, graf;
+    private ImageButton ImgBtn;
+    private TextView patientinformation;
+    private HorizontalBarChart barChart;
+    private IDataController dc;
+    private IUserController uc;
+    private String jsonString, dateChosen, id;
+    private ProgressDialog loading;
+
+    final Calendar calendar = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.patient_data_frag, container, false);
 
+        if(getArguments() != null){
+            id = getArguments().getString("id");
+        }
 
-       /* periode = (Button) view.findViewById(R.id.periode);
-        graf = (Button) view.findViewById(R.id.grafer);*/
-        //calendarView = (CalendarView) view.findViewById(R.id.calendarView);
-        ImgBtn = (ImageButton) view.findViewById(R.id.knap_profil);
+        dc = ControllerRegistry.getDataController();
+        uc = ControllerRegistry.getUserController();
+        loading = new ProgressDialog(view.getContext());
 
-     /*   periode.setOnClickListener(this);
-        graf.setOnClickListener(this);*/
+        updateSensorData(id);
+
+        barChart = view.findViewById(R.id.chart);
+        updateBarChart();
+
+        periode = view.findViewById(R.id.dato_knap);
+        periode.setOnClickListener(this);
+
+        graf = view.findViewById(R.id.graf_knap);
+        graf.setOnClickListener(this);
+
+        ImgBtn = view.findViewById(R.id.knap_profil);
         ImgBtn.setOnClickListener(this);
+
+        patientinformation = view.findViewById(R.id.textView2);
 
         return view;
     }
 
 
-   /* @Override  SKAL MÅSKE BRUEGS, HVIS DEN SKAL LAVES TIL EN ACTIVITY
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.patient_data_frag);
-
-        Button periode = (Button) findViewById(R.id.periode);
-        Button graf = (Button) findViewById(R.id.grafer);
-
-        periode.setOnClickListener(this);
-        graf.setOnClickListener(this);
-    }
-
-*/
-
     @Override
     public void onClick(View view) {
 
         if (view == periode) {
-            if (!calendar) {
-                calendarView.setVisibility(View.VISIBLE);
-                calendar = true;
-            } else if (calendar) {
-                calendarView.setVisibility(View.GONE);
-                calendar = false;
-            }
+
+            new DatePickerDialog(view.getContext(), date, calendar
+                    .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)).show();
+
+
         } else if (view == graf) {
 
             //en masse kode.
@@ -74,8 +109,92 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
                         .commit();
 
         }
+    }
 
 
+    private void updateLabel() {
+        String myFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        dateChosen = sdf.format(calendar.getTime());
+        patientinformation.setText(dateChosen);
+        updateSensorData(id);
+        updateBarChart();
+    }
+
+    public void updateBarChart(){
+        List<BarEntry> entries = new ArrayList<BarEntry>();
+
+        if(ControllerRegistry.getUserController().getPatient(id) != null) {
+            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+
+            entries.add(new BarEntry(0f, Float.valueOf(values.getStand())));
+            entries.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
+            entries.add(new BarEntry(2f, Float.valueOf(values.getRest())));
+            entries.add(new BarEntry(3f, Float.valueOf(values.getOther())));
+
+            BarDataSet dataSet = new BarDataSet(entries, "Værdier");
+            BarData data = new BarData(dataSet);
+            data.setBarWidth(0.9f);
+            barChart.setData(data);
+            barChart.setFitBars(true);
+            barChart.invalidate();
         }
+
+
+
+    }
+
+    public void updateSensorData(String id){
+        try {
+            String hentDataResult = new HentDataAsyncTask().execute().get();
+
+            if(uc.getPatient(id) != null) {
+                dc.saveData(hentDataResult, uc.getPatient(id).getSensor("s1"));
+            }
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    class HentDataAsyncTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loading.setMessage("\t Henter data...");
+            loading.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            if(Strings.isEmptyOrWhitespace(dateChosen)){
+                String myFormat = "yyyy-MM-dd";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                dateChosen = sdf.format(calendar.getTime());
+                System.out.println(dateChosen);
+            }
+            else{
+                System.out.println("dateChosen er ikke empty");
+            }
+
+            jsonString = dc.getDataString(uc.getPatient("p1"), dateChosen);
+            System.out.println("jsonString: " + jsonString);
+
+            return jsonString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loading.dismiss();
+        }
+    }
+
     }
 

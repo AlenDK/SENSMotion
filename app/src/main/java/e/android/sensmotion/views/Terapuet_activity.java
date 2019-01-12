@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import e.android.sensmotion.R;
 //import e.android.sensmotion.views.Patientliste_frag;
 
@@ -22,4 +25,5 @@ public class Terapuet_activity extends AppCompatActivity {
                     .commit();
         }
     }
+
 }
