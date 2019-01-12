@@ -4,6 +4,8 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class NotifikationChannels extends Application {
     final public static String CHANNEL_ID1 = "Channel1";
@@ -12,6 +14,7 @@ public class NotifikationChannels extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         createNotificationchannels();
     }

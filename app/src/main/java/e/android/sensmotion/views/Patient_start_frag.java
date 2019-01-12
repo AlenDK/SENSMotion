@@ -21,8 +21,8 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
-import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
-import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
+//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
+//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
@@ -197,7 +197,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
-
+/*
     public void NotifyWhenDone() {
         Notifikation_Titel = "Mega sejt gået!!";
         Notifikation_Besked = "Du har klaret én af dagens udfordinger";
@@ -228,4 +228,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         notificationManagerCompat.notify(2, notification);
     }
+
+    */
 }

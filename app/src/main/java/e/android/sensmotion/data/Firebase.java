@@ -1,5 +1,11 @@
 package e.android.sensmotion.data;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -62,6 +68,42 @@ public class Firebase {
 //
   //      dTest.child("testing").setValue(sensor);
   //  }
+
+/*
+        mDatabase.addValueEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Patient bruger = dataSnapshot.getValue(Patient.class);
+                System.out.println("Sensor " + bruger.getSensorer());
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        }
+
+*/
+
 
 
 
