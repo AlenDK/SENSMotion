@@ -2,6 +2,7 @@ package e.android.sensmotion.views;
 
 import android.app.Fragment;
 import android.app.Notification;
+import android.app.usage.UsageStats;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.MotionDetection;
@@ -242,4 +245,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     */
+
+/*
+    public void streakNotification(){
+        int streak;
+        UsageStats usageStats = new UsageStats();
+        Date date = new Date();
+        long currentTime = date.getTime();
+        if(usageStats.getLastTimeUsed()- currentTime == 43200000){
+
+        }
+
+    }
+*/
 }
