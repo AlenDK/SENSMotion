@@ -16,6 +16,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
 import e.android.sensmotion.data.Firebase;
+import e.android.sensmotion.data.FirebaseController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.User;
 import e.android.sensmotion.entities.user.Patient;
@@ -27,10 +28,14 @@ public class UserController implements IUserController {
     private List<Patient> patientList = new ArrayList<Patient>();
     private ISensorController sc;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    FirebaseController fbc;
+
+    Patient patient = new Patient();
 
     public UserController(){
 
         sc = ControllerRegistry.getSensorController();
+        fbc = new FirebaseController();
 
         List<Sensor> p1Sensorer = new ArrayList<>();
         p1Sensorer.add(sc.getSensor("s1"));
@@ -70,24 +75,25 @@ public class UserController implements IUserController {
         return null;
     }
 
-    public Patient getPatient(String id){
-        //ArrayList<Patient> patientList = new ArrayList<>();
-
-        /*
-        final ArrayList<Object> obj = new ArrayList<>();
-
+    public Patient getPatient(final String id){
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                ArrayList<Object> sensorer = new ArrayList<>();
                 for(DataSnapshot d : dataSnapshot.getChildren()){
                     //Fordi vi ikke har tømt databasen endnu
-                    if(d.getValue() == "test")
-                        obj.add(d.getValue());
-                }
-                for(Object o : obj){
+                    patient.setId(d.child(id).child("id").getValue(String.class));
+                    patient.setCpr(d.child(id).child("cpr").getValue(String.class));
+                    patient.setProject_key(d.child(id).child("project_key").getValue(String.class));
+                    patient.setPatient_key(d.child(id).child("patient_key").getValue(String.class));
+                    patient.setUsername(d.child(id).child("username").getValue(String.class));
+                    patient.setPassword(d.child(id).child("password").getValue(String.class));
+                    patient.setSensors(null);
+                    patient.setMobility(null);
 
+                    System.out.println("what hello "+patient.toString());
                 }
-                System.out.println("Penis: "+obj.toString());
             }
 
             @Override
@@ -95,9 +101,12 @@ public class UserController implements IUserController {
 
             }
         });
-        */
+        System.out.println("Sidste kald:   "+patient.toString());
+        //return patient;
 
+        fbc.getValues();
 
+        //Direkte fra API
         for(Patient p : patientList){
             if(p.getId().equals(id)){
                 return p;
