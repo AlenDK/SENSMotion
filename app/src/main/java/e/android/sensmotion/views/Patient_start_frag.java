@@ -118,7 +118,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         if(view == profile_button){
             getFragmentManager().beginTransaction()
-            .replace(R.id.fragmentindhold, new patient_setting_frag())
+            .replace(R.id.fragmentindhold, new Task_complete_frag())
             .commit();
 
         }
