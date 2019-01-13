@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.adapters.MotionDetection;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
@@ -109,6 +110,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 }}
         }).start();
         */
+
+
+
+        view.setOnTouchListener(new MotionDetection(getActivity()) {
+            @Override
+            public void onSwipeUp() {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new Achievement_frag())
+                        .commit();
+            }
+            });
 
 
         return view;
