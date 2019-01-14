@@ -32,8 +32,7 @@ public class NotificationService extends Service {
         super.onStartCommand(intent, flags, startId);
         Log.e(TAG, "onStartCommand");
         Toast.makeText(this, "StartID: " + startId, Toast.LENGTH_SHORT).show();
-
-
+        Lytter.start();
         return START_STICKY;
     }
 
@@ -57,12 +56,15 @@ public class NotificationService extends Service {
                 }
             }
         });
+
     }
 
     @Override
     public void onDestroy() {
         Toast.makeText(this, TAG + " onDestroy", Toast.LENGTH_LONG).show();
         run = false;
+        System.out.print(Lytter.isAlive());
+
         patient = null;
     }
 }
