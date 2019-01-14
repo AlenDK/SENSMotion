@@ -1,8 +1,10 @@
 package e.android.sensmotion.views;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
@@ -15,13 +17,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -48,10 +55,12 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
     private ImageButton ImgBtn;
     private TextView patientinformation;
     private HorizontalBarChart barChart;
+    private PieChart pieChart;
     private IDataController dc;
     private IUserController uc;
     private String jsonString, dateChosen, id;
     private ProgressDialog loading;
+    private AlertDialog.Builder dialogBuilder;
 
     final Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -72,11 +81,16 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
             id = getArguments().getString("id");
         }
 
+        dialogBuilder = new AlertDialog.Builder(view.getContext());
+
         dc = ControllerRegistry.getDataController();
         uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
 
         updateSensorData(id);
+
+        pieChart = view.findViewById(R.id.pieChart);
+        pieChart.setVisibility(View.GONE);
 
         barChart = view.findViewById(R.id.chart);
         updateBarChart();
@@ -108,7 +122,35 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
         } else if (view == graf) {
 
-            //en masse kode.
+            dialogBuilder.setTitle("Vælg diagram");
+
+            final String grafvalg[] = new String[]{"1. Søjlediagram", "2. Cirkeldiagram"};
+
+            dialogBuilder.setItems(grafvalg, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+
+                        case 0:
+                            pieChart.setVisibility(View.GONE);
+                            barChart.setVisibility(View.VISIBLE);
+                            updateBarChart();
+                            break;
+
+                        case 1:
+                            pieChart.setVisibility(View.VISIBLE);
+                            barChart.setVisibility(View.GONE);
+                            updatePieChart();
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            });
+
+            AlertDialog graphChoice = dialogBuilder.create();
+            graphChoice.show();
 
 
         } else if (view == ImgBtn) {
@@ -129,6 +171,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         periode.setText(dateChosen);
         updateSensorData(id);
         updateBarChart();
+        updatePieChart();
     }
 
     public void updateBarChart(){
@@ -153,6 +196,7 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
             entriesOther.add(new BarEntry(5f, Float.valueOf(values.getOther())));
 
             //Creates the various datasets and sets their color.
+            //This is done individually as to give every value a unique label.
             BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
             dataSetStand.setColor(getResources().getColor(R.color.colorBlack));
 
@@ -190,10 +234,34 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
 
             //Updates the chart.
             barChart.invalidate();
+
         }
+    }
 
+    public void updatePieChart() {
+        if (ControllerRegistry.getUserController().getPatient(id) != null) {
+            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
+            //Creates a list of PieEntries
+            List<PieEntry> entries = new ArrayList<PieEntry>();
+            entries.add(new PieEntry(Float.valueOf(values.getStand()), "Stående"));
+            entries.add(new PieEntry(Float.valueOf(values.getWalk()), "Gang"));
+            entries.add(new PieEntry(Float.valueOf(values.getCycling()), "Cykling"));
+            entries.add(new PieEntry(Float.valueOf(values.getExercise()), "Træning"));
+            entries.add(new PieEntry(Float.valueOf(values.getRest()), "Hvile"));
+            entries.add(new PieEntry(Float.valueOf(values.getOther()), "Andet"));
 
+            //Creates a dataset with the given entries
+            PieDataSet set = new PieDataSet(entries, "Sensordata");
+
+            //Sets the colors of the entries
+            set.setColors(new int[]{R.color.colorYellow, R.color.colorBlue, R.color.colorGreen, R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
+
+            PieData data = new PieData(set);
+            data.setValueFormatter(new ValueFormatter());
+            pieChart.setData(data);
+            pieChart.invalidate();
+        }
     }
 
     public void updateSensorData(String id){
