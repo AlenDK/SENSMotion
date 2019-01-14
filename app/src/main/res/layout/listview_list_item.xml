@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="60sp"
+    android:layout_height="95sp"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="80dp"
+        android:layout_height="123dp">
+
+
+        <ImageView
+            android:id="@+id/previousSmiley"
+            android:layout_width="57dp"
+            android:layout_height="47dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_sentiment_very_satisfied_black_48" />
+
+        <TextView
+            android:id="@+id/previousTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Dag 1"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/previousSmiley"
+            app:layout_constraintStart_toStartOf="@+id/previousSmiley"
+            app:layout_constraintTop_toBottomOf="@+id/previousSmiley" />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
