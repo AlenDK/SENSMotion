@@ -1,7 +1,12 @@
 package e.android.sensmotion.views;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.Notification;
+import android.app.usage.UsageStats;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
@@ -16,16 +21,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.adapters.MotionDetection;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.sensor.Values;
 
-//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
-//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
+import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
+import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID2;
+
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
@@ -34,26 +43,36 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ProgressBar circlebar, walk, stand, bike, train, other;
     private ImageButton profile_button;
 
-    String Notifikation_Titel, Notifikation_Besked;
+    Date currentDay = Calendar.getInstance().getTime();
+    SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+    String today = format.format(currentDay);
 
-    List<Values> values;
+    int day = Integer.parseInt(today.substring(0,1));
+    int month =  Integer.parseInt(today.substring(3,4));
+    int year =  Integer.parseInt(today.substring(6,9));
 
+    SharedPreferences prefs;
 
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
-    double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
-    int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
+    public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    static double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
+    static int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
 
 
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
+
     private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
+        notificationManagerCompat = NotificationManagerCompat.from(getActivity());
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
@@ -74,6 +93,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             today_smiley = views.findViewById(R.id.facetoday_image);
             today_smiley.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+
+
 
             dates.addView(views);
         }
@@ -119,6 +140,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         */
 
 
+
+        view.setOnTouchListener(new MotionDetection(getActivity()) {
+            @Override
+            public void onSwipeUp() {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new Achievement_frag())
+                        .commit();
+            }
+            });
+
+
         return view;
     }
 
@@ -140,6 +172,51 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         } else if (66.66 < overallProgress | overallProgress <= 100) {
             imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
         }
+    }
+*/
+
+
+//get dag, og tjek år, måned, dag
+
+    public void setDates(int day, int month, int year) {
+        prefs.edit().putInt("day", day);
+        prefs.edit().putInt("month", month);
+        prefs.edit().putInt("year", year);
+    }
+
+    private boolean checkDate() {
+        if (prefs.getInt("day", 0) == 0) {
+           setDates(day, month, year);
+        }
+        if ((day - prefs.getInt("day", 0)) >= 1) {
+
+            setDates(day, month, year);
+            return true;
+        }
+
+        if ((month - prefs.getInt("month", 0)) >= 1) {
+            setDates(day, month, year);
+            return true;
+        }
+        if ((year - prefs.getInt("year", 0)) >= 1) {
+            setDates(day, month, year);
+            return true;
+        }
+        return false;
+    }
+
+/*
+    private void saveAchievemnt( ) {
+        prefs.edit().putInt("overallWalk", )
+        prefs.getInt("walk", 0)
+        if ((prefs.getInt("walk", 0)) == 0) {
+            prefs.edit().putInt("walk",0);
+        } else {
+        }
+        500
+                520 - 500 = 20
+                        500 + 20
+                                300 - 520
     }
 */
     private void createProgressbar(View view){
@@ -205,15 +282,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
-/*
+
     public void NotifyWhenDone() {
-        Notifikation_Titel = "Mega sejt gået!!";
-        Notifikation_Besked = "Du har klaret én af dagens udfordinger";
 
         Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID1)
                 .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle(Notifikation_Titel)
-                .setContentText(Notifikation_Besked)
+                .setContentTitle("Mega sejt gået!!")
+                .setContentText("Du har nu klaret én af dagens udfordinger")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
@@ -222,14 +297,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     public void NotifyHalfWayThere() {
-        Notifikation_Titel = "Du er der næsten!";
-        Notifikation_Besked = "Du er nu halvejs gennem én af dagens udfordinger. \n" +
-                "Keep up the good work";
 
         Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID2)
                 .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle(Notifikation_Titel)
-                .setContentText(Notifikation_Besked)
+                .setContentTitle("Du er der næsten!")
+                .setContentText("Du er nu halvejs gennem én af dagens udfordinger. \n" +
+                        "Keep up the good work")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
@@ -237,5 +310,26 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         notificationManagerCompat.notify(2, notification);
     }
 
+    public static void setPercentage() {
+
+        PercentWalk = (int) Math.round(walkAmount/totalwalk*100);
+        PercentStand = (int) Math.round(standAmount/totalstand*100);
+        Percentcycle = (int) Math.round(cyclingAmount/totalcycling*100);
+        PercentExecise = (int) Math.round(exerciseAmount/totalexercise*100);
+        PercentOther = (int) Math.round(otherAmount/totalother*100);
+
+    }
+
+    /*
+    public void streakNotification(){
+        int streak;
+        UsageStats usageStats = new UsageStats();
+        Date date = new Date();
+        long currentTime = date.getTime();
+        if(usageStats.getLastTimeUsed()- currentTime == 43200000){
+
+        }
+
+    }
     */
 }

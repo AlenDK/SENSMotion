@@ -22,4 +22,12 @@
     <color name="colorGray">#A6B9C5</color>
     <color name="colorBlue">#1A91DC</color>
     <color name="colorDarkBlue">#0B659D</color>
+
+    <!--
+    Farvekoder til grafer mm.
+    -->
+
+    <color name="colorYellow">#FFFF00</color>
+    <color name="colorGreen"> 	#32CD32</color>
+
 </resources>

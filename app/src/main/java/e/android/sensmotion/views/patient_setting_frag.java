@@ -1,6 +1,7 @@
 package e.android.sensmotion.views;
 
 import android.app.Fragment;
+import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import e.android.sensmotion.Notification.NotificationService;
 import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {
@@ -23,10 +25,10 @@ public class patient_setting_frag extends Fragment {
     Button logout;
     ImageButton back;
     ImageView column1, column2, column3, column4, column5;
-    Intent act;
+    Intent act, service;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_setting_frag, container, false);
 
@@ -41,7 +43,14 @@ public class patient_setting_frag extends Fragment {
         //Kan det gøres smartere?
         pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
+                if (on) {
+                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
+                    getActivity().startService(service);
+                } else if (!on) {
+                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
+                    getActivity().stopService(service);
+                }
                 Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
         });
