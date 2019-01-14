@@ -15,12 +15,21 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.gms.common.util.Strings;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -117,27 +126,69 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         dateChosen = sdf.format(calendar.getTime());
-        patientinformation.setText(dateChosen);
+        periode.setText(dateChosen);
         updateSensorData(id);
         updateBarChart();
     }
 
     public void updateBarChart(){
-        List<BarEntry> entries = new ArrayList<BarEntry>();
 
         if(ControllerRegistry.getUserController().getPatient(id) != null) {
             Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
-            entries.add(new BarEntry(0f, Float.valueOf(values.getStand())));
-            entries.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
-            entries.add(new BarEntry(2f, Float.valueOf(values.getRest())));
-            entries.add(new BarEntry(3f, Float.valueOf(values.getOther())));
+            //Initializes lists of BarEntry.
+            List<BarEntry> entriesStand = new ArrayList<BarEntry>();
+            List<BarEntry> entriesWalk = new ArrayList<BarEntry>();
+            List<BarEntry> entriesCycling = new ArrayList<BarEntry>();
+            List<BarEntry> entriesExercise = new ArrayList<BarEntry>();
+            List<BarEntry> entriesRest = new ArrayList<BarEntry>();
+            List<BarEntry> entriesOther = new ArrayList<BarEntry>();
 
-            BarDataSet dataSet = new BarDataSet(entries, "Værdier");
-            BarData data = new BarData(dataSet);
+            //Creates the entries for the different values.
+            entriesStand.add(new BarEntry(0f, Float.valueOf(values.getStand())));
+            entriesWalk.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
+            entriesCycling.add(new BarEntry(2f, Float.valueOf(values.getCycling())));
+            entriesExercise.add(new BarEntry(3f, Float.valueOf(values.getExercise())));
+            entriesRest.add(new BarEntry(4f, Float.valueOf(values.getRest())));
+            entriesOther.add(new BarEntry(5f, Float.valueOf(values.getOther())));
+
+            //Creates the various datasets and sets their color.
+            BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
+            dataSetStand.setColor(getResources().getColor(R.color.colorBlack));
+
+            BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
+            dataSetWalk.setColor(getResources().getColor(R.color.colorBlue));
+
+            BarDataSet dataSetCycling = new BarDataSet(entriesCycling, "Cykling");
+            dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
+
+            BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
+            dataSetExercise.setColor(getResources().getColor(R.color.colorYellow));
+
+            BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
+            dataSetRest.setColor(getResources().getColor(R.color.colorRed));
+
+            BarDataSet dataSetOther = new BarDataSet(entriesOther, "Andet");
+            dataSetOther.setColor(getResources().getColor(R.color.colorGray));
+
+            //Creates data for the chart based on the different datasets.
+            BarData data = new BarData(dataSetStand, dataSetWalk, dataSetExercise, dataSetCycling, dataSetRest, dataSetOther);
+            data.setValueFormatter(new ValueFormatter());
+
+            //Formats the chart.
             data.setBarWidth(0.9f);
             barChart.setData(data);
             barChart.setFitBars(true);
+            barChart.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            barChart.setDrawBorders(true);
+            barChart.setTouchEnabled(false);
+
+            //Sets chart description
+            Description disc = new Description();
+            disc.setText("Sensordata");
+            barChart.setDescription(disc);
+
+            //Updates the chart.
             barChart.invalidate();
         }
 
@@ -193,6 +244,18 @@ public class PatientData_frag extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             loading.dismiss();
+        }
+    }
+
+    class ValueFormatter implements IValueFormatter{
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+
+            int hours = (int) value / 60;
+            int minutes = Math.round(value % 60);
+
+            return hours + " t, " + minutes + " min";
         }
     }
 
