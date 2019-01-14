@@ -13,9 +13,10 @@ import static e.android.sensmotion.views.Patient_start_frag.PercentOther;
 import static e.android.sensmotion.views.Patient_start_frag.PercentStand;
 import static e.android.sensmotion.views.Patient_start_frag.PercentWalk;
 import static e.android.sensmotion.views.Patient_start_frag.Percentcycle;
-import static e.android.sensmotion.views.Patient_start_frag.getPercentage;
+import static e.android.sensmotion.views.Patient_start_frag.setPercentage;
 
 public class NotificationService extends Service {
+    Patient_start_frag patient;
     String TAG = getClass().getName();
     Thread Lytter;
     boolean run;
@@ -40,17 +41,18 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         Toast.makeText(this, TAG + " onCreate", Toast.LENGTH_LONG).show();
+        patient = new Patient_start_frag();
         run = true;
         Lytter = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (run) {
-                    getPercentage();
+                    setPercentage();
                     if (PercentWalk == 50 || PercentStand == 50 || Percentcycle == 50 || PercentExecise == 50 || PercentOther == 50) {
-                        //NotifyHalfWayThere();
+                        patient.NotifyHalfWayThere();
                     }
                     if (PercentWalk == 100 || PercentStand == 100 || Percentcycle == 100 || PercentExecise == 100 || PercentOther == 10) {
-
+                        patient.NotifyWhenDone();
                     }
                 }
             }
@@ -61,5 +63,6 @@ public class NotificationService extends Service {
     public void onDestroy() {
         Toast.makeText(this, TAG + " onDestroy", Toast.LENGTH_LONG).show();
         run = false;
+        patient = null;
     }
 }
