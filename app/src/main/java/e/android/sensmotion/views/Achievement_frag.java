@@ -29,6 +29,7 @@ public class Achievement_frag extends Fragment  {
     Achievement_adapter adapter;
     int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.walking_stickman, R.drawable.login_knap,
     R.drawable.patient_ikon};
+    int progress[] = {R.drawable.nuludaf3, R.drawable.enudaf3, R.drawable.toudaf3, R.drawable.treudaf3};
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -40,7 +41,7 @@ public class Achievement_frag extends Fragment  {
 
         gridView = (GridView) view.findViewById(R.id.gridview);
 
-        adapter = new Achievement_adapter(getActivity(), numberIcons);
+        adapter = new Achievement_adapter(getActivity(), numberIcons, progress);
 
         gridView.setAdapter(adapter);
 

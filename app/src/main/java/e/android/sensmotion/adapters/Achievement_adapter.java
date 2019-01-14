@@ -18,13 +18,15 @@ import e.android.sensmotion.entities.user.Patient;
 public class Achievement_adapter extends BaseAdapter {
 
 
-    int icons[];
+    int icons[], progress[];
     Activity context;
     LayoutInflater inflater;
 
-    public Achievement_adapter(Activity context, int icons[]) {
+
+    public Achievement_adapter(Activity context, int icons[], int progress[]) {
         this.context = context;
         this.icons = icons;
+        this.progress = progress;
     }
 
 
@@ -51,9 +53,11 @@ public class Achievement_adapter extends BaseAdapter {
         View view = inflater.inflate(R.layout.achievement_adapter, null, true);
 
 
+        ImageView gennemforelse = (ImageView) view.findViewById(R.id.gennemforelse);
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
 
         icon.setImageResource(icons[position]);
+        gennemforelse.setImageResource(progress[0]);
 
         return view;
     }

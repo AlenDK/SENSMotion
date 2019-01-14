@@ -1,8 +1,12 @@
 package e.android.sensmotion.views;
 
+import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.Notification;
 import android.app.usage.UsageStats;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
@@ -17,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import e.android.sensmotion.R;
@@ -35,6 +41,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
     private ProgressBar circlebar, walk,stand,bike,train,other;
 
+    Date currentDay = Calendar.getInstance().getTime();
+    SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+    String today = format.format(currentDay);
+
+    int day = Integer.parseInt(today.substring(0,1));
+    int month =  Integer.parseInt(today.substring(3,4));
+    int year =  Integer.parseInt(today.substring(6,9));
+
+
+    SharedPreferences prefs;
+
     String Notifikation_Titel, Notifikation_Besked;
 
     int totalProgressGoal = 500, circleProgress;
@@ -52,6 +69,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         LinearLayout dates = view.findViewById(R.id.dates);
 
@@ -70,6 +88,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             today_smiley = views.findViewById(R.id.facetoday_image);
             today_smiley.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+
+
 
             dates.addView(views);
         }
@@ -149,6 +169,64 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 */
+
+
+//get dag, og tjek år, måned, dag
+
+    public void setDates(int day, int month, int year) {
+        prefs.edit().putInt("day", day);
+        prefs.edit().putInt("month", month);
+        prefs.edit().putInt("year", year);
+    }
+
+    private boolean checkDate() {
+        if (prefs.getInt("day", 0) == 0) {
+           setDates(day, month, year);
+        }
+        if ((day - prefs.getInt("day", 0)) >= 1) {
+
+            setDates(day, month, year);
+            return true;
+        }
+
+        if ((month - prefs.getInt("month", 0)) >= 1) {
+            setDates(day, month, year);
+            return true;
+        }
+        if ((year - prefs.getInt("year", 0)) >= 1) {
+            setDates(day, month, year);
+            return true;
+        }
+        return false;
+    }
+
+/*
+    private void saveAchievemnt( ) {
+        prefs.edit().putInt("overallWalk", )
+
+        prefs.getInt("walk", 0)
+
+
+        if ((prefs.getInt("walk", 0)) == 0) {
+            prefs.edit().putInt("walk",0);
+        } else {
+
+
+        }
+
+        500
+
+                520 - 500 = 20
+                        500 + 20
+                                300 - 520
+
+    }
+
+
+*/
+
+
+
     private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
