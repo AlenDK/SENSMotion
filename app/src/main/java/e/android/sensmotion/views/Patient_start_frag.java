@@ -31,8 +31,9 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
-//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
-//import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
+import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
+import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID2;
+
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
@@ -49,25 +50,26 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     int month =  Integer.parseInt(today.substring(3,4));
     int year =  Integer.parseInt(today.substring(6,9));
 
-
     SharedPreferences prefs;
-
-    String Notifikation_Titel, Notifikation_Besked;
 
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
-    double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
-    int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
+    public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    static double dailyProgress, walkAmount,standAmount,exerciseAmount,cyclingAmount,otherAmount;
+    static int totalwalk =100, totalstand =100, totalexercise =100, totalcycling =100, totalother =100;
 
 
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
-    private NotificationManagerCompat notificationManagerCompat;
+
+    private static NotificationManagerCompat notificationManagerCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_patient, container, false);
+
+        notificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -203,30 +205,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 /*
     private void saveAchievemnt( ) {
         prefs.edit().putInt("overallWalk", )
-
         prefs.getInt("walk", 0)
-
-
         if ((prefs.getInt("walk", 0)) == 0) {
             prefs.edit().putInt("walk",0);
         } else {
-
-
         }
-
         500
-
                 520 - 500 = 20
                         500 + 20
                                 300 - 520
-
     }
-
-
 */
-
-
-
     private void createProgressbar(View view){
         circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
         walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
@@ -290,15 +279,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
-/*
+
     public void NotifyWhenDone() {
-        Notifikation_Titel = "Mega sejt gået!!";
-        Notifikation_Besked = "Du har klaret én af dagens udfordinger";
 
         Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID1)
                 .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle(Notifikation_Titel)
-                .setContentText(Notifikation_Besked)
+                .setContentTitle("Mega sejt gået!!")
+                .setContentText("Du har nu klaret én af dagens udfordinger")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
@@ -307,14 +294,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     public void NotifyHalfWayThere() {
-        Notifikation_Titel = "Du er der næsten!";
-        Notifikation_Besked = "Du er nu halvejs gennem én af dagens udfordinger. \n" +
-                "Keep up the good work";
 
         Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID2)
                 .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle(Notifikation_Titel)
-                .setContentText(Notifikation_Besked)
+                .setContentTitle("Du er der næsten!")
+                .setContentText("Du er nu halvejs gennem én af dagens udfordinger. \n" +
+                        "Keep up the good work")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
@@ -322,9 +307,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         notificationManagerCompat.notify(2, notification);
     }
 
-    */
+    public static void getPercentage() {
 
-/*
+        PercentWalk = (int) Math.round(walkAmount/totalwalk*100);
+        PercentStand = (int) Math.round(standAmount/totalstand*100);
+        Percentcycle = (int) Math.round(cyclingAmount/totalcycling*100);
+        PercentExecise = (int) Math.round(exerciseAmount/totalexercise*100);
+        PercentOther = (int) Math.round(otherAmount/totalother*100);
+
+    }
+
+    /*
     public void streakNotification(){
         int streak;
         UsageStats usageStats = new UsageStats();
@@ -335,5 +328,29 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
 
     }
-*/
+    */
+
+    public ProgressBar getCirclebar() {
+        return circlebar;
+    }
+
+    public ProgressBar getWalk() {
+        return walk;
+    }
+
+    public ProgressBar getStand() {
+        return stand;
+    }
+
+    public ProgressBar getBike() {
+        return bike;
+    }
+
+    public ProgressBar getTrain() {
+        return train;
+    }
+
+    public ProgressBar getOther() {
+        return other;
+    }
 }
