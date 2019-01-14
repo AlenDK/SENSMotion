@@ -63,7 +63,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
 
-    private static NotificationManagerCompat notificationManagerCompat;
+    private NotificationManagerCompat notificationManagerCompat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -307,7 +307,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         notificationManagerCompat.notify(2, notification);
     }
 
-    public static void getPercentage() {
+    public static void setPercentage() {
 
         PercentWalk = (int) Math.round(walkAmount/totalwalk*100);
         PercentStand = (int) Math.round(standAmount/totalstand*100);
@@ -329,28 +329,4 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
     */
-
-    public ProgressBar getCirclebar() {
-        return circlebar;
-    }
-
-    public ProgressBar getWalk() {
-        return walk;
-    }
-
-    public ProgressBar getStand() {
-        return stand;
-    }
-
-    public ProgressBar getBike() {
-        return bike;
-    }
-
-    public ProgressBar getTrain() {
-        return train;
-    }
-
-    public ProgressBar getOther() {
-        return other;
-    }
 }

@@ -25,10 +25,10 @@ public class patient_setting_frag extends Fragment {
     Button logout;
     ImageButton back;
     ImageView column1, column2, column3, column4, column5;
-    Intent act;
+    Intent act, service;
 
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.patient_setting_frag, container, false);
 
@@ -41,19 +41,19 @@ public class patient_setting_frag extends Fragment {
         logout = (Button) view.findViewById(R.id.logUd);
 
         //Kan det gøres smartere?
-        /*pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked()) {
-                    Intent act = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
-                    startService(act);
-                } else if (!compoundButton.isChecked()) {
-                    Intent act = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
-                    stopService(act);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
+                if (on) {
+                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
+                    getActivity().startService(service);
+                } else if (!on) {
+                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
+                    getActivity().stopService(service);
                 }
                 Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
