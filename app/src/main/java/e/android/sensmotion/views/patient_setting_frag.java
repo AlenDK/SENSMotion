@@ -35,6 +35,7 @@ public class patient_setting_frag extends Fragment {
         createImage(view);
 
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
+        pop_switch.setChecked(true);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
 
         back = (ImageButton) view.findViewById(R.id.backarrow);
