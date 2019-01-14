@@ -43,10 +43,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
     private NotificationManagerCompat notificationManagerCompat;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_patient, container, false);
+        view = inflater.inflate(R.layout.fragment_patient, container, false);
 
 
         LinearLayout dates = view.findViewById(R.id.dates);
@@ -118,8 +119,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         if(view == profile_button){
             getFragmentManager().beginTransaction()
-            .replace(R.id.fragmentindhold, new Task_complete_frag())
+            .add(R.id.fragmentindhold, new Task_complete_frag())
             .commit();
+
+
 
         }
     }

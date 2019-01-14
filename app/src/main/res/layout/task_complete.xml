@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".views.PatientActivity">
+    android:background="@color/colorBlack"
+    tools:context=".views.Patient_start_frag"
+    >
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Godt gået!"
-        android:textColor="@color/colorBlack"
+        android:textColor="@color/colorWhite"
         android:textSize="40sp" />
 
         <TextView
@@ -28,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Du har klaret en af dine daglige mål for i dag!"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="15sp"/>
 
     </LinearLayout>

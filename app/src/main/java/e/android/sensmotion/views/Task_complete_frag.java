@@ -34,6 +34,8 @@ public class Task_complete_frag extends Fragment implements View.OnClickListener
         ok.setOnClickListener(this);
         del.setOnClickListener(this);
 
+        view.getBackground().setAlpha(250);
+
         return view;
     }
 
