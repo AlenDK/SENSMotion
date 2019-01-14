@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
+
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 
@@ -20,6 +21,7 @@ public class NotifikationChannels extends Application {
     }
 
     public void createNotificationchannels() {
+        //Bliver kun kaldt hvis telefonens sdk er version 26 eller ældre.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel1 = new NotificationChannel(
                     CHANNEL_ID1,
