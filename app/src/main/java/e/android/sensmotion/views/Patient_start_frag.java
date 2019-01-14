@@ -16,10 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.entities.sensor.Values;
 
 //import static e.android.sensmotion.data.Notifikation.CHANNEL_ID1;
 //import static e.android.sensmotion.data.Notifikation.CHANNEL_ID2;
@@ -27,11 +30,14 @@ import e.android.sensmotion.controller.interfaces.IDataController;
 public class Patient_start_frag extends Fragment implements View.OnClickListener{
 
     private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
-    private ImageButton profile_button;
     private TextView textView, textView1, textView2, textView3, textView4, textView5,circleText;
-    private ProgressBar circlebar, walk,stand,bike,train,other;
+    private ProgressBar circlebar, walk, stand, bike, train, other;
+    private ImageButton profile_button;
 
     String Notifikation_Titel, Notifikation_Besked;
+
+    List<Values> values;
+
 
     int totalProgressGoal = 500, circleProgress;
     private int walk_prog = 0;
@@ -50,6 +56,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
         LinearLayout dates = view.findViewById(R.id.dates);
+
+        values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
 
         System.out.println("Bruger: "+bruger.getPatient("p1").toString());
         System.out.println("Sensor: "+bruger.getPatient("p1").getSensor("s1").toString());
@@ -71,11 +79,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
 
 
-        walkAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getWalk());
-        standAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getStand());
-        cyclingAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getCycling());
-        exerciseAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getExercise());
-        otherAmount = Double.parseDouble(bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
+        walkAmount = Double.parseDouble(values.get(0).getWalk());
+        standAmount = Double.parseDouble(values.get(0).getStand());
+        cyclingAmount = Double.parseDouble(values.get(0).getCycling());
+        exerciseAmount = Double.parseDouble(values.get(0).getExercise());
+        otherAmount = Double.parseDouble(values.get(0).getOther());
 
         dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount +otherAmount;
         circleProgress = (int) Math.round(dailyProgress/totalProgressGoal*100);

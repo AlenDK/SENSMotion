@@ -24,6 +24,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.data.Firebase;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
@@ -41,11 +42,12 @@ public class Login_frag extends Fragment implements View.OnClickListener {
     Firebase firebasee = new Firebase();
     boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
 
+    Patient patient;
+    Sensor sensor;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
-
-
 
         if (!EMULATOR) {
 
@@ -54,7 +56,6 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 /*
         forceCrash(view);
 */
-
 
         brugernavn = view.findViewById(R.id.brugernavn);
         dc = ControllerRegistry.getDataController();
@@ -68,9 +69,6 @@ public class Login_frag extends Fragment implements View.OnClickListener {
         login.setOnClickListener(this);
         opret.setOnClickListener(this);
         glemt.setOnClickListener(this);
-
-
-
 
         return view;
     }
@@ -98,7 +96,8 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
                     try {
                         String hentDataResult = new HentDataAsyncTask().execute().get();
-                        dc.saveData(hentDataResult, bc.getPatient("p1").getSensor("s1"));
+                        sensor = patient.getSensor("s1");
+                        dc.saveData(hentDataResult, sensor);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -112,52 +111,13 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                     System.out.println("/////////////////////////////// Other /////////////////////////////////////");
                     //System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
 
-                 //   for (int i = 0; i < 10; i++){
-
-//                        Log.d("testtt", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)));
-
-
-                        //Log.d("Første", String.valueOf(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList()));
-
-
-// bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(i)
-                  //      firebasee.newPeriod(null, null , 5 );
-
-                    //Patient p = new Patient("Lol123",null, null, "3333", null, null, null, null);
-
-                    /*
-                    Period pp = new Period(2);
-
-
-
-                    Sensor s = new Sensor("hejsa", 0);
-                    Sensor s1 = new Sensor("hejsav2", 1);
-
-                    List<Sensor> sensors = new ArrayList<>();
-
-                    sensors.add(s);
-                    sensors.add(s1);
-
-                    Patient p = new Patient("Tobias",null, null, "3333", sensors, null, null, null);
-                    firebasee.newPatient(p);
-                    */
-
                     Patient p1 = ControllerRegistry.getUserController().getPatient("p1");
                     firebasee.newPatient(p1);
-
-
-                       // firebasee.newTest(null, 5);
-
-                   //     }
-
-
 
                     act = new Intent(getActivity(), PatientActivity.class);
                     startActivity(act);
 
                     break;
-
-
                 }
 
             case R.id.opret:
@@ -188,8 +148,8 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
         @Override
         protected String doInBackground(String... strings) {
-
-            jsonString = dc.getDataString(bc.getPatient("p1"), null);
+            patient = bc.getPatient("p1");
+            jsonString = dc.getDataString(patient, null);
 
             return jsonString;
         }

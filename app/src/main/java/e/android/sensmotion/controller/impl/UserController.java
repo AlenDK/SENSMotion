@@ -1,5 +1,6 @@
 package e.android.sensmotion.controller.impl;
 
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -11,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
@@ -27,15 +29,18 @@ public class UserController implements IUserController {
     private List<User> userList = new ArrayList<User>();
     private List<Patient> patientList = new ArrayList<Patient>();
     private ISensorController sc;
-    private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference database;
     FirebaseController fbc;
 
-    Patient patient = new Patient();
+    String hent = null;
+    Patient patient;
 
     public UserController(){
 
+        database = FirebaseDatabase.getInstance().getReference();
         sc = ControllerRegistry.getSensorController();
         fbc = new FirebaseController();
+
 
         List<Sensor> p1Sensorer = new ArrayList<>();
         p1Sensorer.add(sc.getSensor("s1"));
@@ -53,8 +58,8 @@ public class UserController implements IUserController {
         userList.add(patient3);
 
         patientList.add(patient1);
-        patientList.add(patient2);
-        patientList.add(patient3);
+        //patientList.add(patient2);
+        //patientList.add(patient3);
 
         Therapist therapist1 = new Therapist("t1", "t1", "t1", patientList);
         userList.add(therapist1);
@@ -76,36 +81,6 @@ public class UserController implements IUserController {
     }
 
     public Patient getPatient(final String id){
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                ArrayList<Object> sensorer = new ArrayList<>();
-                for(DataSnapshot d : dataSnapshot.getChildren()){
-                    //Fordi vi ikke har tømt databasen endnu
-                    patient.setId(d.child(id).child("id").getValue(String.class));
-                    patient.setCpr(d.child(id).child("cpr").getValue(String.class));
-                    patient.setProject_key(d.child(id).child("project_key").getValue(String.class));
-                    patient.setPatient_key(d.child(id).child("patient_key").getValue(String.class));
-                    patient.setUsername(d.child(id).child("username").getValue(String.class));
-                    patient.setPassword(d.child(id).child("password").getValue(String.class));
-                    patient.setSensors(null);
-                    patient.setMobility(null);
-
-                    System.out.println("what hello "+patient.toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        System.out.println("Sidste kald:   "+patient.toString());
-        //return patient;
-
-        fbc.getValues();
-
         //Direkte fra API
         for(Patient p : patientList){
             if(p.getId().equals(id)){

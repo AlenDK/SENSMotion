@@ -21,8 +21,31 @@ public class FirebaseController {
     public FirebaseController() {
     }
 
-    public Patient getPatient(){
-        return null;
+    public void getPatient(final Patient patient){
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String id = patient.getId();
+                for(DataSnapshot d : dataSnapshot.getChildren()){
+                    //Fordi vi ikke har tømt databasen endnu
+                    patient.setId(d.child(id).child("id").getValue(String.class));
+                    System.out.println("id "+patient.getId());
+                    patient.setCpr(d.child(id).child("cpr").getValue(String.class));
+                    patient.setProject_key(d.child(id).child("project_key").getValue(String.class));
+                    patient.setPatient_key(d.child(id).child("patient_key").getValue(String.class));
+                    patient.setUsername(d.child(id).child("username").getValue(String.class));
+                    patient.setPassword(d.child(id).child("password").getValue(String.class));
+                    patient.setSensors(null);
+                    patient.setMobility(null);
+
+                    System.out.println("what hello "+patient.toString());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //nothing
+            }
+        });
     }
 
     public Sensor getSensor(){
