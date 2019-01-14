@@ -1,10 +1,13 @@
 package e.android.sensmotion.views;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +19,15 @@ import e.android.sensmotion.R;
 public class Task_complete_frag extends Fragment implements View.OnClickListener {
 
     Button ok;
-    ImageButton del;
+    Button del;
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.task_complete, container, false);
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Transparent);
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+        View view = localInflater.inflate(R.layout.task_complete, container, false);
+
 
         ok = view.findViewById(R.id.okKnap);
         del = view.findViewById(R.id.delKnap);
@@ -53,6 +59,6 @@ public class Task_complete_frag extends Fragment implements View.OnClickListener
         String shareBody = "Test";
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+        startActivity(Intent.createChooser(sharingIntent, "Del via"));
     }
 }

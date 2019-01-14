@@ -22,4 +22,8 @@
     <color name="colorGray">#A6B9C5</color>
     <color name="colorBlue">#1A91DC</color>
     <color name="colorDarkBlue">#0B659D</color>
+    
+    <!-- FARVE TIL ACHIEVEMENT COMPLETE -->
+    <color name="transparent">#dc000000</color>
+    
 </resources>
