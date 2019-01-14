@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.MotionDetection;
@@ -46,6 +47,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     Date currentDay = Calendar.getInstance().getTime();
     SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
     String today = format.format(currentDay);
+
+    List<Values> values;
 
     int day = Integer.parseInt(today.substring(0,1));
     int month =  Integer.parseInt(today.substring(3,4));
