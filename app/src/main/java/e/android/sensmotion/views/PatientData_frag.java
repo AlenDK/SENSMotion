@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,11 +17,13 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -31,6 +34,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.gms.common.util.Strings;
 
@@ -48,6 +52,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
+import io.fabric.sdk.android.Fabric;
 
 public class PatientData_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
@@ -180,25 +185,25 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
             //Initializes lists of BarEntry.
-            List<BarEntry> entriesStand = new ArrayList<BarEntry>();
-            List<BarEntry> entriesWalk = new ArrayList<BarEntry>();
-            List<BarEntry> entriesCycling = new ArrayList<BarEntry>();
-            List<BarEntry> entriesExercise = new ArrayList<BarEntry>();
-            List<BarEntry> entriesRest = new ArrayList<BarEntry>();
-            List<BarEntry> entriesOther = new ArrayList<BarEntry>();
+            List<BarEntry> entriesStand = new ArrayList<>();
+            List<BarEntry> entriesWalk = new ArrayList<>();
+            List<BarEntry> entriesCycling = new ArrayList<>();
+            List<BarEntry> entriesExercise = new ArrayList<>();
+            List<BarEntry> entriesRest = new ArrayList<>();
+            List<BarEntry> entriesOther = new ArrayList<>();
 
             //Creates the entries for the different values.
-            entriesStand.add(new BarEntry(0f, Float.valueOf(values.getStand())));
-            entriesWalk.add(new BarEntry(1f, Float.valueOf(values.getWalk())));
-            entriesCycling.add(new BarEntry(2f, Float.valueOf(values.getCycling())));
-            entriesExercise.add(new BarEntry(3f, Float.valueOf(values.getExercise())));
-            entriesRest.add(new BarEntry(4f, Float.valueOf(values.getRest())));
-            entriesOther.add(new BarEntry(5f, Float.valueOf(values.getOther())));
+            entriesStand.add(new BarEntry(5f, Float.valueOf(values.getStand())));
+            entriesWalk.add(new BarEntry(4f, Float.valueOf(values.getWalk())));
+            entriesCycling.add(new BarEntry(3f, Float.valueOf(values.getCycling())));
+            entriesExercise.add(new BarEntry(2f, Float.valueOf(values.getExercise())));
+            entriesRest.add(new BarEntry(1f, Float.valueOf(values.getRest())));
+            entriesOther.add(new BarEntry(0f, Float.valueOf(values.getOther())));
 
             //Creates the various datasets and sets their color.
             //This is done individually as to give every value a unique label.
             BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
-            dataSetStand.setColor(getResources().getColor(R.color.colorBlack));
+            dataSetStand.setColor(getResources().getColor(R.color.colorOrange));
 
             BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
             dataSetWalk.setColor(getResources().getColor(R.color.colorBlue));
@@ -207,7 +212,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
 
             BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
-            dataSetExercise.setColor(getResources().getColor(R.color.colorYellow));
+            dataSetExercise.setColor(getResources().getColor(R.color.colorBlack));
 
             BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
             dataSetRest.setColor(getResources().getColor(R.color.colorRed));
@@ -226,6 +231,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             barChart.setBackgroundColor(getResources().getColor(R.color.colorWhite));
             barChart.setDrawBorders(true);
             barChart.setTouchEnabled(false);
+            barChart.getAxisRight().setEnabled(false);
 
             //Sets chart description
             Description disc = new Description();
@@ -243,7 +249,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
 
             //Creates a list of PieEntries
-            List<PieEntry> entries = new ArrayList<PieEntry>();
+            List<PieEntry> entries = new ArrayList<>();
             entries.add(new PieEntry(Float.valueOf(values.getStand()), "Stående"));
             entries.add(new PieEntry(Float.valueOf(values.getWalk()), "Gang"));
             entries.add(new PieEntry(Float.valueOf(values.getCycling()), "Cykling"));
@@ -252,19 +258,36 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             entries.add(new PieEntry(Float.valueOf(values.getOther()), "Andet"));
 
             //Creates a dataset with the given entries
-            PieDataSet set = new PieDataSet(entries, "Sensordata");
+            PieDataSet set = new PieDataSet(entries, "Sensorværdier");
 
             //Sets the colors of the entries
-            set.setColors(new int[]{R.color.colorYellow, R.color.colorBlue, R.color.colorGreen, R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
+            set.setColors(new int[]{R.color.colorOrange, R.color.colorBlue, R.color.colorGreen, R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
 
+            //General formatting
             PieData data = new PieData(set);
-            data.setValueFormatter(new ValueFormatter());
+            data.setValueFormatter(new PercentFormatter());
             pieChart.setData(data);
+            pieChart.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+            pieChart.setDrawEntryLabels(false);
+            pieChart.setUsePercentValues(true);
+
+            //Sets chart description
+            Description disc = new Description();
+            disc.setText("Sensordata");
+            barChart.setDescription(disc);
+
+            //Updates the chart
             pieChart.invalidate();
         }
     }
 
     public void updateSensorData(String id){
+
+        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+        if (!EMULATOR) {
+            Fabric.with(getActivity(), new Crashlytics());
+        }
+
         try {
             String hentDataResult = new HentDataAsyncTask().execute().get();
 

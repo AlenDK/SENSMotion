@@ -89,7 +89,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
 
                     if (!dataHandling.isChecked()) {
                         Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
-                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
+                                      "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
 
                         break;
                     }

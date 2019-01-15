@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import e.android.sensmotion.Notification.Alarm;
+import e.android.sensmotion.Notification.NotificationService;
 import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {
@@ -33,6 +35,7 @@ public class patient_setting_frag extends Fragment {
         createImage(view);
 
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
+        pop_switch.setChecked(true);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
 
         back = (ImageButton) view.findViewById(R.id.backarrow);
@@ -42,13 +45,11 @@ public class patient_setting_frag extends Fragment {
         pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                if (on) {
-                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
-                    getActivity().startService(service);
+                /*if (on) {
+                    Alarm.startAlarm(getActivity());
                 } else if (!on) {
-                    service = new Intent(getActivity(), e.android.sensmotion.Notification.NotificationService.class);
-                    getActivity().stopService(service);
-                }
+                    Alarm.stopAlarm();
+                }*/
                 Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
         });
