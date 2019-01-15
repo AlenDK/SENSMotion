@@ -91,7 +91,7 @@ public class Login_frag extends Fragment implements View.OnClickListener {
 
                     if (!dataHandling.isChecked()) {
                         Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
-                                "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
+                                      "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
 
                         break;
                     }
