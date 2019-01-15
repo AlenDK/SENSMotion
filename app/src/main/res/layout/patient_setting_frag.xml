@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/dinProfilText"
+        android:id="@+id/profil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dinProfilText" />
+        app:layout_constraintTop_toBottomOf="@+id/profil" />
 
     <ImageView
         android:id="@+id/column2"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/column1" />
 
     <TextView
-        android:id="@+id/notificationText"
+        android:id="@+id/notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -120,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationText" />
+        app:layout_constraintTop_toBottomOf="@+id/notification" />
 
     <ImageView
         android:id="@+id/column5"
@@ -150,7 +150,7 @@
         app:layout_constraintTop_toTopOf="@+id/column4" />
 
     <TextView
-        android:id="@+id/soundeffect"
+        android:id="@+id/soundEffects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -169,7 +169,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="216dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/soundeffect"
+        app:layout_constraintStart_toEndOf="@+id/soundEffects"
         app:layout_constraintTop_toTopOf="@+id/column5" />
 
     <Switch
@@ -191,7 +191,7 @@
         android:text="Log ud"
         android:textSize="18sp"
         android:textColor="#ffffff"
-        android:background="@drawable/login_knap"
+        android:background="@drawable/logud_knap"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
