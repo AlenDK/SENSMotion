@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 
 import e.android.sensmotion.R;
 
-public class Task_complete_frag extends Fragment implements View.OnClickListener {
+public class Task_complete_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     Button ok;
     Button del;
