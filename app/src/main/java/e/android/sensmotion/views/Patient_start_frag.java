@@ -1,19 +1,16 @@
 package e.android.sensmotion.views;
 
-import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.Notification;
-import android.app.usage.UsageStats;
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,8 +25,8 @@ import java.util.Date;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.MotionDetection;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 
 import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
 import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID2;
@@ -155,7 +152,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         if(view == profile_button){
             getFragmentManager().beginTransaction()
-            .replace(R.id.fragmentindhold, new patient_setting_frag())
+            .replace(R.id.fragmentindhold, new Achievement_frag())
             .commit();
 
         }

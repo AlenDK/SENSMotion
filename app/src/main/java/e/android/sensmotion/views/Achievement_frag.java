@@ -1,24 +1,20 @@
 package e.android.sensmotion.views;
+
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
-import java.util.ArrayList;
-
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.Achievement_adapter;
-import e.android.sensmotion.adapters.MotionDetection;
-import e.android.sensmotion.adapters.Patientliste_adapter;
 import io.fabric.sdk.android.Fabric;
 
 
@@ -29,9 +25,15 @@ public class Achievement_frag extends Fragment  {
     Achievement_adapter adapter;
     int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.walking_stickman, R.drawable.login_knap,
     R.drawable.patient_ikon};
+    int altNumberIcons[] = {R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite};
     int progress[] = {R.drawable.nuludaf3, R.drawable.enudaf3, R.drawable.toudaf3, R.drawable.treudaf3};
+    String text[] = {"Du har gjort det", "Du klarede det", "Ja tak", "Kom så"};
+    String alttext[] = {"Du har ikke gjort det endnu", "Du har ikke klaret det", "Nej tak", "Kom så"};
+    String head[] = {"Marathon", "7 på stribe", "Keep going", "2018 beta tester"};
+    Boolean check[] = {100 > 1000, 4 == 3, 4 > 5, 1 > 0};
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.achievement, container, false);
 
@@ -45,15 +47,20 @@ public class Achievement_frag extends Fragment  {
 
         gridView.setAdapter(adapter);
 
+
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onCreateDialog(savedInstanceState, position);
 
-                Toast.makeText(getActivity(), "Du har gennemført x", Toast.LENGTH_SHORT).show();
             }
-        });
+
+            });
 
 
+
+/*
 
         view.setOnTouchListener(new MotionDetection(getActivity()) {
             @Override
@@ -64,6 +71,7 @@ public class Achievement_frag extends Fragment  {
             }
         });
 
+  */
 
 
 
@@ -73,4 +81,25 @@ public class Achievement_frag extends Fragment  {
 
 
 
+    public void onCreateDialog(Bundle savedInstanceState, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle(head[position])
+                .setMessage(text[position]);
+        if (check[position] == false) {
+            builder.setIcon(numberIcons[position]);
+        }else {
+            builder.setIcon(altNumberIcons[position]);
+        }
+        builder.setNeutralButton("Exit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentindhold, new Achievement_frag())
+                                .commit();
+                    }
+                });
+         builder.create().show();
+
+    }
 }
