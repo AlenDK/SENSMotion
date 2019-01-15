@@ -31,7 +31,7 @@ import io.fabric.sdk.android.Fabric;
 import com.crashlytics.android.Crashlytics;
 
 
-public class Login_frag extends Fragment implements View.OnClickListener {
+public class Login_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     EditText brugernavn;
     CheckBox dataHandling;
@@ -121,16 +121,10 @@ public class Login_frag extends Fragment implements View.OnClickListener {
                 }
 
             case R.id.opret:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new IkkeImplementeret_frag())
-                        .addToBackStack(null)
-                        .commit();
+                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
                 break;
             case R.id.glemtLogin:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new IkkeImplementeret_frag())
-                        .addToBackStack(null)
-                        .commit();
+                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
                 break;
         }
     }

@@ -29,7 +29,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.user.Patient;
 
-public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
+public class Patientliste_frag extends android.support.v4.app.Fragment implements AdapterView.OnClickListener {
 
 
     Firebase firebase = new Firebase();

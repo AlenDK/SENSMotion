@@ -16,7 +16,7 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
-public class NyPatient_frag extends Fragment implements View.OnClickListener {
+public class NyPatient_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     Button opret;
     EditText patientID;

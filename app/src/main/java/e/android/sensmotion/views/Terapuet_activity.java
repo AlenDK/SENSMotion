@@ -1,6 +1,7 @@
 package e.android.sensmotion.views;
 
 import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,7 +11,7 @@ import java.util.Locale;
 import e.android.sensmotion.R;
 //import e.android.sensmotion.views.Patientliste_frag;
 
-public class Terapuet_activity extends AppCompatActivity {
+public class Terapuet_activity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,8 @@ public class Terapuet_activity extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            Fragment fragment = new Patientliste_frag();
-            getFragmentManager().beginTransaction()
+            android.support.v4.app.Fragment fragment = new Patientliste_frag();
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }

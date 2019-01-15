@@ -146,7 +146,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         if (view == profile_button) {
             Fragment fragment = new patient_setting_frag();
             getFragmentManager().beginTransaction()
-                    .replace(R.id.viewpager, fragment)
+                    .replace(R.id.fragmentindhold, fragment)
                     .commit();
         }
     }
