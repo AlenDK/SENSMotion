@@ -32,4 +32,6 @@
     <color name="colorYellow">#FFFF00</color>
     <color name="colorGreen"> 	#32CD32</color>
 
+    <color name="transparent">#dc000000</color>
+    
 </resources>

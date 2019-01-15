@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".views.PatientActivity" />
         <activity android:name=".views.Terapuet_activity"></activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <service android:name=".Notification.NotificationService"/>
         <meta-data
             android:name="io.fabric.ApiKey"

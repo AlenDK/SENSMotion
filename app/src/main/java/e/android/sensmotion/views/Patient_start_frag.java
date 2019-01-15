@@ -69,6 +69,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private Handler progHandle = new Handler();
 
     private NotificationManagerCompat notificationManagerCompat;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
