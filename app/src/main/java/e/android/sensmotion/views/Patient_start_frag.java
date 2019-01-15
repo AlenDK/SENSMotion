@@ -327,12 +327,24 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     */
 
     public void previousData(View view) {
-        days.add("Dag 1");
-        days.add("Dag 2");
-        days.add("Dag 3");
+        days.add("I går");
+        days.add("13-01");
+        days.add("12-01");
+        days.add("11-01");
+        days.add("10-01");
+        days.add("09-01");
+        days.add("08-01");
+        days.add("07-01");
+        days.add("06-01");
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
 
 
         recyclerView = view.findViewById(R.id.previousList);

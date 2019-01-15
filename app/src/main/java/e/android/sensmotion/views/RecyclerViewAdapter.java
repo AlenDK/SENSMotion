@@ -37,7 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.tv.setText(days.get(position));
-        holder.iv.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        holder.iv.setImageResource(images.get(position));
     }
 
     @Override

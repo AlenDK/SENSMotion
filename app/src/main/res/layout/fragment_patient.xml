@@ -7,36 +7,56 @@
     android:background="@color/eggwhite">
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="75dp"
-        android:layout_height="88dp"
-        android:layout_marginTop="60dp"
-        android:backgroundTint="@color/colorBlack"
-        android:orientation="vertical"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/previousList"
+        android:layout_width="295dp"
+        android:layout_height="95dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/categorizer_previous_data"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="116dp"
+        android:layout_height="114dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/categorizer_today_data"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/facetoday_image"
-            android:layout_width="63dp"
-            android:layout_height="66dp"
+            android:layout_width="78dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/baseline_sentiment_very_satisfied_black_48"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.071" />
 
         <TextView
             android:id="@+id/facetoday_text"
-            android:layout_width="52dp"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="26dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="I dag"
             app:layout_constraintEnd_toEndOf="@+id/facetoday_image"
-            app:layout_constraintHorizontal_bias="0.441"
             app:layout_constraintStart_toStartOf="@+id/facetoday_image"
             app:layout_constraintTop_toBottomOf="@+id/facetoday_image" />
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
         android:id="@+id/actionbar_image"
@@ -274,18 +294,6 @@
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/progbar_train" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/previousList"
-        android:layout_width="308dp"
-        android:layout_height="95dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
