@@ -57,6 +57,10 @@ public class patient_setting_frag extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, new Task_complete_frag())
+                        .commit();
             }
         });
 
