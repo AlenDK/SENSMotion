@@ -1,28 +1,20 @@
 package e.android.sensmotion.views;
 
-import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.Notification;
-import android.app.usage.UsageStats;
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +26,9 @@ import java.util.Date;
 import java.util.List;
 
 import e.android.sensmotion.R;
-import e.android.sensmotion.adapters.MotionDetection;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
 
 import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
@@ -81,7 +72,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_patient, container, false);
+        //View view = inflater.inflate(R.layout.fragment_patient, container, false);
+          ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
+
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         notificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
@@ -133,7 +127,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }).start();
         */
 
-
+/*
         view.setOnTouchListener(new MotionDetection(getActivity()) {
             @Override
             public void onSwipeUp() {
@@ -143,17 +137,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             }
         });
 
-
+*/
         return view;
     }
 
     @Override
     public void onClick(View view) {
         if (view == profile_button) {
+            Fragment fragment = new patient_setting_frag();
             getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new patient_setting_frag())
+                    .replace(R.id.viewpager, fragment)
                     .commit();
-
         }
     }
 /*

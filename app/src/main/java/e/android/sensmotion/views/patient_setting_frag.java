@@ -1,11 +1,10 @@
 package e.android.sensmotion.views;
 
-import android.app.Fragment;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import e.android.sensmotion.Notification.NotificationService;
 import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {

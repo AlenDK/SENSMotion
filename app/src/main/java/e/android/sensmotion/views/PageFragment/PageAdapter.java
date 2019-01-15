@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import e.android.sensmotion.views.Achievement_frag;
+import e.android.sensmotion.views.Patient_start_frag;
+
 public class PageAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] { "Normal", "Endless" };
@@ -25,12 +28,11 @@ public class PageAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                StandardPage tab1 = new StandardPage();
+                Patient_start_frag tab1 = new Patient_start_frag();
                 return tab1;
 
             case 1:
-                DropDownPage tab2 = new DropDownPage();
-                return tab2;
+                Achievement_frag tab2 = new Achievement_frag();                return tab2;
             default:
                 return null;
         }
