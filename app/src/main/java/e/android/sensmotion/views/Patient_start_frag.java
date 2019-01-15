@@ -1,7 +1,5 @@
 package e.android.sensmotion.views;
 
-import android.app.AlarmManager;
-import android.app.Fragment;
 import android.app.Notification;
 import android.content.SharedPreferences;
 import android.os.Bundle;
