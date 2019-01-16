@@ -1,11 +1,10 @@
 package e.android.sensmotion.views;
 
-import android.app.Fragment;
-import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import e.android.sensmotion.Notification.Alarm;
-import e.android.sensmotion.Notification.NotificationService;
 import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {
@@ -46,18 +44,22 @@ public class patient_setting_frag extends Fragment {
         pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                /*if (on) {
+                if (on) {
                     Alarm.startAlarm(getActivity());
                 } else if (!on) {
                     Alarm.stopAlarm();
-                }*/
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                }
+                //Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, new Task_complete_frag())
+                        .commit();
             }
         });
 

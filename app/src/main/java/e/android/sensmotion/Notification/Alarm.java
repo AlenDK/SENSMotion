@@ -2,11 +2,8 @@ package e.android.sensmotion.Notification;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.SystemClock;
 
 import java.util.Calendar;
 
@@ -24,7 +21,7 @@ public class Alarm {
         pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 */
         if (alarmMgr == null)  alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(c, AlarmLytter.class);
+        Intent intent = new Intent(c, PostNotifications.class);
 
         //intent.setAction("com.alarm.notitest.START_ALARM"); //lille trick som gør at det bliver forskellige intents hvis det er to notifikationer samtidig
         alarmIntent = PendingIntent.getBroadcast(c, 0, intent,  0);

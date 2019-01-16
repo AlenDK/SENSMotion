@@ -54,7 +54,7 @@ import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
 import io.fabric.sdk.android.Fabric;
 
-public class PatientData_frag extends Fragment implements View.OnClickListener {
+public class PatientData_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     private Button periode, graf;
     private ImageButton ImgBtn;

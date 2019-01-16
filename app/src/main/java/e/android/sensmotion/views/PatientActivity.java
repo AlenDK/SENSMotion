@@ -1,25 +1,27 @@
 package e.android.sensmotion.views;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import e.android.sensmotion.R;
-import e.android.sensmotion.views.Patient_start_frag;
 
-public class PatientActivity extends Activity {
+public class PatientActivity extends FragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.patient_viewpager);
         setContentView(R.layout.activity_patient);
 
+
         if (savedInstanceState == null) {
-            Fragment fragment = new Patient_start_frag();
-            getFragmentManager().beginTransaction()
+            android.support.v4.app.Fragment fragment = new PatientViewpager();
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }
-
     }
 }

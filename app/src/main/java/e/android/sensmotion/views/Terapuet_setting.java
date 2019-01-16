@@ -13,7 +13,7 @@ import android.widget.TextView;
 import e.android.sensmotion.R;
 
 
-public class Terapuet_setting extends Fragment implements View.OnClickListener {
+public class Terapuet_setting extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     Button LogOut;
     ImageButton backArrow;

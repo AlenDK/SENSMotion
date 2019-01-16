@@ -26,10 +26,11 @@ import java.util.List;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.Patientliste_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.impl.UserController;
 import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.user.Patient;
 
-public class Patientliste_frag extends Fragment implements AdapterView.OnClickListener {
+public class Patientliste_frag extends android.support.v4.app.Fragment implements AdapterView.OnClickListener {
 
 
     Firebase firebase = new Firebase();
@@ -48,6 +49,8 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
         listView.setDividerHeight(15);
 
         patientList = new ArrayList<>();
+        UserController patient = new UserController();
+        patientList.add(patient.getPatient("p1"));
 
         adapter = new Patientliste_adapter(getActivity(), patientList);
 
@@ -123,9 +126,9 @@ public class Patientliste_frag extends Fragment implements AdapterView.OnClickLi
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         for (DataSnapshot brugerSnapshot : dataSnapshot.getChildren()) {
-                            Patient patient = brugerSnapshot.getValue(Patient.class);
+                            //Patient patient = brugerSnapshot.getValue(Patient.class);
 
-                            patientList.add((patient));
+                            //patientList.add((patient));
 
                         }
                         adapter.notifyDataSetChanged();
