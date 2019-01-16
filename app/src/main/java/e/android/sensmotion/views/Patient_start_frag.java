@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -288,15 +289,19 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     */
 
     public void previousData(View view) {
-        days.add("I går");
-        days.add("13-01");
-        days.add("12-01");
-        days.add("11-01");
-        days.add("10-01");
-        days.add("09-01");
-        days.add("08-01");
-        days.add("07-01");
-        days.add("06-01");
+        days.add("i går");
+        days.add(getYesterdayDateString(1));
+        days.add(getYesterdayDateString(2));
+        days.add(getYesterdayDateString(3));
+        days.add(getYesterdayDateString(4));
+        days.add(getYesterdayDateString(5));
+        days.add(getYesterdayDateString(6));
+        days.add(getYesterdayDateString(7));
+        days.add(getYesterdayDateString(8));
+        days.add(getYesterdayDateString(9));
+        days.add(getYesterdayDateString(10));
+        days.add(getYesterdayDateString(11));
+        days.add(getYesterdayDateString(12));
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
@@ -306,7 +311,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
-
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -315,4 +325,16 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         recyclerView.setAdapter(adapter);
 
         }
+    private Date previousDay(int day) {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -day);
+        System.out.println(cal.getTime());
+        return cal.getTime();
+    }
+
+    private String getYesterdayDateString(int day) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        return dateFormat.format(previousDay(day));
+    }
+
 }
