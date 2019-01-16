@@ -110,10 +110,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         previousData(view);
 
         for(int i = 0; i < progBarsIncom.size(); i++){
-            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal())
+            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
                 progBarsIncom.get(i).setComplete(true);
+                System.out.println("We done here? " + progBarsIncom.get(i).getComplete());
                 progBarsCom.add(progBarsIncom.get(i));
                 progBarsIncom.remove(i);
+            }
         }
 
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
@@ -276,6 +278,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         recyclerView.setAdapter(adapter);
 
         }
+
     private Date previousDay(int day) {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -day);
