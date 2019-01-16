@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,9 +27,6 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
-
-import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
-import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID2;
 
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener {
