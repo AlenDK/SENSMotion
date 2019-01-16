@@ -1,13 +1,10 @@
 package e.android.sensmotion.views;
 
-import android.app.Notification;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,9 +27,6 @@ import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
-
-import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
-import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID2;
 
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener {
@@ -68,7 +62,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     IUserController bruger = ControllerRegistry.getUserController();
     private Handler progHandle = new Handler();
 
-    private NotificationManagerCompat notificationManagerCompat;
     private View view;
 
     @Override
@@ -78,7 +71,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        notificationManagerCompat = NotificationManagerCompat.from(getActivity());
 
         values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
         days = new ArrayList<>();
@@ -269,33 +261,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
-    }
-
-    public void NotifyWhenDone() {
-
-        Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID1)
-                .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle("Mega sejt gået!!")
-                .setContentText("Du har nu klaret én af dagens udfordinger")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-
-        notificationManagerCompat.notify(1, notification);
-    }
-
-    public void NotifyHalfWayThere() {
-
-        Notification notification = new NotificationCompat.Builder(getActivity(), CHANNEL_ID2)
-                .setSmallIcon(R.drawable.sensmotionblack)
-                .setContentTitle("Du er der næsten!")
-                .setContentText("Du er nu halvejs gennem én af dagens udfordinger. \n" +
-                        "Keep up the good work")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .build();
-
-        notificationManagerCompat.notify(2, notification);
     }
 
     public static void setPercentage() {

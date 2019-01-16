@@ -21,12 +21,11 @@
         <activity android:name=".views.PatientActivity" />
         <activity android:name=".views.Terapuet_activity"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <receiver android:name=".Notification.AlarmLytter">
+        <receiver android:name=".Notification.PostNotifications">
             <intent-filter>
                 <action android:name="e.android.sensmotion.START_ALARM" />
             </intent-filter>
         </receiver>
-        <service android:name=".Notification.NotificationService"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="04326a3345540e9b8bbd4693dbf56ddea01e860e" />
