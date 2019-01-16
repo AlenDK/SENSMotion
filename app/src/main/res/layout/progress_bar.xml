@@ -9,12 +9,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="2dp">
 
         <ImageView
             android:id="@+id/barImage"
-            android:layout_width="37dp"
-            android:layout_height="37dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@drawable/walking_stickman" />
 
         <LinearLayout
@@ -26,6 +27,7 @@
                 android:id="@+id/progressText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
                 android:text="TextView" />
 
             <ProgressBar

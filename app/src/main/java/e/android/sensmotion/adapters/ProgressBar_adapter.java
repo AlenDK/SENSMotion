@@ -35,6 +35,7 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         TextView progText = view.findViewById(R.id.progressText);
         ImageView progImage = view.findViewById(R.id.barImage);
 
+        progImage.setImageResource(R.drawable.walking_stickman);
         progressBar.setProgress(progressBarList.get(position).getProgress());
         progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal());
 
