@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -35,6 +33,7 @@ public class Achievement_frag extends Fragment  {
     Boolean check[] = {100 > 1000, 4 == 3, 4 > 5, 1 > 0};
 
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
       //  View view = inflater.inflate(R.layout.achievement, container, false);
@@ -50,7 +49,6 @@ public class Achievement_frag extends Fragment  {
         adapter = new Achievement_adapter(getActivity(), numberIcons, progress);
 
         gridView.setAdapter(adapter);
-
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,6 +86,7 @@ public class Achievement_frag extends Fragment  {
     public void onCreateDialog(Bundle savedInstanceState, int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+
         builder.setTitle(head[position])
                 .setMessage(text[position]);
         if (check[position] == false) {
@@ -99,7 +98,6 @@ public class Achievement_frag extends Fragment  {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         getFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentindhold, new Achievement_frag())
                                 .commit();
                     }
                 });
