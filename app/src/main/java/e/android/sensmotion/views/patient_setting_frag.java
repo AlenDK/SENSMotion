@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +68,25 @@ public class patient_setting_frag extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Remove settings from stack
+                /*
+                FragmentManager manager = getActivity().getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.remove(getParentFragment());
+                transaction.commit();
+                manager.popBackStack();
+
+                android.support.v4.app.Fragment fragment = new PatientViewpager();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .addToBackStack(null)
+                        .commit();
+                */
+
                 act = new Intent(getActivity(), PatientActivity.class);
+                act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(act);
+
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {

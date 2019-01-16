@@ -140,6 +140,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             Fragment fragment = new patient_setting_frag();
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, fragment)
+                    .addToBackStack(null)
                     .commit();
         }
     }
