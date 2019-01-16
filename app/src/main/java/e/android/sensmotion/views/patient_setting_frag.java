@@ -16,7 +16,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import e.android.sensmotion.Notification.Alarm;
-import e.android.sensmotion.Notification.NotificationService;
 import e.android.sensmotion.R;
 
 public class patient_setting_frag extends Fragment {
@@ -45,12 +44,12 @@ public class patient_setting_frag extends Fragment {
         pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
-                /*if (on) {
+                if (on) {
                     Alarm.startAlarm(getActivity());
                 } else if (!on) {
                     Alarm.stopAlarm();
-                }*/
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                }
+                //Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
