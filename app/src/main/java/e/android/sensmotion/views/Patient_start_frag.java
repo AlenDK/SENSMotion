@@ -49,9 +49,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     List<Values> values;
     ArrayList<String> days;
     ArrayList<Integer> images;
-    List<ProgBar> progBars = new ArrayList<>();
+    List<ProgBar> progBarsIncom = new ArrayList<>();
+    List<ProgBar> progBarsCom = new ArrayList<>();
 
-    ProgressBar_adapter adapter;
+
+    ProgressBar_adapter IncomAdapter, comAdapter;
+
 
     int day = Integer.parseInt(today.substring(0, 1));
     int month = Integer.parseInt(today.substring(3, 4));
@@ -96,10 +99,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
         completeText = view.findViewById(R.id.completeText);
-        completeText.setVisibility(View.GONE);
         complete =view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
-        complete.setVisibility(View.GONE);
 
 
         //createText(view);
@@ -108,45 +109,21 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         createProgressbar();
         previousData(view);
 
-        adapter = new ProgressBar_adapter(getActivity(), progBars);
+        for(int i = 0; i < progBarsIncom.size(); i++){
+            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal())
+                progBarsIncom.get(i).setComplete(true);
+                progBarsCom.add(progBarsIncom.get(i));
+                progBarsIncom.remove(i);
+        }
 
-        incomplete.setAdapter(adapter);
+        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
+        comAdapter = new ProgressBar_adapter(getActivity(),progBarsCom);
+
+        incomplete.setAdapter(IncomAdapter);
+        complete.setAdapter(comAdapter);
 
         final Toast akt_klaret = Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (walk_prog < 100){
-                    walk_prog++;
-                    android.os.SystemClock.sleep(50);
-                    progHandle.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            walk.setProgress(walk_prog);
-                        }
-                    });
-                }
-
-                if(walk_prog == 100){
-                   akt_klaret.show();
-                }}
-        }).start();
-        */
-
-/*
-        view.setOnTouchListener(new MotionDetection(getActivity()) {
-            @Override
-            public void onSwipeUp() {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Achievement_frag())
-                        .commit();
-            }
-        });
-
-*/
 
 
         return view;
@@ -162,18 +139,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     .commit();
         }
     }
-/*
-    private void changeSmiley(overallProgess) {
-        if(overallProgress <= 33.33) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_unsatisfied_red_48);
-        } else if (33.33 < overallProgress | overallProgress <= 66.66) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_moderat_yellow_48);
-        } else if (66.66 < overallProgress | overallProgress <= 100) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        }
-    }
-*/
-
 
 //get dag, og tjek år, måned, dag
 
@@ -225,15 +190,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         train = new ProgBar("train", (int) Math.round(trainAmount), totalexercise);
         other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
+        progBarsIncom.add(walk);
+        progBarsIncom.add(stand);
+        progBarsIncom.add(cycling);
+        progBarsIncom.add(train);
+        progBarsIncom.add(other);
 
-
-        progBars.add(walk);
-        progBars.add(stand);
-        progBars.add(cycling);
-        progBars.add(train);
-        progBars.add(other);
-
-        return progBars;
+        return progBarsIncom;
     }
 
   /*  private void createImages(View view) {
@@ -246,21 +209,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
     }
 
-    private void createText(View view) {
-        textView = (TextView) view.findViewById(R.id.nameText);
-        textView1 = (TextView) view.findViewById(R.id.textView1);
-        textView2 = (TextView) view.findViewById(R.id.textView2);
-        textView3 = (TextView) view.findViewById(R.id.textView3);
-        textView4 = (TextView) view.findViewById(R.id.textView4);
-        textView5 = (TextView) view.findViewById(R.id.textView5);
-        circleText = (TextView) view.findViewById(R.id.progressBarText);
-
-        textView1.setText(Math.round(otherAmount) + "/100m");
-        textView2.setText(Math.round(standAmount) + "/100min");
-        textView3.setText(Math.round(cyclingAmount) + "/100m");
-        textView4.setText(Math.round(exerciseAmount) + "/100min");
-        textView5.setText(Math.round(walkAmount) + "/100min");
-        circleText.setText(circleProgress + "%");
     }*/
 
     private void createButtons(View view) {
