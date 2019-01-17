@@ -29,7 +29,7 @@ public class Achievement_frag extends Fragment  {
     int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.stickman_walking, R.drawable.login_knap,
     R.drawable.patient_ikon};
     ArrayList<Achievement> achievements= new ArrayList <>();
-    Achievement marathon, stribe, keepgoing,betatester;
+    Achievement marathon, stribe, keepgoing,betatester, comeon, test1, test2, test3, test4;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -109,11 +109,25 @@ public class Achievement_frag extends Fragment  {
         stribe = new Achievement("7 på stribe", "Du har ikke klaret det");
         keepgoing = new Achievement("Keep going","Nej tak");
         betatester = new Achievement("2018 Beta Tester", "Testede app'en i 2018");
+        comeon = new Achievement("Test", "test");
+        test1 = new Achievement("Test", "test");
+        test2 = new Achievement("Test", "test");
+        test3 = new Achievement("Test", "test");
+        test4 = new Achievement("Test", "test");
+
 
         achievements.add(marathon);
         achievements.add(stribe);
         achievements.add(keepgoing);
         achievements.add(betatester);
+        achievements.add(comeon);
+        achievements.add(test1);
+        achievements.add(test2);
+        achievements.add(test3);
+        achievements.add(test4);
+
+
+
 
         return achievements;
     }

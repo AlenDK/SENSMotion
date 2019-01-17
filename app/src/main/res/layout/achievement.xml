@@ -17,7 +17,7 @@
         android:layout_marginTop="8dp"
         android:columnWidth="100dp"
         android:numColumns="3"
-        android:paddingBottom="10dp"
+        android:verticalSpacing="30dp"
 
 
         android:stretchMode="columnWidth"
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Trofæer"
+        android:textColor="#EEEEEE"
         android:fontFamily="serif"
         android:textSize="24sp"
         android:typeface="sans"
