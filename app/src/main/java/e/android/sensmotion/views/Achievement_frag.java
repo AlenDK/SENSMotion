@@ -13,8 +13,11 @@ import android.widget.GridView;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.util.ArrayList;
+
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.Achievement_adapter;
+import e.android.sensmotion.views.Achievement.Achievement;
 import io.fabric.sdk.android.Fabric;
 
 
@@ -25,14 +28,8 @@ public class Achievement_frag extends Fragment  {
     Achievement_adapter adapter;
     int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.stickman_walking, R.drawable.login_knap,
     R.drawable.patient_ikon};
-    int altNumberIcons[] = {R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite};
-    int progress[] = {R.drawable.nuludaf3, R.drawable.enudaf3, R.drawable.toudaf3, R.drawable.treudaf3};
-    String text[] = {"Du har gjort det", "Du klarede det", "Ja tak", "Kom så"};
-    String alttext[] = {"Du har ikke gjort det endnu", "Du har ikke klaret det", "Nej tak", "Kom så"};
-    String head[] = {"Marathon", "7 på stribe", "Keep going", "2018 beta tester"};
-    Boolean check[] = {100 > 1000, 4 == 3, 4 > 5, 1 > 0};
-
-
+    ArrayList<Achievement> achievements= new ArrayList <>();
+    Achievement marathon, stribe, keepgoing,betatester;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -46,7 +43,7 @@ public class Achievement_frag extends Fragment  {
 
         gridView = (GridView) view.findViewById(R.id.gridview);
 
-        adapter = new Achievement_adapter(getActivity(), numberIcons, progress);
+        adapter = new Achievement_adapter(getActivity(), achievements);
 
         gridView.setAdapter(adapter);
 
@@ -87,12 +84,12 @@ public class Achievement_frag extends Fragment  {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
-        builder.setTitle(head[position])
-                .setMessage(text[position]);
-        if (check[position] == false) {
-            builder.setIcon(numberIcons[position]);
+        builder.setTitle(achievements.get(position).getName())
+                .setMessage(achievements.get(position).getText());
+        if (achievements.get(position).getComplete() == false) {
+            builder.setIcon(R.drawable.iconfinder_lock_299105);
         }else {
-            builder.setIcon(altNumberIcons[position]);
+            builder.setIcon(achievements.get(position).getImage());
         }
         builder.setNeutralButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
@@ -102,6 +99,27 @@ public class Achievement_frag extends Fragment  {
                     }
                 });
          builder.create().show();
+
+    }
+
+    public ArrayList<Achievement> createAchievement(){
+        marathon = new Achievement("Marathon","Du har ikke gjort det endnu");
+        marathon.setComplete(true);
+        stribe = new Achievement("7 på stribe", "Du har ikke klaret det");
+        keepgoing = new Achievement("Keep going","Nej tak");
+        betatester = new Achievement("2018 Beta Tester", "Testede app'en i 2018");
+
+        achievements.add(marathon);
+        achievements.add(stribe);
+        achievements.add(keepgoing);
+        achievements.add(betatester);
+
+        return achievements;
+    }
+
+    public void checkCompletion(){
+        //tjek om condition for en achievment er opnået.
+
 
     }
 }

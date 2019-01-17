@@ -7,42 +7,29 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.entities.user.Patient;
+import e.android.sensmotion.views.Achievement.Achievement;
 
-public class Achievement_adapter extends BaseAdapter {
+public class Achievement_adapter extends ArrayAdapter<Achievement> {
 
-
-    int icons[], progress[];
     Activity context;
     LayoutInflater inflater;
+    ArrayList<Achievement> achievements = new ArrayList<>();
 
 
-    public Achievement_adapter(Activity context, int icons[], int progress[]) {
+    public Achievement_adapter(Activity context, ArrayList<Achievement> achievements) {
+        super(context,R.layout.achievement_adapter ,achievements);
         this.context = context;
-        this.icons = icons;
-        this.progress = progress;
-    }
+        this.achievements = achievements;
 
-
-    @Override
-    public int getCount() {
-        return icons.length;
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return icons[position];
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 
     @Override
@@ -52,12 +39,14 @@ public class Achievement_adapter extends BaseAdapter {
 
         View view = inflater.inflate(R.layout.achievement_adapter, null, true);
 
-
-        ImageView gennemforelse = (ImageView) view.findViewById(R.id.gennemforelse);
         ImageView icon = (ImageView) view.findViewById(R.id.icon);
 
-        icon.setImageResource(icons[position]);
-        gennemforelse.setImageResource(progress[0]);
+        if(achievements.get(position).getComplete()==true && achievements.get(position).getName() == "Marathon"){
+            achievements.get(position).setImage(R.drawable.sensmotionblack);
+        }
+
+        icon.setImageResource(achievements.get(position).getImage());
+
 
         return view;
     }
