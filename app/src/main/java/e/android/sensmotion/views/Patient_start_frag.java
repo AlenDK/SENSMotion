@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +45,31 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ProgBar walk, stand, cycling, train, other;
     private ListView complete, incomplete;
 
-    Date currentDay = Calendar.getInstance().getTime();
-    SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+
+    //  Calendar c = Calendar.getInstance();
+
+    SharedPreferences prefs;
+
+    Calendar c = Calendar.getInstance();
+    int today = c.get(Calendar.DAY_OF_YEAR);
+
+
+    int yesterday, streakCount;
+
+  /*  Date currentDay = Calendar.getInstance().getTime();
+    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
     String today = format.format(currentDay);
+
+
+    int day = Integer.parseInt(today.substring(0, 2));
+    int month = Integer.parseInt(today.substring(3, 5));
+    int year = Integer.parseInt(today.substring(6, 10));
+    */
+
+
+
+
+
 
     List<Values> values;
     ArrayList<String> days;
@@ -58,11 +81,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ProgressBar_adapter IncomAdapter, comAdapter;
 
 
-    int day = Integer.parseInt(today.substring(0, 1));
-    int month = Integer.parseInt(today.substring(3, 4));
-    int year = Integer.parseInt(today.substring(6, 9));
 
-    SharedPreferences prefs;
 
     int totalProgressGoal = 500, circleProgress;
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
@@ -83,6 +102,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        setStreak();
+        Log.d("test", ""+prefs.getInt("streakCounter", 0));
+
+        Log.d("test", ""+streakCount);
+        Log.d("test", ""+today);
+        Log.d("test", ""+yesterday);
+
+
+
         values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
         days = new ArrayList<>();
         images = new ArrayList<>();
@@ -100,6 +128,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         completeText = view.findViewById(R.id.completeText);
         complete =view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
+
 
 
         //createText(view);
@@ -133,7 +162,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
 //get dag, og tjek år, måned, dag
-
+/*
     public void setDates(int day, int month, int year) {
         prefs.edit().putInt("day", day);
         prefs.edit().putInt("month", month);
@@ -160,6 +189,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
         return false;
     }
+    */
 
     /*
         private void saveAchievemnt( ) {
@@ -230,6 +260,27 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     }*/
+
+    public void setStreak() {
+    yesterday = prefs.getInt("yesterday", 0);
+    streakCount = prefs.getInt("streakCounter", 0);
+
+        if(today - 1 == yesterday){
+        streakCount++;
+        prefs.edit().putInt("yesterday", today).commit();
+        prefs.edit().putInt("streakCounter", streakCount).commit();
+    } else if (today == yesterday) {
+   /*        if(prefs.getInt("streakCounter", 0) == 0) {
+               prefs.edit().putInt("streakCounter", 1).commit();
+           }
+*/    } else {
+        prefs.edit().putInt("yesterday", today).commit();
+        prefs.edit().putInt("streakCounter", 1).commit();
+    }
+}
+
+
+
 
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
