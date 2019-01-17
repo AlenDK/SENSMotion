@@ -261,7 +261,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     public void previousData(View view) {
         days.add("i går");
-        days.add(getYesterdayDateString(1));
         days.add(getYesterdayDateString(2));
         days.add(getYesterdayDateString(3));
         days.add(getYesterdayDateString(4));
@@ -273,21 +272,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         days.add(getYesterdayDateString(10));
         days.add(getYesterdayDateString(11));
         days.add(getYesterdayDateString(12));
-        images.add(R.drawable.greensmileyrounded);
+        days.add(getYesterdayDateString(13));
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

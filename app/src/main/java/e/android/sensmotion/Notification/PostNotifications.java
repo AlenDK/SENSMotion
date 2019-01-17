@@ -43,8 +43,13 @@ public class PostNotifications extends BroadcastReceiver {
             NotifyHalfWayThere(context);
             i = 0;
         }
-        /*setPercentage();
-        if (PercentWalk == 50 || PercentStand == 50 || Percentcycle == 50 || PercentExecise == 50 || PercentOther == 50) {
+        //setPercentage();
+        System.out.println("Gå " + PercentWalk + "hest");
+        System.out.println("Stå "+ PercentStand + "hest");
+        System.out.println("cykel " +Percentcycle + "hest");
+        System.out.println("Motion "+PercentExecise + "hest");
+        System.out.println("andet " + PercentOther + "hest");
+        /*if (PercentWalk == 50 || PercentStand == 50 || Percentcycle == 50 || PercentExecise == 50 || PercentOther == 50) {
             patient.NotifyHalfWayThere();
         }
         if (PercentWalk == 100 || PercentStand == 100 || Percentcycle == 100 || PercentExecise == 100 || PercentOther == 10) {
