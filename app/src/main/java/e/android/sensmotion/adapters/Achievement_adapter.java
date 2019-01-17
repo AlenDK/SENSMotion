@@ -18,34 +18,47 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.entities.user.Patient;
 import e.android.sensmotion.views.Achievement.Achievement;
 
-public class Achievement_adapter extends ArrayAdapter<Achievement> {
+public class Achievement_adapter extends BaseAdapter {
 
     Activity context;
+    List<Achievement> achievements = new ArrayList<>();
+    ImageView icons;
     LayoutInflater inflater;
-    ArrayList<Achievement> achievements = new ArrayList<>();
-
 
     public Achievement_adapter(Activity context, ArrayList<Achievement> achievements) {
-        super(context,R.layout.achievement_adapter ,achievements);
         this.context = context;
         this.achievements = achievements;
+        inflater = context.getLayoutInflater();
+    }
 
+    @Override
+    public int getCount() {
+        return achievements.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return achievements.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        inflater = context.getLayoutInflater();
-
         View view = inflater.inflate(R.layout.achievement_adapter, null, true);
 
-        ImageView icon = (ImageView) view.findViewById(R.id.icon);
+        icons = view.findViewById(R.id.icon);
+
+        icons.setImageResource(achievements.get(position).getImage());
 
         if(achievements.get(position).getComplete()==true && achievements.get(position).getName() == "Marathon"){
             achievements.get(position).setImage(R.drawable.sensmotionblack);
         }
 
-        icon.setImageResource(achievements.get(position).getImage());
 
 
         return view;

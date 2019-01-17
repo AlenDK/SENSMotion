@@ -41,6 +41,7 @@ public class Achievement_frag extends Fragment  {
             Fabric.with(getActivity(), new Crashlytics());
         }
 
+        ArrayList<Achievement> achievements = getAchievement();
         gridView = (GridView) view.findViewById(R.id.gridview);
 
         adapter = new Achievement_adapter(getActivity(), achievements);
@@ -102,7 +103,7 @@ public class Achievement_frag extends Fragment  {
 
     }
 
-    public ArrayList<Achievement> createAchievement(){
+    public ArrayList<Achievement> getAchievement(){
         marathon = new Achievement("Marathon","Du har ikke gjort det endnu");
         marathon.setComplete(true);
         stribe = new Achievement("7 på stribe", "Du har ikke klaret det");
