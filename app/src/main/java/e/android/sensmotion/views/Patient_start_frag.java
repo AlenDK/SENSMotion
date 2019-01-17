@@ -199,7 +199,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         progBarsIncom.add(train);
         progBarsIncom.add(other);
 
+        sortProgressbars(progBarsIncom);
+
         return progBarsIncom;
+    }
+
+    private void sortProgressbars(List<ProgBar> bars){
+        int length = bars.size();
+
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 0; j < length - i - 1; j++) {
+                if (bars.get(j).getProgress() < bars.get(j + 1).getProgress()) {
+                    ProgBar temp = bars.get(j);
+                    bars.remove(j);
+                    bars.add(j + 1, temp);
+                }
+            }
+        }
     }
 
   /*  private void createImages(View view) {
@@ -277,8 +293,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), days, images);
         recyclerView.setAdapter(adapter);
 
+        /*
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         recyclerView.startAnimation(animation);
+        */
 
         }
 
