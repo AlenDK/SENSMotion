@@ -34,5 +34,16 @@
     <color name="colorOrange">#FF8C00</color>
 
     <color name="transparent">#dc000000</color>
-    
+
+    <!--
+    Progressbar farver
+    -->
+    <color name="progress20">#ccff00</color>
+    <color name="progress40">#aaff00</color>
+    <color name="progress50">#99ff00</color>
+    <color name="progress60">#77ff00</color>
+    <color name="progress80">#44ff00</color>
+    <color name="progress99">#32CD32</color>
+    <color name="progress100">#1e9b30</color>
+
 </resources>

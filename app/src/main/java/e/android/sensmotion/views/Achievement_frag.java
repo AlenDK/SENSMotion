@@ -23,7 +23,7 @@ public class Achievement_frag extends Fragment  {
     boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
     GridView gridView;
     Achievement_adapter adapter;
-    int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.walking_stickman, R.drawable.login_knap,
+    int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.stickman_walking, R.drawable.login_knap,
     R.drawable.patient_ikon};
     int altNumberIcons[] = {R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite, R.drawable.sensmotionwhite};
     int progress[] = {R.drawable.nuludaf3, R.drawable.enudaf3, R.drawable.toudaf3, R.drawable.treudaf3};

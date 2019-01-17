@@ -87,9 +87,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         days = new ArrayList<>();
         images = new ArrayList<>();
 
-        System.out.println("Bruger: " + bruger.getPatient("p1").toString());
-        System.out.println("Sensor: " + bruger.getPatient("p1").getSensor("s1").toString());
-
 
         walkAmount = Double.parseDouble(values.get(0).getWalk());
         standAmount = Double.parseDouble(values.get(0).getStand());
@@ -110,14 +107,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         createButtons(view);
         createProgressbar();
         previousData(view);
-
-        for(int i = 0; i < progBarsIncom.size(); i++){
-            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
-                progBarsIncom.get(i).setComplete(true);
-                progBarsCom.add(progBarsIncom.get(i));
-                progBarsIncom.remove(i);
-            }
-        }
 
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
         comAdapter = new ProgressBar_adapter(getActivity(),progBarsCom);
@@ -189,8 +178,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private List<ProgBar> createProgressbar() {
         walk = new ProgBar("walk",(int) Math.round(walkAmount), totalwalk);
         stand = new ProgBar("stand",(int) Math.round(standAmount), totalstand);
-        cycling = new ProgBar("cycling",(int) Math.round(cyclingAmount), totalcycling);
-        train = new ProgBar("train", (int) Math.round(trainAmount), totalexercise);
+        cycling = new ProgBar("bike",(int) Math.round(cyclingAmount), totalcycling);
+        train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
         other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
         progBarsIncom.add(walk);
@@ -200,6 +189,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         progBarsIncom.add(other);
 
         sortProgressbars(progBarsIncom);
+        completeProgressbars();
 
         return progBarsIncom;
     }
@@ -217,6 +207,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             }
         }
     }
+
+    private void completeProgressbars(){
+        for(int i = 0; i < progBarsIncom.size(); i++){
+            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
+                progBarsIncom.get(i).setComplete(true);
+                progBarsCom.add(progBarsIncom.get(i));
+                progBarsIncom.remove(i);
+            }
+        }
+    }
+
 
   /*  private void createImages(View view) {
         actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
