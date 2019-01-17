@@ -33,7 +33,6 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         return view;
     }
 
-
     @Override
     public void onClick(View view) {
 

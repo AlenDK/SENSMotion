@@ -1,24 +1,14 @@
 package e.android.sensmotion.controller.impl;
 
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
-import e.android.sensmotion.data.Firebase;
-import e.android.sensmotion.data.FirebaseController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.User;
 import e.android.sensmotion.entities.user.Patient;
@@ -30,7 +20,7 @@ public class UserController implements IUserController {
     private List<Patient> patientList = new ArrayList<Patient>();
     private ISensorController sc;
     private DatabaseReference database;
-    FirebaseController fbc;
+    private FirebaseController fbc;
 
     String hent = null;
     Patient patient;
@@ -57,7 +47,7 @@ public class UserController implements IUserController {
                 null, null, null, null);
         userList.add(patient3);
 
-        patientList.add(patient1);
+        //patientList.add(patient1);
         //patientList.add(patient2);
         //patientList.add(patient3);
 
@@ -65,33 +55,39 @@ public class UserController implements IUserController {
         userList.add(therapist1);
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public void setPatientList(List<Patient> list){
+        patientList = list;
     }
 
     public List<Patient> getPatientList() { return patientList; }
 
-    public User getUser(String id){
-        for(User b : userList){
-            if(b.getId().equals(id)){
-                return b;
-            }
-        }
-        return null;
-    }
-
     public Patient getPatient(final String id){
-        //Direkte fra API
-        for(Patient p : patientList){
+
+        for(Patient p: patientList){
+            System.out.println(p.getId());
             if(p.getId().equals(id)){
+                System.out.println("id: " + p.getId());
                 return p;
             }
         }
+
         return null;
     }
 
     public void savePatient(Patient p){
-        Firebase firebase = new Firebase();
-        firebase.newPatient(p);
+        FirebaseController fbc = new FirebaseController();
+        fbc.newPatient(p);
+    }
+
+    public void addToPatientList(Patient p){
+        patientList.add(p);
+    }
+
+    public void removeFromPatientList(String id) {
+        for(Patient p: patientList){
+            if(p.getId().equals(id)){
+                patientList.remove(p);
+            }
+        }
     }
 }

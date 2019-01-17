@@ -7,11 +7,12 @@ import e.android.sensmotion.entities.user.Patient;
 
 public interface IUserController {
 
-    List<User> getUserList();
     List<Patient> getPatientList();
-    User getUser(String id);
     Patient getPatient(String id);
+    void setPatientList(List<Patient> list);
     void savePatient(Patient p);
+    void addToPatientList(Patient p);
+    void removeFromPatientList(String id);
 
 
 }

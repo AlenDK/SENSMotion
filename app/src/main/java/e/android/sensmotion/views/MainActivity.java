@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 
@@ -17,6 +18,7 @@ public class MainActivity extends FragmentActivity {
     TextView tv6;
     IDataController dc;
     IUserController bc;
+    IFirebaseController fbc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,9 @@ public class MainActivity extends FragmentActivity {
 
         dc = ControllerRegistry.getDataController();
         bc = ControllerRegistry.getUserController();
+
+        fbc = ControllerRegistry.getFirebaseController();
+        fbc.setValueListener();
 
         //dc.refreshPatient(bc.getPatient("p1"), bc.getPatient("p1").getSensor("s1"), "1");
 
