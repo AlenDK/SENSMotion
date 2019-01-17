@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -112,7 +114,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         for(int i = 0; i < progBarsIncom.size(); i++){
             if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
                 progBarsIncom.get(i).setComplete(true);
-                System.out.println("We done here? " + progBarsIncom.get(i).getComplete());
                 progBarsCom.add(progBarsIncom.get(i));
                 progBarsIncom.remove(i);
             }
@@ -274,8 +275,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), days, images);
-
         recyclerView.setAdapter(adapter);
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        recyclerView.startAnimation(animation);
 
         }
 
