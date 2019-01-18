@@ -12,7 +12,7 @@ public class Period {
     private int day_count;
 
     public Period(){
-        
+
     }
 
     public Period(int day_count){

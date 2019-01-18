@@ -302,7 +302,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         try {
             String hentDataResult = new HentDataAsyncTask().execute().get();
 
-            if(uc.getPatient(id) != null) {
+            if(uc.getPatient(id).getSensorer() != null) {
                 dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
                 System.out.println("når til saveData");
                 System.out.println(currentPatient.getId());
