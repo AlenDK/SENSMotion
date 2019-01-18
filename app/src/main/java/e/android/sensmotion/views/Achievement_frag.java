@@ -1,8 +1,13 @@
 package e.android.sensmotion.views;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -26,15 +31,17 @@ public class Achievement_frag extends Fragment  {
     boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
     GridView gridView;
     Achievement_adapter adapter;
-    int numberIcons[] = {R.drawable.baseline_sentiment_very_satisfied_black_48, R.drawable.stickman_walking, R.drawable.login_knap,
-    R.drawable.patient_ikon};
     ArrayList<Achievement> achievements= new ArrayList <>();
-    Achievement marathon, stribe, keepgoing,betatester, comeon, test1, test2, test3, test4;
+    Achievement facebook, stribe, keepgoing,betatester, comeon, test1, test2, test3, test4;
+    SharedPreferences prefs;
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
       //  View view = inflater.inflate(R.layout.achievement, container, false);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.achievement, container, false);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 
         if (!EMULATOR) {
@@ -60,18 +67,7 @@ public class Achievement_frag extends Fragment  {
 
 
 
-/*
 
-        view.setOnTouchListener(new MotionDetection(getActivity()) {
-            @Override
-            public void onSwipeDown() {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Patient_start_frag())
-                        .commit();
-            }
-        });
-
-  */
 
 
 
@@ -85,12 +81,13 @@ public class Achievement_frag extends Fragment  {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
-        builder.setTitle(achievements.get(position).getName())
-                .setMessage(achievements.get(position).getText());
+        builder.setTitle(achievements.get(position).getName());
         if (achievements.get(position).getComplete() == false) {
-            builder.setIcon(R.drawable.iconfinder_lock_299105);
+            builder.setMessage(achievements.get(position).getText());
+            builder.setIcon(achievements.get(position).getImage());
         }else {
             builder.setIcon(achievements.get(position).getImage());
+            builder.setMessage(achievements.get(position).getText());
         }
         builder.setNeutralButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
@@ -104,28 +101,27 @@ public class Achievement_frag extends Fragment  {
     }
 
     public ArrayList<Achievement> getAchievement(){
-        marathon = new Achievement("Marathon","Du har ikke gjort det endnu");
-        marathon.setComplete(true);
-        stribe = new Achievement("7 på stribe", "Du har ikke klaret det");
-        keepgoing = new Achievement("Keep going","Nej tak");
+        stribe = new Achievement("7 på stribe","For at få dette trofæ skal du have åbnet appen 7 dage i streg!", R.drawable.sevendaystreak);
+        stribe.setComplete(prefs.getInt("streakCounter", 0) == 7);
+        facebook = new Achievement("7 på stribe", "Du har ikke klaret det", R.drawable.facebook_logo);
+      /*  keepgoing = new Achievement("Keep going","Nej tak");
         betatester = new Achievement("2018 Beta Tester", "Testede app'en i 2018");
         comeon = new Achievement("Test", "test");
         test1 = new Achievement("Test", "test");
         test2 = new Achievement("Test", "test");
         test3 = new Achievement("Test", "test");
-        test4 = new Achievement("Test", "test");
+      */
 
-
-        achievements.add(marathon);
+    //    achievements.add(marathon);
         achievements.add(stribe);
-        achievements.add(keepgoing);
+      /*  achievements.add(keepgoing);
         achievements.add(betatester);
         achievements.add(comeon);
         achievements.add(test1);
         achievements.add(test2);
         achievements.add(test3);
         achievements.add(test4);
-
+*/
 
 
 
@@ -137,4 +133,8 @@ public class Achievement_frag extends Fragment  {
 
 
     }
-}
+
+
+    }
+
+

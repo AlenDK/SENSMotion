@@ -11,8 +11,9 @@ public class Period {
     private Values values;
     private int day_count;
 
+    public Period(){
 
-
+    }
 
     public Period(int day_count){
         this.day_count = day_count;

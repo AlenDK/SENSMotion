@@ -19,7 +19,7 @@ import e.android.sensmotion.entities.user.Patient;
 public class NyPatient_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     Button opret;
-    EditText patientID;
+    EditText patientID, patientName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,15 +29,15 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         opret.setOnClickListener(this);
 
         patientID = view.findViewById(R.id.patientID);
+        patientName = view.findViewById(R.id.editText);
 
         return view;
     }
 
-
     @Override
     public void onClick(View view) {
 
-        Patient p = new Patient(patientID.getText().toString(), null, null, null, null, null, "k5W2uX", null);
+        Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null, null, null, null, "k5W2uX", null);
 
         ControllerRegistry.getUserController().savePatient(p);
 

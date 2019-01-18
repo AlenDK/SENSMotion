@@ -21,9 +21,10 @@ import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.impl.FirebaseController;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.data.Firebase;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
@@ -33,17 +34,17 @@ import com.crashlytics.android.Crashlytics;
 
 public class Login_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
-    EditText brugernavn;
-    CheckBox dataHandling;
-    Intent act;
-    IDataController dc;
-    IUserController bc;
-    String jsonString;
-    Firebase firebasee = new Firebase();
-    boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+    private EditText brugernavn;
+    private CheckBox dataHandling;
+    private Intent act;
+    private IDataController dc;
+    private IUserController bc;
+    private String jsonString;
+    private IFirebaseController firebasee;
+    private boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
 
-    Patient patient;
-    Sensor sensor;
+    private Patient patient;
+    private Sensor sensor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
         brugernavn = view.findViewById(R.id.brugernavn);
         dc = ControllerRegistry.getDataController();
         bc = ControllerRegistry.getUserController();
+        firebasee = ControllerRegistry.getFirebaseController();
 
         TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);

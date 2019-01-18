@@ -8,11 +8,11 @@ public class Achievement {
     String name, text;
     Boolean isComplete;
 
-    public Achievement(String name, String text) {
+    public Achievement(String name, String text, int image) {
         this.name = name;
         this.text = text;
         isComplete = false;
-        image = (R.drawable.iconfinder_lock_299105);
+        this.image = image;
     }
 
     public int getImage() {

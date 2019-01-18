@@ -2,7 +2,6 @@ package e.android.sensmotion.views;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -20,27 +19,20 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.DataSet;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.gms.common.util.Strings;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -50,8 +42,12 @@ import java.util.concurrent.ExecutionException;
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
 import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.controller.impl.FirebaseController;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
+import e.android.sensmotion.entities.user.Patient;
 import io.fabric.sdk.android.Fabric;
 
 public class PatientData_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
@@ -66,6 +62,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private String jsonString, dateChosen, id;
     private ProgressDialog loading;
     private AlertDialog.Builder dialogBuilder;
+    private List<Patient> patientList;
+    private List<Sensor> list;
+    private Patient currentPatient;
 
     final Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -91,6 +90,16 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         dc = ControllerRegistry.getDataController();
         uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
+        list = new ArrayList<>();
+
+        patientList = uc.getPatientList();
+        for(Patient p: patientList){
+            if(p.getId().equals(id)){
+                currentPatient = p;
+            }
+        }
+
+        System.out.println("hejsa");
 
         updateSensorData(id);
 
@@ -181,8 +190,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
     public void updateBarChart(){
 
-        if(ControllerRegistry.getUserController().getPatient(id) != null) {
-            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        if(uc.getPatient(id) != null) {
+            updateSensorData(id);
+            Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 
             //Initializes lists of BarEntry.
             List<BarEntry> entriesStand = new ArrayList<>();
@@ -245,8 +255,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updatePieChart() {
-        if (ControllerRegistry.getUserController().getPatient(id) != null) {
-            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        if (uc.getPatient(id) != null) {
+            updateSensorData(id);
+            Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 
             //Creates a list of PieEntries
             List<PieEntry> entries = new ArrayList<>();
@@ -291,8 +302,12 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         try {
             String hentDataResult = new HentDataAsyncTask().execute().get();
 
-            if(uc.getPatient(id) != null) {
-                dc.saveData(hentDataResult, uc.getPatient(id).getSensor("s1"));
+            if(uc.getPatient(id).getSensorer() != null) {
+                dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
+                System.out.println("når til saveData");
+                System.out.println(currentPatient.getId());
+                list = currentPatient.getSensorer();
+                System.out.println("hej");
             }
 
         } catch (InterruptedException e) {
@@ -325,7 +340,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                 System.out.println("dateChosen er ikke empty");
             }
 
-            jsonString = dc.getDataString(uc.getPatient("p1"), dateChosen);
+            jsonString = dc.getDataString(currentPatient, dateChosen);
             System.out.println("jsonString: " + jsonString);
 
             return jsonString;

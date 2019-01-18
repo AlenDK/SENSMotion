@@ -35,8 +35,8 @@ public class Patientliste_adapter extends ArrayAdapter<Patient> {
 
         View view = inflater.inflate(R.layout.patient_list_item, null, true);
 
-        TextView nameView = (TextView) view.findViewById(R.id.name);
-        TextView rank = (TextView) view.findViewById(R.id.position);
+        TextView nameView = view.findViewById(R.id.name);
+        TextView rank = view.findViewById(R.id.position);
 
 
         Patient patient = patientList.get(position);
@@ -45,7 +45,7 @@ public class Patientliste_adapter extends ArrayAdapter<Patient> {
         baggrund.setImageResource(R.drawable.patient_list_bar);
 
 
-        nameView.setText(patient.getId());
+        nameView.setText(patient.getName());
         rank.setText(position + 1 + ".");
 
         return view;
