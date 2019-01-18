@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import e.android.sensmotion.R;
@@ -19,7 +21,7 @@ import e.android.sensmotion.entities.user.Patient;
 public class NyPatient_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     Button opret;
-    EditText patientID, patientName;
+    EditText patientID, patientName, mobilitet, sensorID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
 
         patientID = view.findViewById(R.id.patientID);
         patientName = view.findViewById(R.id.editText);
+        mobilitet = view.findViewById(R.id.editText4);
+        sensorID = view.findViewById(R.id.editText3);
 
         return view;
     }
@@ -37,13 +41,28 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
     @Override
     public void onClick(View view) {
 
-        Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null, null, null, null, "k5W2uX", null);
+        if(patientID.getText().toString().equals("")){
+            Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
+        }
+        else if(patientName.getText().toString().equals("")){
+            Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
+        }
+        else{
+            List<Sensor> list = new ArrayList<>();
+            if(!sensorID.getText().toString().equals("")){
+                Sensor s = new Sensor("s1", 0);
+                list.add(s);
+            }
 
-        ControllerRegistry.getUserController().savePatient(p);
+            Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null,
+                    null, list, mobilitet.getText().toString(), "k5W2uX", "6rT39u");
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.fragmentindhold, new Patientliste_frag())
-                .commit();
+            ControllerRegistry.getUserController().savePatient(p);
+
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentindhold, new Patientliste_frag())
+                    .commit();
+        }
 
     }
 }

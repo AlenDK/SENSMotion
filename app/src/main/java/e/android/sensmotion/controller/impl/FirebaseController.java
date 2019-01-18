@@ -18,6 +18,8 @@ import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
+import e.android.sensmotion.views.Patientliste_frag;
+import e.android.sensmotion.views.Terapuet_activity;
 
 public class FirebaseController implements IFirebaseController {
     private DatabaseReference database;
@@ -53,6 +55,8 @@ public class FirebaseController implements IFirebaseController {
 
                 }
                 uc.setPatientList(list);
+
+
 
 
                 /*

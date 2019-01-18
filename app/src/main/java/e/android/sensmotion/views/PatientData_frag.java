@@ -54,12 +54,12 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
     private Button periode, graf;
     private ImageButton ImgBtn;
-    private TextView patientinformation;
+    private TextView patientinformation, nameText;
     private HorizontalBarChart barChart;
     private PieChart pieChart;
     private IDataController dc;
     private IUserController uc;
-    private String jsonString, dateChosen, id;
+    private String jsonString, name, dateChosen, id;
     private ProgressDialog loading;
     private AlertDialog.Builder dialogBuilder;
     private List<Patient> patientList;
@@ -83,6 +83,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
         if(getArguments() != null){
             id = getArguments().getString("id");
+            name = getArguments().getString("name");
         }
 
         dialogBuilder = new AlertDialog.Builder(view.getContext());
@@ -119,6 +120,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         ImgBtn.setOnClickListener(this);
 
         patientinformation = view.findViewById(R.id.textView2);
+
+        nameText = view.findViewById(R.id.nameText);
+        nameText.setText(name);
 
         return view;
     }
@@ -190,7 +194,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
     public void updateBarChart(){
 
-        if(uc.getPatient(id) != null) {
+        if(uc.getPatient(id).getSensorer() != null) {
             updateSensorData(id);
             Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 
@@ -255,7 +259,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updatePieChart() {
-        if (uc.getPatient(id) != null) {
+        if (uc.getPatient(id).getSensorer() != null) {
             updateSensorData(id);
             Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 

@@ -22,9 +22,10 @@ public class Terapuet_activity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terapeut_activity);
 
+        /*
         fbc = ControllerRegistry.getFirebaseController();
         fbc.setValueListener();
-
+        */
 
         if (savedInstanceState == null) {
             android.support.v4.app.Fragment fragment = new Patientliste_frag();
