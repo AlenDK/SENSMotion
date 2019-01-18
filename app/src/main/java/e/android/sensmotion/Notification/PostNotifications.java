@@ -21,7 +21,7 @@ import static e.android.sensmotion.views.Patient_start_frag.PercentOther;
 import static e.android.sensmotion.views.Patient_start_frag.PercentStand;
 import static e.android.sensmotion.views.Patient_start_frag.PercentWalk;
 import static e.android.sensmotion.views.Patient_start_frag.Percentcycle;
-import static e.android.sensmotion.views.Patient_start_frag.setPercentage;
+
 
 import java.util.ArrayList;
 

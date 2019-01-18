@@ -10,12 +10,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,19 +27,22 @@ import java.util.Date;
 import java.util.List;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.adapters.ProgressBar_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Values;
+import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener {
 
-    private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
-    private TextView textView, textView1, textView2, textView3, textView4, textView5, circleText;
-    private ProgressBar circlebar, walk, stand, bike, train, other;
+    private TextView circleText, completeText;
+    private ProgressBar circlebar;
     private ImageButton profile_button;
     private RecyclerView recyclerView;
+    private ProgBar walk, stand, cycling, train, other;
+    private ListView complete, incomplete;
 
     Date currentDay = Calendar.getInstance().getTime();
     SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
@@ -44,6 +51,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     List<Values> values;
     ArrayList<String> days;
     ArrayList<Integer> images;
+    List<ProgBar> progBarsIncom = new ArrayList<>();
+    List<ProgBar> progBarsCom = new ArrayList<>();
+
+
+    ProgressBar_adapter IncomAdapter, comAdapter;
+
 
     int day = Integer.parseInt(today.substring(0, 1));
     int month = Integer.parseInt(today.substring(3, 4));
@@ -52,15 +65,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     SharedPreferences prefs;
 
     int totalProgressGoal = 500, circleProgress;
-    private int walk_prog = 0;
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
-    static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
+    static double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
 
     IDataController data = ControllerRegistry.getDataController();
     IUserController bruger = ControllerRegistry.getUserController();
-    private Handler progHandle = new Handler();
 
     private View view;
 
@@ -83,54 +94,41 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         walkAmount = Double.parseDouble(values.get(0).getWalk());
         standAmount = Double.parseDouble(values.get(0).getStand());
         cyclingAmount = Double.parseDouble(values.get(0).getCycling());
-        exerciseAmount = Double.parseDouble(values.get(0).getExercise());
+        trainAmount = Double.parseDouble(values.get(0).getExercise());
         otherAmount = Double.parseDouble(values.get(0).getOther());
 
-        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
+        dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
-        createText(view);
-        createImages(view);
+        completeText = view.findViewById(R.id.completeText);
+        complete =view.findViewById(R.id.completeList);
+        incomplete = view.findViewById(R.id.incompleteList);
+
+
+        //createText(view);
+        //createImages(view);
         createButtons(view);
-        createProgressbar(view);
+        createProgressbar();
         previousData(view);
 
+        for(int i = 0; i < progBarsIncom.size(); i++){
+            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
+                progBarsIncom.get(i).setComplete(true);
+                progBarsCom.add(progBarsIncom.get(i));
+                progBarsIncom.remove(i);
+            }
+        }
+
+        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
+        comAdapter = new ProgressBar_adapter(getActivity(),progBarsCom);
+
+        incomplete.setAdapter(IncomAdapter);
+        complete.setAdapter(comAdapter);
 
         final Toast akt_klaret = Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
                 "daglige mål for i dag!", Toast.LENGTH_LONG);
 
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (walk_prog < 100){
-                    walk_prog++;
-                    android.os.SystemClock.sleep(50);
-                    progHandle.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            walk.setProgress(walk_prog);
-                        }
-                    });
-                }
 
-                if(walk_prog == 100){
-                   akt_klaret.show();
-                }}
-        }).start();
-        */
-
-/*
-        view.setOnTouchListener(new MotionDetection(getActivity()) {
-            @Override
-            public void onSwipeUp() {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Achievement_frag())
-                        .commit();
-            }
-        });
-
-*/
         return view;
     }
 
@@ -144,18 +142,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     .commit();
         }
     }
-/*
-    private void changeSmiley(overallProgess) {
-        if(overallProgress <= 33.33) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_unsatisfied_red_48);
-        } else if (33.33 < overallProgress | overallProgress <= 66.66) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_moderat_yellow_48);
-        } else if (66.66 < overallProgress | overallProgress <= 100) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        }
-    }
-*/
-
 
 //get dag, og tjek år, måned, dag
 
@@ -200,39 +186,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     300 - 520
         }
     */
-    private void createProgressbar(View view) {
-        circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
-        walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
-        stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
-        bike = (ProgressBar) view.findViewById(R.id.progbar_bike);
-        train = (ProgressBar) view.findViewById(R.id.progbar_train);
-        other = (ProgressBar) view.findViewById(R.id.progbar_other);
+    private List<ProgBar> createProgressbar() {
+        walk = new ProgBar("walk",(int) Math.round(walkAmount), totalwalk);
+        stand = new ProgBar("stand",(int) Math.round(standAmount), totalstand);
+        cycling = new ProgBar("cycling",(int) Math.round(cyclingAmount), totalcycling);
+        train = new ProgBar("train", (int) Math.round(trainAmount), totalexercise);
+        other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
-        int walkPercent = (int) Math.round(walkAmount / totalwalk * 100);
-        int standPercent = (int) Math.round(standAmount / totalstand * 100);
-        int cyclingPercent = (int) Math.round(cyclingAmount / totalcycling * 100);
-        int exercisePercent = (int) Math.round(exerciseAmount / totalexercise * 100);
-        int otherPercent = (int) Math.round(otherAmount / totalother * 100);
+        progBarsIncom.add(walk);
+        progBarsIncom.add(stand);
+        progBarsIncom.add(cycling);
+        progBarsIncom.add(train);
+        progBarsIncom.add(other);
 
-        System.out.println(walkPercent);
-        System.out.println(standPercent);
-        System.out.println(cyclingPercent);
-        System.out.println(exercisePercent);
-        System.out.println(otherPercent);
-
-        walk.setProgress(walkPercent);
-        stand.setProgress(standPercent);
-        bike.setProgress(cyclingPercent);
-        train.setProgress(exercisePercent);
-        other.setProgress(otherPercent);
-
-
-        circlebar.setProgress(circleProgress);
-        circlebar.setRotation(270); //Make the progressbar start at the top
-
+        return progBarsIncom;
     }
 
-    private void createImages(View view) {
+  /*  private void createImages(View view) {
         actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
         today_smiley = (ImageView) view.findViewById(R.id.facetoday_image);
         stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
@@ -242,28 +212,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
     }
 
-    private void createText(View view) {
-        textView = (TextView) view.findViewById(R.id.nameText);
-        textView1 = (TextView) view.findViewById(R.id.textView1);
-        textView2 = (TextView) view.findViewById(R.id.textView2);
-        textView3 = (TextView) view.findViewById(R.id.textView3);
-        textView4 = (TextView) view.findViewById(R.id.textView4);
-        textView5 = (TextView) view.findViewById(R.id.textView5);
-        circleText = (TextView) view.findViewById(R.id.progressBarText);
-
-        textView1.setText(Math.round(otherAmount) + "/100m");
-        textView2.setText(Math.round(standAmount) + "/100min");
-        textView3.setText(Math.round(cyclingAmount) + "/100m");
-        textView4.setText(Math.round(exerciseAmount) + "/100min");
-        textView5.setText(Math.round(walkAmount) + "/100min");
-        circleText.setText(circleProgress + "%");
-    }
+    }*/
 
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
-
+/*
     public static void setPercentage() {
 
         PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
@@ -274,7 +229,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
 
-    /*
+
     public void streakNotification(){
         int streak;
         UsageStats usageStats = new UsageStats();
@@ -288,15 +243,19 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     */
 
     public void previousData(View view) {
-        days.add("I går");
-        days.add("13-01");
-        days.add("12-01");
-        days.add("11-01");
-        days.add("10-01");
-        days.add("09-01");
-        days.add("08-01");
-        days.add("07-01");
-        days.add("06-01");
+        days.add("i går");
+        days.add(getYesterdayDateString(1));
+        days.add(getYesterdayDateString(2));
+        days.add(getYesterdayDateString(3));
+        days.add(getYesterdayDateString(4));
+        days.add(getYesterdayDateString(5));
+        days.add(getYesterdayDateString(6));
+        days.add(getYesterdayDateString(7));
+        days.add(getYesterdayDateString(8));
+        days.add(getYesterdayDateString(9));
+        days.add(getYesterdayDateString(10));
+        days.add(getYesterdayDateString(11));
+        days.add(getYesterdayDateString(12));
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
@@ -306,13 +265,33 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
         images.add(R.drawable.greensmileyrounded);
-
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
+        images.add(R.drawable.greensmileyrounded);
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), days, images);
-
         recyclerView.setAdapter(adapter);
 
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        recyclerView.startAnimation(animation);
+
         }
+
+    private Date previousDay(int day) {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -day);
+        System.out.println(cal.getTime());
+        return cal.getTime();
+    }
+
+    private String getYesterdayDateString(int day) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        return dateFormat.format(previousDay(day));
+    }
+
 }
