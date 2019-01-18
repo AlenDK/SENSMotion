@@ -64,6 +64,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private AlertDialog.Builder dialogBuilder;
     private IFirebaseController fbc;
     private List<Patient> patientList;
+    private List<Sensor> list;
     private Patient currentPatient;
 
     final Calendar calendar = Calendar.getInstance();
@@ -91,13 +92,8 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
         fbc = ControllerRegistry.getFirebaseController();
+        list = new ArrayList<>();
         fbc.setValueListener();
-
-        System.out.println("/777777777777777777777777777777777////////////////////////7");
-        for(Patient pa : uc.getPatientList()){
-            System.out.println("123");
-            System.out.println("//////////////////////////////////////////////////" + pa.getId());
-        }
 
         patientList = uc.getPatientList();
         for(Patient p: patientList){
@@ -114,7 +110,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         pieChart.setVisibility(View.GONE);
 
         barChart = view.findViewById(R.id.chart);
-        //updateBarChart();
+        updateBarChart();
 
         periode = view.findViewById(R.id.dato_knap);
         periode.setOnClickListener(this);
@@ -197,8 +193,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
     public void updateBarChart(){
 
-        if(ControllerRegistry.getUserController().getPatient(id) != null) {
-            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        if(uc.getPatient(id) != null) {
+            updateSensorData(id);
+            Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 
             //Initializes lists of BarEntry.
             List<BarEntry> entriesStand = new ArrayList<>();
@@ -261,8 +258,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updatePieChart() {
-        if (ControllerRegistry.getUserController().getPatient(id) != null) {
-            Values values = ControllerRegistry.getUserController().getPatient(id).getSensor("s1").getCurrentPeriod().getValuesList().get(0);
+        if (uc.getPatient(id) != null) {
+            updateSensorData(id);
+            Values values = list.get(0).getCurrentPeriod().getValuesList().get(0);
 
             //Creates a list of PieEntries
             List<PieEntry> entries = new ArrayList<>();
@@ -308,10 +306,10 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             String hentDataResult = new HentDataAsyncTask().execute().get();
 
             if(uc.getPatient(id) != null) {
-                //dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
+                dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
                 System.out.println("når til saveData");
                 System.out.println(currentPatient.getId());
-                List<Sensor> list = currentPatient.getSensorer();
+                list = currentPatient.getSensorer();
                 System.out.println("hej");
             }
 

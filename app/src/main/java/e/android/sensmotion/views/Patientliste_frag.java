@@ -14,6 +14,7 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.Patientliste_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IFirebaseController;
+import e.android.sensmotion.controller.interfaces.ISensorController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.impl.FirebaseController;
 import e.android.sensmotion.entities.sensor.Sensor;
@@ -27,6 +28,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
     private ListView listView;
     private IFirebaseController fbc;
     private IUserController uc;
+    private ISensorController sc;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,20 +45,8 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         listView.setDividerHeight(15);
 
         uc = ControllerRegistry.getUserController();
+        sc = ControllerRegistry.getSensorController();
         patientList = uc.getPatientList();
-
-        System.out.println("////////////////////////////////////77");
-
-        for(int i = 0; i < patientList.size(); i++){
-            System.out.println("hejsa");
-            System.out.println(patientList.get(i).getId());
-        }
-
-        System.out.println("id: " + patientList.get(2).getId());
-        System.out.println("sensorid: "+ patientList.get(2).getSensorer().get(0).getId());
-
-        System.out.println("///////////////////////////////98");
-
 
         adapter = new Patientliste_adapter(getActivity(), patientList);
 

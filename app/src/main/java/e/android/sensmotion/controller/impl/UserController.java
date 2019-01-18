@@ -79,14 +79,10 @@ public class UserController implements IUserController {
         fbc.newPatient(p);
     }
 
-    public void addToPatientList(Patient p){
-        patientList.add(p);
-    }
-
-    public void removeFromPatientList(String id) {
+    public void addSensorToPatient(List<Sensor> sl, String patientId){
         for(Patient p: patientList){
-            if(p.getId().equals(id)){
-                patientList.remove(p);
+            if(p.getId().equals(patientId)){
+                p.setSensors(sl);
             }
         }
     }
