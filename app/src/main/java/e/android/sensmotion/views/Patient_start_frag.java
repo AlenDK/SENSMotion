@@ -134,8 +134,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         //createText(view);
         //createImages(view);
         createButtons(view);
-        createProgressbar();
         previousData(view);
+        createProgressbar();
 
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
         comAdapter = new ProgressBar_adapter(getActivity(),progBarsCom);
@@ -220,6 +220,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         sortProgressbars(progBarsIncom);
         completeProgressbars();
+        if(progBarsCom.size() == 0){ completeText.setVisibility(View.GONE); }
 
         return progBarsIncom;
     }
@@ -244,6 +245,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 progBarsIncom.get(i).setComplete(true);
                 progBarsCom.add(progBarsIncom.get(i));
                 progBarsIncom.remove(i);
+                i--;    //Ellers springer vi over hver anden
             }
         }
     }
@@ -278,9 +280,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         prefs.edit().putInt("streakCounter", 1).commit();
     }
 }
-
-
-
 
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
@@ -343,8 +342,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), days, images);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(),recyclerView, days, images);
         recyclerView.setAdapter(adapter);
+
 
         /*
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
@@ -365,4 +365,47 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
+
+    class ListelemntViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView dayTilte;
+        ImageView smileyImage;
+
+        public ListelemntViewholder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int i = getAdapterPosition();
+            System.out.println("nice makker B) " + i);
+            Toast.makeText(view.getContext(), "yeet", Toast.LENGTH_LONG).show();
+
+            recyclerView.smoothScrollToPosition(0);
+        }
+
+        /*
+        RecyclerView.Adapter adapter = new RecyclerView.Adapter<ListelemntViewholder>() {
+            @Override
+            public int getItemCount() {
+                return days.size();
+            }
+
+            @Override
+            public ListelemntViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
+                View view = getLayoutInflater().inflate(R.layout.listview_list_item, parent, false);
+                ListelemntViewholder holder = new ListelemntViewholder(view);
+
+                return holder;
+            }
+
+            @Override
+            public void onBindViewHolder(ListelemntViewholder holder, int position) {
+                holder.dayTilte.setText(days.get(position));
+                holder.smileyImage.setImageResource(images.get(position));
+            }
+        };
+        */
+
+    }
 }

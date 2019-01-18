@@ -2,6 +2,8 @@ package e.android.sensmotion.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -24,6 +26,8 @@ public class Achievement_adapter extends BaseAdapter {
     List<Achievement> achievements = new ArrayList<>();
     ImageView icons;
     LayoutInflater inflater;
+    ColorMatrix matrix = new ColorMatrix();
+
 
     public Achievement_adapter(Activity context, ArrayList<Achievement> achievements) {
         this.context = context;
@@ -55,9 +59,15 @@ public class Achievement_adapter extends BaseAdapter {
 
         icons.setImageResource(achievements.get(position).getImage());
 
-        if(achievements.get(position).getComplete()==true && achievements.get(position).getName() == "Marathon"){
-            achievements.get(position).setImage(R.drawable.sensmotionblack);
+
+
+        matrix.setSaturation(0);
+        ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
+
+        if(achievements.get(position).getComplete()==false) {
+            icons.setColorFilter(filter);
         }
+
 
 
 
