@@ -26,7 +26,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
     private List<Patient> patientList;
     private Patientliste_adapter adapter;
     private ListView listView;
-    private IFirebaseController fbc;
     private IUserController uc;
     private ISensorController sc;
 
@@ -34,9 +33,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patientliste_frag, container, false);
-
-        fbc = ControllerRegistry.getFirebaseController();
-        fbc.setValueListener();
 
         listView = view.findViewById(R.id.patientliste);
 
@@ -57,11 +53,13 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String id = patientList.get(i).getId();
+                String name = patientList.get(i).getName();
 
                 PatientData_frag pdf = new PatientData_frag();
                 Bundle pdf_args = new Bundle();
 
                 pdf_args.putString("id", id);
+                pdf_args.putString("navn", name);
                 pdf.setArguments(pdf_args);
 
                 getFragmentManager().beginTransaction()

@@ -62,7 +62,6 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private String jsonString, dateChosen, id;
     private ProgressDialog loading;
     private AlertDialog.Builder dialogBuilder;
-    private IFirebaseController fbc;
     private List<Patient> patientList;
     private List<Sensor> list;
     private Patient currentPatient;
@@ -91,9 +90,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         dc = ControllerRegistry.getDataController();
         uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
-        fbc = ControllerRegistry.getFirebaseController();
         list = new ArrayList<>();
-        fbc.setValueListener();
 
         patientList = uc.getPatientList();
         for(Patient p: patientList){

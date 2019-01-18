@@ -35,15 +35,15 @@ public class UserController implements IUserController {
         List<Sensor> p1Sensorer = new ArrayList<>();
         p1Sensorer.add(sc.getSensor("s1"));
 
-        Patient patient1 = new Patient("p1","p1", "p1", "p1", p1Sensorer,
+        Patient patient1 = new Patient("p1", "Aktiv Sensorsen", "p1", "p1", "p1", p1Sensorer,
                 null, "k5W2uX", "6rT39u");
         userList.add(patient1);
 
-        Patient patient2 = new Patient("p2", "p2", "p2", "p2",
+        Patient patient2 = new Patient("p2", "p2", "p2", "p2", "p2",
                 null, null, null, null);
         userList.add(patient2);
 
-        Patient patient3 = new Patient("p3", "p3", "p3", "p3",
+        Patient patient3 = new Patient("p3", "p3", "p3", "p3", "p3",
                 null, null, null, null);
         userList.add(patient3);
 
