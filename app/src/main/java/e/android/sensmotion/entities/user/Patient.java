@@ -85,6 +85,8 @@ public class Patient extends User {
     @Override
     public String toString() {
         return "Patient{" +
+                "id: "+getId()+
+                "name: "+name+
                 "cpr: "+cpr+
                 ", mobility: "+mobility+
                 ", project_key: "+project_key+
