@@ -101,8 +101,8 @@ public class Achievement_frag extends Fragment  {
     }
 
     public ArrayList<Achievement> getAchievement(){
-        stribe = new Achievement("7 på stribe","For at få dette trofæ skal du have åbnet appen 7 dage i streg!", R.drawable.sevendaystreak);
-        stribe.setComplete(prefs.getInt("streakCounter", 0) == 7);
+        //stribe = new Achievement("7 på stribe","For at få dette trofæ skal du have åbnet appen 7 dage i streg!", R.drawable.sevendaystreak);
+        //stribe.setComplete(prefs.getInt("streakCounter", 0) == 7);
         facebook = new Achievement("7 på stribe", "Du har ikke klaret det", R.drawable.facebook_logo);
       /*  keepgoing = new Achievement("Keep going","Nej tak");
         betatester = new Achievement("2018 Beta Tester", "Testede app'en i 2018");
