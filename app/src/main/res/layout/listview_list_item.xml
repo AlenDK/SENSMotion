@@ -9,7 +9,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="80dp"
-        android:layout_height="123dp">
+        android:layout_height="wrap_content">
 
 
         <ImageView
@@ -25,17 +25,18 @@
 
         <TextView
             android:id="@+id/previousTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="62dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="0dp"
             android:text="Dag 1"
             android:textColor="@color/colorBlack"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/previousSmiley"
             app:layout_constraintStart_toStartOf="@+id/previousSmiley"
-            app:layout_constraintTop_toBottomOf="@+id/previousSmiley" />
+            app:layout_constraintTop_toBottomOf="@+id/previousSmiley"
+            android:gravity="center"/>
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

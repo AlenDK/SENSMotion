@@ -31,6 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_list_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
+
         return holder;
     }
 
@@ -53,13 +54,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             tv = itemView.findViewById(R.id.previousTitle);
             iv = itemView.findViewById(R.id.previousSmiley);
-            tv.setOnClickListener(this);
+            iv.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             System.out.println("nice makker B)");
             Toast.makeText(context, "yeet", Toast.LENGTH_LONG).show();
+            int i = getAdapterPosition();
+            iv.setBackgroundColor(R.color.colorYellow);
+            tv.setBackgroundColor(R.color.colorYellow);
+            System.out.println(tv.getWidth());
+
+            android.view.ViewGroup.LayoutParams layoutParams = iv.getLayoutParams();
+            layoutParams.width = 122;
+            layoutParams.height = 102;
+            iv.setLayoutParams(layoutParams);
         }
     }
 }
