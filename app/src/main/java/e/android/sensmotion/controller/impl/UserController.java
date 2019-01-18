@@ -17,10 +17,14 @@ import e.android.sensmotion.entities.user.Therapist;
 public class UserController implements IUserController {
 
     private List<Patient> patientList = new ArrayList<>();
+    private Patient patient;
 
     public UserController(){
     }
 
+    public void setPatient(Patient p) {
+        patient = p;
+    }
     public void setPatientList(List<Patient> list){
         patientList = list;
     }
@@ -39,6 +43,7 @@ public class UserController implements IUserController {
 
         return null;
     }
+
 
     public void savePatient(Patient p){
         FirebaseController fbc = new FirebaseController();

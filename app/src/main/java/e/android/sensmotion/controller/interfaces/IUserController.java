@@ -10,6 +10,7 @@ public interface IUserController {
 
     List<Patient> getPatientList();
     Patient getPatient(String id);
+    void setPatient(Patient p);
     void setPatientList(List<Patient> list);
     void savePatient(Patient p);
     void addSensorToPatient(List<Sensor> sl, String patientId);

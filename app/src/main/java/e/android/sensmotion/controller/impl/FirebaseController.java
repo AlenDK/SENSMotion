@@ -23,13 +23,41 @@ import e.android.sensmotion.views.Terapuet_activity;
 
 public class FirebaseController implements IFirebaseController {
     private DatabaseReference database;
-    private String test = "";
     private IUserController uc;
     private ISensorController sc;
     private List<Patient> list;
 
     public FirebaseController() {
         database = FirebaseDatabase.getInstance().getReference("Patients");
+    }
+
+    public void getPatientFirebase(final String id){
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Patient p = null;
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("name").getValue(String.class).equals(id)) {
+                        p = snapshot.getValue(Patient.class);
+
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+                            Sensor s = snapshotSensor.getValue(Sensor.class);
+                            sensorList.add(s);
+                            p.setSensors(sensorList);
+                        }
+                    }
+                    System.out.println(list);
+                    uc.setPatient(p);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void setValueListener() {
@@ -54,28 +82,8 @@ public class FirebaseController implements IFirebaseController {
                     list.add(p);
 
                 }
+                System.out.println("hello: "+list);
                 uc.setPatientList(list);
-
-
-
-
-                /*
-                for(DataSnapshot snapshot : dataSnapshot.child("p1").child("sensorer").getChildren()){
-                    Sensor s = snapshot.getValue(Sensor.class);
-                    System.out.println("///////////////////////////////////////////////////////");
-                    System.out.println("///////////////////////////////////////////////////////");
-                    System.out.println("///////////////////////////////////////////////////////");
-                    System.out.println(s.getId());
-                    System.out.println("///////////////////////////////////////////////////////");
-                    System.out.println("///////////////////////////////////////////////////////");
-                    System.out.println("///////////////////////////////////////////////////////");
-
-                    sensorList.add(s);
-
-                }
-                uc.addSensorToPatient(sensorList, "p1");
-                */
-
             }
 
             @Override

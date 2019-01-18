@@ -27,10 +27,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position){
-            case 0:
-            Achievement_frag tab2 = new Achievement_frag();                return tab2;
+            case 0: Achievement_frag tab2 = new Achievement_frag();
+                    return tab2;
+
             case 1: Patient_start_frag tab1 = new Patient_start_frag();
-                return tab1;
+                    return tab1;
             default:
                 return null;
         }

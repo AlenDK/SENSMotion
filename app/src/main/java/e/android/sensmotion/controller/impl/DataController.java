@@ -32,7 +32,7 @@ public class DataController implements IDataController {
 
     }
 
-    public String getDataString(Patient patient, String date){
+    public String getApiDATA(Patient patient, String date){
         project_key = patient.getProject_key();
         patient_key = patient.getPatient_key();
 

@@ -42,9 +42,7 @@ import java.util.concurrent.ExecutionException;
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.controller.interfaces.IFirebaseController;
 import e.android.sensmotion.controller.interfaces.IUserController;
-import e.android.sensmotion.controller.impl.FirebaseController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
@@ -344,7 +342,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                 System.out.println("dateChosen er ikke empty");
             }
 
-            jsonString = dc.getDataString(currentPatient, dateChosen);
+            jsonString = dc.getApiDATA(currentPatient, dateChosen);
             System.out.println("jsonString: " + jsonString);
 
             return jsonString;
