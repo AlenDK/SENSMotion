@@ -45,7 +45,7 @@ import e.android.sensmotion.entities.user.Patient;
 import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 
-public class Patient_start_frag extends Fragment implements View.OnClickListener {
+public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
     private TextView circleBarText, completeText;
     private ProgressBar circlebar;
@@ -93,11 +93,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         userID = prefs.getString("userID", "p1");
 
         setStreak();
-        Log.d("test", "" + prefs.getInt("streakCounter", 0));
 
-        Log.d("test", "" + streakCount);
-        Log.d("test", "" + today);
-        Log.d("test", "" + yesterday);
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+            Log.d("alen lugter", bundle.getInt("dag")+"");
+        }
 
 
         days = new ArrayList<>();
@@ -265,7 +265,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images,this);
         recyclerView.setAdapter(adapter);
 
 
@@ -380,5 +380,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             }
         });
+    }
+
+    @Override
+    public void clickItem(int position) {
+        Log.d("stiv fisse",position+"");
     }
 }
