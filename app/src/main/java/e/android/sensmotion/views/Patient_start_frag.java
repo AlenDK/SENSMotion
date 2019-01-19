@@ -316,6 +316,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void getFirebasePatient(final String today) {
+        Log.d("Stiv alen",today);
         database = FirebaseDatabase.getInstance().getReference("Patients");
 
         database.addValueEventListener(new ValueEventListener() {
@@ -384,6 +385,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public void clickItem(int position) {
-        Log.d("stiv fisse",position+"");
+        getFirebasePatient(""+position);
     }
 }
