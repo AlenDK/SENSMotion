@@ -79,16 +79,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     static double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
-
-    IUserController uc = ControllerRegistry.getUserController();
-    ISensorController sc = ControllerRegistry.getSensorController();
-    IFirebaseController fbc = ControllerRegistry.getFirebaseController();
-
     private Patient patient;
     private String userID;
 
-
-    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -298,7 +291,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("fiiiiiiiiiiiiiiiiiiiiisse");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
                         patient = snapshot.getValue(Patient.class);
