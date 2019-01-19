@@ -29,7 +29,6 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-
         if (mPrefs.getBoolean("remember", false)) {
             setContentView(R.layout.activity_patient);
 

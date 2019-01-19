@@ -1,7 +1,9 @@
 package e.android.sensmotion.views;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,10 +30,14 @@ public class patient_setting_frag extends Fragment {
     ImageView column1, column2, column3, column4, column5;
     Intent act, service;
 
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor prefsEditor;
+
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.patient_setting_frag, container, false);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefsEditor = mPrefs.edit();
 
         createImage(view);
 
@@ -92,7 +98,10 @@ public class patient_setting_frag extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                prefsEditor.remove("remember");
+                prefsEditor.remove("userID");
+                prefsEditor.apply();
+                prefsEditor.commit();
                 act = new Intent(getActivity(), MainActivity.class);
                 act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(act);
