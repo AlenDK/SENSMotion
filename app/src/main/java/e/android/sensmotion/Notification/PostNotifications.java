@@ -12,6 +12,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.views.Patient_start_frag;
 
 import static e.android.sensmotion.Notification.NotifikationChannels.CHANNEL_ID1;
@@ -21,14 +24,22 @@ import static e.android.sensmotion.views.Patient_start_frag.PercentOther;
 import static e.android.sensmotion.views.Patient_start_frag.PercentStand;
 import static e.android.sensmotion.views.Patient_start_frag.PercentWalk;
 import static e.android.sensmotion.views.Patient_start_frag.Percentcycle;
+import static e.android.sensmotion.views.Patient_start_frag.setPercentage;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PostNotifications extends BroadcastReceiver {
 
     final String TAG = getClass().getName();
+    static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
+    int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
+    List<Values> values;
+
+    IUserController bruger = ControllerRegistry.getUserController();
     NotificationManagerCompat notificationManagerCompat;
     static int i = 0;
 
@@ -36,25 +47,19 @@ public class PostNotifications extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         System.out.println(TAG + "    onRecieve() modtog hest   " + context);
-        if (i == 0) {
+        /*if (i == 0) {
             NotifyWhenDone(context);
             i++;
         } else {
             NotifyHalfWayThere(context);
             i = 0;
-        }
-        //setPercentage();
+        }*/
+        getStats();
         System.out.println("Gå " + PercentWalk + "hest");
         System.out.println("Stå "+ PercentStand + "hest");
         System.out.println("cykel " +Percentcycle + "hest");
         System.out.println("Motion "+PercentExecise + "hest");
         System.out.println("andet " + PercentOther + "hest");
-        /*if (PercentWalk == 50 || PercentStand == 50 || Percentcycle == 50 || PercentExecise == 50 || PercentOther == 50) {
-            patient.NotifyHalfWayThere();
-        }
-        if (PercentWalk == 100 || PercentStand == 100 || Percentcycle == 100 || PercentExecise == 100 || PercentOther == 10) {
-            patient.NotifyWhenDone();
-        }*/
     }
 
     public void NotifyWhenDone(Context context) {
@@ -86,6 +91,22 @@ public class PostNotifications extends BroadcastReceiver {
                 .build();
 
         notificationManagerCompat.notify(2, notification);
+    }
+
+    public void getStats() {
+        values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
+        walkAmount = Double.parseDouble(values.get(0).getWalk());
+        standAmount = Double.parseDouble(values.get(0).getStand());
+        cyclingAmount = Double.parseDouble(values.get(0).getCycling());
+        trainAmount = Double.parseDouble(values.get(0).getExercise());
+        otherAmount = Double.parseDouble(values.get(0).getOther());
+
+        PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
+        PercentStand = (int) Math.round(standAmount / totalstand * 100);
+        Percentcycle = (int) Math.round(cyclingAmount / totalcycling * 100);
+        PercentExecise = (int) Math.round(trainAmount / totalexercise * 100);
+        PercentOther = (int) Math.round(otherAmount / totalother * 100);
+
     }
 
 }
