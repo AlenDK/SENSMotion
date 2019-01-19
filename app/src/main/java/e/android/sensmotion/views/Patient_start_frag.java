@@ -291,32 +291,50 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
                         patient = snapshot.getValue(Patient.class);
 
+                        //For each Sensor in database
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                             List<Sensor> sensorList = new ArrayList<>();
-                            Sensor s = snapshotSensor.getValue(Sensor.class);
 
-                            walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
-                            standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
-                            cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
-                            trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
-                            otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
+                            //For each "Day value" in database
+                            for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
+                                if(snapshotValues.getKey().equals("2")) {
 
-                            dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
-                            circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
-                            circleBarText.setText(circleProgress+"%");
-                            circlebar.setProgress(circleProgress);
-                            circlebar.setRotation(-90);
+                                    Values values = snapshotValues.getValue(Values.class);
+                                    walkAmount    = Double.parseDouble(values.getWalk());
+                                    standAmount   = Double.parseDouble(values.getStand());
+                                    cyclingAmount = Double.parseDouble(values.getCycling());
+                                    trainAmount   = Double.parseDouble(values.getExercise());
+                                    otherAmount   = Double.parseDouble(values.getOther());
 
-                            showElements();
+                                    /*
+                                    Sensor s = snapshotSensor.getValue(Sensor.class);
+                                    walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
+                                    standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
+                                    cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
+                                    trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
+                                    otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
+                                    */
+
+                                    dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
+                                    circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+
+                                    circleBarText.setText(circleProgress + "%");
+                                    circlebar.setProgress(circleProgress);
+                                    circlebar.setRotation(-90);
+
+                                    showElements();
+                                }
+                            }
                         }
                     }
                 }
-
             }
 
             @Override

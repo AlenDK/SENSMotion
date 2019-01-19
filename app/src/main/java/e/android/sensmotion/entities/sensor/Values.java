@@ -18,6 +18,16 @@ public class Values {
 
     }
 
+    public Values(String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
+        this.cycling = cycling;
+        this.exercise = exercise;
+        this.other = other;
+        this.rest = rest;
+        this.stand = stand;
+        this.steps = steps;
+        this.walk = walk;
+    }
+
     public String getRest() {
         return rest;
     }
@@ -30,10 +40,6 @@ public class Values {
         return walk;
     }
 
-    public String getCycling() {
-        return cycling;
-    }
-
     public String getExercise() {
         return exercise;
     }
@@ -44,6 +50,14 @@ public class Values {
 
     public String getSteps() {
         return steps;
+    }
+
+    public String getCycling() {
+        return cycling;
+    }
+
+    public String getNodata() {
+        return nodata;
     }
 
 
@@ -61,23 +75,14 @@ public class Values {
             System.out.println("////\n"+jsonVALUES1);
 
 
-            rest = jsonVALUES1.getString("activity/resting/time");
-            stand = jsonVALUES1.getString("activity/standing/time");
-            walk = jsonVALUES1.getString("activity/walking/time");
-            cycling = jsonVALUES1.getString("activity/cycling/time");
+            rest     = jsonVALUES1.getString("activity/resting/time");
+            stand    = jsonVALUES1.getString("activity/standing/time");
+            walk     = jsonVALUES1.getString("activity/walking/time");
+            cycling  = jsonVALUES1.getString("activity/cycling/time");
             exercise = jsonVALUES1.getString("activity/exercise/time");
-            other = jsonVALUES1.getString("activity/other/time");
-            nodata = jsonVALUES1.getString("general/nodata/time");
-            steps = jsonVALUES1.getString("activity/steps/count");
-
-            /*
-            System.out.println("Resting time: " + rest);
-            System.out.println("Standing time: " + stand);
-            System.out.println("Walking time: " + walk);
-            System.out.println("Cycling time: " + cycling);
-            System.out.println("Exercise time: " + exercise);
-            System.out.println("Other: " + other);
-            */
+            other    = jsonVALUES1.getString("activity/other/time");
+            nodata   = jsonVALUES1.getString("general/nodata/time");
+            steps    = jsonVALUES1.getString("activity/steps/count");
 
 
         } catch (JSONException e) {
