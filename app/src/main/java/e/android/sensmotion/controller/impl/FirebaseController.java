@@ -1,6 +1,7 @@
 package e.android.sensmotion.controller.impl;
 
 import android.support.annotation.NonNull;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,17 +30,22 @@ public class FirebaseController implements IFirebaseController {
 
     public FirebaseController() {
         database = FirebaseDatabase.getInstance().getReference("Patients");
+
     }
 
     public void getPatientFirebase(final String id){
+        uc = ControllerRegistry.getUserController();
+        sc = ControllerRegistry.getSensorController();
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Patient p = null;
-
+                System.out.println("hallo");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.child("name").getValue(String.class).equals(id)) {
+                    System.out.println("fiiiiiiisse: "+snapshot.child(id).child(id).getValue(String.class));
+                    if (snapshot.child("id").getValue(String.class).equals(id)) {
                         p = snapshot.getValue(Patient.class);
+                        System.out.println("key: "+dataSnapshot.getKey());
 
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                             List<Sensor> sensorList = new ArrayList<>();
@@ -67,6 +73,7 @@ public class FirebaseController implements IFirebaseController {
         sc = ControllerRegistry.getSensorController();
 
 
+
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,7 +95,6 @@ public class FirebaseController implements IFirebaseController {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -96,6 +102,10 @@ public class FirebaseController implements IFirebaseController {
     public void newPatient (Patient p) {
 
         database.child(p.getId()).setValue(p);
+
+    }
+
+    public void updateViews(View view){
 
     }
 

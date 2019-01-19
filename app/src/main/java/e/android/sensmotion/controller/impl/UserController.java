@@ -25,6 +25,7 @@ public class UserController implements IUserController {
     public void setPatient(Patient p) {
         patient = p;
     }
+
     public void setPatientList(List<Patient> list){
         patientList = list;
     }

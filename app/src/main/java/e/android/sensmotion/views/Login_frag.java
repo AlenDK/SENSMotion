@@ -41,7 +41,8 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     private String jsonString;
     private IFirebaseController fbc;
     private boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
-    SharedPreferences mPrefs;
+    private SharedPreferences mPrefs;
+    private SharedPreferences.Editor prefsEditor;
 
     private Patient patient;
     private Sensor sensor;
@@ -54,26 +55,14 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefsEditor = mPrefs.edit();
 
         dc = ControllerRegistry.getDataController();
         uc = ControllerRegistry.getUserController();
         fbc = ControllerRegistry.getFirebaseController();
 
-        SharedPreferences.Editor prefsEditor1 = mPrefs.edit();
-        prefsEditor1.clear();
 
-
-
-        if(mPrefs.getBoolean("remember", false) == true){
-            userID = mPrefs.getString("userID", "p1");
-            fbc.getPatientFirebase(userID);
-            patient = uc.getPatient(userID);
-
-            System.out.println("FIIIIIIIIIIIIIIIIIIIIIIIIIIIIISSE");
-
-            //act = new Intent(getActivity(), PatientActivity.class);
-            //startActivity(act);
-        }
+        //prefsEditor.clear();
 
         if (!EMULATOR) {
 
@@ -103,7 +92,6 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     @Override
     public void onClick(View view) {
         userID = brugernavn.getText().toString();
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
 
             switch (view.getId()) {
                 case R.id.logIndKnap:

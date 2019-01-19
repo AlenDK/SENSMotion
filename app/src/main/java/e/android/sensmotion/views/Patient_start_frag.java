@@ -2,8 +2,8 @@ package e.android.sensmotion.views;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,9 +34,14 @@ import java.util.List;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.impl.FirebaseController;
 import e.android.sensmotion.controller.interfaces.IDataController;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
+import e.android.sensmotion.controller.interfaces.ISensorController;
 import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
+import e.android.sensmotion.entities.user.Patient;
 import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 
@@ -46,30 +55,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ListView complete, incomplete;
 
 
-    //  Calendar c = Calendar.getInstance();
-
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
+    private DatabaseReference database;
 
     Calendar c = Calendar.getInstance();
     int today = c.get(Calendar.DAY_OF_YEAR);
 
 
     int yesterday, streakCount;
-
-  /*  Date currentDay = Calendar.getInstance().getTime();
-    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-    String today = format.format(currentDay);
-
-
-    int day = Integer.parseInt(today.substring(0, 2));
-    int month = Integer.parseInt(today.substring(3, 5));
-    int year = Integer.parseInt(today.substring(6, 10));
-    */
-
-
-
-
-
 
     List<Values> values;
     ArrayList<String> days;
@@ -81,70 +74,46 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ProgressBar_adapter IncomAdapter, comAdapter;
 
 
-
-
     int totalProgressGoal = 500, circleProgress;
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
 
-    IDataController data = ControllerRegistry.getDataController();
-    IUserController bruger = ControllerRegistry.getUserController();
+    IUserController uc = ControllerRegistry.getUserController();
+    ISensorController sc = ControllerRegistry.getSensorController();
+    IFirebaseController fbc = ControllerRegistry.getFirebaseController();
+
+    private Patient patient;
+    private String userID;
+
 
     private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_patient, container, false);
-          ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
-
+        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userID = prefs.getString("userID", "p1");
 
         setStreak();
-        Log.d("test", ""+prefs.getInt("streakCounter", 0));
+        Log.d("test", "" + prefs.getInt("streakCounter", 0));
 
-        Log.d("test", ""+streakCount);
-        Log.d("test", ""+today);
-        Log.d("test", ""+yesterday);
+        Log.d("test", "" + streakCount);
+        Log.d("test", "" + today);
+        Log.d("test", "" + yesterday);
 
 
-
-        values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
         days = new ArrayList<>();
         images = new ArrayList<>();
 
 
-        walkAmount = Double.parseDouble(values.get(0).getWalk());
-        standAmount = Double.parseDouble(values.get(0).getStand());
-        cyclingAmount = Double.parseDouble(values.get(0).getCycling());
-        trainAmount = Double.parseDouble(values.get(0).getExercise());
-        otherAmount = Double.parseDouble(values.get(0).getOther());
-
         dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
-        completeText = view.findViewById(R.id.completeText);
-        complete =view.findViewById(R.id.completeList);
-        incomplete = view.findViewById(R.id.incompleteList);
-
-
-
-        //createText(view);
-        //createImages(view);
-        createButtons(view);
-        previousData(view);
-        createProgressbar();
-
-        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
-        comAdapter = new ProgressBar_adapter(getActivity(),progBarsCom);
-
-        incomplete.setAdapter(IncomAdapter);
-        complete.setAdapter(comAdapter);
-
-        final Toast akt_klaret = Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
-                "daglige mål for i dag!", Toast.LENGTH_LONG);
+        inisializeElements(view);
+        getFirebasePatient();
 
 
         return view;
@@ -161,54 +130,45 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-//get dag, og tjek år, måned, dag
-/*
-    public void setDates(int day, int month, int year) {
-        prefs.edit().putInt("day", day);
-        prefs.edit().putInt("month", month);
-        prefs.edit().putInt("year", year);
+    private void inisializeElements(View view) {
+        completeText = view.findViewById(R.id.completeText);
+
+        createButtons(view);
+        createRecyclerview(view);
+        createLists(view);
+
+        hideElements();
     }
 
-    private boolean checkDate() {
-        if (prefs.getInt("day", 0) == 0) {
-            setDates(day, month, year);
-        }
-        if ((day - prefs.getInt("day", 0)) >= 1) {
-
-            setDates(day, month, year);
-            return true;
-        }
-
-        if ((month - prefs.getInt("month", 0)) >= 1) {
-            setDates(day, month, year);
-            return true;
-        }
-        if ((year - prefs.getInt("year", 0)) >= 1) {
-            setDates(day, month, year);
-            return true;
-        }
-        return false;
+    private void showElements(){
+        completeText.setVisibility(View.VISIBLE);
+        incomplete.setVisibility(View.VISIBLE);
+        complete.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        createProgressbar();
     }
-    */
 
-    /*
-        private void saveAchievemnt( ) {
-            prefs.edit().putInt("overallWalk", )
-            prefs.getInt("walk", 0)
-            if ((prefs.getInt("walk", 0)) == 0) {
-                prefs.edit().putInt("walk",0);
-            } else {
-            }
-            500
-                    520 - 500 = 20
-                            500 + 20
-                                    300 - 520
-        }
-    */
+    private void hideElements(){
+        completeText.setVisibility(View.GONE);
+        incomplete.setVisibility(View.GONE);
+        complete.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+    }
+
+    public void createLists(View view) {
+        complete = view.findViewById(R.id.completeList);
+        incomplete = view.findViewById(R.id.incompleteList);
+        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
+        comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom);
+
+        incomplete.setAdapter(IncomAdapter);
+        complete.setAdapter(comAdapter);
+    }
+
     private List<ProgBar> createProgressbar() {
-        walk = new ProgBar("walk",(int) Math.round(walkAmount), totalwalk);
-        stand = new ProgBar("stand",(int) Math.round(standAmount), totalstand);
-        cycling = new ProgBar("bike",(int) Math.round(cyclingAmount), totalcycling);
+        walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
+        stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
+        cycling = new ProgBar("bike", (int) Math.round(cyclingAmount), totalcycling);
         train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
         other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
@@ -220,12 +180,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         sortProgressbars(progBarsIncom);
         completeProgressbars();
-        if(progBarsCom.size() == 0){ completeText.setVisibility(View.GONE); }
+        if (progBarsCom.size() == 0) {
+            completeText.setVisibility(View.GONE);
+        }
 
         return progBarsIncom;
     }
 
-    private void sortProgressbars(List<ProgBar> bars){
+    private void sortProgressbars(List<ProgBar> bars) {
         int length = bars.size();
 
         for (int i = 0; i < length - 1; i++) {
@@ -239,9 +201,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-    private void completeProgressbars(){
-        for(int i = 0; i < progBarsIncom.size(); i++){
-            if(progBarsIncom.get(i).getProgress()>= progBarsIncom.get(i).getGoal()) {
+    private void completeProgressbars() {
+        for (int i = 0; i < progBarsIncom.size(); i++) {
+            if (progBarsIncom.get(i).getProgress() >= progBarsIncom.get(i).getGoal()) {
                 progBarsIncom.get(i).setComplete(true);
                 progBarsCom.add(progBarsIncom.get(i));
                 progBarsIncom.remove(i);
@@ -250,66 +212,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-
-  /*  private void createImages(View view) {
-        actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
-        today_smiley = (ImageView) view.findViewById(R.id.facetoday_image);
-        stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
-        stickman_stand = (ImageView) view.findViewById(R.id.standing_stickman);
-        stickman_bike = (ImageView) view.findViewById(R.id.biking_stickman);
-        stickman_train = (ImageView) view.findViewById(R.id.training_stickman);
-        stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
-    }
-
-    }*/
-
-    public void setStreak() {
-    yesterday = prefs.getInt("yesterday", 0);
-    streakCount = prefs.getInt("streakCounter", 0);
-
-        if(today - 1 == yesterday){
-        streakCount++;
-        prefs.edit().putInt("yesterday", today).commit();
-        prefs.edit().putInt("streakCounter", streakCount).commit();
-    } else if (today == yesterday) {
-   /*        if(prefs.getInt("streakCounter", 0) == 0) {
-               prefs.edit().putInt("streakCounter", 1).commit();
-           }
-*/    } else {
-        prefs.edit().putInt("yesterday", today).commit();
-        prefs.edit().putInt("streakCounter", 1).commit();
-    }
-}
-
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
     }
-/*
-    public static void setPercentage() {
 
-        PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
-        PercentStand = (int) Math.round(standAmount / totalstand * 100);
-        Percentcycle = (int) Math.round(cyclingAmount / totalcycling * 100);
-        PercentExecise = (int) Math.round(exerciseAmount / totalexercise * 100);
-        PercentOther = (int) Math.round(otherAmount / totalother * 100);
-
-    }
-
-
-    public void streakNotification(){
-        int streak;
-        UsageStats usageStats = new UsageStats();
-        Date date = new Date();
-        long currentTime = date.getTime();
-        if(usageStats.getLastTimeUsed()- currentTime == 43200000){
-
-        }
-
-    }
-    */
-
-    public void previousData(View view) {
+    private void createRecyclerview(View view) {
         days.add("i går");
         days.add(getYesterdayDateString(2));
         days.add(getYesterdayDateString(3));
@@ -342,7 +250,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(),recyclerView, days, images);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images);
         recyclerView.setAdapter(adapter);
 
 
@@ -350,8 +258,26 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         recyclerView.startAnimation(animation);
         */
+    }
 
+    public void setStreak() {
+        yesterday = prefs.getInt("yesterday", 0);
+        streakCount = prefs.getInt("streakCounter", 0);
+
+        if (today - 1 == yesterday) {
+            streakCount++;
+            prefs.edit().putInt("yesterday", today).commit();
+            prefs.edit().putInt("streakCounter", streakCount).commit();
+        } else if (today == yesterday) {
+   /*        if(prefs.getInt("streakCounter", 0) == 0) {
+               prefs.edit().putInt("streakCounter", 1).commit();
+           }
+*/
+        } else {
+            prefs.edit().putInt("yesterday", today).commit();
+            prefs.edit().putInt("streakCounter", 1).commit();
         }
+    }
 
     private Date previousDay(int day) {
         final Calendar cal = Calendar.getInstance();
@@ -365,47 +291,42 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
+    private void getFirebasePatient() {
+        database = FirebaseDatabase.getInstance().getReference("Patients");
 
-    class ListelemntViewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-        TextView dayTilte;
-        ImageView smileyImage;
-
-        public ListelemntViewholder(View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        public void onClick(View view) {
-            int i = getAdapterPosition();
-            System.out.println("nice makker B) " + i);
-            Toast.makeText(view.getContext(), "yeet", Toast.LENGTH_LONG).show();
-
-            recyclerView.smoothScrollToPosition(0);
-        }
-
-        /*
-        RecyclerView.Adapter adapter = new RecyclerView.Adapter<ListelemntViewholder>() {
+        database.addValueEventListener(new ValueEventListener() {
             @Override
-            public int getItemCount() {
-                return days.size();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println("fiiiiiiiiiiiiiiiiiiiiisse");
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+                            Sensor s = snapshotSensor.getValue(Sensor.class);
+                            sensorList.add(s);
+                            patient.setSensors(sensorList);
+
+                            System.out.println(patient);
+
+
+                            walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
+                            standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
+                            cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
+                            trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
+                            otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
+                            showElements();
+                        }
+                    }
+                }
+
             }
 
             @Override
-            public ListelemntViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = getLayoutInflater().inflate(R.layout.listview_list_item, parent, false);
-                ListelemntViewholder holder = new ListelemntViewholder(view);
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                return holder;
             }
-
-            @Override
-            public void onBindViewHolder(ListelemntViewholder holder, int position) {
-                holder.dayTilte.setText(days.get(position));
-                holder.smileyImage.setImageResource(images.get(position));
-            }
-        };
-        */
-
+        });
     }
 }
