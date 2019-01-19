@@ -29,15 +29,15 @@ public class Alarm {
         // Set the alarm to start at 8:30 a.m.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 5);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 30);
 
-        //alarmMgr.set(AlarmManager.RTC, t.dato.getMillis(), alarmIntent);
-        /*alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
                                 , AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
+        //For at teste om AlarmManageren virker
+        /*
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+100, 60000, alarmIntent);
         */
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+100, 60000, alarmIntent);/* SystemClock.elapsedRealtime() +
-                5 * 1000, 5 * 1000, alarmIntent);*/
     }
 
     public static void stopAlarm() {
