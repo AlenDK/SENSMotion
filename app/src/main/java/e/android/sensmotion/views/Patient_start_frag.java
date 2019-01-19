@@ -56,6 +56,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
     private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
     private DatabaseReference database;
 
     Calendar c = Calendar.getInstance();
@@ -86,8 +87,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
-
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editor = prefs.edit();
+
         userID = prefs.getString("userID", "p1");
 
         setStreak();
@@ -104,7 +106,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         dailyProgress = 0;
 
         inisializeElements(view);
-        getFirebasePatient("2");
+        getFirebasePatient("0");
 
 
         return view;
@@ -126,12 +128,21 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         circleBarText = view.findViewById(R.id.progressBarText);
         circlebar     = view.findViewById(R.id.circlebar);
 
+        walkAmount  = prefs.getFloat("walk", 0.0f);
+        standAmount = prefs.getFloat("stand", 0.0f);
+        cyclingAmount = prefs.getFloat("cycle", 0.0f);
+        trainAmount = prefs.getFloat("exercise", 0.0f);
+        otherAmount = prefs.getFloat("other", 0.0f);
+
+
 
         createButtons(view);
         createRecyclerview(view);
         createLists(view);
+        createProgressbar();
+        setCirleProgress();
 
-        hideElements();
+        //hideElements();
     }
 
     private void showElements(){
@@ -140,6 +151,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         complete.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         createProgressbar();
+        setCirleProgress();
     }
 
     private void hideElements(){
@@ -159,26 +171,31 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         complete.setAdapter(comAdapter);
     }
 
-    private List<ProgBar> createProgressbar() {
+    private void createProgressbar() {
         walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
         stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
         cycling = new ProgBar("bike", (int) Math.round(cyclingAmount), totalcycling);
         train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
         other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
-        progBarsIncom.add(walk);
-        progBarsIncom.add(stand);
-        progBarsIncom.add(cycling);
-        progBarsIncom.add(train);
-        progBarsIncom.add(other);
+        if(progBarsIncom.size() == 0){
+            progBarsIncom.add(walk);
+            progBarsIncom.add(stand);
+            progBarsIncom.add(cycling);
+            progBarsIncom.add(train);
+            progBarsIncom.add(other);
+        } else {
+            walk.setProgress((int) Math.round(walkAmount));
+            stand.setProgress((int) Math.round(standAmount));
+            cycling.setProgress((int) Math.round(cyclingAmount));
+            train.setProgress((int) Math.round(trainAmount));
+            other.setProgress((int) Math.round(otherAmount));
+        }
 
         sortProgressbars(progBarsIncom);
         completeProgressbars();
-        if (progBarsCom.size() == 0) {
-            completeText.setVisibility(View.GONE);
-        }
 
-        return progBarsIncom;
+
     }
 
     private void sortProgressbars(List<ProgBar> bars) {
@@ -196,6 +213,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void completeProgressbars() {
+        if (progBarsCom.size() == 0) {
+            completeText.setVisibility(View.GONE);
+        }
         for (int i = 0; i < progBarsIncom.size(); i++) {
             if (progBarsIncom.get(i).getProgress() >= progBarsIncom.get(i).getGoal()) {
                 progBarsIncom.get(i).setComplete(true);
@@ -252,6 +272,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
         recyclerView.startAnimation(animation);
         */
+    }
+
+    private void setCirleProgress(){
+        dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
+        circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+
+        circleBarText.setText(circleProgress + "%");
+        circlebar.setProgress(circleProgress);
+        circlebar.setRotation(-90);
     }
 
     public void setStreak() {
@@ -321,14 +350,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
                                     */
 
-                                    dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
-                                    circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+                                    if(prefs.getFloat("walk", 0.0f) != walkAmount   ||
+                                            prefs.getFloat("stand", 0.0f)!= standAmount  ||
+                                            prefs.getFloat("cycle", 0.0f)!= cyclingAmount||
+                                            prefs.getFloat("exercise", 0.0f) != trainAmount ||
+                                            prefs.getFloat("other", 0.0f)!= otherAmount){
 
-                                    circleBarText.setText(circleProgress + "%");
-                                    circlebar.setProgress(circleProgress);
-                                    circlebar.setRotation(-90);
+                                        editor.putFloat("walk", (float) walkAmount);
+                                        editor.putFloat("stand",(float) standAmount);
+                                        editor.putFloat("cycle",(float) cyclingAmount);
+                                        editor.putFloat("exercise",(float) trainAmount);
+                                        editor.putFloat("other",(float) otherAmount);
+                                        editor.apply();
+                                        editor.commit();
 
-                                    showElements();
+                                        showElements();
+                                    }
+
                                 }
                             }
                         }
