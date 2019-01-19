@@ -32,7 +32,7 @@ public class Achievement_frag extends Fragment  {
     GridView gridView;
     Achievement_adapter adapter;
     ArrayList<Achievement> achievements= new ArrayList <>();
-    Achievement facebook, stribe, keepgoing,betatester, comeon, test1, test2, test3, test4;
+    Achievement facebook, stribe,betatester, running, onegoal, allgoals, halfway;
     SharedPreferences prefs;
 
 
@@ -103,26 +103,23 @@ public class Achievement_frag extends Fragment  {
     public ArrayList<Achievement> getAchievement(){
         stribe = new Achievement("7 på stribe","For at få dette trofæ skal du have åbnet appen 7 dage i streg!", R.drawable.sevendaystreak);
         stribe.setComplete(prefs.getInt("streakCounter", 0) == 7);
-        facebook = new Achievement("7 på stribe", "For at opnå dette trofæ, skal", R.drawable.facebook_logo);
+        facebook = new Achievement("Del med dine venner", "For at opnå dette trofæ, skal man dele sine resultater på facebook via del", R.drawable.facebook_logo);
         facebook.setComplete(prefs.getInt("facebookCheck", 0) == 1);
-      /*  keepgoing = new Achievement("Keep going","Nej tak");
-        betatester = new Achievement("2018 Beta Tester", "Testede app'en i 2018");
-        comeon = new Achievement("Test", "test");
-        test1 = new Achievement("Test", "test");
-        test2 = new Achievement("Test", "test");
-        test3 = new Achievement("Test", "test");
-      */
+        betatester = new Achievement("Betatester 2019","Et trofæ for at have været beta tester i 2019", R.drawable.beta_tester);
+        betatester.setComplete(true);
+        running = new Achievement("500 meter", "Man har løbet i 500..", R.drawable.running_achivement);
+        onegoal = new Achievement("1 mål klaret 100&", "Man skal klare et mål 100%", R.drawable.achivedonegoal);
+        allgoals = new Achievement("Klaret alle målene", "Du har klaret alle de opsatte mål", R.drawable.achivedallgoals);
+        halfway = new Achievement("Halvejs", "Du har opået 50% af dine samlede mål", R.drawable.achived50percent);
 
         achievements.add(facebook);
         achievements.add(stribe);
-      /*  achievements.add(keepgoing);
         achievements.add(betatester);
-        achievements.add(comeon);
-        achievements.add(test1);
-        achievements.add(test2);
-        achievements.add(test3);
-        achievements.add(test4);
-*/
+        achievements.add(running);
+        achievements.add(onegoal);
+        achievements.add(allgoals);
+        achievements.add(halfway);
+
 
 
 
