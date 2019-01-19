@@ -47,7 +47,7 @@ import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener {
 
-    private TextView circleText, completeText;
+    private TextView circleBarText, completeText;
     private ProgressBar circlebar;
     private ImageButton profile_button;
     private RecyclerView recyclerView;
@@ -108,9 +108,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         days = new ArrayList<>();
         images = new ArrayList<>();
 
-
-        dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
-        circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+        dailyProgress = 0;
 
         inisializeElements(view);
         getFirebasePatient();
@@ -131,7 +129,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void inisializeElements(View view) {
-        completeText = view.findViewById(R.id.completeText);
+        completeText  = view.findViewById(R.id.completeText);
+        circleBarText = view.findViewById(R.id.progressBarText);
+        circlebar     = view.findViewById(R.id.circlebar);
+
 
         createButtons(view);
         createRecyclerview(view);
@@ -316,6 +317,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
                             trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
                             otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
+
+                            dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
+                            circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+
+                            circleBarText.setText(circleProgress+"%");
+                            circlebar.setProgress(circleProgress);
+                            circlebar.setRotation(-90);
+
                             showElements();
                         }
                     }
