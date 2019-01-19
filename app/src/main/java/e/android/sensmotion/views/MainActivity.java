@@ -32,7 +32,7 @@ public class MainActivity extends FragmentActivity {
         if (mPrefs.getBoolean("remember", false)) {
             setContentView(R.layout.activity_patient);
 
-            Fragment fragment = new Patient_start_frag();
+            Fragment fragment = new PatientViewpager();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
