@@ -47,9 +47,8 @@ public class PostNotifications extends BroadcastReceiver {
     private DatabaseReference database;
 
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
-    static double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
+    static double walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
-    int totalProgressGoal = totalcycling + totalstand + totalwalk + totalexercise + totalother;
 
     private String userID;
     static boolean walkHalf = false, walk75 = false, walkDone = false;
@@ -150,8 +149,6 @@ public class PostNotifications extends BroadcastReceiver {
                             cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
                             trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
                             otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
-
-                            dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
                         }
                     }
                 }
@@ -175,7 +172,7 @@ public class PostNotifications extends BroadcastReceiver {
         PercentWalk = (int) Math.round(walkAmount/totalwalk * 100);
         PercentStand = (int) Math.round(standAmount/totalstand * 100);
         PercentOther = (int) Math.round(otherAmount/totalother * 100);
-        PercentDaily = (int) Math.round(dailyProgress/totalProgressGoal * 100);
+        PercentDaily = (Percentcycle + PercentExecise + PercentWalk + PercentStand + PercentOther)/5;
     }
 
     public void NotifyWhenDone(Context context) {
