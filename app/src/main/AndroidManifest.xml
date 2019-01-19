@@ -26,6 +26,11 @@
                 <action android:name="e.android.sensmotion.START_ALARM" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".views.PreferenceMangerResetListener">
+            <intent-filter>
+                <action android:name="e.android.sensmotion.START_ALARM"/>
+            </intent-filter>
+        </receiver>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="04326a3345540e9b8bbd4693dbf56ddea01e860e" />
