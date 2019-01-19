@@ -105,6 +105,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         dailyProgress = 0;
 
+
         inisializeElements(view);
         getFirebasePatient("0");
 
@@ -138,8 +139,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         createButtons(view);
         createRecyclerview(view);
-        createLists(view);
         createProgressbar();
+        createLists(view);
         setCirleProgress();
 
         //hideElements();
