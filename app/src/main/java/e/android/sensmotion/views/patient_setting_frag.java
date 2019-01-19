@@ -115,7 +115,7 @@ public class patient_setting_frag extends Fragment {
                 */
 
                 act = new Intent(getActivity(), PatientActivity.class);
-                act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getActivity().finish();
                 startActivity(act);
 
             }

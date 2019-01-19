@@ -46,4 +46,11 @@
     <color name="progress99">#32CD32</color>
     <color name="progress100">#1e9b30</color>
 
+    <!--
+    Konfetti farver
+    -->
+    <color name="gold1">#DAA520</color>
+    <color name="gold2">#F0E68C</color>
+    <color name="silver">#dcdcdc</color>
+
 </resources>

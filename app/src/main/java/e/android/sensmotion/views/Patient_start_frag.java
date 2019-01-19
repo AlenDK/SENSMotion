@@ -104,7 +104,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         dailyProgress = 0;
 
         inisializeElements(view);
-        getFirebasePatient();
+        getFirebasePatient("2");
 
 
         return view;
@@ -285,7 +285,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
-    private void getFirebasePatient() {
+    private void getFirebasePatient(final String today) {
         database = FirebaseDatabase.getInstance().getReference("Patients");
 
         database.addValueEventListener(new ValueEventListener() {
@@ -303,8 +303,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                             //For each "Day value" in database
                             for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
-                                if(snapshotValues.getKey().equals("2")) {
-
+                                if(snapshotValues.getKey().equals(today)) {
 
                                     Values values = snapshotValues.getValue(Values.class);
                                     walkAmount    = Double.parseDouble(values.getWalk());

@@ -50,8 +50,9 @@ public class Task_complete_frag extends android.support.v4.app.Fragment implemen
         new Handler().post(new Runnable() {
             @Override
             public void run() {
-                CommonConfetti.rainingConfetti(RL, new int[] { Color.BLACK, Color.BLUE, Color.RED, Color.WHITE, Color.YELLOW })
-                        .infinite()
+                CommonConfetti.rainingConfetti(RL, new int[] { getResources().getColor(R.color.gold1), getResources().getColor(R.color.gold2), getResources().getColor(R.color.silver) })
+                        .stream(5000)
+                        .setAccelerationY(-0.7f)
                         .animate();
             }
         });
@@ -64,9 +65,9 @@ public class Task_complete_frag extends android.support.v4.app.Fragment implemen
     public void onClick(View view) {
 
         if(view.getId() == R.id.okKnap){
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Patient_start_frag())
-                    .commit();
+            Intent act = new Intent(getActivity(), PatientActivity.class);
+            getActivity().finish();
+            startActivity(act);
         }
 
         if(view.getId() == R.id.delKnap){
