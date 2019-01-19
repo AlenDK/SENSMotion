@@ -17,8 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
 import e.android.sensmotion.controller.interfaces.IFirebaseController;
@@ -29,6 +35,11 @@ import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Login_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
@@ -36,16 +47,13 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     private EditText brugernavn;
     private CheckBox dataHandling, rememberUser;
     private Intent act;
-    private IDataController dc;
-    private IUserController uc;
-    private String jsonString;
-    private IFirebaseController fbc;
     private boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+
     private SharedPreferences mPrefs;
     private SharedPreferences.Editor prefsEditor;
+    private DatabaseReference database;
 
-    private Patient patient;
-    private Sensor sensor;
+    public Patient patient;
 
     private int pressed;
     private boolean remember;
@@ -57,12 +65,6 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         prefsEditor = mPrefs.edit();
 
-        dc = ControllerRegistry.getDataController();
-        uc = ControllerRegistry.getUserController();
-        fbc = ControllerRegistry.getFirebaseController();
-
-
-        //prefsEditor.clear();
 
         if (!EMULATOR) {
 
@@ -109,36 +111,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                                         "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
                                 break;
                             }
-
-                            //Remember User
-                            if (rememberUser.isChecked()) {
-                                remember = true;
-                                prefsEditor.putBoolean("remember", remember);
-                            }
-
-                            //Get data
-                            try {
-                                String hentDataResult = new HentDataAsyncTask().execute().get();
-                                sensor = patient.getSensor("s1");
-                                dc.saveData(hentDataResult, sensor);
-
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            }
-
-                            prefsEditor.putString("userID", userID);
-                            prefsEditor.apply();
-                            prefsEditor.commit();
-
-                            Patient p1 = ControllerRegistry.getUserController().getPatient(userID);
-                            fbc.newPatient(p1);
-
-                            act = new Intent(getActivity(), PatientActivity.class);
-                            startActivity(act);
-                            pressed++;
-                            getActivity().finish();
+                            getFirebasePatient();
                         }
                     } else {
                         Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
@@ -154,22 +127,45 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
             }
     }
 
-    class HentDataAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            patient = uc.getPatient(userID);
-            jsonString = dc.getApiDATA(patient, null);
-
-            return jsonString;
-        }
-    }
 
     public void forceCrash(View view) {
         throw new RuntimeException("This is a crash");
     }
 
+    private void getFirebasePatient() {
+        database = FirebaseDatabase.getInstance().getReference("Patients");
 
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //Remember User
+                        if (rememberUser.isChecked()) {
+                            remember = true;
+                            prefsEditor.putBoolean("remember", remember);
+                        }
+
+                        //Save id and possibly remember state
+                        prefsEditor.putString("userID", userID);
+                        prefsEditor.apply();
+                        prefsEditor.commit();
+
+                        act = new Intent(getActivity(), PatientActivity.class);
+                        startActivity(act);
+                        getActivity().finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
+            }
+        });
+    }
 }
 
 

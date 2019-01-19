@@ -298,11 +298,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                             List<Sensor> sensorList = new ArrayList<>();
                             Sensor s = snapshotSensor.getValue(Sensor.class);
-                            sensorList.add(s);
-                            patient.setSensors(sensorList);
-
-                            System.out.println(patient);
-
 
                             walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
                             standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
