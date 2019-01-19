@@ -53,6 +53,27 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         listView.setDivider(null);
         listView.setDividerHeight(15);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                String id = patientList.get(i).getId();
+                String name = patientList.get(i).getName();
+
+                PatientData_frag pdf = new PatientData_frag();
+                Bundle pdf_args = new Bundle();
+
+                pdf_args.putString("id", id);
+                pdf_args.putString("name", name);
+                pdf.setArguments(pdf_args);
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, pdf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         patientList = new ArrayList<>();
 
         getFirebasePatientList();
@@ -97,27 +118,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
                     adapter = new Patientliste_adapter(getActivity(), patientList);
                     adapter.notifyDataSetChanged();
                     listView.setAdapter(adapter);
-
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            String id = patientList.get(i).getId();
-                            String name = patientList.get(i).getName();
-
-                            PatientData_frag pdf = new PatientData_frag();
-                            Bundle pdf_args = new Bundle();
-
-                            pdf_args.putString("id", id);
-                            pdf_args.putString("name", name);
-                            pdf.setArguments(pdf_args);
-
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragmentindhold, pdf)
-                                    .addToBackStack(null)
-                                    .commit();
-                        }
-                    });
 
 
                     newPatient = view.findViewById(R.id.NyPatient);
