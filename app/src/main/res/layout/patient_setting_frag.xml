@@ -7,6 +7,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
+
+
     <ImageView
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
@@ -207,6 +212,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/popupText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Terapeut oplysninger"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/column2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/column3"
+        app:layout_constraintVertical_bias="0.473" />
+
+
+    <TextView
+        android:id="@+id/popupText3"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="8dp"
+    android:text="Skift sprog"
+    android:textColor="@color/lightBlack"
+    android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/column3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/column3" />
+
+    <TextView
+        android:id="@+id/popupText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Opdater brugeroplysninger"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/column3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/column1" />
 
 
 </android.support.constraint.ConstraintLayout>

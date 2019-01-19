@@ -44,6 +44,10 @@ public class patient_setting_frag extends Fragment {
         pop_switch = (Switch) view.findViewById(R.id.switchPOP);
         pop_switch.setChecked(true);
         sound_switch = (Switch) view.findViewById(R.id.switchSound);
+        column1 = (ImageView) view.findViewById(R.id.column1);
+        column2 = (ImageView) view.findViewById(R.id.column2);
+        column3 = (ImageView) view.findViewById(R.id.column3);
+
 
         back = (ImageButton) view.findViewById(R.id.backarrow);
         logout = (Button) view.findViewById(R.id.logUd);
@@ -68,6 +72,27 @@ public class patient_setting_frag extends Fragment {
                 getFragmentManager().beginTransaction()
                         .add(R.id.fragmentindhold, new Task_complete_frag())
                         .commit();
+            }
+        });
+
+        column1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+            }
+            });
+
+        column2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        column3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -119,4 +144,6 @@ public class patient_setting_frag extends Fragment {
         column4 = (ImageView) view.findViewById(R.id.column4);
         column5 = (ImageView) view.findViewById(R.id.column5);
     }
+
+
 }
