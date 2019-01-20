@@ -54,7 +54,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
-    private DatabaseReference database;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
     private DataController dataController = new DataController();
 
     Calendar c = Calendar.getInstance();
@@ -89,14 +89,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         editor = prefs.edit();
 
         userID = prefs.getString("userID", "p1");
+        getFirebaseStartingDate();
+
         days = new ArrayList<>();
         images = new ArrayList<>();
 
         setStreak();
         inisializeElements();
-        //getFirebasePatient("0");
         opdaterData();
-
 
         return view;
     }
@@ -293,6 +293,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
+    private String getCurrentDate(){
+        DateFormat dateFormat = new SimpleDateFormat("ddMM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 0);
+        return dateFormat.format(cal.getTime());
+    }
+
     private Date previousDay(int day) {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -day);
@@ -305,8 +312,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
-    public void opdaterData(){
-        database = FirebaseDatabase.getInstance().getReference("Patients");
+    private void opdaterData(){
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -315,10 +321,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
                         patient = snapshot.getValue(Patient.class);
-                        String myFormat = "yyyy-MM-dd";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                        //final String alenErGrim = sdf.format(c.getTime());
-                        final String alenErGrim = "2018-10-01";
 
                         //Get Sensor
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
@@ -329,7 +331,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                 @Override
                                 protected Object doInBackground(Object[] objects) {
                                     try {
-                                        json = dataController.getApiDATA(patient, alenErGrim);
+                                        String myFormat = "yyyy-MM-dd";
+                                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                                        //String dato = sdf.format(c.getTime());
+                                        String dato = "2018-10-01";
+
+                                        json = dataController.getApiDATA(patient, dato);
                                         return null;
                                     } catch (Exception e) {
                                         return e;
@@ -396,9 +403,25 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
-    private void getFirebasePatient(final String day) {
-        database = FirebaseDatabase.getInstance().getReference("Patients");
+    private void setRecyclerViewFromFireBase(){
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int dayCount = 0;
+                //days.add("i går");
+                //Get Patient
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void getFirebasePatient(final String day) {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -458,6 +481,37 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
+    private void getFirebaseStartingDate(){
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+
+                            String startingDate = snapshotSensor.child("currentPeriod").child("startingDate").getValue(String.class);
+                            System.out.println("Staring date: "+startingDate);
+
+                            editor.putString("startingDate", startingDate);
+                            editor.apply();
+                            editor.commit();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @Override
     public void clickItem(int position) {
         progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
@@ -466,8 +520,5 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         if(position == 4){
             opdaterData();
         }
-
     }
-
-
 }
