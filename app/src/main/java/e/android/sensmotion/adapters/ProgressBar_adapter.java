@@ -56,7 +56,7 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
             else if(progressBarList.get(position).getName().equals("stand"))
                 progImage.setImageResource(R.drawable.stickman_standing2);
 
-            else if(progressBarList.get(position).getName().equals("bike"))
+            else if(progressBarList.get(position).getName().equals("cycle"))
                 progImage.setImageResource(R.drawable.stickman_biking);
 
             else if(progressBarList.get(position).getName().equals("exercise"))

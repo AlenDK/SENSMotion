@@ -125,10 +125,15 @@ public class patient_setting_frag extends Fragment {
             public void onClick(View view) {
                 prefsEditor.remove("remember");
                 prefsEditor.remove("userID");
+                prefsEditor.remove("walk");
+                prefsEditor.remove("stand");
+                prefsEditor.remove("cycle");
+                prefsEditor.remove("exercise");
+                prefsEditor.remove("other");
                 prefsEditor.apply();
                 prefsEditor.commit();
                 act = new Intent(getActivity(), MainActivity.class);
-                act.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getActivity().finish();
                 startActivity(act);
             }
         });

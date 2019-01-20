@@ -7,16 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,12 +30,6 @@ import java.util.List;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.impl.FirebaseController;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.controller.interfaces.IFirebaseController;
-import e.android.sensmotion.controller.interfaces.ISensorController;
-import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
@@ -51,7 +42,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private ProgressBar circlebar;
     private ImageButton profile_button;
     private RecyclerView recyclerView;
-    private ProgBar walk, stand, cycling, train, other;
+    private ProgBar walk, stand, cycling, exercise, other;
     private ListView complete, incomplete;
 
 
@@ -65,7 +56,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     int yesterday, streakCount;
 
-    List<Values> values;
     ArrayList<String> days;
     ArrayList<Integer> images;
     List<ProgBar> progBarsIncom = new ArrayList<>();
@@ -76,8 +66,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ViewGroup view;
 
     int totalProgressGoal = 500, circleProgress;
-    public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
-    static double dailyProgress, walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
+    public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
     private Patient patient;
@@ -91,22 +81,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         editor = prefs.edit();
 
         userID = prefs.getString("userID", "p1");
-
-        setStreak();
-
-        Bundle bundle = this.getArguments();
-        if(bundle != null){
-            Log.d("alen lugter", bundle.getInt("dag")+"");
-        }
-
-
         days = new ArrayList<>();
         images = new ArrayList<>();
 
-        dailyProgress = 0;
-
-
-        inisializeElements(view);
+        setStreak();
+        inisializeElements();
         getFirebasePatient("0");
 
 
@@ -124,26 +103,24 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-    private void inisializeElements(View view) {
+    private void inisializeElements() {
         completeText  = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
         circlebar     = view.findViewById(R.id.circlebar);
 
+
         walkAmount  = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
-        trainAmount = prefs.getFloat("exercise", 0.0f);
+        exerciseAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
-
 
 
         createButtons(view);
         createRecyclerview(view);
+        createLists();
         createProgressbar();
-        createLists(view);
         setCirleProgress();
-
-        //hideElements();
     }
 
     private void showElements(){
@@ -151,27 +128,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         incomplete.setVisibility(View.VISIBLE);
         complete.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        createLists();
         createProgressbar();
-        createLists(view);
         setCirleProgress();
     }
 
-    private void hideElements(){
-        completeText.setVisibility(View.GONE);
-        incomplete.setVisibility(View.GONE);
-        complete.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.GONE);
-    }
-
-    public void createLists(View view) {
+    public void createLists() {
         complete = view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
-
-        for(ProgBar pb : progBarsIncom){
-            Log.d("stiv Alentina", pb.getProgress()+"");
-        }
-
         comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom);
 
         incomplete.setAdapter(IncomAdapter);
@@ -179,33 +144,30 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void createProgressbar() {
-
         if(progBarsIncom.size() == 0){
+            System.out.println("the fuck");
             walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
             stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
-            cycling = new ProgBar("bike", (int) Math.round(cyclingAmount), totalcycling);
-            train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
+            cycling = new ProgBar("cycle", (int) Math.round(cyclingAmount), totalcycling);
+            exercise = new ProgBar("exercise", (int) Math.round(exerciseAmount), totalexercise);
             other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
             progBarsIncom.add(walk);
             progBarsIncom.add(stand);
             progBarsIncom.add(cycling);
-            progBarsIncom.add(train);
+            progBarsIncom.add(exercise);
             progBarsIncom.add(other);
         } else {
+            System.out.println("yes");
             for(ProgBar pb : progBarsIncom){
                 if(pb.getName() == "walk"){
                     pb.setProgress((int) Math.round(walkAmount));
                 } else if(pb.getName() == "stand"){
                     pb.setProgress((int) Math.round(standAmount));
-                } else if(pb.getName() == "cycling"){
+                } else if(pb.getName() == "cycle"){
                     pb.setProgress((int) Math.round(cyclingAmount));
                 } else if(pb.getName() == "exercise"){
-                    Log.d("stiv Alen", pb.getProgress()+"");
-                    Log.d("stiv simounella",trainAmount+"");
-                    pb.setProgress((int) Math.round(trainAmount));
-                    Log.d("stiv Alentino", pb.getProgress()+"");
-                    Log.d("stiv Burhan",trainAmount+"");
+                    pb.setProgress((int) Math.round(exerciseAmount));
                 } else if(pb.getName() == "other"){
                     pb.setProgress((int) Math.round(otherAmount));
                 }
@@ -233,9 +195,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void completeProgressbars() {
-        if (progBarsCom.size() == 0) {
-            completeText.setVisibility(View.GONE);
-        }
         for (int i = 0; i < progBarsIncom.size(); i++) {
             if (progBarsIncom.get(i).getProgress() >= progBarsIncom.get(i).getGoal()) {
                 progBarsIncom.get(i).setComplete(true);
@@ -243,6 +202,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 progBarsIncom.remove(i);
                 i--;    //Ellers springer vi over hver anden
             }
+        }
+        if (progBarsCom.size() == 0) {
+            completeText.setVisibility(View.GONE);
         }
     }
 
@@ -295,8 +257,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void setCirleProgress(){
-        dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
-        Log.d("stiv simon", trainAmount+"");
+        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
         circleBarText.setText(circleProgress + "%");
@@ -335,7 +296,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
-    private void getFirebasePatient(final String today) {
+    private void getFirebasePatient(final String day) {
         database = FirebaseDatabase.getInstance().getReference("Patients");
 
         database.addValueEventListener(new ValueEventListener() {
@@ -353,41 +314,58 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                             //For each "Day value" in database
                             for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
-                                if(snapshotValues.getKey().equals(today)) {
+                                if(snapshotValues.getKey().equals(day)) {
 
                                     Values values = snapshotValues.getValue(Values.class);
                                     walkAmount    = Double.parseDouble(values.getWalk());
                                     standAmount   = Double.parseDouble(values.getStand());
                                     cyclingAmount = Double.parseDouble(values.getCycling());
-                                    trainAmount   = Double.parseDouble(values.getExercise());
+                                    exerciseAmount = Double.parseDouble(values.getExercise());
                                     otherAmount   = Double.parseDouble(values.getOther());
+
+                                    System.out.println("før");
+                                    System.out.println("otherAmount: "+(int) otherAmount);
+                                    System.out.println("otherTotal: "+totalother);
+                                    if((int) walkAmount > totalwalk) {
+                                        walkAmount = totalwalk;
+                                    } else if ((int) standAmount > totalstand) {
+                                        standAmount = totalstand;
+                                    } else if ((int) cyclingAmount > totalcycling) {
+                                        cyclingAmount = totalcycling;
+                                    } else if ((int) exerciseAmount > totalexercise) {
+                                        exerciseAmount = totalexercise;
+                                    } else if (otherAmount > totalother) {
+                                        System.out.println("yes hello");
+                                        otherAmount = totalother;
+                                    }
+                                    System.out.println("efter");
 
                                     /*
                                     Sensor s = snapshotSensor.getValue(Sensor.class);
                                     walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
                                     standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
                                     cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
-                                    trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
+                                    exerciseAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
                                     otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
                                     */
 
+
+                                    //Skal laves om så vi tjekker mod api'en...
                                     if(prefs.getFloat("walk", 0.0f) != walkAmount   ||
                                             prefs.getFloat("stand", 0.0f)!= standAmount  ||
                                             prefs.getFloat("cycle", 0.0f)!= cyclingAmount||
-                                            prefs.getFloat("exercise", 0.0f) != trainAmount ||
+                                            prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
                                             prefs.getFloat("other", 0.0f)!= otherAmount){
 
                                         editor.putFloat("walk", (float) walkAmount);
                                         editor.putFloat("stand",(float) standAmount);
                                         editor.putFloat("cycle",(float) cyclingAmount);
-                                        editor.putFloat("exercise",(float) trainAmount);
+                                        editor.putFloat("exercise",(float) exerciseAmount);
                                         editor.putFloat("other",(float) otherAmount);
                                         editor.apply();
                                         editor.commit();
-
-                                        showElements();
                                     }
-
+                                    showElements();
                                 }
                             }
                         }
@@ -404,6 +382,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public void clickItem(int position) {
+        progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
+        progBarsCom.clear();    //Samme grund
         getFirebasePatient(""+position);
     }
 }
