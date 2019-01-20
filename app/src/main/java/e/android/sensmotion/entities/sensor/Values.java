@@ -93,7 +93,7 @@ public class Values {
 
     }
 
-    public Values getValues(JSONObject data1){
+    public Values getAPIdata(JSONObject data1){
         Values values = null;
         try {
             JSONObject jsonVALUE   = data1.getJSONObject("value");

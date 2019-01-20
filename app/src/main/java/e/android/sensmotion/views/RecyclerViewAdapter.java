@@ -55,15 +55,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tv.setText(days.get(position));
         holder.iv.setImageResource(images.get(position));
-
-
-      /*  holder.cl.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-            }
-        });*/
     }
 
     @Override

@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +94,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         setStreak();
         inisializeElements();
-        getFirebasePatient("0");
+        //getFirebasePatient("0");
         opdaterData();
 
 
@@ -312,7 +311,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //For each Patient in database
+                //Get Patient
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
                         patient = snapshot.getValue(Patient.class);
@@ -321,10 +320,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         //final String alenErGrim = sdf.format(c.getTime());
                         final String alenErGrim = "2018-10-01";
 
-                        //For each Sensor in database
+                        //Get Sensor
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                             Sensor sensor = snapshotSensor.getValue(Sensor.class);
 
+                            //Get API data
                             AsyncTask atask = new AsyncTask() {
                                 @Override
                                 protected Object doInBackground(Object[] objects) {
@@ -342,7 +342,44 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     try {
                                         data = new JSONObject(json);
                                         values = new Values();
-                                        values.getValues(data);
+                                        values.getAPIdata(data);
+
+                                        walkAmount    = Double.parseDouble(values.getWalk());
+                                        standAmount   = Double.parseDouble(values.getStand());
+                                        cyclingAmount = Double.parseDouble(values.getCycling());
+                                        exerciseAmount = Double.parseDouble(values.getExercise());
+                                        otherAmount   = Double.parseDouble(values.getOther());
+
+                                        if((int) walkAmount > totalwalk) {
+                                            walkAmount = totalwalk;
+                                        } else if ((int) standAmount > totalstand) {
+                                            standAmount = totalstand;
+                                        } else if ((int) cyclingAmount > totalcycling) {
+                                            cyclingAmount = totalcycling;
+                                        } else if ((int) exerciseAmount > totalexercise) {
+                                            exerciseAmount = totalexercise;
+                                        } else if ((int) otherAmount > totalother) {
+                                            otherAmount = totalother;
+                                        }
+
+                                        //Skal laves om så vi tjekker mod api'en...
+                                        if(prefs.getFloat("walk", 0.0f) != walkAmount   ||
+                                                prefs.getFloat("stand", 0.0f)!= standAmount  ||
+                                                prefs.getFloat("cycle", 0.0f)!= cyclingAmount||
+                                                prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
+                                                prefs.getFloat("other", 0.0f)!= otherAmount){
+
+                                            editor.putFloat("walk", (float) walkAmount);
+                                            editor.putFloat("stand",(float) standAmount);
+                                            editor.putFloat("cycle",(float) cyclingAmount);
+                                            editor.putFloat("exercise",(float) exerciseAmount);
+                                            editor.putFloat("other",(float) otherAmount);
+                                            editor.apply();
+                                            editor.commit();
+
+                                            showElements();
+                                        }
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -406,23 +443,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     exerciseAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
                                     otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
                                     */
-
-
-                                    //Skal laves om så vi tjekker mod api'en...
-                                    if(prefs.getFloat("walk", 0.0f) != walkAmount   ||
-                                            prefs.getFloat("stand", 0.0f)!= standAmount  ||
-                                            prefs.getFloat("cycle", 0.0f)!= cyclingAmount||
-                                            prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
-                                            prefs.getFloat("other", 0.0f)!= otherAmount){
-
-                                        editor.putFloat("walk", (float) walkAmount);
-                                        editor.putFloat("stand",(float) standAmount);
-                                        editor.putFloat("cycle",(float) cyclingAmount);
-                                        editor.putFloat("exercise",(float) exerciseAmount);
-                                        editor.putFloat("other",(float) otherAmount);
-                                        editor.apply();
-                                        editor.commit();
-                                    }
                                     showElements();
                                 }
                             }
@@ -443,6 +463,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
         progBarsCom.clear();    //Samme grund
         getFirebasePatient(""+position);
+        if(position == 4){
+            opdaterData();
+        }
+
     }
 
 
