@@ -173,24 +173,33 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void createProgressbar() {
-        walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
-        stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
-        cycling = new ProgBar("bike", (int) Math.round(cyclingAmount), totalcycling);
-        train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
-        other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
         if(progBarsIncom.size() == 0){
+            walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
+            stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
+            cycling = new ProgBar("bike", (int) Math.round(cyclingAmount), totalcycling);
+            train = new ProgBar("exercise", (int) Math.round(trainAmount), totalexercise);
+            other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
+
             progBarsIncom.add(walk);
             progBarsIncom.add(stand);
             progBarsIncom.add(cycling);
             progBarsIncom.add(train);
             progBarsIncom.add(other);
         } else {
-            walk.setProgress((int) Math.round(walkAmount));
-            stand.setProgress((int) Math.round(standAmount));
-            cycling.setProgress((int) Math.round(cyclingAmount));
-            train.setProgress((int) Math.round(trainAmount));
-            other.setProgress((int) Math.round(otherAmount));
+            for(ProgBar pb : progBarsIncom){
+                if(pb.getName() == "walk"){
+                    pb.setProgress((int) Math.round(walkAmount));
+                } else if(pb.getName() == "stand"){
+                    pb.setProgress((int) Math.round(standAmount));
+                } else if(pb.getName() == "cycling"){
+                    pb.setProgress((int) Math.round(cyclingAmount));
+                } else if(pb.getName() == "train"){
+                    pb.setProgress((int) Math.round(trainAmount));
+                } else if(pb.getName() == "other"){
+                    pb.setProgress((int) Math.round(otherAmount));
+                }
+            }
         }
 
         sortProgressbars(progBarsIncom);
@@ -316,7 +325,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void getFirebasePatient(final String today) {
-        Log.d("Stiv alen",today);
         database = FirebaseDatabase.getInstance().getReference("Patients");
 
         database.addValueEventListener(new ValueEventListener() {
