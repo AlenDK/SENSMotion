@@ -23,6 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +79,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
     private Patient patient;
-    private String userID;
+    Values values;
+    String userID, json;
 
 
     @Override
@@ -302,6 +306,59 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
+    public void opdaterData(){
+        database = FirebaseDatabase.getInstance().getReference("Patients");
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+                        String myFormat = "yyyy-MM-dd";
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        //final String alenErGrim = sdf.format(c.getTime());
+                        final String alenErGrim = "2018-10-01";
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            Sensor sensor = snapshotSensor.getValue(Sensor.class);
+
+                            AsyncTask atask = new AsyncTask() {
+                                @Override
+                                protected Object doInBackground(Object[] objects) {
+                                    try {
+                                        json = dataController.getApiDATA(patient, alenErGrim);
+                                        return null;
+                                    } catch (Exception e) {
+                                        return e;
+                                    }
+                                }
+
+                                @Override
+                                protected void onPostExecute(Object titler) {
+                                    JSONObject data = null;
+                                    try {
+                                        data = new JSONObject(json);
+                                        values = new Values();
+                                        values.getValues(data);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.execute();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     private void getFirebasePatient(final String day) {
         database = FirebaseDatabase.getInstance().getReference("Patients");
 
@@ -329,9 +386,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     exerciseAmount = Double.parseDouble(values.getExercise());
                                     otherAmount   = Double.parseDouble(values.getOther());
 
-                                    System.out.println("før");
-                                    System.out.println("otherAmount: "+(int) otherAmount);
-                                    System.out.println("otherTotal: "+totalother);
                                     if((int) walkAmount > totalwalk) {
                                         walkAmount = totalwalk;
                                     } else if ((int) standAmount > totalstand) {
@@ -340,11 +394,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         cyclingAmount = totalcycling;
                                     } else if ((int) exerciseAmount > totalexercise) {
                                         exerciseAmount = totalexercise;
-                                    } else if (otherAmount > totalother) {
-                                        System.out.println("yes hello");
+                                    } else if ((int) otherAmount > totalother) {
                                         otherAmount = totalother;
                                     }
-                                    System.out.println("efter");
 
                                     /*
                                     Sensor s = snapshotSensor.getValue(Sensor.class);
@@ -393,33 +445,5 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         getFirebasePatient(""+position);
     }
 
-    public void opdaterData(){
-        database = FirebaseDatabase.getInstance().getReference("Patients");
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                //For each Patient in database
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
-                        patient = snapshot.getValue(Patient.class);
-                        String myFormat = "yyyy-MM-dd";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                        String alenErGrim = sdf.format(c.getTime());
-
-
-                        
-
-
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 }

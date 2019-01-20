@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class Values {
     private String rest;
     private String stand;
@@ -60,7 +62,6 @@ public class Values {
         return nodata;
     }
 
-
     public void populate(JSONObject data1, int count) {
 
         try {
@@ -90,6 +91,36 @@ public class Values {
         }
 
 
+    }
+
+    public Values getValues(JSONObject data1){
+        Values values = null;
+        try {
+            JSONObject jsonVALUE   = data1.getJSONObject("value");
+            JSONArray jsonDATA     = jsonVALUE.getJSONArray("data");
+            JSONObject jsonVALUES  = jsonDATA.getJSONObject(0);
+            JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
+
+            rest     = jsonVALUES1.getString("activity/resting/time");
+            stand    = jsonVALUES1.getString("activity/standing/time");
+            walk     = jsonVALUES1.getString("activity/walking/time");
+            cycling  = jsonVALUES1.getString("activity/cycling/time");
+            exercise = jsonVALUES1.getString("activity/exercise/time");
+            other    = jsonVALUES1.getString("activity/other/time");
+            nodata   = jsonVALUES1.getString("general/nodata/time");
+            steps    = jsonVALUES1.getString("activity/steps/count");
+
+            values = new Values(cycling, exercise, other, rest, stand, steps, walk);
+
+            System.out.println("Values from API: "+values);
+
+            return values;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
