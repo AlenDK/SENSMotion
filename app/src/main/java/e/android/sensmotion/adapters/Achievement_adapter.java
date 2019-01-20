@@ -57,18 +57,18 @@ public class Achievement_adapter extends BaseAdapter {
 
         icons = view.findViewById(R.id.icon);
 
-        //icons.setImageResource(achievements.get(position).getImage());
+        icons.setImageResource(achievements.get(position).getImage());
 
 
 
         matrix.setSaturation(0);
         ColorMatrixColorFilter filter = new ColorMatrixColorFilter(matrix);
 
-        /*
+
         if(achievements.get(position).getComplete()==false) {
             icons.setColorFilter(filter);
         }
-        */
+
 
 
 
