@@ -49,6 +49,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private DatabaseReference database;
+    private DataController dataController;
 
     Calendar c = Calendar.getInstance();
     int today = c.get(Calendar.DAY_OF_YEAR);
@@ -385,5 +386,35 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
         progBarsCom.clear();    //Samme grund
         getFirebasePatient(""+position);
+    }
+
+    public void opdaterData(){
+        database = FirebaseDatabase.getInstance().getReference("Patients");
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+
+                            //For each "Day value" in database
+                            for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
