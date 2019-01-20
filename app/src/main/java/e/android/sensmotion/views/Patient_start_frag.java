@@ -1,12 +1,14 @@
 package e.android.sensmotion.views;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
@@ -50,7 +53,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
     private DatabaseReference database;
-    private DataController dataController;
+    private DataController dataController = new DataController();
 
     Calendar c = Calendar.getInstance();
     int today = c.get(Calendar.DAY_OF_YEAR);
@@ -89,6 +92,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         setStreak();
         inisializeElements();
         getFirebasePatient("0");
+        opdaterData();
 
 
         return view;
@@ -399,15 +403,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
                         patient = snapshot.getValue(Patient.class);
+                        String myFormat = "yyyy-MM-dd";
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        String alenErGrim = sdf.format(c.getTime());
 
-                        //For each Sensor in database
-                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
-                            List<Sensor> sensorList = new ArrayList<>();
 
-                            //For each "Day value" in database
-                            for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
-                            }
-                        }
+                        
+
+
+
                     }
                 }
             }
