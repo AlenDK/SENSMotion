@@ -30,6 +30,7 @@ import java.util.List;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
+import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
