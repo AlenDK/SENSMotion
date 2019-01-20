@@ -73,7 +73,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
     ProgressBar_adapter IncomAdapter, comAdapter;
-
+    ViewGroup view;
 
     int totalProgressGoal = 500, circleProgress;
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
@@ -86,7 +86,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = prefs.edit();
 
@@ -152,6 +152,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         complete.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         createProgressbar();
+        createLists(view);
         setCirleProgress();
     }
 
@@ -166,6 +167,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         complete = view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
+
+        for(ProgBar pb : progBarsIncom){
+            Log.d("stiv Alentina", pb.getProgress()+"");
+        }
+
         comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom);
 
         incomplete.setAdapter(IncomAdapter);
@@ -194,8 +200,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     pb.setProgress((int) Math.round(standAmount));
                 } else if(pb.getName() == "cycling"){
                     pb.setProgress((int) Math.round(cyclingAmount));
-                } else if(pb.getName() == "train"){
+                } else if(pb.getName() == "exercise"){
+                    Log.d("stiv Alen", pb.getProgress()+"");
+                    Log.d("stiv simounella",trainAmount+"");
                     pb.setProgress((int) Math.round(trainAmount));
+                    Log.d("stiv Alentino", pb.getProgress()+"");
+                    Log.d("stiv Burhan",trainAmount+"");
                 } else if(pb.getName() == "other"){
                     pb.setProgress((int) Math.round(otherAmount));
                 }
@@ -286,6 +296,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private void setCirleProgress(){
         dailyProgress = walkAmount + standAmount + cyclingAmount + trainAmount + otherAmount;
+        Log.d("stiv simon", trainAmount+"");
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
         circleBarText.setText(circleProgress + "%");
