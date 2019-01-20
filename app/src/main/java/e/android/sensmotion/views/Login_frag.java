@@ -75,7 +75,6 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
 */
 
         brugernavn = view.findViewById(R.id.brugernavn);
-        TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
         Button login = (Button) view.findViewById(R.id.logIndKnap);
         dataHandling = (CheckBox) view.findViewById(R.id.dataHandling);
@@ -83,7 +82,6 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
 
         pressed = 0;
         login.setOnClickListener(this);
-        opret.setOnClickListener(this);
         glemt.setOnClickListener(this);
 
         return view;
@@ -118,9 +116,6 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                     }
                     break;
 
-                case R.id.opret:
-                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
-                    break;
                 case R.id.glemtLogin:
                     Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
                     break;

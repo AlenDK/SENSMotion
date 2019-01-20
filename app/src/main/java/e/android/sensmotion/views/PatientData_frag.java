@@ -306,10 +306,8 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
             if(uc.getPatient(id).getSensorer() != null) {
                 dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
-                System.out.println("når til saveData");
                 System.out.println(currentPatient.getId());
                 list = currentPatient.getSensorer();
-                System.out.println("hej");
             }
 
         } catch (InterruptedException e) {

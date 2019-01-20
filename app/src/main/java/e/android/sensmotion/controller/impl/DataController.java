@@ -55,14 +55,12 @@ public class DataController implements IDataController {
                     "project_key=" + project_key +
                     "&patient_key=" + patient_key +
                     "&date=" + date);
-            System.out.println("den her metoder BURDE funke");
         } else {
             endpoint = String.format("https://beta.sens.dk/exapi/1.0/patients/data/external/overview?" +
                     "project_key=" + project_key +
                     "&patient_key=" + patient_key +
                     //"&day_count="  + 10);
                     "&date=2018-10-02");
-            System.out.println("den her metode funker ikke");
         }
 
         try {

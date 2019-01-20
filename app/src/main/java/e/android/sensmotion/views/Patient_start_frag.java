@@ -72,7 +72,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ProgressBar_adapter IncomAdapter, comAdapter;
     ViewGroup view;
 
-    int totalProgressGoal = 500, circleProgress;
+    int totalProgressGoal = 500, circleProgress, dayCount = 0;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
@@ -90,6 +90,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         userID = prefs.getString("userID", "p1");
         getFirebaseStartingDate();
+        setRecyclerViewFromFireBase();
 
         days = new ArrayList<>();
         images = new ArrayList<>();
@@ -113,12 +114,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void inisializeElements() {
-        completeText  = view.findViewById(R.id.completeText);
+        completeText = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
-        circlebar     = view.findViewById(R.id.circlebar);
+        circlebar = view.findViewById(R.id.circlebar);
 
 
-        walkAmount  = prefs.getFloat("walk", 0.0f);
+        walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
         exerciseAmount = prefs.getFloat("exercise", 0.0f);
@@ -132,7 +133,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         setCirleProgress();
     }
 
-    private void showElements(){
+    private void showElements() {
         completeText.setVisibility(View.VISIBLE);
         incomplete.setVisibility(View.VISIBLE);
         complete.setVisibility(View.VISIBLE);
@@ -153,8 +154,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void createProgressbar() {
-        if(progBarsIncom.size() == 0){
-            System.out.println("the fuck");
+        if (progBarsIncom.size() == 0) {
             walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
             stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
             cycling = new ProgBar("cycle", (int) Math.round(cyclingAmount), totalcycling);
@@ -167,17 +167,16 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             progBarsIncom.add(exercise);
             progBarsIncom.add(other);
         } else {
-            System.out.println("yes");
-            for(ProgBar pb : progBarsIncom){
-                if(pb.getName() == "walk"){
+            for (ProgBar pb : progBarsIncom) {
+                if (pb.getName() == "walk") {
                     pb.setProgress((int) Math.round(walkAmount));
-                } else if(pb.getName() == "stand"){
+                } else if (pb.getName() == "stand") {
                     pb.setProgress((int) Math.round(standAmount));
-                } else if(pb.getName() == "cycle"){
+                } else if (pb.getName() == "cycle") {
                     pb.setProgress((int) Math.round(cyclingAmount));
-                } else if(pb.getName() == "exercise"){
+                } else if (pb.getName() == "exercise") {
                     pb.setProgress((int) Math.round(exerciseAmount));
-                } else if(pb.getName() == "other"){
+                } else if (pb.getName() == "other") {
                     pb.setProgress((int) Math.round(otherAmount));
                 }
             }
@@ -223,7 +222,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void createRecyclerview(View view) {
+
         days.add("i går");
+       /*
         days.add(getYesterdayDateString(2));
         days.add(getYesterdayDateString(3));
         days.add(getYesterdayDateString(4));
@@ -236,7 +237,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         days.add(getYesterdayDateString(11));
         days.add(getYesterdayDateString(12));
         days.add(getYesterdayDateString(13));
+        */
         images.add(R.drawable.greensmileyrounded);
+        /*
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
@@ -252,10 +255,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
         images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
+        */
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images,this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images, this);
         recyclerView.setAdapter(adapter);
 
 
@@ -265,7 +269,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         */
     }
 
-    private void setCirleProgress(){
+    private void setCirleProgress() {
         dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
@@ -293,7 +297,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
-    private String getCurrentDate(){
+    private String getCurrentDate() {
         DateFormat dateFormat = new SimpleDateFormat("ddMM");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 0);
@@ -312,7 +316,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
-    private void opdaterData(){
+    private void opdaterData() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -351,13 +355,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         values = new Values();
                                         values.getAPIdata(data);
 
-                                        walkAmount    = Double.parseDouble(values.getWalk());
-                                        standAmount   = Double.parseDouble(values.getStand());
+                                        walkAmount = Double.parseDouble(values.getWalk());
+                                        standAmount = Double.parseDouble(values.getStand());
                                         cyclingAmount = Double.parseDouble(values.getCycling());
                                         exerciseAmount = Double.parseDouble(values.getExercise());
-                                        otherAmount   = Double.parseDouble(values.getOther());
+                                        otherAmount = Double.parseDouble(values.getOther());
 
-                                        if((int) walkAmount > totalwalk) {
+                                        if ((int) walkAmount > totalwalk) {
                                             walkAmount = totalwalk;
                                         } else if ((int) standAmount > totalstand) {
                                             standAmount = totalstand;
@@ -370,17 +374,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         }
 
                                         //Skal laves om så vi tjekker mod api'en...
-                                        if(prefs.getFloat("walk", 0.0f) != walkAmount   ||
-                                                prefs.getFloat("stand", 0.0f)!= standAmount  ||
-                                                prefs.getFloat("cycle", 0.0f)!= cyclingAmount||
+                                        if (prefs.getFloat("walk", 0.0f) != walkAmount ||
+                                                prefs.getFloat("stand", 0.0f) != standAmount ||
+                                                prefs.getFloat("cycle", 0.0f) != cyclingAmount ||
                                                 prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
-                                                prefs.getFloat("other", 0.0f)!= otherAmount){
+                                                prefs.getFloat("other", 0.0f) != otherAmount) {
 
                                             editor.putFloat("walk", (float) walkAmount);
-                                            editor.putFloat("stand",(float) standAmount);
-                                            editor.putFloat("cycle",(float) cyclingAmount);
-                                            editor.putFloat("exercise",(float) exerciseAmount);
-                                            editor.putFloat("other",(float) otherAmount);
+                                            editor.putFloat("stand", (float) standAmount);
+                                            editor.putFloat("cycle", (float) cyclingAmount);
+                                            editor.putFloat("exercise", (float) exerciseAmount);
+                                            editor.putFloat("other", (float) otherAmount);
                                             editor.apply();
                                             editor.commit();
 
@@ -403,15 +407,40 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
-    private void setRecyclerViewFromFireBase(){
+    private void setRecyclerViewFromFireBase() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                int dayCount = 0;
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                 //days.add("i går");
                 //Get Patient
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
 
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+
+                            //For each "Day value" in database
+                            for (final DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
+                                AsyncTask atask = new AsyncTask() {
+                                    @Override
+                                    protected Object doInBackground(Object[] objects) {
+                                        dayCount++;
+                                        days.add(snapshotValues.getKey());
+                                        images.add(R.drawable.greensmileyrounded);
+                                        return null;
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Object titler) {
+                                        System.out.println("Day count bitches: " + dayCount);
+                                        System.out.println(days);
+                                    }
+                                }.execute();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -436,17 +465,18 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             List<Sensor> sensorList = new ArrayList<>();
 
                             //For each "Day value" in database
-                            for(DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()){
-                                if(snapshotValues.getKey().equals(day)) {
+                            for (DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
+                                if (snapshotValues.getKey().equals(day)) {
+                                    System.out.println("key: " + snapshotValues.getKey());
 
                                     Values values = snapshotValues.getValue(Values.class);
-                                    walkAmount    = Double.parseDouble(values.getWalk());
-                                    standAmount   = Double.parseDouble(values.getStand());
+                                    walkAmount = Double.parseDouble(values.getWalk());
+                                    standAmount = Double.parseDouble(values.getStand());
                                     cyclingAmount = Double.parseDouble(values.getCycling());
                                     exerciseAmount = Double.parseDouble(values.getExercise());
-                                    otherAmount   = Double.parseDouble(values.getOther());
+                                    otherAmount = Double.parseDouble(values.getOther());
 
-                                    if((int) walkAmount > totalwalk) {
+                                    if ((int) walkAmount > totalwalk) {
                                         walkAmount = totalwalk;
                                     } else if ((int) standAmount > totalstand) {
                                         standAmount = totalstand;
@@ -481,7 +511,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
-    private void getFirebaseStartingDate(){
+    private void getFirebaseStartingDate() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -495,7 +525,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
 
                             String startingDate = snapshotSensor.child("currentPeriod").child("startingDate").getValue(String.class);
-                            System.out.println("Staring date: "+startingDate);
+                            System.out.println("Staring date: " + startingDate);
 
                             editor.putString("startingDate", startingDate);
                             editor.apply();
@@ -512,12 +542,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
+
     @Override
     public void clickItem(int position) {
         progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
         progBarsCom.clear();    //Samme grund
-        getFirebasePatient(""+position);
-        if(position == 4){
+        getFirebasePatient("" + position);
+        if (position == 4) {
             opdaterData();
         }
     }
