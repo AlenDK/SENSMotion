@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.Login_frag"
-    android:background="@color/colorBackground">
+    android:background="@drawable/login_background">
 
     <ImageView
         android:id="@+id/imageView"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/sensmotionblack"
+        android:src="@drawable/sensmotionwhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="24dp"
-        android:background="@drawable/login_knap"
+        android:background="@color/colorTest"
         android:text="Log ind"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
@@ -77,7 +77,7 @@
         android:layout_marginTop="48dp"
         android:checked="false"
         android:text="Forbliv logget ind"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
@@ -89,7 +89,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="24dp"
         android:text="@string/PersData"
-        android:textColor="@color/colorGray"
+        android:textColor="@color/colorWhite"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/HuskBruger" />

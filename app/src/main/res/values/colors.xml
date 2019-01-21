@@ -13,6 +13,7 @@
     <color name="lightBlack">#484848</color>
 
     <color name="colorDarkRed">#9f1717</color>
+    <color name="colorTest">#D86060</color>
 
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
