@@ -1,5 +1,6 @@
 package e.android.sensmotion.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +24,7 @@ import android.widget.Toast;
 import e.android.sensmotion.Notification.Alarm;
 import e.android.sensmotion.R;
 
-public class patient_setting_frag extends Fragment {
+public class Patient_setting_Activity extends AppCompatActivity {
 
     Switch pop_switch, sound_switch;
     Button logout;
@@ -30,94 +32,72 @@ public class patient_setting_frag extends Fragment {
     ImageView column1, column2, column3, column4, column5;
     Intent act, service;
 
+    Context context;
+
     SharedPreferences mPrefs;
     SharedPreferences.Editor prefsEditor;
 
     @Override
-    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.patient_setting_frag, container, false);
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.patient_setting_frag);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefsEditor = mPrefs.edit();
+        context = this;
 
-        createImage(view);
+        createImage();
 
-        pop_switch = (Switch) view.findViewById(R.id.switchPOP);
+        pop_switch = (Switch) findViewById(R.id.switchPOP);
         pop_switch.setChecked(true);
-        sound_switch = (Switch) view.findViewById(R.id.switchSound);
-        column1 = (ImageView) view.findViewById(R.id.column1);
-        column2 = (ImageView) view.findViewById(R.id.column2);
-        column3 = (ImageView) view.findViewById(R.id.column3);
+        sound_switch = (Switch) findViewById(R.id.switchSound);
 
-
-        back = (ImageButton) view.findViewById(R.id.backarrow);
-        logout = (Button) view.findViewById(R.id.logUd);
+        back = (ImageButton) findViewById(R.id.backarrow);
+        logout = (Button) findViewById(R.id.logUd);
 
         //Kan det gøres smartere?
         pop_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
                 if (on) {
-                    Alarm.startAlarm(getActivity());
+                    Alarm.startAlarm(context);
                 } else if (!on) {
                     Alarm.stopAlarm();
                 }
-                //Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
-
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, new Task_complete_frag())
-                        .commit();
+                Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
         });
 
         column1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
-            });
+        });
 
         column2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
         });
 
         column3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "comming soon", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
         });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Remove settings from stack
-                /*
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                transaction.remove(getParentFragment());
-                transaction.commit();
-                manager.popBackStack();
-
-                android.support.v4.app.Fragment fragment = new PatientViewpager();
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, fragment)
-                        .addToBackStack(null)
-                        .commit();
-                */
-
-                act = new Intent(getActivity(), PatientActivity.class);
-                getActivity().finish();
-                startActivity(act);
-
+                finish();
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
@@ -132,22 +112,20 @@ public class patient_setting_frag extends Fragment {
                 prefsEditor.remove("other");
                 prefsEditor.apply();
                 prefsEditor.commit();
-                act = new Intent(getActivity(), MainActivity.class);
-                getActivity().finish();
+                act = new Intent(context, MainActivity.class);
+                act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(act);
             }
         });
 
-        return view;
     }
 
-
-    private void createImage(View view){
-        column1 = (ImageView) view.findViewById(R.id.column1);
-        column2 = (ImageView) view.findViewById(R.id.column2);
-        column3 = (ImageView) view.findViewById(R.id.column3);
-        column4 = (ImageView) view.findViewById(R.id.column4);
-        column5 = (ImageView) view.findViewById(R.id.column5);
+    private void createImage(){
+        column1 = (ImageView) findViewById(R.id.column1);
+        column2 = (ImageView) findViewById(R.id.column2);
+        column3 = (ImageView) findViewById(R.id.column3);
+        column4 = (ImageView) findViewById(R.id.column4);
+        column5 = (ImageView) findViewById(R.id.column5);
     }
 
 

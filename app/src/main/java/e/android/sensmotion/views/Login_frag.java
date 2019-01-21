@@ -98,9 +98,9 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                     if (pressed == 0) {
                         if (userID.equals("admin")) {
                             act = new Intent(getActivity(), Terapuet_activity.class);
-                            startActivity(act);
                             pressed++;
                             getActivity().finish();
+                            startActivity(act);
                         } else {
 
                             //Agree to consent
@@ -149,8 +149,8 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                         prefsEditor.commit();
 
                         act = new Intent(getActivity(), PatientActivity.class);
-                        startActivity(act);
                         getActivity().finish();
+                        startActivity(act);
                     }
                 }
             }

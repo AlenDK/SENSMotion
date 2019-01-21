@@ -1,5 +1,6 @@
 package e.android.sensmotion.views;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,7 +76,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ViewGroup view;
     ConstraintLayout constraintLayout;
 
-    int totalProgressGoal = 500, circleProgress, dayCount = 0;
+    int totalProgressGoal = 500, circleProgress;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
@@ -84,6 +84,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private Patient patient;
     Values values;
     String userID, json;
+    String mobility = "0";
 
 
     @Override
@@ -109,19 +110,23 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         if (view == profile_button) {
-            Fragment fragment = new patient_setting_frag();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, fragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent act = new Intent(getActivity(), Patient_setting_Activity.class);
+            startActivity(act);
         } else if (view == constraintLayout){
+            mobility = prefs.getString("mobility", "0");
             walkAmount = prefs.getFloat("walk", 0.0f);
             standAmount = prefs.getFloat("stand", 0.0f);
             cyclingAmount = prefs.getFloat("cycle", 0.0f);
             exerciseAmount = prefs.getFloat("exercise", 0.0f);
             otherAmount = prefs.getFloat("other", 0.0f);
+            //Check wether any progress amounts exceeds the goal
 
             showElements();
+            //setExpectedAmount(Integer.parseInt(mobility));
+
+
+            //Skal kun køres når det er nødvendigt! Det tager lang tid!
+                //opdaterData();
         }
     }
 
@@ -318,6 +323,66 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
+    private void setExpectedAmount(int m){
+        switch (m){
+            case 0:
+                totalwalk     = 10;
+                totalstand    = 15;
+                totalcycling  = 2;
+                totalexercise = 5;
+                totalother    = 10;
+                break;
+
+            case 1:
+                totalwalk     = 12;
+                totalstand    = 17;
+                totalcycling  = 4;
+                totalexercise = 7;
+                totalother    = 12;
+                break;
+
+            case 2:
+                totalwalk     = 16;
+                totalstand    = 21;
+                totalcycling  = 8;
+                totalexercise = 11;
+                totalother    = 16;
+                break;
+
+            case 3:
+                totalwalk     = 24;
+                totalstand    = 29;
+                totalcycling  = 16;
+                totalexercise = 19;
+                totalother    = 24;
+                break;
+
+            case 4:
+                totalwalk     = 40;
+                totalstand    = 45;
+                totalcycling  = 32;
+                totalexercise = 35;
+                totalother    = 40;
+                break;
+
+            case 5:
+                totalwalk     = 72;
+                totalstand    = 77;
+                totalcycling  = 64;
+                totalexercise = 67;
+                totalother    = 72;
+                break;
+
+            default:
+                totalwalk     = 10;
+                totalstand    = 15;
+                totalcycling  = 2;
+                totalexercise = 5;
+                totalother    = 10;
+                break;
+        }
+    }
+
     private void opdaterData() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -329,8 +394,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         patient = snapshot.getValue(Patient.class);
 
                         //Get Sensor
-                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
-                            Sensor sensor = snapshotSensor.getValue(Sensor.class);
+                        for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
 
                             //Get API data
                             AsyncTask atask = new AsyncTask() {
@@ -357,23 +421,18 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         values = new Values();
                                         values.getAPIdata(data);
 
+                                        values.setMobility(patient.getMobility());
+                                        mobility = values.getMobility();
+                                        System.out.println("Mobilitet: "+mobility);
+                                        //setExpectedAmount(Integer.parseInt(mobility));
+
                                         walkAmount = Double.parseDouble(values.getWalk());
                                         standAmount = Double.parseDouble(values.getStand());
                                         cyclingAmount = Double.parseDouble(values.getCycling());
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
 
-                                        if ((int) walkAmount > totalwalk) {
-                                            walkAmount = totalwalk;
-                                        } else if ((int) standAmount > totalstand) {
-                                            standAmount = totalstand;
-                                        } else if ((int) cyclingAmount > totalcycling) {
-                                            cyclingAmount = totalcycling;
-                                        } else if ((int) exerciseAmount > totalexercise) {
-                                            exerciseAmount = totalexercise;
-                                        } else if ((int) otherAmount > totalother) {
-                                            otherAmount = totalother;
-                                        }
+                                        editor.putString("mobility", mobility);
 
                                         //Skal laves om så vi tjekker mod api'en...
                                         if (prefs.getFloat("walk", 0.0f) != walkAmount ||
@@ -460,32 +519,16 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     System.out.println("key: " + snapshotValues.getKey());
 
                                     Values values = snapshotValues.getValue(Values.class);
+                                    mobility = values.getMobility();
                                     walkAmount = Double.parseDouble(values.getWalk());
                                     standAmount = Double.parseDouble(values.getStand());
                                     cyclingAmount = Double.parseDouble(values.getCycling());
                                     exerciseAmount = Double.parseDouble(values.getExercise());
                                     otherAmount = Double.parseDouble(values.getOther());
 
-                                    if ((int) walkAmount > totalwalk) {
-                                        walkAmount = totalwalk;
-                                    } else if ((int) standAmount > totalstand) {
-                                        standAmount = totalstand;
-                                    } else if ((int) cyclingAmount > totalcycling) {
-                                        cyclingAmount = totalcycling;
-                                    } else if ((int) exerciseAmount > totalexercise) {
-                                        exerciseAmount = totalexercise;
-                                    } else if ((int) otherAmount > totalother) {
-                                        otherAmount = totalother;
-                                    }
+                                    System.out.println("mobilitet: "+mobility);
+                                    setExpectedAmount(Integer.parseInt(mobility));
 
-                                    /*
-                                    Sensor s = snapshotSensor.getValue(Sensor.class);
-                                    walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
-                                    standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
-                                    cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
-                                    exerciseAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
-                                    otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
-                                    */
                                     showElements();
                                 }
                             }
@@ -535,8 +578,5 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     @Override
     public void clickItem(int position) {
         getFirebasePatient("" + position);
-        if (position == 4) {
-            opdaterData();
-        }
     }
 }

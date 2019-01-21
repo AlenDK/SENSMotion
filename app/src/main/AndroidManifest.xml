@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".views.PatientActivity" />
+        <activity android:name=".views.Patient_setting_Activity"/>
         <activity android:name=".views.Terapuet_activity"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <receiver android:name=".Notification.PostNotifications">

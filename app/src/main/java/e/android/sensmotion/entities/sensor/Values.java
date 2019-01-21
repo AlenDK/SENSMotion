@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Values {
     private String date;
+    private String mobility;
     private String rest;
     private String stand;
     private String walk;
@@ -21,16 +22,19 @@ public class Values {
 
     }
 
-    public Values(String date, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
-        this.date    = date;
-        this.cycling = cycling;
-        this.exercise= exercise;
-        this.other   = other;
-        this.rest    = rest;
-        this.stand   = stand;
-        this.steps   = steps;
-        this.walk    = walk;
+    public Values(String date, String mobility, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
+        this.date     = date;
+        this.mobility = mobility;
+        this.cycling  = cycling;
+        this.exercise = exercise;
+        this.other    = other;
+        this.rest     = rest;
+        this.stand    = stand;
+        this.steps    = steps;
+        this.walk     = walk;
     }
+
+    public String getMobility(){ return mobility; }
 
     public String getRest() {
         return rest;
@@ -63,6 +67,8 @@ public class Values {
     public String getNodata() {
         return nodata;
     }
+
+    public void setMobility(String level) { mobility = level; }
 
     public void populate(JSONObject data1, int count) {
 
@@ -97,6 +103,7 @@ public class Values {
 
     public Values getAPIdata(JSONObject data1){
         Values values = null;
+        mobility = "0";
         try {
             JSONObject jsonVALUE   = data1.getJSONObject("value");
             JSONArray jsonDATA     = jsonVALUE.getJSONArray("data");
@@ -115,7 +122,7 @@ public class Values {
             nodata   = jsonVALUES1.getString("general/nodata/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
 
-            values = new Values(date, cycling, exercise, other, rest, stand, steps, walk);
+            values = new Values(date, mobility, cycling, exercise, other, rest, stand, steps, walk);
 
             System.out.println("Values from API: "+values);
 

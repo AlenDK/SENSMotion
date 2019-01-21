@@ -12,7 +12,11 @@ public class ProgBar {
     public ProgBar(String name, int progress, int goal){
 
         this.name = name;
-        this.progress = progress;
+        if(progress > goal){
+            this.progress = goal;
+        } else {
+            this.progress = progress;
+        }
         this.goal = goal;
         isComplete = false;
     }
@@ -43,6 +47,13 @@ public class ProgBar {
 
     public String getName() {
         return name;
+    }
+
+    public double getPercent(){
+        double percent;
+        percent = ((double) progress/ (double) goal)*100;
+        return percent;
+
     }
 
 }

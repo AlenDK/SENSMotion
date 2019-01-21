@@ -40,9 +40,10 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         progText = view.findViewById(R.id.progressText);
         progImage = view.findViewById(R.id.barImage);
 
-        setProgressImage(position);
-        setProgessbarColor(position);
-        progressBar.setProgress(progressBarList.get(position).getProgress());
+
+       progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
+       setProgressImage(position);
+       setProgessbarColor(position);
         progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal());
 
 
@@ -67,8 +68,8 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         }
 
     private void setProgessbarColor(int position){
-        int progress = progressBarList.get(position).getProgress();
-        if(progress < 20)
+        int progress = progressBar.getProgress();  //Gives progress percentage
+        if(progressBar.getProgress() < 20)
             progressBar.setProgressTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.progress20)));
 
         else if(progress < 40)
@@ -90,4 +91,5 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
             progressBar.setProgressTintList(ColorStateList.valueOf(getContext().getResources().getColor(R.color.progress100)));
         }
     }
+
 }
