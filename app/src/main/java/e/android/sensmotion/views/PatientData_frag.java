@@ -6,8 +6,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +33,11 @@ import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.gms.common.util.Strings;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +48,7 @@ import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.entities.sensor.Sensor;
@@ -55,7 +63,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private TextView patientinformation, nameText;
     private HorizontalBarChart barChart;
     private PieChart pieChart;
-    private IDataController dc;
+    private DataController dc = new DataController();
     private IUserController uc;
     private String jsonString, name, dateChosen, id;
     private ProgressDialog loading;
@@ -63,6 +71,8 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private List<Patient> patientList;
     private List<Sensor> list;
     private Patient currentPatient;
+
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
 
     final Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -84,21 +94,30 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             name = getArguments().getString("name");
         }
 
+        Log.d("burhanee", "hej1");
+
+
         dialogBuilder = new AlertDialog.Builder(view.getContext());
 
-        dc = ControllerRegistry.getDataController();
-        uc = ControllerRegistry.getUserController();
         loading = new ProgressDialog(view.getContext());
         list = new ArrayList<>();
 
-        patientList = uc.getPatientList();
+        Log.d("burhanee", "hej2");
+
+  /*      patientList = uc.getPatientList();
         for(Patient p: patientList){
             if(p.getId().equals(id)){
                 currentPatient = p;
+                Log.d("burhanee", ""+p.toString());
             }
         }
+*/
+        getFirebasePatient(id);
 
-        System.out.println("hejsa");
+        Log.d("buran", ""+currentPatient);
+        if(currentPatient == null) {
+            Log.d("buran", "øv");
+        }
 
         updateSensorData(id);
 
@@ -106,7 +125,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         pieChart.setVisibility(View.GONE);
 
         barChart = view.findViewById(R.id.chart);
-        updateBarChart();
+    //    updateBarChart();
 
         periode = view.findViewById(R.id.dato_knap);
         periode.setOnClickListener(this);
@@ -296,15 +315,12 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
     public void updateSensorData(String id){
 
-        boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
-        if (!EMULATOR) {
-            Fabric.with(getActivity(), new Crashlytics());
-        }
 
         try {
             String hentDataResult = new HentDataAsyncTask().execute().get();
 
-            if(uc.getPatient(id).getSensorer() != null) {
+            if(        currentPatient.getSensorer() != null) {
+                Log.d("burhaneee", currentPatient +"");
                 dc.saveData(hentDataResult, currentPatient.getSensor("s1"));
                 System.out.println(currentPatient.getId());
                 list = currentPatient.getSensorer();
@@ -364,6 +380,35 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             return hours + " t, " + minutes + " min";
         }
     }
+
+    private void getFirebasePatient(final String id) {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(id)) {
+                        currentPatient = snapshot.getValue(Patient.class);
+
+
+
+                        Log.d("buran", ""+currentPatient);
+
+                    }
+                    }
+                }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
 
     }
 
