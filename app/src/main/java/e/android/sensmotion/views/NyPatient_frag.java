@@ -40,7 +40,6 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
 
     @Override
     public void onClick(View view) {
-
         if(patientID.getText().toString().equals("")){
             Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
         }
@@ -49,14 +48,13 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         }
         else{
             List<Sensor> list = new ArrayList<>();
-            if(!sensorID.getText().toString().equals("")){
-                Sensor s = new Sensor("s1", 0);
-                list.add(s);
-            }
+            Sensor s = new Sensor("s1", 0);
+            list.add(s);
 
             Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null,
                     null, list, mobilitet.getText().toString(), "k5W2uX", "6rT39u");
 
+            //Save Patient to firebase
             ControllerRegistry.getUserController().savePatient(p);
 
             getFragmentManager().beginTransaction()

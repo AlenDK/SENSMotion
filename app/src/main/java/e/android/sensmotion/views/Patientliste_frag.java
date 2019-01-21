@@ -39,8 +39,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
     private List<Patient> patientList;
     private Patientliste_adapter adapter;
     private ListView listView;
-    private IUserController uc;
-    private ISensorController sc;
 
     private DatabaseReference database;
     public View view;
@@ -111,7 +109,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Patient patient = snapshot.getValue(Patient.class);
-                    System.out.println("hvaaaaaaaa: "+patient.toString());
 
                     patientList.add(patient);
 
