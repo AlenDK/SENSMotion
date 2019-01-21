@@ -46,7 +46,7 @@ import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
-    private TextView circleBarText, completeText;
+    private TextView circleBarText, completeText, titleName;
     private ProgressBar circlebar;
     private ImageButton profile_button;
 
@@ -131,6 +131,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void inisializeElements() {
+        titleName = view.findViewById(R.id.nameText);
+        titleName.setText(prefs.getString("name", ""));
         completeText = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
         circlebar = view.findViewById(R.id.circlebar);

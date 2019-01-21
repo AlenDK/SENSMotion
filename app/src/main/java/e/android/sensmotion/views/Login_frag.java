@@ -143,8 +143,9 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                             prefsEditor.putBoolean("remember", remember);
                         }
 
-                        //Save id and possibly remember state
+                        //Save id and name
                         prefsEditor.putString("userID", userID);
+                        prefsEditor.putString("name", patient.getName());
                         prefsEditor.apply();
                         prefsEditor.commit();
 
