@@ -84,7 +84,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private Patient patient;
     Values values;
     String userID, json;
-    String mobility = "0";
+    String mobility = "0", status = "3";
+    int tasksCompleted;
 
 
     @Override
@@ -96,6 +97,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         userID = prefs.getString("userID", "p1");
         getFirebaseStartingDate();
         setRecyclerViewFromFireBase();
+
+        //saveDataFirebase();
 
         days = new ArrayList<>();
         images = new ArrayList<>();
@@ -112,21 +115,29 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         if (view == profile_button) {
             Intent act = new Intent(getActivity(), Patient_setting_Activity.class);
             startActivity(act);
-        } else if (view == constraintLayout){
+        } else if (view == constraintLayout) {
             mobility = prefs.getString("mobility", "0");
             walkAmount = prefs.getFloat("walk", 0.0f);
             standAmount = prefs.getFloat("stand", 0.0f);
             cyclingAmount = prefs.getFloat("cycle", 0.0f);
             exerciseAmount = prefs.getFloat("exercise", 0.0f);
             otherAmount = prefs.getFloat("other", 0.0f);
-            //Check wether any progress amounts exceeds the goal
+
+            // /Check wether any progress amounts exceeds the goal
             setExpectedAmount(Integer.parseInt(mobility));
             resultsExceeded();
+
+            //Save status to SP
+            if(tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))){
+                editor.putString("status", tasksCompleted+"");
+                editor.apply();
+                editor.commit();
+            }
             showElements();
 
 
             //Skal kun køres når det er nødvendigt! Det tager lang tid!
-                //opdaterData();
+            //opdaterData();
         }
     }
 
@@ -147,11 +158,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         otherAmount = prefs.getFloat("other", 0.0f);
         setExpectedAmount(Integer.parseInt(mobility));
 
-        System.out.println("SP walk: "+walkAmount);
-        System.out.println("SP stand: "+standAmount);
-        System.out.println("SP cycle: "+cyclingAmount);
-        System.out.println("SP exercise: "+exerciseAmount);
-        System.out.println("SP other: "+otherAmount);
+        System.out.println("SP walk: " + walkAmount);
+        System.out.println("SP stand: " + standAmount);
+        System.out.println("SP cycle: " + cyclingAmount);
+        System.out.println("SP exercise: " + exerciseAmount);
+        System.out.println("SP other: " + otherAmount);
 
         createButtons(view);
         createLists();
@@ -249,29 +260,29 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button.setOnClickListener(this);
     }
 
-    private void createRecyclerview(String date, String status)  {
+    private void createRecyclerview(String date, String status) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM");
 
         //Find the date of yesterday in format "dd-mm"
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         String yesterday = dateFormat.format(cal.getTime());
-        System.out.println("format: "+yesterday);
+        System.out.println("format: " + yesterday);
 
-        if(date.equals(yesterday)){
+        if (date.equals(yesterday)) {
             days.add(0, "i går");
         } else {
             days.add(0, date);
         }
 
         //Decide which smiley to display
-        if(status.equals("0")){
+        if (status.equals("0")) {
             images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
-        } else if(status.equals("1")) {
+        } else if (status.equals("1")) {
             images.add(0, R.drawable.greensmiley1);
-        } else if(status.equals("2")) {
+        } else if (status.equals("2")) {
             images.add(0, R.drawable.greensmiley2);
-        } else if(status.equals("3")) {
+        } else if (status.equals("3")) {
             images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
         }
 
@@ -289,11 +300,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private void setCirleProgress() {
         dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
-        totalProgressGoal = totalwalk + totalstand + totalcycling +totalexercise + totalother;
+        totalProgressGoal = totalwalk + totalstand + totalcycling + totalexercise + totalother;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
-        System.out.println("Daily: "+dailyProgress);
-        System.out.println("Daily goal: "+totalProgressGoal);
+        System.out.println("Daily: " + dailyProgress);
+        System.out.println("Daily goal: " + totalProgressGoal);
 
 
         circleBarText.setText(circleProgress + "%");
@@ -332,81 +343,87 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         return dateFormat.format(previousDay(day));
     }
 
-    private void setExpectedAmount(int m){
-        switch (m){
+    private void setExpectedAmount(int m) {
+        switch (m) {
             case 0:
-                totalwalk     = 10;
-                totalstand    = 15;
-                totalcycling  = 2;
+                totalwalk = 10;
+                totalstand = 15;
+                totalcycling = 2;
                 totalexercise = 5;
-                totalother    = 10;
+                totalother = 10;
                 break;
 
             case 1:
-                totalwalk     = 12;
-                totalstand    = 17;
-                totalcycling  = 4;
+                totalwalk = 12;
+                totalstand = 17;
+                totalcycling = 4;
                 totalexercise = 7;
-                totalother    = 12;
+                totalother = 12;
                 break;
 
             case 2:
-                totalwalk     = 16;
-                totalstand    = 21;
-                totalcycling  = 8;
+                totalwalk = 16;
+                totalstand = 21;
+                totalcycling = 8;
                 totalexercise = 11;
-                totalother    = 16;
+                totalother = 16;
                 break;
 
             case 3:
-                totalwalk     = 24;
-                totalstand    = 29;
-                totalcycling  = 16;
+                totalwalk = 24;
+                totalstand = 29;
+                totalcycling = 16;
                 totalexercise = 19;
-                totalother    = 24;
+                totalother = 24;
                 break;
 
             case 4:
-                totalwalk     = 40;
-                totalstand    = 45;
-                totalcycling  = 32;
+                totalwalk = 40;
+                totalstand = 45;
+                totalcycling = 32;
                 totalexercise = 35;
-                totalother    = 40;
+                totalother = 40;
                 break;
 
             case 5:
-                totalwalk     = 72;
-                totalstand    = 77;
-                totalcycling  = 64;
+                totalwalk = 72;
+                totalstand = 77;
+                totalcycling = 64;
                 totalexercise = 67;
-                totalother    = 72;
+                totalother = 72;
                 break;
 
             default:
-                totalwalk     = 10;
-                totalstand    = 15;
-                totalcycling  = 2;
+                totalwalk = 10;
+                totalstand = 15;
+                totalcycling = 2;
                 totalexercise = 5;
-                totalother    = 10;
+                totalother = 10;
                 break;
         }
     }
 
-    private void resultsExceeded(){
-        if(walkAmount > totalwalk){
+    private void resultsExceeded() {
+        tasksCompleted = 0;
+        if (walkAmount > totalwalk) {
             walkAmount = totalwalk;
+            tasksCompleted++;
         }
-        if(standAmount > totalstand){
+        if (standAmount > totalstand) {
             standAmount = totalstand;
+            tasksCompleted++;
         }
-        if(cyclingAmount > totalcycling){
+        if (cyclingAmount > totalcycling) {
             cyclingAmount = totalcycling;
+            tasksCompleted++;
         }
-        if(exerciseAmount > totalexercise){
+        if (exerciseAmount > totalexercise) {
             exerciseAmount = totalexercise;
+            tasksCompleted++;
         }
-        if(otherAmount > totalother){
+        if (otherAmount > totalother) {
             otherAmount = totalother;
+            tasksCompleted++;
         }
     }
 
@@ -450,7 +467,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                                         values.setMobility(patient.getMobility());
                                         mobility = values.getMobility();
-                                        System.out.println("Mobilitet: "+mobility);
+                                        System.out.println("Mobilitet: " + mobility);
                                         setExpectedAmount(Integer.parseInt(mobility));
 
                                         walkAmount = Double.parseDouble(values.getWalk());
@@ -460,6 +477,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         otherAmount = Double.parseDouble(values.getOther());
                                         resultsExceeded();
 
+                                        //Save mobility to SP
                                         editor.putString("mobility", mobility);
 
                                         //Skal laves om så vi tjekker mod api'en...
@@ -548,13 +566,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                                     Values values = snapshotValues.getValue(Values.class);
                                     mobility = values.getMobility();
+                                    status = values.getStatus();
                                     walkAmount = Double.parseDouble(values.getWalk());
                                     standAmount = Double.parseDouble(values.getStand());
                                     cyclingAmount = Double.parseDouble(values.getCycling());
                                     exerciseAmount = Double.parseDouble(values.getExercise());
                                     otherAmount = Double.parseDouble(values.getOther());
 
-                                    System.out.println("mobilitet: "+mobility);
+                                    System.out.println("mobilitet: " + mobility);
                                     setExpectedAmount(Integer.parseInt(mobility));
                                     resultsExceeded();
 
@@ -600,6 +619,66 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    private void saveDataFirebase() {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //Get Patient
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //Get Sensor
+                        for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            if (snapshotSensor.child("id").getValue(String.class).equals("s1")) {
+                                //Get API data
+                                AsyncTask atask = new AsyncTask() {
+                                    @Override
+                                    protected Object doInBackground(Object[] objects) {
+                                        try {
+                                            String myFormat = "yyyy-MM-dd";
+                                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                                            String dato = sdf.format(c.getTime());
+
+                                            json = dataController.getApiDATA(patient, dato);
+                                            return null;
+                                        } catch (Exception e) {
+                                            return e;
+                                        }
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Object titler) {
+                                        JSONObject data = null;
+                                        try {
+                                            data = new JSONObject(json);
+                                            values = new Values();
+                                            values.getAPIdata(data);
+                                            values.setMobility(patient.getMobility());
+                                            values.setStatus(prefs.getString("status", "0"));
+
+                                            //DatabaseReference dbReference = database.child("sensorer").child("0").child("currentPeriod").child("valuesList").push();
+                                            database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").push().setValue(values);
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }.execute();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }

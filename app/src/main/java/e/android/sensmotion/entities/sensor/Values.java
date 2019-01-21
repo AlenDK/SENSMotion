@@ -15,14 +15,14 @@ public class Values {
     private String exercise;
     private String other;
     private String steps;
+    private String status;
     private String cycling;
-    private String nodata;
 
     public Values() {
 
     }
 
-    public Values(String date, String mobility, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
+    public Values(String date, String status, String mobility, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
         this.date     = date;
         this.mobility = mobility;
         this.cycling  = cycling;
@@ -31,10 +31,15 @@ public class Values {
         this.rest     = rest;
         this.stand    = stand;
         this.steps    = steps;
+        this.status   = status;
         this.walk     = walk;
     }
 
+    public String getDate(){ return date;}
+
     public String getMobility(){ return mobility; }
+
+    public String getStatus(){ return  status; }
 
     public String getRest() {
         return rest;
@@ -64,11 +69,9 @@ public class Values {
         return cycling;
     }
 
-    public String getNodata() {
-        return nodata;
-    }
-
     public void setMobility(String level) { mobility = level; }
+
+    public void setStatus(String level) { status = level; }
 
     public void populate(JSONObject data1, int count) {
 
@@ -90,7 +93,6 @@ public class Values {
             cycling  = jsonVALUES1.getString("activity/cycling/time");
             exercise = jsonVALUES1.getString("activity/exercise/time");
             other    = jsonVALUES1.getString("activity/other/time");
-            nodata   = jsonVALUES1.getString("general/nodata/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
 
 
@@ -104,13 +106,17 @@ public class Values {
     public Values getAPIdata(JSONObject data1){
         Values values = null;
         mobility = "0";
+        status = "0";
         try {
             JSONObject jsonVALUE   = data1.getJSONObject("value");
             JSONArray jsonDATA     = jsonVALUE.getJSONArray("data");
             JSONObject jsonVALUES  = jsonDATA.getJSONObject(0);
 
-            date = (jsonVALUES.getString("end_time")).substring(5, 10);
+            //Get formated date
+            date = (jsonVALUES.getString("end_time")).substring(8, 10);
+            date += "-"+(jsonVALUES.getString("end_time")).substring(5, 7);
 
+            //Get Values
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
 
             rest     = jsonVALUES1.getString("activity/resting/time");
@@ -119,10 +125,9 @@ public class Values {
             cycling  = jsonVALUES1.getString("activity/cycling/time");
             exercise = jsonVALUES1.getString("activity/exercise/time");
             other    = jsonVALUES1.getString("activity/other/time");
-            nodata   = jsonVALUES1.getString("general/nodata/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
 
-            values = new Values(date, mobility, cycling, exercise, other, rest, stand, steps, walk);
+            values = new Values(date, status, mobility, cycling, exercise, other, rest, stand, steps, walk);
 
             System.out.println("Values from API: "+values);
 
@@ -146,7 +151,6 @@ public class Values {
                 ", other: "+other+
                 ", steps: "+steps+
                 ", cycling: "+cycling+
-                ", nodata: "+nodata+
                 '}';
     }
 }
