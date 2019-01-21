@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -127,7 +128,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
         createButtons(view);
-        createRecyclerview(view);
         createLists();
         createProgressbar();
         setCirleProgress();
@@ -221,47 +221,37 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         profile_button.setOnClickListener(this);
     }
 
-    private void createRecyclerview(View view) {
+    private void createRecyclerview(String date, String status)  {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM");
 
-        days.add("i går");
-       /*
-        days.add(getYesterdayDateString(2));
-        days.add(getYesterdayDateString(3));
-        days.add(getYesterdayDateString(4));
-        days.add(getYesterdayDateString(5));
-        days.add(getYesterdayDateString(6));
-        days.add(getYesterdayDateString(7));
-        days.add(getYesterdayDateString(8));
-        days.add(getYesterdayDateString(9));
-        days.add(getYesterdayDateString(10));
-        days.add(getYesterdayDateString(11));
-        days.add(getYesterdayDateString(12));
-        days.add(getYesterdayDateString(13));
-        */
-        images.add(R.drawable.greensmileyrounded);
-        /*
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        */
+        //Find the date of yesterday in format "dd-mm"
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String yesterday = dateFormat.format(cal.getTime());
+        System.out.println("format: "+yesterday);
+        
+        if(date.equals(yesterday)){
+            days.add(0, "i går");
+        } else {
+            days.add(0, date);
+        }
+
+        //Decide which smiley to display
+        if(status.equals("0")){
+            images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
+        } else if(status.equals("1")) {
+            images.add(0, R.drawable.greensmiley1);
+        } else if(status.equals("2")) {
+            images.add(0, R.drawable.greensmiley2);
+        } else if(status.equals("3")) {
+            images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
+        }
+
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images, this);
         recyclerView.setAdapter(adapter);
-
 
         /*
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
@@ -295,13 +285,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             prefs.edit().putInt("yesterday", today).commit();
             prefs.edit().putInt("streakCounter", 1).commit();
         }
-    }
-
-    private String getCurrentDate() {
-        DateFormat dateFormat = new SimpleDateFormat("ddMM");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 0);
-        return dateFormat.format(cal.getTime());
     }
 
     private Date previousDay(int day) {
@@ -423,21 +406,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                             //For each "Day value" in database
                             for (final DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
-                                AsyncTask atask = new AsyncTask() {
-                                    @Override
-                                    protected Object doInBackground(Object[] objects) {
-                                        dayCount++;
-                                        days.add(snapshotValues.getKey());
-                                        images.add(R.drawable.greensmileyrounded);
-                                        return null;
-                                    }
-
-                                    @Override
-                                    protected void onPostExecute(Object titler) {
-                                        System.out.println("Day count bitches: " + dayCount);
-                                        System.out.println(days);
-                                    }
-                                }.execute();
+                                String date = snapshotValues.child("date").getValue(String.class);
+                                String status = snapshotValues.child("status").getValue(String.class);
+                                createRecyclerview(date, status);
                             }
                         }
                     }
