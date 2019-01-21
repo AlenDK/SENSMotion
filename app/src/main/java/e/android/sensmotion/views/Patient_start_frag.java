@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +49,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private TextView circleBarText, completeText;
     private ProgressBar circlebar;
     private ImageButton profile_button;
+
     private RecyclerView recyclerView;
     private ProgBar walk, stand, cycling, exercise, other;
     private ListView complete, incomplete;
@@ -72,6 +74,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     ProgressBar_adapter IncomAdapter, comAdapter;
     ViewGroup view;
+    ConstraintLayout constraintLayout;
 
     int totalProgressGoal = 500, circleProgress, dayCount = 0;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
@@ -111,6 +114,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     .replace(R.id.fragmentindhold, fragment)
                     .addToBackStack(null)
                     .commit();
+        } else if (view == constraintLayout){
+            walkAmount = prefs.getFloat("walk", 0.0f);
+            standAmount = prefs.getFloat("stand", 0.0f);
+            cyclingAmount = prefs.getFloat("cycle", 0.0f);
+            exerciseAmount = prefs.getFloat("exercise", 0.0f);
+            otherAmount = prefs.getFloat("other", 0.0f);
+
+            showElements();
         }
     }
 
@@ -118,7 +129,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         completeText = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
         circlebar = view.findViewById(R.id.circlebar);
-
+        constraintLayout = view.findViewById(R.id.constraintLayout);
+        constraintLayout.setOnClickListener(this);
 
         walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
@@ -126,6 +138,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         exerciseAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
 
+        System.out.println("SP walk: "+walkAmount);
+        System.out.println("SP stand: "+standAmount);
+        System.out.println("SP cycle: "+cyclingAmount);
+        System.out.println("SP exercise: "+exerciseAmount);
+        System.out.println("SP other: "+otherAmount);
 
         createButtons(view);
         createLists();
@@ -138,6 +155,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         incomplete.setVisibility(View.VISIBLE);
         complete.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
+        progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
+        progBarsCom.clear();    //Samme grund
         createLists();
         createProgressbar();
         setCirleProgress();
@@ -229,7 +248,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         cal.add(Calendar.DATE, -1);
         String yesterday = dateFormat.format(cal.getTime());
         System.out.println("format: "+yesterday);
-        
+
         if(date.equals(yesterday)){
             days.add(0, "i går");
         } else {
@@ -513,11 +532,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
-
     @Override
     public void clickItem(int position) {
-        progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
-        progBarsCom.clear();    //Samme grund
         getFirebasePatient("" + position);
         if (position == 4) {
             opdaterData();
