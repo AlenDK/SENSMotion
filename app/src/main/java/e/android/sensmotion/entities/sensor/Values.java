@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Values {
+    private String date;
     private String rest;
     private String stand;
     private String walk;
@@ -20,14 +21,15 @@ public class Values {
 
     }
 
-    public Values(String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
+    public Values(String date, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
+        this.date    = date;
         this.cycling = cycling;
-        this.exercise = exercise;
-        this.other = other;
-        this.rest = rest;
-        this.stand = stand;
-        this.steps = steps;
-        this.walk = walk;
+        this.exercise= exercise;
+        this.other   = other;
+        this.rest    = rest;
+        this.stand   = stand;
+        this.steps   = steps;
+        this.walk    = walk;
     }
 
     public String getRest() {
@@ -99,6 +101,9 @@ public class Values {
             JSONObject jsonVALUE   = data1.getJSONObject("value");
             JSONArray jsonDATA     = jsonVALUE.getJSONArray("data");
             JSONObject jsonVALUES  = jsonDATA.getJSONObject(0);
+
+            date = (jsonVALUES.getString("end_time")).substring(5, 10);
+
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
 
             rest     = jsonVALUES1.getString("activity/resting/time");
@@ -110,7 +115,7 @@ public class Values {
             nodata   = jsonVALUES1.getString("general/nodata/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
 
-            values = new Values(cycling, exercise, other, rest, stand, steps, walk);
+            values = new Values(date, cycling, exercise, other, rest, stand, steps, walk);
 
             System.out.println("Values from API: "+values);
 
@@ -126,6 +131,7 @@ public class Values {
     @Override
     public String toString() {
         return "Values{" +
+                "date: "+date+
                 "rest: "+rest+
                 ", stand: "+stand+
                 ", walk: "+walk+
