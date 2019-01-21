@@ -61,7 +61,6 @@ public class PostNotifications extends BroadcastReceiver {
 
         // For test om hentning af data virker
        /* System.out.println(TAG + "    onRecieve() modtog hest   " + context);
-        setPercentage(context);
         System.out.println("Gå " + PercentWalk + "hest");
         System.out.println("Stå " + PercentStand + "hest");
         System.out.println("cykel " + Percentcycle + "hest");
@@ -69,6 +68,7 @@ public class PostNotifications extends BroadcastReceiver {
         System.out.println("andet " + PercentOther + "hest");
         */
 
+        setPercentage(context);
         if (PercentDaily >= 100 && dailyDone == false) {
             NotifyWhenDone(context);
             dailyDone = true;
@@ -247,7 +247,7 @@ public class PostNotifications extends BroadcastReceiver {
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
 
-        notificationManagerCompat.notify(1, notification);
+        notificationManagerCompat.notify(3, notification);
     }
 
     public void Cycle75Done(Context context) {
@@ -262,7 +262,7 @@ public class PostNotifications extends BroadcastReceiver {
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
 
-        notificationManagerCompat.notify(1, notification);
+        notificationManagerCompat.notify(3, notification);
     }
 
     public void Exercise75Done(Context context) {
@@ -277,7 +277,7 @@ public class PostNotifications extends BroadcastReceiver {
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .build();
 
-        notificationManagerCompat.notify(1, notification);
+        notificationManagerCompat.notify(3, notification);
     }
 
 
