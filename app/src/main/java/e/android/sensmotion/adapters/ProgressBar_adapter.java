@@ -15,20 +15,23 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import e.android.sensmotion.R;
 import e.android.sensmotion.views.ProgressBars.ProgBar;
+import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 
 public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
 
     private Activity context;
     private List<ProgBar> progressBarList;
+    private List<Float> previousProgress;
 
     ProgressBar progressBar;
     TextView progText;
     ImageView progImage;
 
-    public ProgressBar_adapter(Activity context, List<ProgBar> progressBarList) {
+    public ProgressBar_adapter(Activity context, List<ProgBar> progressBarList, List<Float> previousProgress) {
         super(context,R.layout.progress_bar, progressBarList);
         this.context = context;
         this.progressBarList = progressBarList;
+        this.previousProgress = previousProgress;
     }
 
    public View getView(int position, @Nullable View convertView, ViewGroup viewGroup){
@@ -40,6 +43,15 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         progText = view.findViewById(R.id.progressText);
         progImage = view.findViewById(R.id.barImage);
 
+       if(previousProgress.size() > 0){
+           ProgBarAnimation anim = new ProgBarAnimation(progressBar, previousProgress.get(position), progressBarList.get(position).getProgress());
+           anim.setDuration(1000);
+           progressBar.startAnimation(anim);
+       } else if (previousProgress.size() == 0){
+           ProgBarAnimation anim = new ProgBarAnimation(progressBar, 0f, progressBarList.get(position).getProgress());
+           anim.setDuration(1000);
+           progressBar.startAnimation(anim);
+       }
 
        progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
        setProgressImage(position);

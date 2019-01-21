@@ -32,8 +32,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
@@ -70,7 +72,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ArrayList<Integer> images;
     List<ProgBar> progBarsIncom = new ArrayList<>();
     List<ProgBar> progBarsCom = new ArrayList<>();
-
+    List<Float> previousProgress = new ArrayList<>();
 
     ProgressBar_adapter IncomAdapter, comAdapter;
     ViewGroup view;
@@ -180,13 +182,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         createLists();
         createProgressbar();
         setCirleProgress();
+
     }
 
     public void createLists() {
         complete = view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
-        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom);
-        comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom);
+        getPreviousProgres();
+        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom, previousProgress);
+        comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom, previousProgress);
 
         incomplete.setAdapter(IncomAdapter);
         complete.setAdapter(comAdapter);
@@ -685,6 +689,41 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public void clickItem(int position) {
+        setPreviousProgress();
         getFirebasePatient("" + position);
+    }
+
+    public void setPreviousProgress(){
+        Set<String> prefPrevProgress = new HashSet<String>();
+        List<String> prevString = new ArrayList<>();
+        for(ProgBar pb: progBarsIncom){
+            previousProgress.add((float)pb.getProgress());
+        }
+        for(ProgBar pb: progBarsCom){
+            previousProgress.add((float)pb.getProgress());
+        }
+
+        for(float f: previousProgress){
+            String temp = Float.toString(f);
+            prevString.add(temp);
+        }
+
+        prefPrevProgress.addAll(prevString);
+
+        editor.putStringSet("Previous Progress",prefPrevProgress);
+        editor.commit();
+    }
+    public void getPreviousProgres(){
+        List<String> prevString;
+        Set<String> prefPrevProgress = prefs.getStringSet("Previous Progress",null);
+
+        if(prefPrevProgress!= null){
+            prevString = new ArrayList<String>(prefPrevProgress);
+
+            for(String s: prefPrevProgress){
+                float temp = Float.parseFloat(s);
+                previousProgress.add(temp);
+            }
+        }
     }
 }
