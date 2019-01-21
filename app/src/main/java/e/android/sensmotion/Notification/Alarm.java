@@ -15,11 +15,7 @@ public class Alarm {
     public static void startAlarm (Context c) {
 
         System.out.println("hest startalarm kaldt");
-/*
-        ComponentName receiver = new ComponentName(c, BootLytter.class);
-        PackageManager pm = c.getPackageManager();
-        pm.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-*/
+
         if (alarmMgr == null)  alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(c, PostNotifications.class);
 
