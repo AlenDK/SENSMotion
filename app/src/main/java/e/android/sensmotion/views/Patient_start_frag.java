@@ -76,10 +76,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ViewGroup view;
     ConstraintLayout constraintLayout;
 
-    int totalProgressGoal = 500, circleProgress;
+    int totalProgressGoal, circleProgress;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
-    static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
+    static int totalwalk, totalstand, totalexercise, totalcycling, totalother;
 
     private Patient patient;
     Values values;
@@ -120,9 +120,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             exerciseAmount = prefs.getFloat("exercise", 0.0f);
             otherAmount = prefs.getFloat("other", 0.0f);
             //Check wether any progress amounts exceeds the goal
-
+            setExpectedAmount(Integer.parseInt(mobility));
+            resultsExceeded();
             showElements();
-            //setExpectedAmount(Integer.parseInt(mobility));
 
 
             //Skal kun køres når det er nødvendigt! Det tager lang tid!
@@ -137,11 +137,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         constraintLayout = view.findViewById(R.id.constraintLayout);
         constraintLayout.setOnClickListener(this);
 
+        mobility = prefs.getString("mobility", "0");
         walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
         exerciseAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
+        setExpectedAmount(Integer.parseInt(mobility));
 
         System.out.println("SP walk: "+walkAmount);
         System.out.println("SP stand: "+standAmount);
@@ -285,7 +287,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     private void setCirleProgress() {
         dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
+        totalProgressGoal = totalwalk + totalstand + totalcycling +totalexercise + totalother;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+
+        System.out.println("Daily: "+dailyProgress);
+        System.out.println("Daily goal: "+totalProgressGoal);
+
 
         circleBarText.setText(circleProgress + "%");
         circlebar.setProgress(circleProgress);
@@ -383,6 +390,24 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
     }
 
+    private void resultsExceeded(){
+        if(walkAmount > totalwalk){
+            walkAmount = totalwalk;
+        }
+        if(standAmount > totalstand){
+            standAmount = totalstand;
+        }
+        if(cyclingAmount > totalcycling){
+            cyclingAmount = totalcycling;
+        }
+        if(exerciseAmount > totalexercise){
+            exerciseAmount = totalexercise;
+        }
+        if(otherAmount > totalother){
+            otherAmount = totalother;
+        }
+    }
+
     private void opdaterData() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -424,13 +449,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         values.setMobility(patient.getMobility());
                                         mobility = values.getMobility();
                                         System.out.println("Mobilitet: "+mobility);
-                                        //setExpectedAmount(Integer.parseInt(mobility));
+                                        setExpectedAmount(Integer.parseInt(mobility));
 
                                         walkAmount = Double.parseDouble(values.getWalk());
                                         standAmount = Double.parseDouble(values.getStand());
                                         cyclingAmount = Double.parseDouble(values.getCycling());
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
+                                        resultsExceeded();
 
                                         editor.putString("mobility", mobility);
 
@@ -528,6 +554,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                                     System.out.println("mobilitet: "+mobility);
                                     setExpectedAmount(Integer.parseInt(mobility));
+                                    resultsExceeded();
 
                                     showElements();
                                 }
