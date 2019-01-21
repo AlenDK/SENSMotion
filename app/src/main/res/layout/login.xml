@@ -30,10 +30,13 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="48dp"
-        android:background="@drawable/edittext_custom"
         android:hint="Brugernavn"
         android:paddingLeft="15dp"
+        android:backgroundTint="@color/colorWhite"
+        android:textStyle="italic"
         android:radius="60dp"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -45,8 +48,11 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/edittext_custom"
+        android:backgroundTint="@color/colorWhite"
+        android:textStyle="italic"
         android:hint="Kodeord"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="@color/colorWhite"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
         android:selectAllOnFocus="false"
@@ -82,26 +88,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
 
-    <CheckBox
-        android:id="@+id/dataHandling"
-        android:layout_width="302dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/PersData"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HuskBruger" />
 
     <TextView
         android:id="@+id/glemtLogin"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="136dp"
-        android:layout_marginTop="144dp"
-        android:background="@color/colorBackground"
+        android:layout_marginTop="152dp"
+        android:textColor="@color/colorWhite"
         android:text="Glemt dit log ind?"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
 

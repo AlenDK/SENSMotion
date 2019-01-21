@@ -3,7 +3,6 @@ package e.android.sensmotion.views;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -17,23 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import e.android.sensmotion.R;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IFirebaseController;
-import e.android.sensmotion.controller.interfaces.IUserController;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Login_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     private EditText brugernavn;
-    private CheckBox dataHandling, rememberUser;
+    private CheckBox rememberUser;
     private Intent act;
     private boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
 
@@ -70,14 +59,11 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
 
             Fabric.with(getActivity(), new Crashlytics());
         }
-/*
-        forceCrash(view);
-*/
+
 
         brugernavn = view.findViewById(R.id.brugernavn);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
         Button login = (Button) view.findViewById(R.id.logIndKnap);
-        dataHandling = (CheckBox) view.findViewById(R.id.dataHandling);
         rememberUser = (CheckBox) view.findViewById(R.id.HuskBruger);
 
         pressed = 0;
@@ -93,38 +79,26 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     public void onClick(View view) {
         userID = brugernavn.getText().toString();
 
-            switch (view.getId()) {
-                case R.id.logIndKnap:
-                    if (pressed == 0) {
-                        if (userID.equals("admin")) {
-                            act = new Intent(getActivity(), Terapuet_activity.class);
-                            pressed++;
-                            getActivity().finish();
-                            startActivity(act);
-                        } else {
-
-                            //Agree to consent
-                            if (!dataHandling.isChecked()) {
-                                Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
-                                        "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
-                                break;
-                            }
-                            getFirebasePatient();
-                        }
+        switch (view.getId()) {
+            case R.id.logIndKnap:
+                if (pressed == 0) {
+                    if (userID.equals("admin")) {
+                        act = new Intent(getActivity(), Terapuet_activity.class);
+                        pressed++;
+                        getActivity().finish();
+                        startActivity(act);
                     } else {
-                        Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
+                        getFirebasePatient();
                     }
-                    break;
+                } else {
+                    Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
+                }
+                break;
 
-                case R.id.glemtLogin:
-                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
-                    break;
-            }
-    }
-
-
-    public void forceCrash(View view) {
-        throw new RuntimeException("This is a crash");
+            case R.id.glemtLogin:
+                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
+                break;
+        }
     }
 
     private void getFirebasePatient() {
@@ -157,7 +131,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
             }
 
             @Override
-            public void onCancelled (@NonNull DatabaseError databaseError){
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
             }
         });
