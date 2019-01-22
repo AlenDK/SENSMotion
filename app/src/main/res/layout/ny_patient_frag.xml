@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/colorBlack"
     android:padding="8dp"
     tools:context=".views.NyPatient_frag"
     tools:layout_editor_absoluteY="25dp">
@@ -13,38 +13,42 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Opret ny patient"
+        android:textColor="@color/colorWhite"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/box"
-        android:layout_width="wrap_content"
-        android:layout_height="441dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@color/eggwhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/nameText"
+            android:id="@+id/nameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="66dp"
-            android:text="Opret ny patient"
-            android:textColor="@color/lightBlack"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/nameTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="32dp"
-            android:text="@string/nameTitle"
+            android:text="Navn"
+            android:layout_marginRight="140dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
 
@@ -53,23 +57,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="37dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="2dp"
+            android:layout_marginRight="37dp"
             android:backgroundTint="@color/focused_tint"
             android:ems="10"
-            android:gravity="left"
             android:hint="eks. Anders And"
             android:inputType="textPersonName"
             android:padding="10dp" />
 
         <TextView
             android:id="@+id/idTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/idTitle"
+            android:layout_marginRight="120dp"
+            android:text="Patient ID"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
 
@@ -78,8 +79,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="37dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="2dp"
+            android:layout_marginRight="37dp"
             android:backgroundTint="@color/focused_tint"
             android:ems="10"
             android:gravity="left"
@@ -92,8 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:layout_marginTop="24dp"
+            android:layout_marginRight="40dp"
             android:text="@string/mobility"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
@@ -103,9 +104,9 @@
             style="@style/Widget.AppCompat.SeekBar.Discrete"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="26dp"
-            android:layout_marginRight="61dp"
+            android:layout_marginLeft="61dp"
             android:layout_marginTop="1dp"
+            android:layout_marginRight="61dp"
             android:max="4"
             android:progress="2" />
 
@@ -113,9 +114,10 @@
             android:id="@+id/mobilityValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="45dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="37dp"
+            android:layout_marginLeft="37dp"
+            android:layout_marginBottom="8dp"
             android:text="3"
             android:textColor="@color/lightBlack"
             android:textSize="16sp" />
@@ -124,9 +126,9 @@
             android:id="@+id/checkBox3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="180dp"
+            android:layout_marginLeft="37dp"
             android:layout_marginTop="4dp"
+            android:layout_marginRight="37dp"
             android:text="Start måling nu"
             android:textColor="@color/lightBlack"
             android:textStyle="normal" />
@@ -136,9 +138,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:layout_marginRight="100dp"
             android:layout_marginTop="48dp"
-            android:background="@drawable/opret_patient_knap"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorDarkRed"
             android:gravity="center"
             android:padding="8dp"
             android:text="Opret patient"
