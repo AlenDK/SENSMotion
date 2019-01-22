@@ -90,7 +90,8 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                             getFirebasePatient();
                         }
                     } else {
-                        Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
+                        pressed++;
+                        getFirebasePatient();
                     }
                     break;
 

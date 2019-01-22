@@ -27,6 +27,8 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
     TextView progText;
     ImageView progImage;
 
+    ProgBarAnimation anim;
+
     public ProgressBar_adapter(Activity context, List<ProgBar> progressBarList, List<Float> previousProgress) {
         super(context,R.layout.progress_bar, progressBarList);
         this.context = context;
@@ -43,17 +45,19 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         progText = view.findViewById(R.id.progressText);
         progImage = view.findViewById(R.id.barImage);
 
+        /*
        if(previousProgress.size() > 0){
-           ProgBarAnimation anim = new ProgBarAnimation(progressBar, previousProgress.get(position), progressBarList.get(position).getProgress());
-           anim.setDuration(1000);
-           progressBar.startAnimation(anim);
+           anim = new ProgBarAnimation(progressBar, previousProgress.get(position), (int) progressBarList.get(position).getPercent());
        } else if (previousProgress.size() == 0){
-           ProgBarAnimation anim = new ProgBarAnimation(progressBar, 0f, progressBarList.get(position).getProgress());
-           anim.setDuration(1000);
-           progressBar.startAnimation(anim);
+           anim = new ProgBarAnimation(progressBar, 0f, (int) progressBarList.get(position).getPercent());
        }
+       anim.setDuration(1000);
+       progressBar.startAnimation(anim);
+       */
+
 
        progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
+
        setProgressImage(position);
        setProgessbarColor(position);
         progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal());
