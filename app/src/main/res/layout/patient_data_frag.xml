@@ -18,6 +18,7 @@
         android:src="@drawable/header_bar_red"
         app:layout_constraintBottom_toTopOf="@+id/dato_knap"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,8 +84,11 @@
         android:layout_marginBottom="287dp"
         android:background="@drawable/edittext_custom"
         android:text="Dato"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar_image" />
 
@@ -94,6 +98,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_custom"
         android:text="Graf"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dato_knap"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2" />
