@@ -274,9 +274,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
         if (progBarsCom.size() == 0) {
             completeText.setVisibility(View.GONE);
-            //leftLine.setVisibility(View.GONE);
-            //rightLine.setVisibility(View.GONE);
+            leftLine.setVisibility(View.GONE);
+            rightLine.setVisibility(View.GONE);
+        } else if (progBarsCom.size() != 0){
+            leftLine.setVisibility(View.VISIBLE);
+            rightLine.setVisibility(View.VISIBLE);
         }
+
     }
 
     private void createButtons(View view) {
