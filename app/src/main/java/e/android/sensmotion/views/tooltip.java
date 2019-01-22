@@ -2,6 +2,7 @@ package e.android.sensmotion.views;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -23,12 +24,16 @@ public class tooltip  extends android.support.v4.app.Fragment implements View.On
 
     Button ok;
     TextView text;
+    private SharedPreferences Prefs;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.Transparent);
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         View view = localInflater.inflate(R.layout.swipe_tip, container, false);
+        Prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+
 
 
         text = view.findViewById(R.id.okKnap);
@@ -47,6 +52,7 @@ public class tooltip  extends android.support.v4.app.Fragment implements View.On
     public void onClick(View view) {
 
         if(view.getId() == R.id.okKnap){
+            Prefs.edit().putInt("pop_up", 1).apply();
             Intent act = new Intent(getActivity(), PatientActivity.class);
             getActivity().finish();
             startActivity(act);
