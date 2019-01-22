@@ -34,7 +34,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:text="Dag 1"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/SENScolorBlack"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/previousSmiley"
             app:layout_constraintStart_toStartOf="@+id/previousSmiley"

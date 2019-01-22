@@ -5,11 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,7 +29,6 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.android.gms.common.util.Strings;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,17 +43,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.impl.DataController;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.controller.interfaces.IUserController;
-import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
-import io.fabric.sdk.android.Fabric;
 
 public class PatientData_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
@@ -214,19 +204,19 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         dataSetStand.setColor(getResources().getColor(R.color.colorOrange));
 
         BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
-        dataSetWalk.setColor(getResources().getColor(R.color.colorBlue));
+        dataSetWalk.setColor(getResources().getColor(R.color.SENScolorBlue));
 
         BarDataSet dataSetCycling = new BarDataSet(entriesCycling, "Cykling");
         dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
 
         BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
-        dataSetExercise.setColor(getResources().getColor(R.color.colorBlack));
+        dataSetExercise.setColor(getResources().getColor(R.color.SENScolorBlack));
 
         BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
-        dataSetRest.setColor(getResources().getColor(R.color.colorRed));
+        dataSetRest.setColor(getResources().getColor(R.color.SENScolorRed));
 
         BarDataSet dataSetOther = new BarDataSet(entriesOther, "Andet");
-        dataSetOther.setColor(getResources().getColor(R.color.colorGray));
+        dataSetOther.setColor(getResources().getColor(R.color.SENScolorGray));
 
         //Creates data for the chart based on the different datasets.
         BarData data = new BarData(dataSetStand, dataSetWalk, dataSetExercise, dataSetCycling, dataSetRest, dataSetOther);
@@ -236,7 +226,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         data.setBarWidth(0.9f);
         barChart.setData(data);
         barChart.setFitBars(true);
-        barChart.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        barChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
         barChart.setDrawBorders(true);
         barChart.setTouchEnabled(false);
         barChart.getAxisRight().setEnabled(false);
@@ -265,17 +255,17 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         PieDataSet set = new PieDataSet(entries, "Sensorværdier");
 
         //Sets the colors of the entries
-        set.setColors(new int[]{R.color.colorOrange, R.color.colorBlue, R.color.colorGreen,
-                R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
+        set.setColors(new int[]{R.color.colorOrange, R.color.SENScolorBlue, R.color.colorGreen,
+                R.color.SENScolorBlack, R.color.SENScolorRed, R.color.SENScolorGray}, getActivity());
 
-        set.setValueTextColor(R.color.colorBlack);
+        set.setValueTextColor(R.color.SENScolorBlack);
         set.setValueTextSize(13);
 
         //General formatting
         PieData data = new PieData(set);
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);
-        pieChart.setBackgroundColor(getResources().getColor(R.color.colorWhite));
+        pieChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
         pieChart.setDrawEntryLabels(false);
         pieChart.setUsePercentValues(true);
 

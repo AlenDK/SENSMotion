@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
+    android:background="@color/SENScolorBlack"
     android:padding="8dp"
     tools:context=".views.NyPatient_frag"
     tools:layout_editor_absoluteY="25dp">
@@ -22,7 +22,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Opret ny patient"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/SENScolorWhite"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/box"
         app:layout_constraintEnd_toEndOf="parent"

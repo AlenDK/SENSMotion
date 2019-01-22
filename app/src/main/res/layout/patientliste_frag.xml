@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/SENScolorBackground"
     tools:context=".views.Patientliste_frag"
     tools:layout_editor_absoluteY="25dp">
 
@@ -46,7 +46,7 @@
         android:layout_marginBottom="4dp"
         android:background="@drawable/opret_patient_knap"
         android:text="+"
-        android:textColor="@color/colorBackground"
+        android:textColor="@color/SENScolorBackground"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

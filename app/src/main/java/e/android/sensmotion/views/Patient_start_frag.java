@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
     private TextView circleBarText, completeText, titleName;
+    private ImageView leftLine, rightLine;
     private ProgressBar circlebar;
     private ImageButton profile_button;
 
@@ -153,13 +155,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private void inisializeElements() {
         titleName = view.findViewById(R.id.nameText);
         titleName.setText(prefs.getString("name", ""));
-        completeText = view.findViewById(R.id.completeText);
+        completeText  = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
         circlebar = view.findViewById(R.id.circlebar);
+        leftLine  = view.findViewById(R.id.completedLeft);
+        rightLine = view.findViewById(R.id.completedRight);
         constraintLayout = view.findViewById(R.id.constraintLayout);
         constraintLayout.setOnClickListener(this);
 
-        days = new ArrayList<>();
+        days   = new ArrayList<>();
         images = new ArrayList<>();
 
         userID = prefs.getString("userID", "p1");
@@ -270,6 +274,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         }
         if (progBarsCom.size() == 0) {
             completeText.setVisibility(View.GONE);
+            //leftLine.setVisibility(View.GONE);
+            //rightLine.setVisibility(View.GONE);
         }
     }
 

@@ -18,18 +18,26 @@
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
     -->
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#2a2a2a</color>
-    <color name="colorRed">#e82020</color>
-    <color name="colorBackground">#F2F2F2</color>
-    <color name="colorGray">#A6B9C5</color>
-    <color name="colorBlue">#1A91DC</color>
-    <color name="colorDarkBlue">#0B659D</color>
+    <color name="SENScolorWhite">#FFFFFF</color>
+    <color name="SENScolorBlack">#2a2a2a</color>
+    <color name="SENScolorRed">#e82020</color>
+    <color name="SENScolorBackground">#F2F2F2</color>
+    <color name="SENScolorGray">#A6B9C5</color>
+    <color name="SENScolorBlue">#1A91DC</color>
+    <color name="SENScolorDarkBlue">#0B659D</color>
+
+    <color name="SENSfontColor">#3c3c3b</color>
+
+    <!--
+    Login gradient
+    -->
+    <color name="loginTopGradient">#802020</color>
+    <color name="loginCenterGradient">#9f1717</color>
+    <color name="loginBottomGradient">#e82020</color>
 
     <!--
     Farvekoder til grafer mm.
     -->
-
     <color name="colorYellow">#FFFF00</color>
     <color name="colorGreen">#32CD32</color>
     <color name="colorOrange">#FF8C00</color>

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/SENScolorBackground"
     tools:context=".views.PatientData_frag"
     tools:layout_editor_absoluteY="25dp">
 
@@ -80,7 +80,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/edittext_custom"
         android:text="Dato"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/SENScolorWhite"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -94,7 +94,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/edittext_custom"
         android:text="Graf"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/SENScolorWhite"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout3"

@@ -4,11 +4,11 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                android:startColor="@color/colorRed"
+                android:startColor="@color/SENScolorRed"
                 android:endColor="@color/colorDarkRed"
                 />
 
-            <stroke android:color="@color/colorBlack"
+            <stroke android:color="@color/SENScolorBlack"
                 android:width="2dp"/>
 
             <corners android:radius="15dp"/>
