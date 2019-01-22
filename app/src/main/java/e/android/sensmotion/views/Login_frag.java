@@ -88,6 +88,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                         getActivity().finish();
                         startActivity(act);
                     } else {
+                        pressed++;
                         getFirebasePatient();
                     }
                 } else {

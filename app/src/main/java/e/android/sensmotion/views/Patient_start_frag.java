@@ -44,6 +44,7 @@ import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
 import e.android.sensmotion.views.ProgressBars.ProgBar;
+import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
@@ -78,7 +79,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ViewGroup view;
     ConstraintLayout constraintLayout;
 
-    int totalProgressGoal, circleProgress;
+    int totalProgressGoal, circleProgress, previousCircleProgress;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
     static int totalwalk, totalstand, totalexercise, totalcycling, totalother;
@@ -88,6 +89,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     String userID, json;
     String mobility = "0", status = "3";
     int tasksCompleted;
+    boolean saved;
 
 
     @Override
@@ -130,8 +132,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             resultsExceeded();
 
             //Save status to SP
-            if(tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))){
-                editor.putString("status", tasksCompleted+"");
+            if (tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))) {
+                editor.putString("status", tasksCompleted + "");
                 editor.apply();
                 editor.commit();
             }
@@ -188,7 +190,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void createLists() {
         complete = view.findViewById(R.id.completeList);
         incomplete = view.findViewById(R.id.incompleteList);
-        getPreviousProgres();
+        setPreviousProgress();
+        //getPreviousProgres();
         IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom, previousProgress);
         comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom, previousProgress);
 
@@ -307,13 +310,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         totalProgressGoal = totalwalk + totalstand + totalcycling + totalexercise + totalother;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
 
+
         System.out.println("Daily: " + dailyProgress);
         System.out.println("Daily goal: " + totalProgressGoal);
 
 
         circleBarText.setText(circleProgress + "%");
-        circlebar.setProgress(circleProgress);
         circlebar.setRotation(-90);
+        ProgBarAnimation anim = new ProgBarAnimation(circlebar, previousCircleProgress, circleProgress);
+        anim.setDuration(300);
+        circlebar.startAnimation(anim);
+
     }
 
     public void setStreak() {
@@ -333,18 +340,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             prefs.edit().putInt("yesterday", today).commit();
             prefs.edit().putInt("streakCounter", 1).commit();
         }
-    }
-
-    private Date previousDay(int day) {
-        final Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -day);
-        System.out.println(cal.getTime());
-        return cal.getTime();
-    }
-
-    private String getYesterdayDateString(int day) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
-        return dateFormat.format(previousDay(day));
     }
 
     private void setExpectedAmount(int m) {
@@ -451,8 +446,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     try {
                                         String myFormat = "yyyy-MM-dd";
                                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                                        //String dato = sdf.format(c.getTime());
-                                        String dato = "2018-10-01";
+                                        String dato = sdf.format(c.getTime());
+                                        //String dato = "2018-10-01";
 
                                         json = dataController.getApiDATA(patient, dato);
                                         return null;
@@ -565,9 +560,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                             //For each "Day value" in database
                             for (DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
-                                if (snapshotValues.getKey().equals(day)) {
-                                    System.out.println("key: " + snapshotValues.getKey());
 
+                                //This is necessary because we reverse the order of days in the recyclerview's array
+                                String formatedDay = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount())-1 - Integer.parseInt(day)+"";
+                                if (snapshotValues.getKey().equals(formatedDay)) {
                                     Values values = snapshotValues.getValue(Values.class);
                                     mobility = values.getMobility();
                                     status = values.getStatus();
@@ -666,8 +662,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                             values.setMobility(patient.getMobility());
                                             values.setStatus(prefs.getString("status", "0"));
 
-                                            //DatabaseReference dbReference = database.child("sensorer").child("0").child("currentPeriod").child("valuesList").push();
-                                            database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").push().setValue(values);
+                                            String dayCount = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount()) + "";
+                                            database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").child(dayCount).setValue(values);
+                                            System.out.println("Data saved...");
 
 
                                         } catch (JSONException e) {
@@ -693,37 +690,26 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         getFirebasePatient("" + position);
     }
 
-    public void setPreviousProgress(){
+    public void setPreviousProgress() {
+        for (ProgBar pb : progBarsCom)
+            previousProgress.add((float) pb.getPercent());
+
+        for (ProgBar pb : progBarsIncom)
+            previousProgress.add((float) pb.getPercent());
+
+        previousCircleProgress = circleProgress;
+
+
+
+        /*
         Set<String> prefPrevProgress = new HashSet<String>();
         List<String> prevString = new ArrayList<>();
         for(ProgBar pb: progBarsIncom){
-            previousProgress.add((float)pb.getProgress());
+            previousProgress.add((float)pb.getPercent());
         }
         for(ProgBar pb: progBarsCom){
-            previousProgress.add((float)pb.getProgress());
+            previousProgress.add((float)pb.getPercent());
         }
-
-        for(float f: previousProgress){
-            String temp = Float.toString(f);
-            prevString.add(temp);
-        }
-
-        prefPrevProgress.addAll(prevString);
-
-        editor.putStringSet("Previous Progress",prefPrevProgress);
-        editor.commit();
-    }
-    public void getPreviousProgres(){
-        List<String> prevString;
-        Set<String> prefPrevProgress = prefs.getStringSet("Previous Progress",null);
-
-        if(prefPrevProgress!= null){
-            prevString = new ArrayList<String>(prefPrevProgress);
-
-            for(String s: prefPrevProgress){
-                float temp = Float.parseFloat(s);
-                previousProgress.add(temp);
-            }
-        }
+        */
     }
 }
