@@ -6,4 +6,7 @@
     <string name="opret"><u><b>Har du ikke en konto?</b></u></string>
     <string name="PersData">Jeg accepterer SENSmotion\'s vilkår for håndtering af personfølsomme oplysninger</string>
     <string name="facebook_app_id">Facebook App ID</string>
+    <string name="nameTitle"><u>Navn</u></string>
+    <string name="idTitle"><u>Patient id</u></string>
+    <string name="mobility"><u>Mobilitet</u></string>
 </resources>

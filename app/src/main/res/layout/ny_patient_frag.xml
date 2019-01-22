@@ -12,105 +12,153 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/edittext_custom"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Mobilitet"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText3"
-        app:layout_constraintStart_toStartOf="@+id/patientID"
-        app:layout_constraintTop_toBottomOf="@+id/patientID" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_custom"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Sensor ID"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox3"
-        app:layout_constraintStart_toStartOf="@+id/editText4"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
-
-    <EditText
-        android:id="@+id/patientID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/edittext_custom"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Patientens ID"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/editText4"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
-
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Start måling nu"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/Opret_P"
-        app:layout_constraintStart_toStartOf="@+id/editText3"
-        app:layout_constraintTop_toBottomOf="@+id/editText3" />
-
     <TextView
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="66dp"
-        android:layout_marginBottom="48dp"
-        android:text="Ny patient"
+        android:text="Opret ny patient"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/nameTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/edittext_custom"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Patientens navn"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/patientID"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/nameTitle"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText" />
 
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="eks. Anders And"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:backgroundTint="@color/focused_tint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameTitle" />
+
+    <TextView
+        android:id="@+id/idTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/idTitle"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+    <EditText
+        android:id="@+id/patientID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="eks. p3"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:backgroundTint="@color/focused_tint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idTitle" />
+
+    <TextView
+        android:id="@+id/mobilityTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/mobility"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/patientID" />
+
+    <SeekBar
+        android:id="@+id/mobilitySeekBar"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="56dp"
+        android:layout_marginTop="1dp"
+        android:max="4"
+        android:progress="2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mobilityTitle" />
+
+    <TextView
+        android:id="@+id/mobilityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="8dp"
+        android:text="3"
+        android:textSize="16sp"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintBottom_toBottomOf="@+id/mobilitySeekBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mobilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/mobilityTitle"
+        app:layout_constraintVertical_bias="0.333" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="180dp"
+        android:text="Start måling nu"
+        android:textStyle="normal"
+        android:textColor="@color/lightBlack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mobilitySeekBar" />
+
     <Button
         android:id="@+id/Opret_P"
-        android:layout_width="0dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="82dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/opret_patient_knap"
         android:gravity="center"
         android:padding="8dp"
         android:text="Opret patient"
-        android:textColor="@android:color/white"
+        android:textColor="@color/warmGrey"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText3"
-        app:layout_constraintStart_toStartOf="@+id/editText3"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox3" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mobilitySeekBar" />
 
 </android.support.constraint.ConstraintLayout>
