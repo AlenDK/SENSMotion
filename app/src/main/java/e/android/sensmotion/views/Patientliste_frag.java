@@ -1,5 +1,6 @@
 package e.android.sensmotion.views;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
     private List<Patient> patientList;
     private Patientliste_adapter adapter;
     private ListView listView;
-
+    private ProgressDialog loading;
     private DatabaseReference database;
     public View view;
 
@@ -50,6 +51,10 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         listView = view.findViewById(R.id.patientliste);
         listView.setDivider(null);
         listView.setDividerHeight(15);
+
+        loading = new ProgressDialog(view.getContext());
+        loading.setMessage("\t Henter data...");
+        loading.show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,6 +72,17 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentindhold, pdf)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        newPatient = view.findViewById(R.id.NyPatient);
+        newPatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new NyPatient_frag())
                         .addToBackStack(null)
                         .commit();
             }
@@ -112,22 +128,15 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
 
                     patientList.add(patient);
 
-                    adapter = new Patientliste_adapter(getActivity(), patientList);
-                    adapter.notifyDataSetChanged();
-                    listView.setAdapter(adapter);
-
-
-                    newPatient = view.findViewById(R.id.NyPatient);
-                    newPatient.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragmentindhold, new NyPatient_frag())
-                                    .addToBackStack(null)
-                                    .commit();
-                        }
-                    });
                 }
+
+                if(loading.isShowing()){
+                    loading.dismiss();
+                }
+
+                adapter = new Patientliste_adapter(getActivity(), patientList);
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
             }
 
             @Override

@@ -1,5 +1,6 @@
 package e.android.sensmotion.views;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -69,6 +70,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
 
     int yesterday, streakCount;
+    private ProgressDialog loading;
 
     ArrayList<String> days;
     ArrayList<Integer> images;
@@ -105,6 +107,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     .add(R.id.fragmentindhold, fragment)
                     .commit();
         }
+        loading = new ProgressDialog(view.getContext());
 
         getFirebaseStartingDate();
         setRecyclerViewFromFireBase();
@@ -450,6 +453,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             //Get API data
                             AsyncTask atask = new AsyncTask() {
                                 @Override
+                                protected void onPreExecute() {
+                                    loading.setMessage("\t Henter data...");
+                                    loading.show();
+                                }
+
+                                @Override
                                 protected Object doInBackground(Object[] objects) {
                                     try {
                                         String myFormat = "yyyy-MM-dd";
@@ -483,6 +492,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
                                         resultsExceeded();
+                                        loading.dismiss();
 
                                         //Save mobility to SP
                                         editor.putString("mobility", mobility);
@@ -503,6 +513,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                             editor.commit();
 
                                             showElements();
+
                                         }
 
                                     } catch (JSONException e) {

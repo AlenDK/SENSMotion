@@ -41,6 +41,8 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         patientName = view.findViewById(R.id.nameEditText);
         mobilityValue = view.findViewById(R.id.mobilityValue);
 
+        view.getBackground().setAlpha(250);
+
         mobilityBar = view.findViewById(R.id.mobilitySeekBar);
         mobilityBar.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
         mobilityBar.getThumb().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
