@@ -33,7 +33,6 @@
         android:hint="Brugernavn"
         android:paddingLeft="15dp"
         android:backgroundTint="@color/colorWhite"
-        android:textStyle="italic"
         android:radius="60dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -49,7 +48,6 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/colorWhite"
-        android:textStyle="italic"
         android:hint="Kodeord"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
@@ -85,7 +83,6 @@
         android:buttonTint="@color/colorWhite"
         android:text="Forbliv logget ind"
         android:textColor="@color/colorWhite"
-        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
 
