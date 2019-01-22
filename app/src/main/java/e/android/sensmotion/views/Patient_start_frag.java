@@ -96,6 +96,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = prefs.edit();
 
+        if(prefs.getInt("pop_up", 0) == 0) {
+            android.support.v4.app.Fragment fragment = new tooltip();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragmentindhold, fragment)
+                    .commit();
+        }
+
+
+
         userID = prefs.getString("userID", "p1");
         getFirebaseStartingDate();
         setRecyclerViewFromFireBase();
