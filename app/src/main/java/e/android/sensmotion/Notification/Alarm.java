@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 
 import java.util.Calendar;
 
@@ -13,7 +14,6 @@ public class Alarm {
     private static PendingIntent alarmIntent;
 
     public static void startAlarm (Context c) {
-
         System.out.println("hest startalarm kaldt");
 
         if (alarmMgr == null)  alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
@@ -34,6 +34,19 @@ public class Alarm {
         /*
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+100, 60000, alarmIntent);
         */
+    }
+
+    public static void alarmSaveData(Context c, final String id){
+        alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(c, SaveToFirebase.class);
+
+        alarmIntent = PendingIntent.getBroadcast(c, 0, intent,  0);
+
+        // Set the alarm to start at 23:50
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 15);
+        calendar.set(Calendar.MINUTE, 00);
     }
 
     public static void stopAlarm() {

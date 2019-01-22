@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import e.android.sensmotion.Notification.Alarm;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
 import e.android.sensmotion.controller.impl.DataController;
@@ -105,16 +106,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                     .commit();
         }
 
-
-
-        userID = prefs.getString("userID", "p1");
         getFirebaseStartingDate();
         setRecyclerViewFromFireBase();
-
-        //saveDataFirebase();
-
-        days = new ArrayList<>();
-        images = new ArrayList<>();
 
         setStreak();
         inisializeElements();
@@ -163,6 +156,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         constraintLayout = view.findViewById(R.id.constraintLayout);
         constraintLayout.setOnClickListener(this);
 
+        days = new ArrayList<>();
+        images = new ArrayList<>();
+
+        userID = prefs.getString("userID", "p1");
         mobility = prefs.getString("mobility", "0");
         walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
@@ -176,6 +173,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         System.out.println("SP cycle: " + cyclingAmount);
         System.out.println("SP exercise: " + exerciseAmount);
         System.out.println("SP other: " + otherAmount);
+
+        //Alarm.alarmSaveData(getContext(), userID);
 
         createButtons(view);
         createLists();
