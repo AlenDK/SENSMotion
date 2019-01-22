@@ -22,7 +22,6 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
-
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,26 +78,26 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     public void onClick(View view) {
         userID = brugernavn.getText().toString();
 
-        switch (view.getId()) {
-            case R.id.logIndKnap:
-                if (pressed == 0) {
-                    if (userID.equals("admin")) {
-                        act = new Intent(getActivity(), Terapuet_activity.class);
-                        pressed++;
-                        getActivity().finish();
-                        startActivity(act);
+            switch (view.getId()) {
+                case R.id.logIndKnap:
+                    if (pressed == 0) {
+                        if (userID.equals("admin")) {
+                            act = new Intent(getActivity(), Terapuet_activity.class);
+                            pressed++;
+                            getActivity().finish();
+                            startActivity(act);
+                        } else {
+                            getFirebasePatient();
+                        }
                     } else {
-                        getFirebasePatient();
+                        Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "Henter data", Toast.LENGTH_LONG).show();
-                }
-                break;
+                    break;
 
-            case R.id.glemtLogin:
-                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
-                break;
-        }
+                case R.id.glemtLogin:
+                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
+                    break;
+            }
     }
 
     private void getFirebasePatient() {
@@ -123,15 +122,23 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                         prefsEditor.apply();
                         prefsEditor.commit();
 
-                        act = new Intent(getActivity(), PatientActivity.class);
-                        getActivity().finish();
-                        startActivity(act);
+
+                        if(mPrefs.getInt("confirmation",0) == 1) {
+                            act = new Intent(getActivity(), PatientActivity.class);
+                            getActivity().finish();
+                            startActivity(act);
+                        } else {
+                            android.support.v4.app.Fragment fragment = new Popop_confirmation();
+                            getFragmentManager().beginTransaction()
+                                    .add(R.id.fragmentindhold, fragment)
+                                    .commit();
+                        }
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled (@NonNull DatabaseError databaseError){
                 Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
             }
         });
