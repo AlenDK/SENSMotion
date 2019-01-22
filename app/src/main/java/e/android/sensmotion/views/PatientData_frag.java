@@ -106,7 +106,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         pieChart.setVisibility(View.GONE);
 
         barChart = view.findViewById(R.id.chart);
-
+        updateChart(0);
         periode = view.findViewById(R.id.dato_knap);
         periode.setOnClickListener(this);
 
@@ -302,6 +302,13 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                             //Get API data
                             AsyncTask atask = new AsyncTask() {
                                 @Override
+                                protected void onPreExecute() {
+                                    loading.setMessage("\t Henter data...");
+                                    loading.show();
+                                }
+
+
+                                @Override
                                 protected Object doInBackground(Object[] objects) {
                                     try {
                                         String myFormat = "yyyy-MM-dd";
@@ -322,11 +329,13 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                                         data = new JSONObject(jsonString);
                                         values = new Values();
                                         values.getAPIdata(data);
+                                        loading.dismiss();
                                         if(chartType == 0){
                                             updateBarChart();
                                         } else {
                                             updatePieChart();
                                         }
+
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
