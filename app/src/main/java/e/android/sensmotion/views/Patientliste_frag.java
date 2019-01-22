@@ -72,6 +72,17 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             }
         });
 
+        newPatient = view.findViewById(R.id.NyPatient);
+        newPatient.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new NyPatient_frag())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         patientList = new ArrayList<>();
 
         getFirebasePatientList();
@@ -116,17 +127,6 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
                     adapter.notifyDataSetChanged();
                     listView.setAdapter(adapter);
 
-
-                    newPatient = view.findViewById(R.id.NyPatient);
-                    newPatient.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragmentindhold, new NyPatient_frag())
-                                    .addToBackStack(null)
-                                    .commit();
-                        }
-                    });
                 }
             }
 
