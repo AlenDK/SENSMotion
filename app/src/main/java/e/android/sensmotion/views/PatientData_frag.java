@@ -265,7 +265,11 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         PieDataSet set = new PieDataSet(entries, "Sensorværdier");
 
         //Sets the colors of the entries
-        set.setColors(new int[]{R.color.colorOrange, R.color.colorBlue, R.color.colorGreen, R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
+        set.setColors(new int[]{R.color.colorOrange, R.color.colorBlue, R.color.colorGreen,
+                R.color.colorBlack, R.color.colorRed, R.color.colorGray}, getActivity());
+
+        set.setValueTextColor(R.color.colorBlack);
+        set.setValueTextSize(13);
 
         //General formatting
         PieData data = new PieData(set);
@@ -278,7 +282,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
         //Sets chart description
         Description disc = new Description();
         disc.setText("Sensordata");
-        barChart.setDescription(disc);
+        pieChart.setDescription(disc);
 
         //Updates the chart
         pieChart.invalidate();
