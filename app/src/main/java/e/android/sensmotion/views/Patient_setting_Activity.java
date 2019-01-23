@@ -59,11 +59,10 @@ public class Patient_setting_Activity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
                 if (on) {
-                    Alarm.startAlarm(context);
+                    Alarm.startNotifications(context);
                 } else if (!on) {
                     Alarm.stopAlarm();
                 }
-                //Toast.makeText(context, "comming soon", Toast.LENGTH_LONG).show();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
