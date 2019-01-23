@@ -81,11 +81,11 @@ public class Alarm {
 
         almIntent = PendingIntent.getBroadcast(c, 0, intent,  0);
 
-        // Set the alarm to go of at 00:01 a.m.
+        // Set the alarm to go of at 23:55 p.m.
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 00);
-        calendar.set(Calendar.MINUTE, 01);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 55);
 
 
         alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
