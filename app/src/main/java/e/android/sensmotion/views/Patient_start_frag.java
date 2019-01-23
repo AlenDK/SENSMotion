@@ -186,8 +186,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         System.out.println("SP exercise: " + exerciseAmount);
         System.out.println("SP other: " + otherAmount);
 
-        Alarm.alarmSaveData(getContext());
-
         createButtons(view);
         createLists();
         createProgressbar();
