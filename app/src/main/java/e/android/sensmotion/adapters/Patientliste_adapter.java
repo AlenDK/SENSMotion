@@ -36,12 +36,13 @@ public class Patientliste_adapter extends ArrayAdapter<Patient> {
         View view = inflater.inflate(R.layout.patient_list_item, null, true);
 
         TextView nameView = view.findViewById(R.id.name);
-
+        TextView idView = view.findViewById(R.id.patient_id);
 
         Patient patient = patientList.get(position);
 
 
         nameView.setText(patient.getName());
+        idView.setText(patient.getId());
 
         return view;
 
