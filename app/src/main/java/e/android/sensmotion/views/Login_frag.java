@@ -1,6 +1,8 @@
 package e.android.sensmotion.views;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -129,10 +131,31 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                             getActivity().finish();
                             startActivity(act);
                         } else {
-                            android.support.v4.app.Fragment fragment = new Popop_confirmation();
-                            getFragmentManager().beginTransaction()
-                                    .add(R.id.fragmentindhold, fragment)
-                                    .commit();
+
+                            final DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            mPrefs.edit().putInt("confirmation", 1).apply();
+                                            act = new Intent(getActivity(), PatientActivity.class);
+                                            getActivity().finish();
+                                            startActivity(act);
+
+                                            break;
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setMessage(R.string.PersData)
+                                    .setPositiveButton("Godkend", dialogListener)
+                                    .setNegativeButton("Afvis", dialogListener).show();
+
                         }
                     }
                 }
