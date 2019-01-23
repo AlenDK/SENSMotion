@@ -23,7 +23,7 @@ import e.android.sensmotion.entities.user.Patient;
 
 public class NyPatient_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
-    Button opret;
+    Button opret, fortryd;
     EditText patientID, patientName;
     TextView mobilityValue;
     SeekBar mobilityBar;
@@ -36,6 +36,8 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
 
         opret = (Button) view.findViewById(R.id.Opret_P);
         opret.setOnClickListener(this);
+        fortryd = (Button) view.findViewById(R.id.Fortryd);
+        fortryd.setOnClickListener(this);
 
         patientID = view.findViewById(R.id.patientID);
         patientName = view.findViewById(R.id.nameEditText);
@@ -69,25 +71,29 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
 
     @Override
     public void onClick(View view) {
-        if (patientID.getText().toString().equals("")) {
-            Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
-        } else if (patientName.getText().toString().equals("")) {
-            Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
-        } else {
-            List<Sensor> list = new ArrayList<>();
-            Sensor s = new Sensor("s1", 0);
-            list.add(s);
+        if (view == opret) {
+            if (patientID.getText().toString().equals("")) {
+                Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
+            } else if (patientName.getText().toString().equals("")) {
+                Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
+            } else {
+                List<Sensor> list = new ArrayList<>();
+                Sensor s = new Sensor("s1", 0);
+                list.add(s);
 
-            Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null,
-                    null, list, mobility, "k5W2uX", "6rT39u");
+                Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null,
+                        null, list, mobility, "k5W2uX", "6rT39u");
 
-            //Save Patient to firebase
-            ControllerRegistry.getUserController().savePatient(p);
+                //Save Patient to firebase
+                ControllerRegistry.getUserController().savePatient(p);
 
+
+            }
+
+        } else if (view == fortryd) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentindhold, new Patientliste_frag())
                     .commit();
         }
-
     }
 }
