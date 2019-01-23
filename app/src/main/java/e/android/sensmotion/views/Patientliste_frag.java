@@ -54,6 +54,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
 
         loading = new ProgressDialog(view.getContext());
         loading.setMessage("\t Henter data...");
+        loading.setCancelable(false);
         loading.show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

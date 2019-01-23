@@ -190,63 +190,65 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updateBarChart() {
-        //Initializes lists of BarEntry.
-        List<BarEntry> entriesStand = new ArrayList<>();
-        List<BarEntry> entriesWalk = new ArrayList<>();
-        List<BarEntry> entriesCycling = new ArrayList<>();
-        List<BarEntry> entriesExercise = new ArrayList<>();
-        List<BarEntry> entriesRest = new ArrayList<>();
-        List<BarEntry> entriesOther = new ArrayList<>();
+        if(isAdded()){
+            //Initializes lists of BarEntry.
+            List<BarEntry> entriesStand = new ArrayList<>();
+            List<BarEntry> entriesWalk = new ArrayList<>();
+            List<BarEntry> entriesCycling = new ArrayList<>();
+            List<BarEntry> entriesExercise = new ArrayList<>();
+            List<BarEntry> entriesRest = new ArrayList<>();
+            List<BarEntry> entriesOther = new ArrayList<>();
 
-        //Creates the entries for the different values.
-        entriesStand.add(new BarEntry(5f, Float.valueOf(values.getStand())));
-        entriesWalk.add(new BarEntry(4f, Float.valueOf(values.getWalk())));
-        entriesCycling.add(new BarEntry(3f, Float.valueOf(values.getCycling())));
-        entriesExercise.add(new BarEntry(2f, Float.valueOf(values.getExercise())));
-        entriesRest.add(new BarEntry(1f, Float.valueOf(values.getRest())));
-        entriesOther.add(new BarEntry(0f, Float.valueOf(values.getOther())));
+            //Creates the entries for the different values.
+            entriesStand.add(new BarEntry(5f, Float.valueOf(values.getStand())));
+            entriesWalk.add(new BarEntry(4f, Float.valueOf(values.getWalk())));
+            entriesCycling.add(new BarEntry(3f, Float.valueOf(values.getCycling())));
+            entriesExercise.add(new BarEntry(2f, Float.valueOf(values.getExercise())));
+            entriesRest.add(new BarEntry(1f, Float.valueOf(values.getRest())));
+            entriesOther.add(new BarEntry(0f, Float.valueOf(values.getOther())));
 
-        //Creates the various datasets and sets their color.
-        //This is done individually as to give every value a unique label.
-        BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
-        dataSetStand.setColor(getResources().getColor(R.color.colorOrange));
+            //Creates the various datasets and sets their color.
+            //This is done individually as to give every value a unique label.
+            BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
+            dataSetStand.setColor(getResources().getColor(R.color.colorOrange));
 
-        BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
-        dataSetWalk.setColor(getResources().getColor(R.color.SENScolorBlue));
+            BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
+            dataSetWalk.setColor(getResources().getColor(R.color.SENScolorBlue));
 
-        BarDataSet dataSetCycling = new BarDataSet(entriesCycling, "Cykling");
-        dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
+            BarDataSet dataSetCycling = new BarDataSet(entriesCycling, "Cykling");
+            dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
 
-        BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
-        dataSetExercise.setColor(getResources().getColor(R.color.SENScolorBlack));
+            BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
+            dataSetExercise.setColor(getResources().getColor(R.color.SENScolorBlack));
 
-        BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
-        dataSetRest.setColor(getResources().getColor(R.color.SENScolorRed));
+            BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
+            dataSetRest.setColor(getResources().getColor(R.color.SENScolorRed));
 
-        BarDataSet dataSetOther = new BarDataSet(entriesOther, "Andet");
-        dataSetOther.setColor(getResources().getColor(R.color.SENScolorGray));
+            BarDataSet dataSetOther = new BarDataSet(entriesOther, "Andet");
+            dataSetOther.setColor(getResources().getColor(R.color.SENScolorGray));
 
-        //Creates data for the chart based on the different datasets.
-        BarData data = new BarData(dataSetStand, dataSetWalk, dataSetExercise, dataSetCycling, dataSetRest, dataSetOther);
-        data.setValueFormatter(new ValueFormatter());
+            //Creates data for the chart based on the different datasets.
+            BarData data = new BarData(dataSetStand, dataSetWalk, dataSetExercise, dataSetCycling, dataSetRest, dataSetOther);
+            data.setValueFormatter(new ValueFormatter());
 
-        //Formats the chart.
-        data.setBarWidth(0.9f);
-        barChart.setData(data);
-        barChart.setFitBars(true);
-        barChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
-        barChart.setDrawBorders(true);
-        barChart.setTouchEnabled(false);
-        barChart.getAxisRight().setEnabled(false);
+            //Formats the chart.
+            data.setBarWidth(0.9f);
+            barChart.setData(data);
+            barChart.setFitBars(true);
+            barChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
+            barChart.setDrawBorders(true);
+            barChart.setTouchEnabled(false);
+            barChart.getAxisRight().setEnabled(false);
 
-        //Sets chart description
-        Description disc = new Description();
-        disc.setText("Sensordata");
-        barChart.setDescription(disc);
+            //Sets chart description
+            Description disc = new Description();
+            disc.setText("Sensordata");
+            barChart.setDescription(disc);
 
-        //Updates the chart.
-        barChart.invalidate();
+            //Updates the chart.
+            barChart.invalidate();
 
+        }
     }
 
     public void updatePieChart() {
@@ -306,6 +308,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                                 @Override
                                 protected void onPreExecute() {
                                     loading.setMessage("\t Henter data...");
+                                    loading.setCancelable(false);
                                     loading.show();
                                 }
 
