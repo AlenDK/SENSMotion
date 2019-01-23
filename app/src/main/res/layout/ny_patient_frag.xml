@@ -123,14 +123,15 @@
             android:textColor="@color/lightBlack"
             android:textSize="16sp" />
 
-        <CheckBox
+        <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/checkBox3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:text="Start måling nu"
             android:textColor="@color/lightBlack"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            app:buttonTint="#e82020" />
 
         <Button
             android:id="@+id/Opret_P"
