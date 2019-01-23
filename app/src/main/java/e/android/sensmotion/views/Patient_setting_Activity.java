@@ -30,7 +30,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
     Button logout;
     ImageButton back;
     ImageView column1, column2, column3, column4, column5;
-    Intent act, service;
+    Intent act;
 
     Context context;
 
@@ -48,7 +48,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
         createImage();
 
         pop_switch = (Switch) findViewById(R.id.switchPOP);
-        pop_switch.setChecked(true);
+        pop_switch.setChecked(mPrefs.getBoolean("NotiGoing", false));
         sound_switch = (Switch) findViewById(R.id.switchSound);
 
         back = (ImageButton) findViewById(R.id.backarrow);
@@ -60,8 +60,10 @@ public class Patient_setting_Activity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean on) {
                 if (on) {
                     Alarm.startNotifications(context);
+                    prefsEditor.putBoolean("NotiGoing", true);
                 } else if (!on) {
                     Alarm.stopAlarm();
+                    prefsEditor.putBoolean("NotiGoing", false);
                 }
             }
         });
