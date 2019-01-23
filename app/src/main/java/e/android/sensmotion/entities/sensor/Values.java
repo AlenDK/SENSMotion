@@ -95,7 +95,6 @@ public class Values {
             other    = jsonVALUES1.getString("activity/other/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -76,7 +76,7 @@
     <CheckBox
         android:id="@+id/HuskBruger"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="48dp"
         android:checked="false"
@@ -90,7 +90,7 @@
     <TextView
         android:id="@+id/glemtLogin"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="152dp"

@@ -52,7 +52,7 @@ import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
-    private TextView circleBarText, completeText, titleName;
+    private TextView circleBarText, completeText, titleName, stepsText;
     private ImageView leftLine, rightLine;
     private ProgressBar circlebar;
     private ImageButton profile_button;
@@ -94,14 +94,14 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     String userID, json;
     String mobility = "0", status = "3";
     int tasksCompleted;
-    boolean saved;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient1, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = prefs.edit();
+
+        ImageView stepsImage= view.findViewById(R.id.stepsImage);
 
         if(prefs.getInt("pop_up", 0) == 0) {
             android.support.v4.app.Fragment fragment = new tooltip();
@@ -157,9 +157,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         titleName.setText(prefs.getString("name", ""));
         completeText  = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
+        stepsText     = view.findViewById(R.id.stepsText);
         circlebar = view.findViewById(R.id.circlebar);
         leftLine  = view.findViewById(R.id.completedLeft);
         rightLine = view.findViewById(R.id.completedRight);
+
         constraintLayout = view.findViewById(R.id.constraintLayout);
         constraintLayout.setOnClickListener(this);
 
@@ -601,6 +603,11 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     cyclingAmount = Double.parseDouble(values.getCycling());
                                     exerciseAmount = Double.parseDouble(values.getExercise());
                                     otherAmount = Double.parseDouble(values.getOther());
+
+                                    //Steps is given as a decimal we dont want that
+                                    String[] formatedSteps = values.getSteps().split("\\.");
+                                    String steps = formatedSteps[0];
+                                    stepsText.setText(steps + " steps");
 
                                     System.out.println("mobilitet: " + mobility);
                                     setExpectedAmount(Integer.parseInt(mobility));

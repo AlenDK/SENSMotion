@@ -45,22 +45,12 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         progText = view.findViewById(R.id.progressText);
         progImage = view.findViewById(R.id.barImage);
 
-        /*
-       if(previousProgress.size() > 0){
-           anim = new ProgBarAnimation(progressBar, previousProgress.get(position), (int) progressBarList.get(position).getPercent());
-       } else if (previousProgress.size() == 0){
-           anim = new ProgBarAnimation(progressBar, 0f, (int) progressBarList.get(position).getPercent());
-       }
-       anim.setDuration(1000);
-       progressBar.startAnimation(anim);
-       */
-
 
        progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
 
        setProgressImage(position);
        setProgessbarColor(position);
-        progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal());
+        progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal() + " min");
 
 
         return view;
