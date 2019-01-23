@@ -1,7 +1,11 @@
 package e.android.sensmotion.views;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,26 +17,49 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.Share;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.controller.ControllerRegistry;
+import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.entities.sensor.Sensor;
+import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
 
 public class NyPatient_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
-    Button opret, fortryd;
-    EditText patientID, patientName;
-    TextView mobilityValue;
-    SeekBar mobilityBar;
-
-    String mobility;
+    private Button opret, fortryd;
+    private EditText patientID, patientName;
+    private TextView mobilityValue;
+    private SeekBar mobilityBar;
+    private DatabaseReference database;
+    private String mobility, json, id, name;
+    private Patient p;
+    private IDataController dataController;
+    private Calendar c = Calendar.getInstance();
+    private SharedPreferences prefs;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ny_patient_frag, container, false);
+
+        database = FirebaseDatabase.getInstance().getReference("Patients");
+        dataController = ControllerRegistry.getDataController();
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         opret = (Button) view.findViewById(R.id.Opret_P);
         opret.setOnClickListener(this);
@@ -81,13 +108,14 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                 Sensor s = new Sensor("s1", 0);
                 list.add(s);
 
-                Patient p = new Patient(patientID.getText().toString(), patientName.getText().toString(), null, null,
-                        null, list, mobility, "k5W2uX", "6rT39u");
+                id = patientID.getText().toString();
+                name = patientName.getText().toString();
+
+                p = new Patient(id, name, null, null,
+                        null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
 
                 //Save Patient to firebase
-                ControllerRegistry.getUserController().savePatient(p);
-
-
+                savePatientFirebase();
             }
 
         } else if (view == fortryd) {
@@ -95,5 +123,53 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                     .replace(R.id.fragmentindhold, new Patientliste_frag())
                     .commit();
         }
+    }
+
+    public void savePatientFirebase(){
+        database.child(p.getId()).setValue(p);
+
+        AsyncTask atask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                try {
+                    String myFormat = "yyyy-MM-dd";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    String dato = sdf.format(c.getTime());
+
+                    json = dataController.getApiDATA(p, dato);
+                    return null;
+                } catch (Exception e) {
+                    return e;
+                }
+            }
+
+            @Override
+            protected void onPostExecute(Object titler) {
+                JSONObject data = null;
+                try {
+                    data = new JSONObject(json);
+                    Values values = new Values();
+                    values.getAPIdata(data);
+                    values.setMobility(p.getMobility());
+                    values.setStatus(prefs.getString("status", "0"));
+
+                    database.child(p.getId()).child("sensorer").child("0").child("currentPeriod").child("valuesList").child("0").setValue(values);
+                    System.out.println("Data saved...");
+
+                    String myFormat = "ddMM";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    String dato = sdf.format(c.getTime());
+
+                    database.child(p.getId()).child("sensorer").child("0").child("currentPeriod").child("startingDate").setValue(dato);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentindhold, new Patientliste_frag())
+                        .commit();
+            }
+        }.execute();
     }
 }

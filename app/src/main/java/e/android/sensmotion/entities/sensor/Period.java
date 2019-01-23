@@ -10,6 +10,7 @@ public class Period {
     private List<Values> valuesList;
     private Values values;
     private int day_count;
+    private String startingDate;
 
     public Period(){
 
@@ -33,6 +34,14 @@ public class Period {
             values.populate(data, i);
             valuesList.add(values);
         }
+    }
+
+    public String getStartingDate() {
+        return startingDate;
+    }
+
+    public void setStartingDate(String startingDate) {
+        this.startingDate = startingDate;
     }
 
     @Override

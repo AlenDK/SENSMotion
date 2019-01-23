@@ -33,9 +33,12 @@ public class Sensor {
         this.placement = placement;
     }
 
-
     public Period getCurrentPeriod() {
         return currentPeriod;
+    }
+
+    public void setCurrentPeriod(Period currentPeriod) {
+        this.currentPeriod = currentPeriod;
     }
 
     public void populate(JSONObject json) {
