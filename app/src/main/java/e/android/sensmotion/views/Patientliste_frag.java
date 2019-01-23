@@ -123,6 +123,8 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                patientList.clear();
+                
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Patient patient = snapshot.getValue(Patient.class);
 
