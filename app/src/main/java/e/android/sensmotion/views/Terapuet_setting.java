@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import e.android.sensmotion.R;
 
@@ -18,6 +20,7 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
     Button LogOut;
     ImageButton backArrow;
     TextView editInfo, conKlient, editUnit, addUnit;
+    ImageView EditInfo, ConClient, EditUnit, AddUnit;
 
 
     @Override
@@ -43,6 +46,18 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
         addUnit = view.findViewById(R.id.addSensor);
         addUnit.setOnClickListener(this);
 
+        EditInfo = view.findViewById(R.id.columnT1);
+        EditInfo.setOnClickListener(this);
+
+        ConClient = view.findViewById(R.id.columnT2);
+        ConClient.setOnClickListener(this);
+
+        EditUnit = view.findViewById(R.id.columnT3);
+        EditUnit.setOnClickListener(this);
+
+        AddUnit = view.findViewById(R.id.columnT4);
+        AddUnit.setOnClickListener(this);
+
         return view;
     }
 
@@ -55,15 +70,8 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
                     .commit();
         } else if (view == backArrow){
             getFragmentManager().popBackStack();
+        } else {
+            Toast.makeText(getActivity(), "Denne funktion er ikke implementeret", Toast.LENGTH_SHORT).show();
         }
-        /*
-        else if (view != LogOut) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Login_frag.IkkeImplementeret_frag())
-                    .addToBackStack(null)
-                    .commit();
-        }
-        */
-
     }
 }

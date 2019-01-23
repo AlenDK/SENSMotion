@@ -11,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,9 +102,9 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = prefs.edit();
 
-        ImageView stepsImage= view.findViewById(R.id.stepsImage);
+        ImageView stepsImage = view.findViewById(R.id.stepsImage);
 
-        if(prefs.getInt("pop_up", 0) == 0) {
+        if (prefs.getInt("pop_up", 0) == 0) {
             android.support.v4.app.Fragment fragment = new tooltip();
             getFragmentManager().beginTransaction()
                     .add(R.id.fragmentindhold, fragment)
@@ -117,6 +118,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         setStreak();
         inisializeElements();
         opdaterData();
+
+        Log.d("burhanee", "" + prefs.getInt("complete", 0));
 
         return view;
     }
@@ -140,7 +143,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             //Save status to SP
             if (tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))) {
-                editor.putString("status", tasksCompleted + "");
+                editor.putInt("status", tasksCompleted);
                 editor.apply();
                 editor.commit();
             }
@@ -155,17 +158,17 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private void inisializeElements() {
         titleName = view.findViewById(R.id.nameText);
         titleName.setText(prefs.getString("name", ""));
-        completeText  = view.findViewById(R.id.completeText);
+        completeText = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
-        stepsText     = view.findViewById(R.id.stepsText);
+        stepsText = view.findViewById(R.id.stepsText);
         circlebar = view.findViewById(R.id.circlebar);
-        leftLine  = view.findViewById(R.id.completedLeft);
+        leftLine = view.findViewById(R.id.completedLeft);
         rightLine = view.findViewById(R.id.completedRight);
 
         constraintLayout = view.findViewById(R.id.constraintLayout);
         constraintLayout.setOnClickListener(this);
 
-        days   = new ArrayList<>();
+        days = new ArrayList<>();
         images = new ArrayList<>();
 
         userID = prefs.getString("userID", "p1");
@@ -176,7 +179,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         exerciseAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
         setExpectedAmount(Integer.parseInt(mobility));
-
         System.out.println("SP walk: " + walkAmount);
         System.out.println("SP stand: " + standAmount);
         System.out.println("SP cycle: " + cyclingAmount);
@@ -278,7 +280,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             completeText.setVisibility(View.GONE);
             leftLine.setVisibility(View.GONE);
             rightLine.setVisibility(View.GONE);
-        } else if (progBarsCom.size() != 0){
+        } else if (progBarsCom.size() != 0) {
             leftLine.setVisibility(View.VISIBLE);
             rightLine.setVisibility(View.VISIBLE);
         }
@@ -345,6 +347,56 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         circlebar.startAnimation(anim);
 
     }
+
+
+    //Popper op for hvilken som helst dag der er completet, skal ige kigges på
+    public void checkComplition() {
+        if (tasksCompleted == 1) {
+            if (prefs.getBoolean("complete1", false) == false) {
+                editor.putBoolean("complete1", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 2) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 3) {
+            if (prefs.getBoolean("complete3", false) == false) {
+                editor.putBoolean("complete3", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 4) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+    } else if(tasksCompleted ==5) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        }
+    }
+
+
+
+
 
     public void setStreak() {
         yesterday = prefs.getInt("yesterday", 0);
@@ -447,6 +499,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             otherAmount = totalother;
             tasksCompleted++;
         }
+
     }
 
     private void opdaterData() {
@@ -475,8 +528,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     try {
                                         String myFormat = "yyyy-MM-dd";
                                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                                        String dato = sdf.format(c.getTime());
-                                        //String dato = "2018-10-01";
+                                       // String dato = sdf.format(c.getTime());
+                                        String dato = "2018-10-01";
 
                                         json = dataController.getApiDATA(patient, dato);
                                         return null;
