@@ -44,7 +44,6 @@ public class SaveToFirebase extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
-
         userID = prefs.getString("userID", "p1");
 
 
@@ -110,7 +109,7 @@ public class SaveToFirebase extends BroadcastReceiver {
     }
 
     private void resetValues(){
-        System.out.println("Test med alarm");
+        System.out.println("SP Test med alarm");
         System.out.println(prefs.getAll());
         System.out.println("Før:");
         System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
@@ -128,7 +127,7 @@ public class SaveToFirebase extends BroadcastReceiver {
         editor.commit();
         //System.out.println("Værdier nulstillet");
 
-        System.out.println("Efter");
+        System.out.println("SP Efter");
         System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
         System.out.println("SP stand: " + prefs.getFloat("stand",0.0f));
         System.out.println("SP cycle: " + prefs.getFloat("cycle",0.0f));
