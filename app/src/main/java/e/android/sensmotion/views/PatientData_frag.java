@@ -52,7 +52,7 @@ import e.android.sensmotion.entities.user.Patient;
 public class PatientData_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
     private Button periode, graf;
-    private ImageButton ImgBtn;
+    private ImageButton ImgBtn, backButton;
     private TextView patientinformation, nameText;
     private HorizontalBarChart barChart;
     private PieChart pieChart;
@@ -105,6 +105,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
         ImgBtn = view.findViewById(R.id.knap_profil);
         ImgBtn.setOnClickListener(this);
+
+        backButton = view.findViewById(R.id.back_patient_data);
+        backButton.setOnClickListener(this);
 
         patientinformation = view.findViewById(R.id.textView2);
 
@@ -169,6 +172,11 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                     .addToBackStack(null)
                     .commit();
 
+        } else if(view == backButton){
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentindhold, new Patientliste_frag())
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 

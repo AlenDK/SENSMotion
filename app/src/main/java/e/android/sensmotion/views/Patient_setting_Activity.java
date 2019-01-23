@@ -5,15 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -51,7 +45,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
         pop_switch.setChecked(mPrefs.getBoolean("NotiGoing", false));
         sound_switch = (Switch) findViewById(R.id.switchSound);
 
-        back = (ImageButton) findViewById(R.id.backarrow);
+        back = (ImageButton) findViewById(R.id.back_patient_data);
         logout = (Button) findViewById(R.id.logUd);
 
         //Kan det gøres smartere?

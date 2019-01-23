@@ -1,12 +1,10 @@
 package e.android.sensmotion.views;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,7 +29,7 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
         LogOut = view.findViewById(R.id.logUd);
         LogOut.setOnClickListener(this);
 
-        backArrow = view.findViewById(R.id.backarrow);
+        backArrow = view.findViewById(R.id.back_patient_data);
         backArrow.setOnClickListener(this);
 
         editInfo = view.findViewById(R.id.editInfo);

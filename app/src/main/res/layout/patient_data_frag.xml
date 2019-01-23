@@ -18,31 +18,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/knap_profil"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/back_patient_data"
+        android:layout_width="37dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
         android:background="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/profil"
-        app:layout_constraintBottom_toBottomOf="@+id/actionbar_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/actionbar_image" />
+        android:src="@drawable/baseline_keyboard_backspace_white_48"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="88dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Fornavn Efternavn"
         android:textColor="#ffffff"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/actionbar_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -123,6 +126,16 @@
             android:layout_height="match_parent" />
 
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/knap_profil"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profil"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>
