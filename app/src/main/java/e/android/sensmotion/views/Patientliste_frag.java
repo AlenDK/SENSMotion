@@ -81,8 +81,22 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         newPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                NyPatient_frag npf = new NyPatient_frag();
+                Bundle npf_args = new Bundle();
+
+                ArrayList<String> ids = new ArrayList<>();
+
+                for(Patient p: patientList){
+                    ids.add(p.getId());
+                }
+
+                npf_args.putStringArrayList("ids", ids);
+
+                npf.setArguments(npf_args);
+
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new NyPatient_frag())
+                        .replace(R.id.fragmentindhold, npf)
                         .addToBackStack(null)
                         .commit();
             }
@@ -124,7 +138,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 patientList.clear();
-                
+
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Patient patient = snapshot.getValue(Patient.class);
 

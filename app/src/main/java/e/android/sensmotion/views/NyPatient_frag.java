@@ -52,10 +52,15 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
     private IDataController dataController;
     private Calendar c = Calendar.getInstance();
     private SharedPreferences prefs;
+    private ArrayList<String> ids;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ny_patient_frag, container, false);
+
+        if (getArguments() != null) {
+            ids = getArguments().getStringArrayList("ids");
+        }
 
         database = FirebaseDatabase.getInstance().getReference("Patients");
         dataController = ControllerRegistry.getDataController();
@@ -103,20 +108,24 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                 Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
             } else if (patientName.getText().toString().equals("")) {
                 Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
-            } else {
-                List<Sensor> list = new ArrayList<>();
-                Sensor s = new Sensor("s1", 0);
-                list.add(s);
-
-                id = patientID.getText().toString();
-                name = patientName.getText().toString();
-
-                p = new Patient(id, name, null, null,
-                        null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
-
-                //Save Patient to firebase
-                savePatientFirebase();
+            } else if(ids.contains(patientID.getText().toString())) {
+                Toast.makeText(view.getContext(), "En patient med dette ID findes allerede. Indtast venligst et gyldtigt ID.",
+                        Toast.LENGTH_LONG).show();
             }
+            else{
+                    List<Sensor> list = new ArrayList<>();
+                    Sensor s = new Sensor("s1", 0);
+                    list.add(s);
+
+                    id = patientID.getText().toString();
+                    name = patientName.getText().toString();
+
+                    p = new Patient(id, name, null, null,
+                            null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
+
+                    //Save Patient to firebase
+                    savePatientFirebase();
+                }
 
         } else if (view == fortryd) {
             getFragmentManager().beginTransaction()
