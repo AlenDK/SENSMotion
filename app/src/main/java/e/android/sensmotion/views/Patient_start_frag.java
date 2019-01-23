@@ -111,10 +111,22 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         ImageView stepsImage = view.findViewById(R.id.stepsImage);
 
         if (prefs.getInt("pop_up", 0) == 0) {
-            android.support.v4.app.Fragment fragment = new tooltip();
-            getFragmentManager().beginTransaction()
-                    .add(R.id.fragmentindhold, fragment)
-                    .commit();
+            final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage("Træk ned for at kunne se dine achievements!");
+            alertDialog.setTitle("Tip");
+            alertDialog.setCancelable(false);
+            alertDialog.setCanceledOnTouchOutside(false);
+
+
+            alertDialog.setButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    editor.putInt("pop_up",1);
+                    editor.apply();
+                }
+            });
+            alertDialog.show();
         }
         loading = new ProgressDialog(view.getContext());
 

@@ -46,31 +46,32 @@ public class ProgressBar_adapter extends ArrayAdapter<ProgBar> {
         progImage = view.findViewById(R.id.barImage);
 
 
-       progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
+        progressBar.setProgress((int) Math.round(progressBarList.get(position).getPercent()));
 
-       setProgressImage(position);
-       setProgessbarColor(position);
+        setProgressImage(position);
+        setProgessbarColor(position);
         progText.setText(progressBarList.get(position).getProgress() +"/"+ progressBarList.get(position).getGoal() + " min");
 
 
         return view;
     }
 
+
     private void setProgressImage(int position){
             if(progressBarList.get(position).getName().equals("walk"))
                 progImage.setImageResource(R.drawable.stickman_walking);
 
             else if(progressBarList.get(position).getName().equals("stand"))
-                progImage.setImageResource(R.drawable.stickman_standing2);
+                progImage.setImageResource(R.drawable.standing);
 
             else if(progressBarList.get(position).getName().equals("cycle"))
-                progImage.setImageResource(R.drawable.stickman_biking);
+                progImage.setImageResource(R.drawable.cycling);
 
             else if(progressBarList.get(position).getName().equals("exercise"))
                 progImage.setImageResource(R.drawable.stickman_exercise);
 
             else if(progressBarList.get(position).getName().equals("other"))
-                progImage.setImageResource(R.drawable.stickman_other);
+                progImage.setImageResource(R.drawable.others);
         }
 
     private void setProgessbarColor(int position){
