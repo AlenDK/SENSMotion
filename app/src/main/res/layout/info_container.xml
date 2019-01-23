@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="70dp"
+        android:text="Daglige mål information"
+        android:textColor="@color/lightBlack"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/seperator1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/info_walking"
+        android:layout_marginTop="42dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/info_seperator" />
+
+    <ImageView
+        android:id="@+id/info_walking"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/seperator1"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/stickman_walking" />
+
+    <TextView
+        android:id="@+id/info_walking_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_walking"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/info_walking"
+        android:textColor="@color/lightBlack"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/info_standing"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/info_walking"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/stickman_standing2" />
+
+    <TextView
+        android:id="@+id/info_standing_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_standing"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/info_standing"
+        android:textColor="@color/lightBlack"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/info_cycling"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/info_standing"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/stickman_biking" />
+
+    <TextView
+        android:id="@+id/info_cycling_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_cycling"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/info_cycling"
+        android:textColor="@color/lightBlack"
+        android:textSize="12dp" />
+
+
+    <ImageView
+        android:id="@+id/info_exercise"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/info_cycling"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/stickman_exercise" />
+
+    <TextView
+        android:id="@+id/info_exercise_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_exercise"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/info_exercise"
+        android:textColor="@color/lightBlack"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/info_other"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/info_exercise"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/stickman_standing2" />
+
+    <TextView
+        android:id="@+id/info_other_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_other"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="0dp"
+        android:text="@string/info_other"
+        android:textColor="@color/lightBlack"
+        android:textSize="12dp" />
+
+    <ImageView
+        android:id="@+id/seperator2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_other"
+        android:layout_marginTop="42dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/info_seperator" />
+
+    <Button
+        android:id="@+id/infoButton"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/info_other"
+        android:layout_marginTop="54dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginBottom="16dp"
+        android:text="OK" />
+
+</RelativeLayout>

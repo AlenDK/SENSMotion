@@ -37,10 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/categorizer_today_data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image">
 
         <ImageView
             android:id="@+id/facetoday_image"
@@ -64,6 +64,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="I dag"
+            android:textColor="@color/lightBlack"
             app:layout_constraintEnd_toEndOf="@+id/facetoday_image"
             app:layout_constraintStart_toStartOf="@+id/facetoday_image"
             app:layout_constraintTop_toBottomOf="@+id/facetoday_image" />
@@ -123,15 +124,15 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="201dp"
         android:layout_height="170dp"
-        android:layout_marginTop="183dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:progress="0"
         android:progressDrawable="@drawable/circle_progress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/progressBarText"
@@ -151,21 +152,23 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="360dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="360dp"
         android:background="@drawable/categorizer_tasks">
 
         <TextView
             android:id="@+id/tasksTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="16dp"
             android:text="Dagens mål"
             android:textColor="@color/SENSfontColor"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -176,6 +179,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="26dp"
+            android:layout_marginTop="0dp"
             android:divider="@null"
             app:layout_constraintBottom_toTopOf="@+id/completeText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -235,7 +239,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/completeText"
             app:layout_constraintStart_toEndOf="@+id/completeText"
             app:layout_constraintTop_toTopOf="@+id/completeText"
-            app:layout_constraintVertical_bias="0.45"/>
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/info"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/info_icon2"
+            app:layout_constraintBottom_toBottomOf="@+id/tasksTitle"
+            app:layout_constraintStart_toEndOf="@+id/tasksTitle"
+            app:layout_constraintTop_toTopOf="@+id/tasksTitle" />
 
     </android.support.constraint.ConstraintLayout>
 

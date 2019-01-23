@@ -1,6 +1,9 @@
 package e.android.sensmotion.views;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -54,9 +59,10 @@ import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
     private TextView circleBarText, completeText, titleName, stepsText;
-    private ImageView leftLine, rightLine;
+    private ImageView leftLine, rightLine, info;
     private ProgressBar circlebar;
     private ImageButton profile_button;
+    Button infoButton;
 
     private RecyclerView recyclerView;
     private ProgBar walk, stand, cycling, exercise, other;
@@ -153,17 +159,19 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
             //Skal kun køres når det er nødvendigt! Det tager lang tid!
             //opdaterData();
+        } else if (view == info) {
+            createAlertdialog();
         }
     }
 
     private void inisializeElements() {
         titleName = view.findViewById(R.id.nameText);
         titleName.setText(prefs.getString("name", ""));
-        completeText = view.findViewById(R.id.completeText);
+        completeText  = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
         stepsText = view.findViewById(R.id.stepsText);
         circlebar = view.findViewById(R.id.circlebar);
-        leftLine = view.findViewById(R.id.completedLeft);
+        leftLine  = view.findViewById(R.id.completedLeft);
         rightLine = view.findViewById(R.id.completedRight);
 
         constraintLayout = view.findViewById(R.id.constraintLayout);
@@ -286,9 +294,35 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
 
+    public void setPreviousProgress() {
+        for (ProgBar pb : progBarsCom)
+            previousProgress.add((float) pb.getPercent());
+
+        for (ProgBar pb : progBarsIncom)
+            previousProgress.add((float) pb.getPercent());
+
+        previousCircleProgress = circleProgress;
+
+
+
+        /*
+        Set<String> prefPrevProgress = new HashSet<String>();
+        List<String> prevString = new ArrayList<>();
+        for(ProgBar pb: progBarsIncom){
+            previousProgress.add((float)pb.getPercent());
+        }
+        for(ProgBar pb: progBarsCom){
+            previousProgress.add((float)pb.getPercent());
+        }
+        */
+    }
+
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
+
+        info      = view.findViewById(R.id.info);
+        info.setOnClickListener(this);
     }
 
     private void createRecyclerview(String date, String status) {
@@ -347,7 +381,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
 
-
     //Popper op for hvilken som helst dag der er completet, skal ige kigges på
     public void checkComplition() {
         if (tasksCompleted == 1) {
@@ -392,10 +425,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             }
         }
     }
-
-
-
-
 
     public void setStreak() {
         yesterday = prefs.getInt("yesterday", 0);
@@ -499,6 +528,37 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             tasksCompleted++;
         }
 
+    }
+
+    private void createAlertdialog(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.info_container);
+        dialog.setTitle("Daglige mål information");
+
+        TextView infoWalking  = dialog.findViewById(R.id.info_walking_text);
+        TextView infoStanding = dialog.findViewById(R.id.info_standing_text);
+        TextView infoCycling  = dialog.findViewById(R.id.info_cycling_text);
+        TextView infoExercise = dialog.findViewById(R.id.info_exercise_text);
+        TextView infoOther    = dialog.findViewById(R.id.info_other_text);
+
+        ImageView infoWalkingImage  = dialog.findViewById(R.id.info_walking);
+        ImageView infoStandingImage = dialog.findViewById(R.id.info_standing);
+        ImageView infoCyclingImage  = dialog.findViewById(R.id.info_cycling);
+        ImageView infoExerciseImage = dialog.findViewById(R.id.info_exercise);
+        ImageView infoOtherImage    = dialog.findViewById(R.id.info_other);
+        ImageView seperator1 = dialog.findViewById(R.id.seperator1);
+        ImageView seperator2 = dialog.findViewById(R.id.seperator2);
+
+        infoButton = dialog.findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
     }
 
     private void opdaterData() {
@@ -778,26 +838,4 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         getFirebasePatient("" + position);
     }
 
-    public void setPreviousProgress() {
-        for (ProgBar pb : progBarsCom)
-            previousProgress.add((float) pb.getPercent());
-
-        for (ProgBar pb : progBarsIncom)
-            previousProgress.add((float) pb.getPercent());
-
-        previousCircleProgress = circleProgress;
-
-
-
-        /*
-        Set<String> prefPrevProgress = new HashSet<String>();
-        List<String> prevString = new ArrayList<>();
-        for(ProgBar pb: progBarsIncom){
-            previousProgress.add((float)pb.getPercent());
-        }
-        for(ProgBar pb: progBarsCom){
-            previousProgress.add((float)pb.getPercent());
-        }
-        */
-    }
 }
