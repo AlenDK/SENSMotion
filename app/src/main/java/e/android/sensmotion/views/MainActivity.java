@@ -29,8 +29,6 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        Alarm.alarmSaveData(this);
-        Alarm.stopNotifications(this);
 
         if (mPrefs.getBoolean("remember", false)) {
             setContentView(R.layout.activity_patient);

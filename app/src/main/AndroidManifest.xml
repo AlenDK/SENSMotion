@@ -41,7 +41,7 @@
                 <action android:name="e.android.sensmotion.START_ALARM" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".views.PreferenceMangerResetListener">
+        <receiver android:name=".Notification.SaveToFirebase">
             <intent-filter>
                 <action android:name="e.android.sensmotion.START_ALARM"/>
             </intent-filter>

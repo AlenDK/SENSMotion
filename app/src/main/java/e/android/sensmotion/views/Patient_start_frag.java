@@ -129,6 +129,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         if (view == profile_button) {
             Intent act = new Intent(getActivity(), Patient_setting_Activity.class);
             startActivity(act);
+            Alarm.alarmSaveData(getActivity());
         } else if (view == constraintLayout) {
             mobility = prefs.getString("mobility", "0");
             walkAmount = prefs.getFloat("walk", 0.0f);
@@ -184,8 +185,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         System.out.println("SP cycle: " + cyclingAmount);
         System.out.println("SP exercise: " + exerciseAmount);
         System.out.println("SP other: " + otherAmount);
-
-        //Alarm.alarmSaveData(getContext(), userID);
 
         createButtons(view);
         createLists();

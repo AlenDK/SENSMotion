@@ -25,10 +25,6 @@ public class Alarm {
         }
     }
 
-    /**
-     *
-     * @param c
-     */
     public static void startNotifications (Context c) {
         System.out.println("hest startalarm kaldt");
 
@@ -76,7 +72,7 @@ public class Alarm {
 
     }
 
-    public static void alarmSaveData(Context c/*, final String id*/){
+    public static void alarmSaveData(Context c){
 
         System.out.println("hest startalarm kaldt");
 
@@ -93,7 +89,7 @@ public class Alarm {
 
 
         alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                                            , AlarmManager.INTERVAL_DAY, almIntent);
+                                           , AlarmManager.INTERVAL_DAY, almIntent);
     }
 
 }
