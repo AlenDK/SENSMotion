@@ -25,6 +25,13 @@ import e.android.sensmotion.adapters.Achievement_adapter;
 import e.android.sensmotion.views.Achievement.Achievement;
 import io.fabric.sdk.android.Fabric;
 
+import static e.android.sensmotion.views.Patient_start_frag.totalProgressGoal;
+import static e.android.sensmotion.views.Patient_start_frag.totalcycling;
+import static e.android.sensmotion.views.Patient_start_frag.totalexercise;
+import static e.android.sensmotion.views.Patient_start_frag.totalother;
+import static e.android.sensmotion.views.Patient_start_frag.totalstand;
+import static e.android.sensmotion.views.Patient_start_frag.totalwalk;
+
 
 public class Achievement_frag extends Fragment  {
 
@@ -103,16 +110,27 @@ public class Achievement_frag extends Fragment  {
     public ArrayList<Achievement> getAchievement(){
         stribe = new Achievement("7 på stribe","For at få dette trofæ skal du have åbnet appen 7 dage i streg!", R.drawable.sevendaystreak);
         stribe.setComplete(prefs.getInt("streakCounter", 0) == 7);
+
         facebook = new Achievement("Del med dine venner", "For at opnå dette trofæ, skal man dele sine resultater på facebook via del", R.drawable.facebook_logo);
         facebook.setComplete(prefs.getInt("facebookCheck", 0) == 1);
+
         betatester = new Achievement("Betatester 2019","Et trofæ for at have været beta tester i 2019", R.drawable.beta_tester);
         betatester.setComplete(true);
+
         walking = new Achievement("500 meter", "Man har gået i 500..", R.drawable.running_achivement);
         walking.setComplete(prefs.getInt("walkamount",0) == 1);
+
         onegoal = new Achievement("1 mål klaret 100&", "Man skal klare et mål 100%", R.drawable.achivedonegoal);
-        //onegoal.setComplete();
+        onegoal.setComplete(prefs.getFloat("walk", 0) >= totalwalk || prefs.getFloat("stand", 0) >= totalstand || prefs.getFloat("cycle", 0) >= totalcycling
+                            && prefs.getFloat("exercise", 0) >= totalexercise || prefs.getFloat("other", 0) >= totalother);
+
         allgoals = new Achievement("Klaret alle målene", "Du har klaret alle de opsatte mål", R.drawable.achivedallgoals);
+        allgoals.setComplete(prefs.getFloat("walk", 0) >= totalwalk && prefs.getFloat("stand", 0) >= totalstand && prefs.getFloat("cycle", 0) >= totalcycling
+                            && prefs.getFloat("exercise", 0) >= totalexercise && prefs.getFloat("other", 0) >= totalother);
+
         halfway = new Achievement("Halvejs", "Du har opået 50% af dine samlede mål", R.drawable.achived50percent);
+        halfway.setComplete(prefs.getFloat("walk", 0)+prefs.getFloat("stand", 0)+prefs.getFloat("cycle",0)+prefs.getFloat("exercise",0)
+                            +prefs.getFloat("other",0)>= totalProgressGoal/2);
 
         achievements.add(facebook);
         achievements.add(stribe);

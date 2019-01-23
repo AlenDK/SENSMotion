@@ -85,10 +85,10 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     ViewGroup view;
     ConstraintLayout constraintLayout;
 
-    int totalProgressGoal, circleProgress, previousCircleProgress;
+    int circleProgress, previousCircleProgress;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
-    static int totalwalk, totalstand, totalexercise, totalcycling, totalother;
+    static int totalwalk, totalstand, totalexercise, totalcycling, totalother, totalProgressGoal;
 
     private Patient patient;
     Values values;
