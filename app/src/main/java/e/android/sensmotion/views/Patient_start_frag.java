@@ -147,7 +147,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         if (view == profile_button) {
             Intent act = new Intent(getActivity(), Patient_setting_Activity.class);
             startActivity(act);
-            Alarm.alarmSaveData(getActivity());
+            //Alarm.alarmSaveData(getActivity());
         } else if (view == constraintLayout) {
             mobility = prefs.getString("mobility", "0");
             walkAmount = prefs.getFloat("walk", 0.0f);
@@ -354,13 +354,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         //Decide which smiley to display
         if (status.equals("0")) {
-            images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
+            images.add(0, R.drawable.yellow);
         } else if (status.equals("1")) {
-            images.add(0, R.drawable.greensmiley1);
+            images.add(0, R.drawable.yellowgreen);
         } else if (status.equals("2")) {
-            images.add(0, R.drawable.greensmiley2);
+            images.add(0, R.drawable.yellowgreen);
         } else if (status.equals("3")) {
-            images.add(0, R.drawable.baseline_sentiment_very_satisfied_black_48);
+            images.add(0, R.drawable.green);
         }
 
 
