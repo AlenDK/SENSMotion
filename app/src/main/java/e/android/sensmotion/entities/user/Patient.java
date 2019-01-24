@@ -6,20 +6,29 @@ import e.android.sensmotion.entities.sensor.Sensor;
 
 public class Patient extends User {
 
-    private String cpr, mobility, project_key, patient_key;
+    private String name, cpr, mobility, project_key, patient_key;
     private List<Sensor> sensors;
 
     public Patient() {
 
     }
 
-    public Patient(String id, String username, String password, String cpr, List<Sensor> sensors, String mobility, String project_key, String patient_key) {
+    public Patient(String id, String name, String username, String password, String cpr, List<Sensor> sensors, String mobility, String project_key, String patient_key) {
         super(id, username, password);
+        this.name = name;
         this.cpr = cpr;
         this.sensors = sensors;
         this.mobility = mobility;
         this.project_key = project_key;
         this.patient_key = patient_key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCpr() {
@@ -76,6 +85,8 @@ public class Patient extends User {
     @Override
     public String toString() {
         return "Patient{" +
+                "id: "+getId()+
+                "name: "+name+
                 "cpr: "+cpr+
                 ", mobility: "+mobility+
                 ", project_key: "+project_key+

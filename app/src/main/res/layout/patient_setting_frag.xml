@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
@@ -26,16 +27,16 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="7dp"
         android:text="Indstillinger"
-        android:textColor="#ffffff"
+        android:textColor="@color/SENScolorWhite"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/backarrow"
+        app:layout_constraintStart_toEndOf="@+id/back_patient_data"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageButton
-        android:id="@+id/backarrow"
+        android:id="@+id/back_patient_data"
         android:layout_width="37dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
@@ -51,87 +52,136 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="56dp"
         android:text="Din Profil"
+        android:textColor="@color/lightBlack"
         android:textSize="23sp"
-        android:textColor="@color/darkEggwhite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/column1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/setting_column"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         app:layout_constraintTop_toBottomOf="@+id/profil" />
 
     <ImageView
         android:id="@+id/column2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/setting_column"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column3" />
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toBottomOf="@+id/column1" />
 
     <ImageView
         android:id="@+id/column3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/setting_column"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toBottomOf="@+id/column2" />
+
+    <TextView
+        android:id="@+id/popupText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        android:src="@drawable/setting_column"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Opdater brugeroplysninger"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/column2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column1" />
+        app:layout_constraintTop_toTopOf="@+id/column1" />
+
+    <TextView
+        android:id="@+id/popupText3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Skift sprog"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/column2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/column2" />
+
+    <TextView
+        android:id="@+id/popupText4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Terapeut oplysninger"
+        android:textColor="@color/lightBlack"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/column3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/column2" />
+
+    <ImageView
+        android:id="@+id/seperator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:src="@drawable/seperator_setting"
+        app:layout_constraintTop_toBottomOf="@+id/column3"/>
 
     <TextView
         android:id="@+id/notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Notifikationer"
-        android:textColor="@color/darkEggwhite"
+        android:textColor="@color/lightBlack"
         android:textSize="23sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/column2" />
+        app:layout_constraintTop_toBottomOf="@+id/seperator" />
 
     <ImageView
         android:id="@+id/column4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/setting_column"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         app:layout_constraintTop_toBottomOf="@+id/notification" />
 
     <ImageView
         android:id="@+id/column5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/setting_column"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/column4" />
 
@@ -139,12 +189,12 @@
         android:id="@+id/popupText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Pop-up notifikationer"
-        android:textSize="18sp"
         android:textColor="@color/lightBlack"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/column4"
         app:layout_constraintStart_toStartOf="@+id/column4"
         app:layout_constraintTop_toTopOf="@+id/column4" />
@@ -153,9 +203,9 @@
         android:id="@+id/soundEffects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Lyd effekter"
         android:textColor="@color/lightBlack"
         android:textSize="18sp"
@@ -164,34 +214,41 @@
         app:layout_constraintTop_toTopOf="@+id/column5" />
 
     <Switch
-        android:id="@+id/switchSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="216dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/soundEffects"
-        app:layout_constraintTop_toTopOf="@+id/column5" />
-
-    <Switch
         android:id="@+id/switchPOP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/popupText"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/highlighted_switch"
+        app:layout_constraintBottom_toBottomOf="@+id/column4"
+        app:layout_constraintEnd_toEndOf="@+id/column4"
         app:layout_constraintTop_toTopOf="@+id/column4" />
+
+    <Switch
+        android:id="@+id/switchSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/SENScolorRed"
+        app:layout_constraintBottom_toBottomOf="@+id/column5"
+        app:layout_constraintEnd_toEndOf="@+id/column5"
+        app:layout_constraintTop_toTopOf="@+id/column5" />
+
 
     <Button
         android:id="@+id/logUd"
         android:layout_width="120dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/button"
         android:text="Log ud"
-        android:textSize="18sp"
         android:textColor="#ffffff"
-        android:background="@drawable/logud_knap"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

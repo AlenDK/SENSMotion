@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:drawable="@drawable/completed_title_background"
+        android:width="100dp"
+        android:height="2dp"
+        android:top="11dp"
+        android:left="1dp"
+        />
+    <item
+        android:drawable="@drawable/test"
+        android:width="24dp"
+        android:height="24dp"
+        />
+</layer-list>

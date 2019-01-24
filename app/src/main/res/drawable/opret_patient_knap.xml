@@ -15,12 +15,12 @@
                 android:height="50dp"
                 />
             <gradient
-                android:startColor="@color/colorRed"
-                android:endColor="@color/colorDarkRed"
+                android:startColor="@color/SENScolorWhite"
+                android:endColor="@color/eggLightWhiteShadow"
                 />
             <stroke
                 android:width="2dp"
-                android:color="@color/colorBlack"
+                android:color="@color/SENScolorBlack"
                 />
         </shape>
 

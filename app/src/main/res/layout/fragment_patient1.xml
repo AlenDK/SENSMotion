@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/eggwhite">
+
+
+    <ImageView
+        android:id="@+id/actionbar_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_bar_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/previousList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/categorizer_previous_data"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/categorizer_today_data"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image">
+
+        <ImageView
+            android:id="@+id/facetoday_image"
+            android:layout_width="78dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/baseline_sentiment_very_satisfied_black_48"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.071" />
+
+        <TextView
+            android:id="@+id/facetoday_text"
+            android:layout_width="36dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="I dag"
+            android:textColor="@color/lightBlack"
+            app:layout_constraintEnd_toEndOf="@+id/facetoday_image"
+            app:layout_constraintStart_toStartOf="@+id/facetoday_image"
+            app:layout_constraintTop_toBottomOf="@+id/facetoday_image" />
+    </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/stepsImage"
+        android:layout_width="34dp"
+        android:layout_height="37dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/footsteps_silver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/stepsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="0 steps"
+        app:layout_constraintStart_toEndOf="@+id/stepsImage"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <ImageButton
+        android:id="@+id/knap_profil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profil"
+        app:layout_constraintEnd_toEndOf="@+id/actionbar_image"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toEndOf="@+id/nameText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:text="Fornavn Efternavn"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ProgressBar
+        android:id="@+id/circlebar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="201dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/circle_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/progressBarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0%"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circlebar"
+        app:layout_constraintEnd_toEndOf="@+id/circlebar"
+        app:layout_constraintStart_toStartOf="@+id/circlebar"
+        app:layout_constraintTop_toTopOf="@+id/circlebar" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="360dp"
+        android:background="@drawable/categorizer_tasks">
+
+        <TextView
+            android:id="@+id/tasksTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="16dp"
+            android:text="Dagens mål"
+            android:textColor="@color/SENSfontColor"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/incompleteList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="0dp"
+            android:divider="@null"
+            app:layout_constraintBottom_toTopOf="@+id/completeText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasksTitle" />
+
+        <TextView
+            android:id="@+id/completeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Gennemført"
+            android:textColor="@color/lightBlack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/incompleteList" />
+
+        <ListView
+            android:id="@+id/completeList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="4dp"
+            android:divider="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.703"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/completeText" />
+
+        <ImageView
+            android:id="@+id/completedLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:rotation="180"
+            android:src="@drawable/categorizer_tasks1"
+            app:layout_constraintBottom_toBottomOf="@+id/completeText"
+            app:layout_constraintEnd_toStartOf="@+id/completeText"
+            app:layout_constraintTop_toTopOf="@+id/completeText"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/completedRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/categorizer_tasks1"
+            app:layout_constraintBottom_toBottomOf="@+id/completeText"
+            app:layout_constraintStart_toEndOf="@+id/completeText"
+            app:layout_constraintTop_toTopOf="@+id/completeText"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/info"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/info_icon2"
+            app:layout_constraintBottom_toBottomOf="@+id/tasksTitle"
+            app:layout_constraintStart_toEndOf="@+id/tasksTitle"
+            app:layout_constraintTop_toTopOf="@+id/tasksTitle" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -3,36 +3,71 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="Beige">#FFFCF7</color>
 
+    <color name="eggLightwhite">#ffffff</color>
     <color name="eggwhite">#F3F1F1</color>
+    <color name="eggInterwhite">#e1dede</color>
+    <color name="eggLightWhiteShadow">#eaeaea</color>
+    <color name="eggInterWhiteShadow">#d1d1d1</color>
+    <color name="eggwhiteShadow">#bfbebe</color>
+    <color name="darkEggwhite">#847d78</color>
+    <color name="eggWhiteRedish">#dcd1d1</color>
+
     <color name="warmLightGrey">#f5f3f0</color>
     <color name="warmGrey">#e8e3de</color>
     <color name="warmDarkGrey">#ccc3b9</color>
-    <color name="eggwhiteShadow">#bfbebe</color>
-    <color name="darkEggwhite">#847d78</color>
     <color name="lightBlack">#484848</color>
 
+    <color name="colorDarkerRed">#8c1111</color>
     <color name="colorDarkRed">#9f1717</color>
+    <color name="colorTest">#D86060</color>
 
     <!--
     Farvekoder til SENS-appen, defineret af SENS.
     -->
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#2a2a2a</color>
-    <color name="colorRed">#e82020</color>
-    <color name="colorBackground">#F2F2F2</color>
-    <color name="colorGray">#A6B9C5</color>
-    <color name="colorBlue">#1A91DC</color>
-    <color name="colorDarkBlue">#0B659D</color>
+    <color name="SENScolorWhite">#FFFFFF</color>
+    <color name="SENScolorBlack">#2a2a2a</color>
+    <color name="SENScolorRed">#e82020</color>
+    <color name="SENScolorBackground">#F2F2F2</color>
+    <color name="SENScolorGray">#A6B9C5</color>
+    <color name="SENScolorBlue">#1A91DC</color>
+    <color name="SENScolorDarkBlue">#0B659D</color>
+
+    <color name="SENSfontColor">#3c3c3b</color>
+
+    <!--
+    Login gradient
+    -->
+    <color name="loginTopGradient">#802020</color>
+    <color name="loginCenterGradient">#9f1717</color>
+    <color name="loginBottomGradient">#e82020</color>
 
     <!--
     Farvekoder til grafer mm.
     -->
-
     <color name="colorYellow">#FFFF00</color>
     <color name="colorGreen">#32CD32</color>
     <color name="colorOrange">#FF8C00</color>
 
     <color name="transparent">#dc000000</color>
-    
+
+    <!--
+    Progressbar farver
+    -->
+    <color name="progress20">#ccff00</color>
+    <color name="progress40">#aaff00</color>
+    <color name="progress50">#99ff00</color>
+    <color name="progress60">#77ff00</color>
+    <color name="progress80">#44ff00</color>
+    <color name="progress99">#32CD32</color>
+    <color name="progress100">#1e9b30</color>
+
+    <!--
+    Konfetti farver
+    -->
+    <color name="gold1">#DAA520</color>
+    <color name="gold2">#F0E68C</color>
+    <color name="silver">#dcdcdc</color>
+
 </resources>

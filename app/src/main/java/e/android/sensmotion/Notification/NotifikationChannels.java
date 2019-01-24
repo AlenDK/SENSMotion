@@ -11,6 +11,7 @@ import io.fabric.sdk.android.Fabric;
 public class NotifikationChannels extends Application {
     final public static String CHANNEL_ID1 = "Channel1";
     final public static String CHANNEL_ID2 = "Channel2";
+    final public static String CHANNEL_ID3 = "Channel3";
 
     @Override
     public void onCreate() {
@@ -28,17 +29,25 @@ public class NotifikationChannels extends Application {
                     "channel 1",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel1.setDescription("This is channel 1");
+            channel1.setDescription("Dette er channel 1");
             NotificationChannel channel2 = new NotificationChannel(
                     CHANNEL_ID2,
                     "channel 2",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel2.setDescription("This is channel 2");
+            channel2.setDescription("Dette er channel 2");
+            NotificationChannel channel3 = new NotificationChannel(
+                    CHANNEL_ID3,
+                    "channel 3",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel3.setDescription("Dette er channel 3");
+
 
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel1);
             manager.createNotificationChannel(channel2);
+            manager.createNotificationChannel(channel3);
 
         }
     }

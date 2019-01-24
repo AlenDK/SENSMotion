@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
     android:layout_width="60sp"
     android:layout_height="95sp"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:paddingLeft="4dp">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="80dp"
-        android:layout_height="123dp">
+        android:layout_height="80dp">
 
 
         <ImageView
             android:id="@+id/previousSmiley"
-            android:layout_width="57dp"
-            android:layout_height="47dp"
-            android:layout_marginEnd="8dp"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,17 +29,17 @@
 
         <TextView
             android:id="@+id/previousTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
             android:text="Dag 1"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/SENScolorBlack"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="@+id/previousSmiley"
             app:layout_constraintStart_toStartOf="@+id/previousSmiley"
-            app:layout_constraintTop_toBottomOf="@+id/previousSmiley" />
+            app:layout_constraintTop_toBottomOf="@+id/previousSmiley"
+            android:gravity="center"/>
 
     </android.support.constraint.ConstraintLayout>
 </LinearLayout>

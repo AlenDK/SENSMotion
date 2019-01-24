@@ -2,16 +2,19 @@ package e.android.sensmotion.controller.interfaces;
 
 import java.util.List;
 
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.User;
 import e.android.sensmotion.entities.user.Patient;
 
 public interface IUserController {
 
-    List<User> getUserList();
     List<Patient> getPatientList();
-    User getUser(String id);
     Patient getPatient(String id);
+    void setPatient(Patient p);
+    void setPatientList(List<Patient> list);
     void savePatient(Patient p);
+    void addSensorToPatient(List<Sensor> sl, String patientId);
+
 
 
 }

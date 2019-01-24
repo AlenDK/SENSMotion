@@ -1,85 +1,74 @@
 package e.android.sensmotion.views;
 
-import android.os.AsyncTask;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import androidx.annotation.NonNull;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.Patientliste_adapter;
 import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.impl.UserController;
-import e.android.sensmotion.data.Firebase;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
+import e.android.sensmotion.controller.interfaces.ISensorController;
+import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.controller.impl.FirebaseController;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 public class Patientliste_frag extends android.support.v4.app.Fragment implements AdapterView.OnClickListener {
 
-
-    Firebase firebase = new Firebase();
-    Button newPatient;
-    List<Patient> patientList; //=  ControllerRegistry.getUserController().getPatientList();
-    Patientliste_adapter adapter;
+    private Button newPatient;
+    private List<Patient> patientList;
+    private Patientliste_adapter adapter;
+    private ListView listView;
+    private ProgressDialog loading;
+    private DatabaseReference database;
+    public View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.patientliste_frag, container, false);
+        view = inflater.inflate(R.layout.patientliste_frag, container, false);
 
-        ListView listView = (ListView) view.findViewById(R.id.patientliste);
-        //Set seperation between list elements
+        listView = view.findViewById(R.id.patientliste);
         listView.setDivider(null);
         listView.setDividerHeight(15);
 
-        patientList = new ArrayList<>();
-        UserController patient = new UserController();
-        patientList.add(patient.getPatient("p1"));
-
-        adapter = new Patientliste_adapter(getActivity(), patientList);
-
-        listView.setAdapter(adapter);
-
-        new AsyncTaskBackground().execute();
-
-  /*
-
-        String[] navne = new String[patientList.size()];
-
-        for(int i = 0; i < ControllerRegistry.getUserController().getPatientList().size(); i++){
-            navne[i] = patientList.get(i).getId();
-        }
-
-
-*/
+        loading = new ProgressDialog(view.getContext());
+        loading.setMessage("\t Henter data...");
+        loading.setCancelable(false);
+        loading.show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String id = patientList.get(i).getId();
+                String name = patientList.get(i).getName();
 
                 PatientData_frag pdf = new PatientData_frag();
                 Bundle pdf_args = new Bundle();
 
                 pdf_args.putString("id", id);
-
+                pdf_args.putString("name", name);
                 pdf.setArguments(pdf_args);
 
                 getFragmentManager().beginTransaction()
@@ -89,20 +78,35 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             }
         });
 
-
-
-
-
         newPatient = view.findViewById(R.id.NyPatient);
         newPatient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                NyPatient_frag npf = new NyPatient_frag();
+                Bundle npf_args = new Bundle();
+
+                ArrayList<String> ids = new ArrayList<>();
+
+                for(Patient p: patientList){
+                    ids.add(p.getId());
+                }
+
+                npf_args.putStringArrayList("ids", ids);
+
+                npf.setArguments(npf_args);
+
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new NyPatient_frag())
+                        .replace(R.id.fragmentindhold, npf)
                         .addToBackStack(null)
                         .commit();
             }
         });
+
+        patientList = new ArrayList<>();
+
+        getFirebasePatientList();
+
 
         return view;
     }
@@ -112,59 +116,50 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         //dunno
     }
 
-    private class AsyncTaskBackground extends AsyncTask {
+    public List<Patient> removeDuplicates(List<Patient> list){
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
+        List<Patient> newList = new ArrayList<>();
 
-        protected Object doInBackground(Object... arg0) {
-            try {
-                firebase.dTest().addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+        for(Patient p1: list){
 
-                        for (DataSnapshot brugerSnapshot : dataSnapshot.getChildren()) {
-                            //Patient patient = brugerSnapshot.getValue(Patient.class);
-
-                            //patientList.add((patient));
-
-                        }
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-
-                });
-                return "HighScore listen er loaded";
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "Noget gik galt";
+            if(!newList.contains(p1)){
+                newList.add(p1);
             }
+
         }
 
-        @Override
-        protected void onPostExecute(Object arg0) {
-        }
-
+        return newList;
     }
 
 
+    private void getFirebasePatientList() {
+        database = FirebaseDatabase.getInstance().getReference("Patients");
 
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                patientList.clear();
 
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Patient patient = snapshot.getValue(Patient.class);
 
+                    patientList.add(patient);
 
+                }
 
+                if(loading.isShowing()){
+                    loading.dismiss();
+                }
 
+                adapter = new Patientliste_adapter(getActivity(), patientList);
+                adapter.notifyDataSetChanged();
+                listView.setAdapter(adapter);
+            }
 
-
-
-
-
-
-
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
+            }
+        });
+    }
 }

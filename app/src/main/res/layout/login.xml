@@ -5,22 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.Login_frag"
-    android:background="@color/colorBackground">
-
-    <CheckBox
-        android:id="@+id/dataHandling"
-        android:layout_width="302dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="200dp"
-        android:text="@string/PersData"
-        android:textColor="@color/colorGray"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:background="@drawable/login_background">
 
     <ImageView
         android:id="@+id/imageView"
@@ -30,38 +15,42 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/sensmotionblack"
+        android:src="@drawable/sensmotionwhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.137" />
 
     <EditText
         android:id="@+id/brugernavn"
         style="@android:style/Widget.Material.Light.AutoCompleteTextView"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/edittext_custom"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="48dp"
         android:hint="Brugernavn"
         android:paddingLeft="15dp"
+        android:backgroundTint="@color/SENScolorWhite"
         android:radius="60dp"
+        android:textColor="@color/SENScolorWhite"
+        android:textColorHint="@color/SENScolorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
         android:id="@+id/kodeord"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/edittext_custom"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/SENScolorWhite"
         android:hint="Kodeord"
+        android:textColor="@color/SENScolorWhite"
+        android:textColorHint="@color/SENScolorWhite"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
         android:selectAllOnFocus="false"
@@ -69,32 +58,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/brugernavn" />
 
-    <CheckBox
-        android:id="@+id/HuskBruger"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:checked="false"
-        android:text="Forbliv logget ind"
-        android:textColor="@color/colorGray"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/dataHandling"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
-
     <Button
         android:id="@+id/logIndKnap"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/login_knap"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/SENScolorRed"
         android:text="Log ind"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
@@ -102,37 +73,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/kodeord" />
 
+    <CheckBox
+        android:id="@+id/HuskBruger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="48dp"
+        android:checked="false"
+        android:buttonTint="@color/SENScolorWhite"
+        android:text="Forbliv logget ind"
+        android:textColor="@color/SENScolorWhite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
+
+
     <TextView
         android:id="@+id/glemtLogin"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="120dp"
-        android:background="@color/colorBackground"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="152dp"
+        android:textColor="@color/SENScolorWhite"
         android:text="Glemt dit log ind?"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logIndKnap"
-        app:layout_constraintVertical_bias="0.919" />
-
-    <TextView
-        android:id="@+id/opret"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorBackground"
-        android:text="Har du ikke en Konto? Opret en her!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/glemtLogin" />
-
+        app:layout_constraintTop_toBottomOf="@+id/logIndKnap" />
 
 
 </android.support.constraint.ConstraintLayout>

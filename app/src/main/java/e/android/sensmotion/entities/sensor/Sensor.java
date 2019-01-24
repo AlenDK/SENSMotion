@@ -5,10 +5,14 @@ import org.json.JSONObject;
 public class Sensor {
 
     private String id;
-    private int placement;
+    private long placement;
     private Period currentPeriod;
 
-    public Sensor(String id, int placement){
+    public Sensor(){
+
+    }
+
+    public Sensor(String id, long placement){
         this.id = id;
         this.placement = placement;
     }
@@ -21,7 +25,7 @@ public class Sensor {
         this.id = id;
     }
 
-    public int getPlacement() {
+    public long getPlacement() {
         return placement;
     }
 
@@ -31,6 +35,10 @@ public class Sensor {
 
     public Period getCurrentPeriod() {
         return currentPeriod;
+    }
+
+    public void setCurrentPeriod(Period currentPeriod) {
+        this.currentPeriod = currentPeriod;
     }
 
     public void populate(JSONObject json) {

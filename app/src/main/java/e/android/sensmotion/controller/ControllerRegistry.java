@@ -1,8 +1,10 @@
 package e.android.sensmotion.controller;
 
+import e.android.sensmotion.controller.impl.FirebaseController;
 import e.android.sensmotion.controller.impl.UserController;
 import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.controller.impl.SensorController;
+import e.android.sensmotion.controller.interfaces.IFirebaseController;
 import e.android.sensmotion.controller.interfaces.IUserController;
 import e.android.sensmotion.controller.interfaces.IDataController;
 import e.android.sensmotion.controller.interfaces.ISensorController;
@@ -12,6 +14,7 @@ public class ControllerRegistry {
     private static IUserController userController;
     private static IDataController dataController;
     private static ISensorController sensorController;
+    private static IFirebaseController firebaseController;
 
     public ControllerRegistry() {
         // Needs to be here to prevent instantiation.
@@ -30,6 +33,11 @@ public class ControllerRegistry {
     public static ISensorController getSensorController(){
         if(sensorController == null) sensorController = new SensorController();
         return sensorController;
+    }
+
+    public static IFirebaseController getFirebaseController(){
+        if(firebaseController == null) firebaseController = new FirebaseController();
+        return firebaseController;
     }
 
 }

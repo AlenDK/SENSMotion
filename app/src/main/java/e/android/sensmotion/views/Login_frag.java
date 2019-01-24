@@ -1,13 +1,14 @@
 package e.android.sensmotion.views;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,57 +18,57 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutionException;
 
+import androidx.annotation.NonNull;
 import e.android.sensmotion.R;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IUserController;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.data.Firebase;
-import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class Login_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
-    EditText brugernavn;
-    CheckBox dataHandling;
-    Intent act;
-    IDataController dc;
-    IUserController bc;
-    String jsonString;
-    Firebase firebasee = new Firebase();
-    boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
+    private EditText brugernavn;
+    private CheckBox rememberUser;
+    private Intent act;
+    private boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
 
-    Patient patient;
-    Sensor sensor;
+    private SharedPreferences mPrefs;
+    private SharedPreferences.Editor prefsEditor;
+    private DatabaseReference database;
+
+    public Patient patient;
+
+    private int pressed;
+    private boolean remember;
+    private String userID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login, container, false);
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        prefsEditor = mPrefs.edit();
+
 
         if (!EMULATOR) {
 
             Fabric.with(getActivity(), new Crashlytics());
         }
-/*
-        forceCrash(view);
-*/
+
 
         brugernavn = view.findViewById(R.id.brugernavn);
-        dc = ControllerRegistry.getDataController();
-        bc = ControllerRegistry.getUserController();
-
-        TextView opret = (TextView) view.findViewById(R.id.opret);
         TextView glemt = (TextView) view.findViewById(R.id.glemtLogin);
         Button login = (Button) view.findViewById(R.id.logIndKnap);
-        dataHandling = (CheckBox) view.findViewById(R.id.dataHandling);
+        rememberUser = (CheckBox) view.findViewById(R.id.HuskBruger);
 
+        pressed = 0;
         login.setOnClickListener(this);
-        opret.setOnClickListener(this);
         glemt.setOnClickListener(this);
 
         return view;
@@ -77,83 +78,95 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     @SuppressLint("StaticFieldLeak")
     @Override
     public void onClick(View view) {
+        userID = brugernavn.getText().toString();
 
-        switch (view.getId()) {
-
-            case R.id.logIndKnap:
-                if (brugernavn.getText().toString().matches("admin")) {
-                    act = new Intent(getActivity(), Terapuet_activity.class);
-                    startActivity(act);
-                    break;
-                } else {
-
-                    if (!dataHandling.isChecked()) {
-                        Toast.makeText(getActivity(), "Du skal acceptere SENSmotion\'s vilkår " +
-                                      "for håndtering af personfølsomme data", Toast.LENGTH_LONG).show();
-
-                        break;
+            switch (view.getId()) {
+                case R.id.logIndKnap:
+                    if (pressed == 0) {
+                        if (userID.equals("admin")) {
+                            act = new Intent(getActivity(), Terapuet_activity.class);
+                            pressed++;
+                            getActivity().finish();
+                            startActivity(act);
+                        } else {
+                            getFirebasePatient();
+                        }
+                    } else {
+                        pressed++;
+                        getFirebasePatient();
                     }
-
-                    try {
-                        String hentDataResult = new HentDataAsyncTask().execute().get();
-                        sensor = patient.getSensor("s1");
-                        dc.saveData(hentDataResult, sensor);
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("/////////////////////////////// REST /////////////////////////////////////");
-                    //System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getRest());
-
-                    System.out.println("/////////////////////////////// Other /////////////////////////////////////");
-                    //System.out.println(bc.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList().get(0).getOther());
-
-                    Patient p1 = ControllerRegistry.getUserController().getPatient("p1");
-                    firebasee.newPatient(p1);
-
-                    act = new Intent(getActivity(), PatientActivity.class);
-                    startActivity(act);
-
                     break;
+
+                case R.id.glemtLogin:
+                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG).show();
+                    break;
+            }
+    }
+
+    private void getFirebasePatient() {
+        database = FirebaseDatabase.getInstance().getReference("Patients");
+
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //Remember User
+                        if (rememberUser.isChecked()) {
+                            remember = true;
+                            prefsEditor.putBoolean("remember", remember);
+                        }
+
+                        //Save id and name
+                        prefsEditor.putString("userID", userID);
+                        prefsEditor.putString("name", patient.getName());
+                        prefsEditor.apply();
+                        prefsEditor.commit();
+
+
+                        if(mPrefs.getInt("confirmation",0) == 1) {
+                            act = new Intent(getActivity(), PatientActivity.class);
+                            getActivity().finish();
+                            startActivity(act);
+                        } else {
+
+                            final DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            mPrefs.edit().putInt("confirmation", 1).apply();
+                                            act = new Intent(getActivity(), PatientActivity.class);
+                                            getActivity().finish();
+                                            startActivity(act);
+
+                                            break;
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            break;
+
+                                        default:
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                            builder.setMessage(R.string.PersData)
+                                    .setPositiveButton("Godkend", dialogListener)
+                                    .setNegativeButton("Afvis", dialogListener).show();
+
+                        }
+                    }
                 }
+            }
 
-            case R.id.opret:
-                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
-                break;
-            case R.id.glemtLogin:
-                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
-                break;
-        }
+            @Override
+            public void onCancelled (@NonNull DatabaseError databaseError){
+                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
+            }
+        });
     }
-
-    public static class IkkeImplementeret_frag extends Fragment {
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.ikke_implementeret, container, false);
-
-
-            return view;
-        }
-    }
-
-    class HentDataAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            patient = bc.getPatient("p1");
-            jsonString = dc.getDataString(patient, null);
-
-            return jsonString;
-        }
-    }
-
-    public void forceCrash(View view) {
-        throw new RuntimeException("This is a crash");
-    }
-
-
 }
 
 

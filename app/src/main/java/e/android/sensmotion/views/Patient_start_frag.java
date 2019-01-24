@@ -1,317 +1,876 @@
 package e.android.sensmotion.views;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
+import e.android.sensmotion.Notification.Alarm;
 import e.android.sensmotion.R;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.controller.interfaces.IUserController;
+import e.android.sensmotion.adapters.ProgressBar_adapter;
+import e.android.sensmotion.controller.impl.DataController;
+import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
+import e.android.sensmotion.entities.user.Patient;
+import e.android.sensmotion.views.ProgressBars.ProgBar;
+import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 
 
-public class Patient_start_frag extends Fragment implements View.OnClickListener {
+public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
-    private ImageView actionbar_image, today_smiley, stickman_walk, stickman_stand, stickman_bike, stickman_train, stickman_other;
-    private TextView textView, textView1, textView2, textView3, textView4, textView5, circleText;
-    private ProgressBar circlebar, walk, stand, bike, train, other;
+    private TextView circleBarText, completeText, titleName, stepsText;
+    private ImageView todaySmiley, leftLine, rightLine, info;
+    private ProgressBar circlebar;
     private ImageButton profile_button;
+    Button infoButton;
+
     private RecyclerView recyclerView;
+    private ProgBar walk, stand, cycling, exercise, other;
+    private ListView complete, incomplete;
 
-    Date currentDay = Calendar.getInstance().getTime();
-    SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
-    String today = format.format(currentDay);
 
-    List<Values> values;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
+    private DataController dataController = new DataController();
+
+    Calendar c = Calendar.getInstance();
+    int today = c.get(Calendar.DAY_OF_YEAR);
+
+
+    int yesterday, streakCount;
+    private ProgressDialog loading;
+
     ArrayList<String> days;
     ArrayList<Integer> images;
+    List<ProgBar> progBarsIncom = new ArrayList<>();
+    List<ProgBar> progBarsCom = new ArrayList<>();
+    List<Float> previousProgress = new ArrayList<>();
 
-    int day = Integer.parseInt(today.substring(0, 1));
-    int month = Integer.parseInt(today.substring(3, 4));
-    int year = Integer.parseInt(today.substring(6, 9));
+    ProgressBar_adapter IncomAdapter, comAdapter;
+    ViewGroup view;
+    ConstraintLayout constraintLayout;
 
-    SharedPreferences prefs;
-
-    int totalProgressGoal = 500, circleProgress;
-    private int walk_prog = 0;
-    public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    int circleProgress, previousCircleProgress;
+    public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
-    static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
+    static int totalwalk, totalstand, totalexercise, totalcycling, totalother, totalProgressGoal, steps;
 
-
-    IDataController data = ControllerRegistry.getDataController();
-    IUserController bruger = ControllerRegistry.getUserController();
-    private Handler progHandle = new Handler();
-
-    private View view;
+    private Patient patient;
+    Values values;
+    String userID, json;
+    String mobility = "0", status = "3";
+    int tasksCompleted;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //View view = inflater.inflate(R.layout.fragment_patient, container, false);
-          ViewGroup view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
-
-
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient1, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        editor = prefs.edit();
 
-        values = bruger.getPatient("p1").getSensor("s1").getCurrentPeriod().getValuesList();
-        days = new ArrayList<>();
-        images = new ArrayList<>();
+        ImageView stepsImage = view.findViewById(R.id.stepsImage);
 
-        System.out.println("Bruger: " + bruger.getPatient("p1").toString());
-        System.out.println("Sensor: " + bruger.getPatient("p1").getSensor("s1").toString());
+        if (prefs.getInt("pop_up", 0) == 0) {
+            final AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+            alertDialog.setMessage("Træk ned for at kunne se dine achievements!");
+            alertDialog.setTitle("Tip");
+            alertDialog.setCancelable(false);
+            alertDialog.setCanceledOnTouchOutside(false);
 
-
-        walkAmount = Double.parseDouble(values.get(0).getWalk());
-        standAmount = Double.parseDouble(values.get(0).getStand());
-        cyclingAmount = Double.parseDouble(values.get(0).getCycling());
-        exerciseAmount = Double.parseDouble(values.get(0).getExercise());
-        otherAmount = Double.parseDouble(values.get(0).getOther());
-
-        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
-        circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
-
-        createText(view);
-        createImages(view);
-        createButtons(view);
-        createProgressbar(view);
-        previousData(view);
-
-
-        final Toast akt_klaret = Toast.makeText(getActivity(), "Godt klaret. Du har nået en af dine" +
-                "daglige mål for i dag!", Toast.LENGTH_LONG);
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (walk_prog < 100){
-                    walk_prog++;
-                    android.os.SystemClock.sleep(50);
-                    progHandle.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            walk.setProgress(walk_prog);
-                        }
-                    });
+            alertDialog.setButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    editor.putInt("pop_up",1);
+                    editor.apply();
                 }
+            });
+            alertDialog.show();
+        }
+        loading = new ProgressDialog(view.getContext());
 
-                if(walk_prog == 100){
-                   akt_klaret.show();
-                }}
-        }).start();
-        */
+        getFirebaseStartingDate();
+        setRecyclerViewFromFireBase();
 
-/*
-        view.setOnTouchListener(new MotionDetection(getActivity()) {
-            @Override
-            public void onSwipeUp() {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentindhold, new Achievement_frag())
-                        .commit();
-            }
-        });
+        setStreak();
+        inisializeElements();
+        opdaterData();
 
-*/
+        Log.d("burhanee", "" + prefs.getInt("complete", 0));
+
         return view;
     }
 
     @Override
     public void onClick(View view) {
         if (view == profile_button) {
-            Fragment fragment = new patient_setting_frag();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, fragment)
-                    .commit();
-        }
-    }
-/*
-    private void changeSmiley(overallProgess) {
-        if(overallProgress <= 33.33) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_unsatisfied_red_48);
-        } else if (33.33 < overallProgress | overallProgress <= 66.66) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_moderat_yellow_48);
-        } else if (66.66 < overallProgress | overallProgress <= 100) {
-            imageView.setImageResource(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        }
-    }
-*/
+            Intent act = new Intent(getActivity(), Patient_setting_Activity.class);
+            startActivity(act);
+            //Alarm.alarmSaveData(getActivity());
+        } else if (view == constraintLayout) {
+            mobility = prefs.getString("mobility", "0");
+            walkAmount = prefs.getFloat("walk", 0.0f);
+            standAmount = prefs.getFloat("stand", 0.0f);
+            cyclingAmount = prefs.getFloat("cycle", 0.0f);
+            exerciseAmount = prefs.getFloat("exercise", 0.0f);
+            otherAmount = prefs.getFloat("other", 0.0f);
+            stepsText.setText(prefs.getInt("steps", 0)+" steps");
 
+            // /Check wether any progress amounts exceeds the goal
+            setExpectedAmount(Integer.parseInt(mobility));
+            resultsExceeded();
+            updateTodaySmiley();
 
-//get dag, og tjek år, måned, dag
-
-    public void setDates(int day, int month, int year) {
-        prefs.edit().putInt("day", day);
-        prefs.edit().putInt("month", month);
-        prefs.edit().putInt("year", year);
-    }
-
-    private boolean checkDate() {
-        if (prefs.getInt("day", 0) == 0) {
-            setDates(day, month, year);
-        }
-        if ((day - prefs.getInt("day", 0)) >= 1) {
-
-            setDates(day, month, year);
-            return true;
-        }
-
-        if ((month - prefs.getInt("month", 0)) >= 1) {
-            setDates(day, month, year);
-            return true;
-        }
-        if ((year - prefs.getInt("year", 0)) >= 1) {
-            setDates(day, month, year);
-            return true;
-        }
-        return false;
-    }
-
-    /*
-        private void saveAchievemnt( ) {
-            prefs.edit().putInt("overallWalk", )
-            prefs.getInt("walk", 0)
-            if ((prefs.getInt("walk", 0)) == 0) {
-                prefs.edit().putInt("walk",0);
-            } else {
+            //Save status to SP
+            if (tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))) {
+                editor.putInt("status", tasksCompleted);
+                editor.apply();
+                editor.commit();
             }
-            500
-                    520 - 500 = 20
-                            500 + 20
-                                    300 - 520
+            showElements();
+
+
+            //Skal kun køres når det er nødvendigt! Det tager lang tid!
+            //opdaterData();
+        } else if (view == info) {
+            createAlertdialog();
         }
-    */
-    private void createProgressbar(View view) {
-        circlebar = (ProgressBar) view.findViewById(R.id.circlebar);
-        walk = (ProgressBar) view.findViewById(R.id.progbar_walk);
-        stand = (ProgressBar) view.findViewById(R.id.progbar_stand);
-        bike = (ProgressBar) view.findViewById(R.id.progbar_bike);
-        train = (ProgressBar) view.findViewById(R.id.progbar_train);
-        other = (ProgressBar) view.findViewById(R.id.progbar_other);
+    }
 
-        int walkPercent = (int) Math.round(walkAmount / totalwalk * 100);
-        int standPercent = (int) Math.round(standAmount / totalstand * 100);
-        int cyclingPercent = (int) Math.round(cyclingAmount / totalcycling * 100);
-        int exercisePercent = (int) Math.round(exerciseAmount / totalexercise * 100);
-        int otherPercent = (int) Math.round(otherAmount / totalother * 100);
+    private void inisializeElements() {
+        titleName = view.findViewById(R.id.nameText);
+        titleName.setText(prefs.getString("name", ""));
+        completeText  = view.findViewById(R.id.completeText);
+        circleBarText = view.findViewById(R.id.progressBarText);
+        todaySmiley   = view.findViewById(R.id.facetoday_image);
+        stepsText = view.findViewById(R.id.stepsText);
+        circlebar = view.findViewById(R.id.circlebar);
+        leftLine  = view.findViewById(R.id.completedLeft);
+        rightLine = view.findViewById(R.id.completedRight);
 
-        System.out.println(walkPercent);
-        System.out.println(standPercent);
-        System.out.println(cyclingPercent);
-        System.out.println(exercisePercent);
-        System.out.println(otherPercent);
+        constraintLayout = view.findViewById(R.id.constraintLayout);
+        constraintLayout.setOnClickListener(this);
 
-        walk.setProgress(walkPercent);
-        stand.setProgress(standPercent);
-        bike.setProgress(cyclingPercent);
-        train.setProgress(exercisePercent);
-        other.setProgress(otherPercent);
+        days = new ArrayList<>();
+        images = new ArrayList<>();
 
 
-        circlebar.setProgress(circleProgress);
-        circlebar.setRotation(270); //Make the progressbar start at the top
+        userID = prefs.getString("userID", "p1");
+        mobility = prefs.getString("mobility", "0");
+        walkAmount = prefs.getFloat("walk", 0.0f);
+        standAmount = prefs.getFloat("stand", 0.0f);
+        cyclingAmount = prefs.getFloat("cycle", 0.0f);
+        exerciseAmount = prefs.getFloat("exercise", 0.0f);
+        otherAmount = prefs.getFloat("other", 0.0f);
+        tasksCompleted = Integer.parseInt(prefs.getString("status", "0"));
+        steps = prefs.getInt("steps", 0);
+        setExpectedAmount(Integer.parseInt(mobility));
+
+        System.out.println("SP walk: " + walkAmount);
+        System.out.println("SP stand: " + standAmount);
+        System.out.println("SP cycle: " + cyclingAmount);
+        System.out.println("SP exercise: " + exerciseAmount);
+        System.out.println("SP other: " + otherAmount);
+        System.out.println("SP other: " + steps);
+
+        stepsText.setText(prefs.getInt("steps", 0)+" steps");
+        createButtons(view);
+        createLists();
+        createProgressbar();
+        setCirleProgress();
+        updateTodaySmiley();
+    }
+
+    private void showElements() {
+        completeText.setVisibility(View.VISIBLE);
+        incomplete.setVisibility(View.VISIBLE);
+        complete.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+        progBarsIncom.clear();  //Ny dag derfor skal arraysne tømmes
+        progBarsCom.clear();    //Samme grund
+        createLists();
+        createProgressbar();
+        setCirleProgress();
 
     }
 
-    private void createImages(View view) {
-        actionbar_image = (ImageView) view.findViewById(R.id.actionbar_image);
-        today_smiley = (ImageView) view.findViewById(R.id.facetoday_image);
-        stickman_walk = (ImageView) view.findViewById(R.id.walking_stickman);
-        stickman_stand = (ImageView) view.findViewById(R.id.standing_stickman);
-        stickman_bike = (ImageView) view.findViewById(R.id.biking_stickman);
-        stickman_train = (ImageView) view.findViewById(R.id.training_stickman);
-        stickman_other = (ImageView) view.findViewById(R.id.other_stickman);
+    public void createLists() {
+        complete = view.findViewById(R.id.completeList);
+        incomplete = view.findViewById(R.id.incompleteList);
+        setPreviousProgress();
+        //getPreviousProgres();
+        IncomAdapter = new ProgressBar_adapter(getActivity(), progBarsIncom, previousProgress);
+        comAdapter = new ProgressBar_adapter(getActivity(), progBarsCom, previousProgress);
+
+        incomplete.setAdapter(IncomAdapter);
+        complete.setAdapter(comAdapter);
     }
 
-    private void createText(View view) {
-        textView = (TextView) view.findViewById(R.id.nameText);
-        textView1 = (TextView) view.findViewById(R.id.textView1);
-        textView2 = (TextView) view.findViewById(R.id.textView2);
-        textView3 = (TextView) view.findViewById(R.id.textView3);
-        textView4 = (TextView) view.findViewById(R.id.textView4);
-        textView5 = (TextView) view.findViewById(R.id.textView5);
-        circleText = (TextView) view.findViewById(R.id.progressBarText);
+    private void createProgressbar() {
+        if (progBarsIncom.size() == 0) {
+            walk = new ProgBar("walk", (int) Math.round(walkAmount), totalwalk);
+            stand = new ProgBar("stand", (int) Math.round(standAmount), totalstand);
+            cycling = new ProgBar("cycle", (int) Math.round(cyclingAmount), totalcycling);
+            exercise = new ProgBar("exercise", (int) Math.round(exerciseAmount), totalexercise);
+            other = new ProgBar("other", (int) Math.round(otherAmount), totalother);
 
-        textView1.setText(Math.round(otherAmount) + "/100m");
-        textView2.setText(Math.round(standAmount) + "/100min");
-        textView3.setText(Math.round(cyclingAmount) + "/100m");
-        textView4.setText(Math.round(exerciseAmount) + "/100min");
-        textView5.setText(Math.round(walkAmount) + "/100min");
-        circleText.setText(circleProgress + "%");
+            progBarsIncom.add(walk);
+            progBarsIncom.add(stand);
+            progBarsIncom.add(cycling);
+            progBarsIncom.add(exercise);
+            progBarsIncom.add(other);
+        } else {
+            for (ProgBar pb : progBarsIncom) {
+                if (pb.getName() == "walk") {
+                    pb.setProgress((int) Math.round(walkAmount));
+                } else if (pb.getName() == "stand") {
+                    pb.setProgress((int) Math.round(standAmount));
+                } else if (pb.getName() == "cycle") {
+                    pb.setProgress((int) Math.round(cyclingAmount));
+                } else if (pb.getName() == "exercise") {
+                    pb.setProgress((int) Math.round(exerciseAmount));
+                } else if (pb.getName() == "other") {
+                    pb.setProgress((int) Math.round(otherAmount));
+                }
+            }
+        }
+
+        sortProgressbars(progBarsIncom);
+        completeProgressbars();
+
+
+    }
+
+    private void sortProgressbars(List<ProgBar> bars) {
+        int length = bars.size();
+
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 0; j < length - i - 1; j++) {
+                if (bars.get(j).getProgress() < bars.get(j + 1).getProgress()) {
+                    ProgBar temp = bars.get(j);
+                    bars.remove(j);
+                    bars.add(j + 1, temp);
+                }
+            }
+        }
+    }
+
+    private void completeProgressbars() {
+        for (int i = 0; i < progBarsIncom.size(); i++) {
+            if (progBarsIncom.get(i).getProgress() >= progBarsIncom.get(i).getGoal()) {
+                progBarsIncom.get(i).setComplete(true);
+                progBarsCom.add(progBarsIncom.get(i));
+                progBarsIncom.remove(i);
+                i--;    //Ellers springer vi over hver anden
+            }
+        }
+        if (progBarsCom.size() == 0) {
+            completeText.setVisibility(View.GONE);
+            leftLine.setVisibility(View.GONE);
+            rightLine.setVisibility(View.GONE);
+        } else if (progBarsCom.size() != 0) {
+            leftLine.setVisibility(View.VISIBLE);
+            rightLine.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public void setPreviousProgress() {
+        for (ProgBar pb : progBarsCom)
+            previousProgress.add((float) pb.getPercent());
+
+        for (ProgBar pb : progBarsIncom)
+            previousProgress.add((float) pb.getPercent());
+
+        previousCircleProgress = circleProgress;
+
+
+
+        /*
+        Set<String> prefPrevProgress = new HashSet<String>();
+        List<String> prevString = new ArrayList<>();
+        for(ProgBar pb: progBarsIncom){
+            previousProgress.add((float)pb.getPercent());
+        }
+        for(ProgBar pb: progBarsCom){
+            previousProgress.add((float)pb.getPercent());
+        }
+        */
     }
 
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
+
+        info      = view.findViewById(R.id.info);
+        info.setOnClickListener(this);
     }
 
-    public static void setPercentage() {
+    private void createRecyclerview(String date, String status) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM");
 
-        PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
-        PercentStand = (int) Math.round(standAmount / totalstand * 100);
-        Percentcycle = (int) Math.round(cyclingAmount / totalcycling * 100);
-        PercentExecise = (int) Math.round(exerciseAmount / totalexercise * 100);
-        PercentOther = (int) Math.round(otherAmount / totalother * 100);
+        //Find the date of yesterday in format "dd-mm"
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String yesterday = dateFormat.format(cal.getTime());
+        System.out.println("format: " + yesterday);
 
-    }
-
-    /*
-    public void streakNotification(){
-        int streak;
-        UsageStats usageStats = new UsageStats();
-        Date date = new Date();
-        long currentTime = date.getTime();
-        if(usageStats.getLastTimeUsed()- currentTime == 43200000){
-
+        if (date.equals(yesterday)) {
+            days.add(0, "i går");
+        } else {
+            days.add(0, date);
         }
 
-    }
-    */
-
-    public void previousData(View view) {
-        days.add("I går");
-        days.add("13-01");
-        days.add("12-01");
-        days.add("11-01");
-        days.add("10-01");
-        days.add("09-01");
-        days.add("08-01");
-        days.add("07-01");
-        days.add("06-01");
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.baseline_sentiment_very_satisfied_black_48);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
-        images.add(R.drawable.greensmileyrounded);
+        //Decide which smiley to display
+        if (status.equals("0")) {
+            images.add(0, R.drawable.netural_smiley);
+        } else if (status.equals("1")) {
+            images.add(0, R.drawable.glad_smiley);
+        } else if (status.equals("2")) {
+            images.add(0, R.drawable.glad_smiley);
+        } else if (status.equals("3")) {
+            images.add(0, R.drawable.happy_smiley);
+        }
 
 
         recyclerView = view.findViewById(R.id.previousList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), days, images);
-
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), recyclerView, days, images, this);
         recyclerView.setAdapter(adapter);
 
+        /*
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+        recyclerView.startAnimation(animation);
+        */
+    }
+
+    private void setCirleProgress() {
+        dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
+        totalProgressGoal = totalwalk + totalstand + totalcycling + totalexercise + totalother;
+        circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
+
+
+        System.out.println("Daily: " + dailyProgress);
+        System.out.println("Daily goal: " + totalProgressGoal);
+
+
+        circleBarText.setText(circleProgress + "%");
+        circlebar.setRotation(-90);
+        ProgBarAnimation anim = new ProgBarAnimation(circlebar, previousCircleProgress, circleProgress);
+        anim.setDuration(300);
+        circlebar.startAnimation(anim);
+
+    }
+
+    //Popper op for hvilken som helst dag der er completet, skal ige kigges på
+    public void checkComplition() {
+        if (tasksCompleted == 1) {
+            if (prefs.getBoolean("complete1", false) == false) {
+                editor.putBoolean("complete1", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 2) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 3) {
+            if (prefs.getBoolean("complete3", false) == false) {
+                editor.putBoolean("complete3", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+        } else if (tasksCompleted == 4) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
+    } else if(tasksCompleted ==5) {
+            if (prefs.getBoolean("complete2", false) == false) {
+                editor.putBoolean("complete2", true).apply();
+                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                getFragmentManager().beginTransaction()
+                        .add(R.id.fragmentindhold, fragment)
+                        .commit();
+            }
         }
+    }
+
+    private void updateTodaySmiley() {
+        if(tasksCompleted < 3)
+            todaySmiley.setImageResource(R.drawable.netural_smiley);
+        if(tasksCompleted >= 3)
+            todaySmiley.setImageResource(R.drawable.glad_smiley);
+        if (tasksCompleted == 5)
+            todaySmiley.setImageResource(R.drawable.happy_smiley);
+    }
+
+    public void setStreak() {
+        yesterday = prefs.getInt("yesterday", 0);
+        streakCount = prefs.getInt("streakCounter", 0);
+
+        if (today - 1 == yesterday) {
+            streakCount++;
+            prefs.edit().putInt("yesterday", today).commit();
+            prefs.edit().putInt("streakCounter", streakCount).commit();
+        } else if (today == yesterday) {
+   /*        if(prefs.getInt("streakCounter", 0) == 0) {
+               prefs.edit().putInt("streakCounter", 1).commit();
+           }
+*/
+        } else {
+            prefs.edit().putInt("yesterday", today).commit();
+            prefs.edit().putInt("streakCounter", 1).commit();
+        }
+    }
+
+    private void setExpectedAmount(int m) {
+        switch (m) {
+            case 0:
+                totalwalk = 10;
+                totalstand = 15;
+                totalcycling = 2;
+                totalexercise = 5;
+                totalother = 10;
+                break;
+
+            case 1:
+                totalwalk = 12;
+                totalstand = 17;
+                totalcycling = 4;
+                totalexercise = 7;
+                totalother = 12;
+                break;
+
+            case 2:
+                totalwalk = 16;
+                totalstand = 21;
+                totalcycling = 8;
+                totalexercise = 11;
+                totalother = 16;
+                break;
+
+            case 3:
+                totalwalk = 24;
+                totalstand = 29;
+                totalcycling = 16;
+                totalexercise = 19;
+                totalother = 24;
+                break;
+
+            case 4:
+                totalwalk = 40;
+                totalstand = 45;
+                totalcycling = 32;
+                totalexercise = 35;
+                totalother = 40;
+                break;
+
+            case 5:
+                totalwalk = 72;
+                totalstand = 77;
+                totalcycling = 64;
+                totalexercise = 67;
+                totalother = 72;
+                break;
+
+            default:
+                totalwalk = 10;
+                totalstand = 15;
+                totalcycling = 2;
+                totalexercise = 5;
+                totalother = 10;
+                break;
+        }
+    }
+
+    private void resultsExceeded() {
+        tasksCompleted = 0;
+        if (walkAmount > totalwalk) {
+            walkAmount = totalwalk;
+            tasksCompleted++;
+        }
+        if (standAmount > totalstand) {
+            standAmount = totalstand;
+            tasksCompleted++;
+        }
+        if (cyclingAmount > totalcycling) {
+            cyclingAmount = totalcycling;
+            tasksCompleted++;
+        }
+        if (exerciseAmount > totalexercise) {
+            exerciseAmount = totalexercise;
+            tasksCompleted++;
+        }
+        if (otherAmount > totalother) {
+            otherAmount = totalother;
+            tasksCompleted++;
+        }
+
+    }
+
+    private void createAlertdialog(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.info_container);
+        dialog.setTitle("Daglige mål information");
+
+        TextView infoWalking  = dialog.findViewById(R.id.info_walking_text);
+        TextView infoStanding = dialog.findViewById(R.id.info_standing_text);
+        TextView infoCycling  = dialog.findViewById(R.id.info_cycling_text);
+        TextView infoExercise = dialog.findViewById(R.id.info_exercise_text);
+        TextView infoOther    = dialog.findViewById(R.id.info_other_text);
+
+        ImageView infoWalkingImage  = dialog.findViewById(R.id.info_walking);
+        ImageView infoStandingImage = dialog.findViewById(R.id.info_standing);
+        ImageView infoCyclingImage  = dialog.findViewById(R.id.info_cycling);
+        ImageView infoExerciseImage = dialog.findViewById(R.id.info_exercise);
+        ImageView infoOtherImage    = dialog.findViewById(R.id.info_other);
+        ImageView seperator1 = dialog.findViewById(R.id.seperator1);
+        ImageView seperator2 = dialog.findViewById(R.id.seperator2);
+
+        infoButton = dialog.findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+    }
+
+    private void opdaterData() {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //Get Patient
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //Get Sensor
+                        for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+
+                            //Get API data
+                            AsyncTask atask = new AsyncTask() {
+                                @Override
+                                protected void onPreExecute() {
+                                    loading.setMessage("\t Henter data...");
+                                    loading.show();
+                                }
+
+                                @Override
+                                protected Object doInBackground(Object[] objects) {
+                                    try {
+                                        String myFormat = "yyyy-MM-dd";
+                                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                                       // String dato = sdf.format(c.getTime());
+                                        String dato = "2018-10-01";
+
+                                        json = dataController.getApiDATA(patient, dato);
+                                        return null;
+                                    } catch (Exception e) {
+                                        return e;
+                                    }
+                                }
+
+                                @Override
+                                protected void onPostExecute(Object titler) {
+                                    JSONObject data = null;
+                                    try {
+                                        data = new JSONObject(json);
+                                        values = new Values();
+                                        values.getAPIdata(data);
+
+                                        values.setMobility(patient.getMobility());
+                                        mobility = values.getMobility();
+                                        System.out.println("Mobilitet: " + mobility);
+                                        setExpectedAmount(Integer.parseInt(mobility));
+
+                                        walkAmount = Double.parseDouble(values.getWalk());
+                                        standAmount = Double.parseDouble(values.getStand());
+                                        cyclingAmount = Double.parseDouble(values.getCycling());
+                                        exerciseAmount = Double.parseDouble(values.getExercise());
+                                        otherAmount = Double.parseDouble(values.getOther());
+                                        steps = Integer.parseInt(values.getSteps());
+                                        System.out.println("Hallo: "+steps);
+                                        resultsExceeded();
+                                        loading.dismiss();
+
+                                        //Save mobility to SP
+                                        editor.putString("mobility", mobility);
+
+                                        //Skal laves om så vi tjekker mod api'en...
+                                        if (prefs.getFloat("walk", 0.0f) != walkAmount ||
+                                                prefs.getFloat("stand", 0.0f) != standAmount ||
+                                                prefs.getFloat("cycle", 0.0f) != cyclingAmount ||
+                                                prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
+                                                prefs.getFloat("other", 0.0f) != otherAmount ||
+                                                prefs.getInt("steps", 0) != steps) {
+
+                                            editor.putFloat("walk", (float) walkAmount);
+                                            editor.putFloat("stand", (float) standAmount);
+                                            editor.putFloat("cycle", (float) cyclingAmount);
+                                            editor.putFloat("exercise", (float) exerciseAmount);
+                                            editor.putFloat("other", (float) otherAmount);
+                                            editor.putInt("steps", steps);
+
+                                            editor.apply();
+                                            editor.commit();
+
+                                            showElements();
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }.execute();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void setRecyclerViewFromFireBase() {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                //days.add("i går");
+                //Get Patient
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+
+                            //For each "Day value" in database
+                            for (final DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
+                                String date = snapshotValues.child("date").getValue(String.class);
+                                String status = snapshotValues.child("status").getValue(String.class);
+                                createRecyclerview(date, status);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void getFirebasePatient(final String day) {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            List<Sensor> sensorList = new ArrayList<>();
+
+                            //For each "Day value" in database
+                            for (DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
+
+                                //This is necessary because we reverse the order of days in the recyclerview's array
+                                String formatedDay = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount())-1 - Integer.parseInt(day)+"";
+                                if (snapshotValues.getKey().equals(formatedDay)) {
+                                    Values values = snapshotValues.getValue(Values.class);
+                                    mobility = values.getMobility();
+                                    status = values.getStatus();
+                                    walkAmount = Double.parseDouble(values.getWalk());
+                                    standAmount = Double.parseDouble(values.getStand());
+                                    cyclingAmount = Double.parseDouble(values.getCycling());
+                                    exerciseAmount = Double.parseDouble(values.getExercise());
+                                    otherAmount = Double.parseDouble(values.getOther());
+
+                                    //Steps is given as a decimal we dont want that
+                                    String[] formatedSteps = values.getSteps().split("\\.");
+                                    String steps = formatedSteps[0];
+                                    stepsText.setText(steps + " steps");
+
+                                    System.out.println("mobilitet: " + mobility);
+                                    setExpectedAmount(Integer.parseInt(mobility));
+                                    resultsExceeded();
+
+                                    showElements();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getFirebaseStartingDate() {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //For each Patient in database
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //For each Sensor in database
+                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+
+                            String startingDate = snapshotSensor.child("currentPeriod").child("startingDate").getValue(String.class);
+                            System.out.println("Staring date: " + startingDate);
+
+                            editor.putString("startingDate", startingDate);
+                            editor.apply();
+                            editor.commit();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void saveDataFirebase() {
+        database.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                //Get Patient
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
+
+                        //Get Sensor
+                        for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
+                            if (snapshotSensor.child("id").getValue(String.class).equals("s1")) {
+                                //Get API data
+                                AsyncTask atask = new AsyncTask() {
+                                    @Override
+                                    protected Object doInBackground(Object[] objects) {
+                                        try {
+                                            String myFormat = "yyyy-MM-dd";
+                                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                                            String dato = sdf.format(c.getTime());
+
+                                            json = dataController.getApiDATA(patient, dato);
+                                            return null;
+                                        } catch (Exception e) {
+                                            return e;
+                                        }
+                                    }
+
+                                    @Override
+                                    protected void onPostExecute(Object titler) {
+                                        JSONObject data = null;
+                                        try {
+                                            data = new JSONObject(json);
+                                            values = new Values();
+                                            values.getAPIdata(data);
+                                            values.setMobility(patient.getMobility());
+                                            values.setStatus(prefs.getString("status", "0"));
+
+                                            String dayCount = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount()) + "";
+                                            database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").child(dayCount).setValue(values);
+                                            System.out.println("Data saved...");
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }.execute();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    @Override
+    public void clickItem(int position) {
+        setPreviousProgress();
+        getFirebasePatient("" + position);
+    }
+
 }
