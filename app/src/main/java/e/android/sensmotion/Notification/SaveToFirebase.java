@@ -47,7 +47,7 @@ public class SaveToFirebase extends BroadcastReceiver {
         editor = prefs.edit();
         userID = prefs.getString("userID", "p1");
 
-
+        //Bliver ikke brugt, men er lavet så den gemmer en bruger til firebase, dog er der en bug, som tilføjer 300 brugere.
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

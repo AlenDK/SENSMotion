@@ -760,68 +760,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
-    //Bliver ikke brugt, men er lavet så den gemmer en bruger til firebase, dog er der en bug, som tilføjer 300 brugere.
-    private void saveDataFirebase() {
-        database.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                //Get Patient
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.child("id").getValue(String.class).equals(userID)) {
-                        patient = snapshot.getValue(Patient.class);
-
-                        //Get Sensor
-                        for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
-                            if (snapshotSensor.child("id").getValue(String.class).equals("s1")) {
-                                //Get API data
-                                AsyncTask atask = new AsyncTask() {
-                                    @Override
-                                    protected Object doInBackground(Object[] objects) {
-                                        try {
-                                            String myFormat = "yyyy-MM-dd";
-                                            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                                            String dato = sdf.format(c.getTime());
-
-                                            json = dataController.getApiDATA(patient, dato);
-                                            return null;
-                                        } catch (Exception e) {
-                                            return e;
-                                        }
-                                    }
-
-                                    @Override
-                                    protected void onPostExecute(Object titler) {
-                                        JSONObject data = null;
-                                        try {
-                                            data = new JSONObject(json);
-                                            values = new Values();
-                                            values.getAPIdata(data);
-                                            values.setMobility(patient.getMobility());
-                                            values.setStatus(prefs.getString("status", "0"));
-
-                                            String dayCount = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount()) + "";
-                                            database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").child(dayCount).setValue(values);
-                                            System.out.println("Data saved...");
-
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }.execute();
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
-
     @Override
     public void clickItem(int position) {
         setPreviousProgress();
