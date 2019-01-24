@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:angle="90"
-        android:endColor="@color/SENScolorWhite"
-        android:centerColor="@color/eggLightWhiteShadow"
-        android:startColor="@color/warmGrey" />
+        android:angle="-90"
+        android:endColor="@color/loginTopGradient"
+        android:centerColor="@color/loginCenterGradient"
+        android:startColor="@color/loginBottomGradient"
+        />
     <size
         android:width="300dp"
         android:height="70dp"
         />
+    <corners
+        android:bottomLeftRadius="10dp"
+        android:bottomRightRadius="10dp"
+        android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"
+        />
     <stroke
         android:width="1dp"
-        android:color="@color/lightBlack"
+        android:color="@color/eggwhite"
         />
 </shape>

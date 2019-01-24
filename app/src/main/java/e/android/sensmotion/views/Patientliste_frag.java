@@ -50,7 +50,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
 
         listView = view.findViewById(R.id.patientliste);
         listView.setDivider(null);
-        listView.setDividerHeight(15);
+        listView.setDividerHeight(3);
 
         loading = new ProgressDialog(view.getContext());
         loading.setMessage("\t Henter data...");
@@ -64,6 +64,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
                 String id = patientList.get(i).getId();
                 String name = patientList.get(i).getName();
 
+                //Save id and name so that we wont have to call firebase again from next fragment
                 PatientData_frag pdf = new PatientData_frag();
                 Bundle pdf_args = new Bundle();
 
@@ -83,6 +84,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
             @Override
             public void onClick(View view) {
 
+                //Save ids to check if id is in use
                 NyPatient_frag npf = new NyPatient_frag();
                 Bundle npf_args = new Bundle();
 
@@ -113,22 +115,7 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
 
     @Override
     public void onClick(View view) {
-        //dunno
-    }
-
-    public List<Patient> removeDuplicates(List<Patient> list){
-
-        List<Patient> newList = new ArrayList<>();
-
-        for(Patient p1: list){
-
-            if(!newList.contains(p1)){
-                newList.add(p1);
-            }
-
-        }
-
-        return newList;
+        //Nothing
     }
 
 
@@ -138,13 +125,12 @@ public class Patientliste_frag extends android.support.v4.app.Fragment implement
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //Clear list to avoid onDataChange errors
                 patientList.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Patient patient = snapshot.getValue(Patient.class);
-
                     patientList.add(patient);
-
                 }
 
                 if(loading.isShowing()){

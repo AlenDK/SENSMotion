@@ -15,12 +15,14 @@
                 android:height="50dp"
                 />
             <gradient
-                android:startColor="@color/SENScolorWhite"
-                android:endColor="@color/eggLightWhiteShadow"
+                android:angle="-90"
+                android:startColor="@color/loginBottomGradient"
+                android:centerColor="@color/loginCenterGradient"
+                android:endColor="@color/loginTopGradient"
                 />
             <stroke
-                android:width="2dp"
-                android:color="@color/SENScolorBlack"
+                android:width="1dp"
+                android:color="@color/eggwhiteShadow"
                 />
         </shape>
 
