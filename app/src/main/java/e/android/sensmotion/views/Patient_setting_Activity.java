@@ -102,6 +102,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                prefsEditor.putBoolean("NotiGoing", false);
                 prefsEditor.remove("remember");
                 prefsEditor.remove("userID");
                 prefsEditor.remove("walk");
