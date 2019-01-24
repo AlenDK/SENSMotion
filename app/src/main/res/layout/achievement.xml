@@ -8,7 +8,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/trophies"
         android:layout_width="wrap_content"
@@ -19,10 +22,7 @@
         android:fontFamily="serif"
         android:layout_gravity="center"
         android:textSize="28sp"
-        android:typeface="sans"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:typeface="sans" />
 
     <ImageView
         android:id="@+id/seperatorAchievements"
@@ -42,13 +42,7 @@
         android:columnWidth="100dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
+        android:verticalSpacing="30dp" />
 
-
-        android:verticalSpacing="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trophies" />
-
-
+    </LinearLayout>
 </LinearLayout>
