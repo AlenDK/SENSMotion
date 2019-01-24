@@ -128,9 +128,7 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                 }
 
         } else if (view == fortryd) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Patientliste_frag())
-                    .commit();
+            getFragmentManager().popBackStack();
         }
     }
 
