@@ -191,7 +191,7 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/logud_knap"
+        android:background="@drawable/button"
         android:text="Log ud"
         android:textColor="#ffffff"
         android:textSize="18sp"

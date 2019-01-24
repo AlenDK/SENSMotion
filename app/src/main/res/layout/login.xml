@@ -65,7 +65,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="24dp"
-        android:background="@color/colorTest"
+        android:background="@color/SENScolorRed"
         android:text="Log ind"
         android:textColor="#FFFFFF"
         android:textSize="15dp"

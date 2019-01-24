@@ -30,7 +30,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Du har klaret en af dine daglige mål for i dag!"
+            android:text="Du har klaret et af dine daglige mål for i dag!"
             android:textColor="@color/SENScolorWhite"
             android:textSize="15sp" />
 

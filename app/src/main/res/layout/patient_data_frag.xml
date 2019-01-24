@@ -49,81 +49,88 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="184dp"
+        android:layout_width="match_parent"
         android:layout_height="161dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="200dp"
         android:src="@drawable/patient_ikon"
-        app:layout_constraintBottom_toTopOf="@+id/dato_knap"
         app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar_image" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="184dp"
+        android:layout_width="match_parent"
         android:layout_height="161dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="190dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/patientinformation_textview"
         android:padding="5dp"
         android:text="Patientinformation"
-        app:layout_constraintBottom_toTopOf="@+id/graf_knap"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actionbar_image"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image" />
 
     <Button
         android:id="@+id/dato_knap"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="200dp"
         android:background="@drawable/edittext_custom"
         android:text="Dato"
         android:textColor="@color/SENScolorWhite"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="@+id/frameLayout3" />
 
     <Button
         android:id="@+id/graf_knap"
-        android:layout_width="170dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="48dp"
         android:background="@drawable/edittext_custom"
         android:text="Graf"
         android:textColor="@color/SENScolorWhite"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        tools:layout_editor_absoluteX="190dp" />
 
     <FrameLayout
         android:id="@+id/frameLayout3"
-        android:layout_width="351dp"
+        android:layout_width="match_parent"
         android:layout_height="271dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/categorizer_tasks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
         <com.github.mikephil.charting.charts.HorizontalBarChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp" />
 
     </FrameLayout>
 
