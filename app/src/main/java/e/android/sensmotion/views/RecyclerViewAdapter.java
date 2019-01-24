@@ -1,10 +1,8 @@
 package e.android.sensmotion.views;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,6 +27,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     LinearLayout linearLayout;
     ConstraintLayout constraintLayout;
     private onClickRecycle cr;
+    private int row_index;
 
 
     public RecyclerViewAdapter(Context context, RecyclerView recyclerView, ArrayList<String> days, ArrayList<Integer> images, onClickRecycle cr) {
@@ -44,7 +42,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.listview_list_item, parent, false);
         holder = new ViewHolder(view, cr);
-        linearLayout = view.findViewById(R.id.linearLayout);
         constraintLayout = view.findViewById(R.id.constraintLayout);
         recyclerView = view.findViewById(R.id.previousList);
 
@@ -55,7 +52,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tv.setText(days.get(position));
         holder.iv.setImageResource(images.get(position));
+
+        //Der her skal tjekkes
+        holder.ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                row_index=position;
+                notifyDataSetChanged();
+
+            }
+        });
+        if(row_index==position){
+            holder.cl.setBackgroundColor(Color.parseColor("#567845"));
+        }
+        else
+        {
+            holder.cl.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
     }
+
+
+
 
     @Override
     public int getItemCount() {
@@ -72,6 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ImageView iv;
         public ConstraintLayout cl;
         public onClickRecycle cr;
+        public LinearLayout ll;
 
         public ViewHolder(View itemView, onClickRecycle cr) {
             super(itemView);
@@ -79,6 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv = itemView.findViewById(R.id.previousTitle);
             iv = itemView.findViewById(R.id.previousSmiley);
             cl = itemView.findViewById(R.id.constraintLayout);
+            ll = itemView.findViewById(R.id.linearLayout);
             itemView.setOnClickListener(this);
         }
 
