@@ -47,9 +47,9 @@ public class PostNotifications extends BroadcastReceiver {
     private SharedPreferences.Editor editor;
     private DatabaseReference database;
 
-    public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
-    static double walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
-    static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
+    int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
+    double walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
+    int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
     private String userID;
     boolean walkHalf, walk75, walkDone;
