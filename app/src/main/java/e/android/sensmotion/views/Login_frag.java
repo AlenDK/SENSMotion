@@ -98,7 +98,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                     break;
 
                 case R.id.glemtLogin:
-                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG);
+                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG).show();
                     break;
             }
     }
