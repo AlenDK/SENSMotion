@@ -20,23 +20,23 @@ public class ControllerRegistry {
         // Needs to be here to prevent instantiation.
     }
 
-    public static IUserController getUserController(){
-        if(userController == null) userController = new UserController();
+    public static IUserController getUserController() {
+        if (userController == null) userController = new UserController();
         return userController;
     }
 
-    public static IDataController getDataController(){
-        if(dataController == null) dataController = new DataController();
+    public static IDataController getDataController() {
+        if (dataController == null) dataController = new DataController();
         return dataController;
     }
 
-    public static ISensorController getSensorController(){
-        if(sensorController == null) sensorController = new SensorController();
+    public static ISensorController getSensorController() {
+        if (sensorController == null) sensorController = new SensorController();
         return sensorController;
     }
 
-    public static IFirebaseController getFirebaseController(){
-        if(firebaseController == null) firebaseController = new FirebaseController();
+    public static IFirebaseController getFirebaseController() {
+        if (firebaseController == null) firebaseController = new FirebaseController();
         return firebaseController;
     }
 

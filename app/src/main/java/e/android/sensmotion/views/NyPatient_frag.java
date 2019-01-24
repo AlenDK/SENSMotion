@@ -78,7 +78,7 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         mobilityBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mobility = i+1 + "";
+                mobility = i + 1 + "";
                 mobilityValue.setText(mobility);
             }
 
@@ -103,31 +103,30 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                 Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
             } else if (patientName.getText().toString().equals("")) {
                 Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
-            } else if(ids.contains(patientID.getText().toString())) {
+            } else if (ids.contains(patientID.getText().toString())) {
                 Toast.makeText(view.getContext(), "En patient med dette ID findes allerede. Indtast venligst et gyldtigt ID.",
                         Toast.LENGTH_LONG).show();
+            } else {
+                List<Sensor> list = new ArrayList<>();
+                Sensor s = new Sensor("s1", 0);
+                list.add(s);
+
+                id = patientID.getText().toString();
+                name = patientName.getText().toString();
+
+                p = new Patient(id, name, null, null,
+                        null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
+
+                //Save Patient to firebase
+                savePatientFirebase();
             }
-            else{
-                    List<Sensor> list = new ArrayList<>();
-                    Sensor s = new Sensor("s1", 0);
-                    list.add(s);
-
-                    id = patientID.getText().toString();
-                    name = patientName.getText().toString();
-
-                    p = new Patient(id, name, null, null,
-                            null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
-
-                    //Save Patient to firebase
-                    savePatientFirebase();
-                }
 
         } else if (view == fortryd) {
             getFragmentManager().popBackStack();
         }
     }
 
-    public void savePatientFirebase(){
+    public void savePatientFirebase() {
         database.child(p.getId()).setValue(p);
 
         AsyncTask atask = new AsyncTask() {

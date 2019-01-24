@@ -8,11 +8,11 @@ public class Sensor {
     private long placement;
     private Period currentPeriod;
 
-    public Sensor(){
+    public Sensor() {
 
     }
 
-    public Sensor(String id, long placement){
+    public Sensor(String id, long placement) {
         this.id = id;
         this.placement = placement;
     }
@@ -51,9 +51,9 @@ public class Sensor {
     @Override
     public String toString() {
         return "Sensor{" +
-                "id: "+id +
-                ", placement: "+placement+
-                ", currentPeriod: "+currentPeriod+
+                "id: " + id +
+                ", placement: " + placement +
+                ", currentPeriod: " + currentPeriod +
                 '}';
     }
 }

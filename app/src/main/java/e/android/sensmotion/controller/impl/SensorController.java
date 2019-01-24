@@ -20,7 +20,7 @@ public class SensorController implements ISensorController {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     Sensor sensor;
 
-    public SensorController(){
+    public SensorController() {
 
         Sensor sensor1 = new Sensor("s1", 0);
 
@@ -28,19 +28,19 @@ public class SensorController implements ISensorController {
 
     }
 
-    public Sensor getSensor(final String id){
+    public Sensor getSensor(final String id) {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 ArrayList<Object> sensorer = new ArrayList<>();
-                for(DataSnapshot d : dataSnapshot.getChildren()){
-                    if(dataSnapshot.child("p1").child("sensorer").child("0").child("id").getValue(String.class) == id){
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    if (dataSnapshot.child("p1").child("sensorer").child("0").child("id").getValue(String.class) == id) {
                         System.out.println("suck my peepee");
                     }
                     //Sensorer
                     //sensor = new Sensor(    dataSnapshot.child("p1").child("sensorer").child("0").child("id").getValue(String.class),
-                                            //dataSnapshot.child("p1").child("sensorer").child("0").child("placement").getValue(Integer.class));
+                    //dataSnapshot.child("p1").child("sensorer").child("0").child("placement").getValue(Integer.class));
                     //sensorer.add(sensor);
 
                 }
@@ -54,10 +54,9 @@ public class SensorController implements ISensorController {
         });
 
 
-
         //Direkte fra API
-        for(Sensor s : sensorList){
-            if(s.getId().equals(id)){
+        for (Sensor s : sensorList) {
+            if (s.getId().equals(id)) {
                 return s;
             }
         }

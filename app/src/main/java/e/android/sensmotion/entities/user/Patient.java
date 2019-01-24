@@ -71,10 +71,10 @@ public class Patient extends User {
         this.sensors = sensors;
     }
 
-    public Sensor getSensor(String id){
+    public Sensor getSensor(String id) {
 
-        for(Sensor s : sensors){
-            if(s.getId().equals(id)){
+        for (Sensor s : sensors) {
+            if (s.getId().equals(id)) {
                 return s;
             }
         }
@@ -85,13 +85,13 @@ public class Patient extends User {
     @Override
     public String toString() {
         return "Patient{" +
-                "id: "+getId()+
-                "name: "+name+
-                "cpr: "+cpr+
-                ", mobility: "+mobility+
-                ", project_key: "+project_key+
-                ", patient_key: "+patient_key+
-                ", sensors: "+sensors+
+                "id: " + getId() +
+                "name: " + name +
+                "cpr: " + cpr +
+                ", mobility: " + mobility +
+                ", project_key: " + project_key +
+                ", patient_key: " + patient_key +
+                ", sensors: " + sensors +
                 '}';
     }
 }

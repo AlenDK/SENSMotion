@@ -32,7 +32,8 @@ public class SaveToFirebase extends BroadcastReceiver {
     private SharedPreferences.Editor editor;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
 
-    DataController dc = new DataController();;
+    DataController dc = new DataController();
+    ;
 
     Patient patient;
     Values values;
@@ -108,15 +109,15 @@ public class SaveToFirebase extends BroadcastReceiver {
         });
     }
 
-    private void resetValues(){
+    private void resetValues() {
         System.out.println("SP Test med alarm");
         System.out.println(prefs.getAll());
         System.out.println("Før:");
-        System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
-        System.out.println("SP stand: " + prefs.getFloat("stand",0.0f));
-        System.out.println("SP cycle: " + prefs.getFloat("cycle",0.0f));
-        System.out.println("SP exercise: " + prefs.getFloat("exercise",0.0f));
-        System.out.println("SP other: " + prefs.getFloat("other",0.0f));
+        System.out.println("SP walk: " + prefs.getFloat("walk", 0.0f));
+        System.out.println("SP stand: " + prefs.getFloat("stand", 0.0f));
+        System.out.println("SP cycle: " + prefs.getFloat("cycle", 0.0f));
+        System.out.println("SP exercise: " + prefs.getFloat("exercise", 0.0f));
+        System.out.println("SP other: " + prefs.getFloat("other", 0.0f));
 
         editor.remove("walk");
         editor.remove("stand");
@@ -128,10 +129,10 @@ public class SaveToFirebase extends BroadcastReceiver {
         //System.out.println("Værdier nulstillet");
 
         System.out.println("SP Efter");
-        System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
-        System.out.println("SP stand: " + prefs.getFloat("stand",0.0f));
-        System.out.println("SP cycle: " + prefs.getFloat("cycle",0.0f));
-        System.out.println("SP exercise: " + prefs.getFloat("exercise",0.0f));
-        System.out.println("SP other: " + prefs.getFloat("other",0.0f));
+        System.out.println("SP walk: " + prefs.getFloat("walk", 0.0f));
+        System.out.println("SP stand: " + prefs.getFloat("stand", 0.0f));
+        System.out.println("SP cycle: " + prefs.getFloat("cycle", 0.0f));
+        System.out.println("SP exercise: " + prefs.getFloat("exercise", 0.0f));
+        System.out.println("SP other: " + prefs.getFloat("other", 0.0f));
     }
 }

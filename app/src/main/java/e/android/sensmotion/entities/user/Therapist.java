@@ -15,9 +15,9 @@ public class Therapist extends User {
         return patients;
     }
 
-    public Patient getPatient(String id){
-        for(Patient p : patients){
-            if(p.getId().equals(id)){
+    public Patient getPatient(String id) {
+        for (Patient p : patients) {
+            if (p.getId().equals(id)) {
                 return p;
             }
         }
