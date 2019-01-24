@@ -69,6 +69,8 @@ public class PostNotifications extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
         setPercentage(context);
         // For test om hentning af data virker
         System.out.println(TAG + "    onRecieve() modtog hest   " + context);
@@ -78,8 +80,7 @@ public class PostNotifications extends BroadcastReceiver {
         System.out.println("Motion " + PercentExecise + "hest");
         System.out.println("andet " + PercentOther + "hest");
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        editor = prefs.edit();
+
 
         walkHalf = prefs.getBoolean("walkHalf", false);
         walk75 = prefs.getBoolean("walk75", false);
@@ -204,12 +205,12 @@ public class PostNotifications extends BroadcastReceiver {
     }
 
     public void setPercentage(Context context) {
-        /*walkAmount = prefs.getFloat("walk", 0.0f);
+        walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
         trainAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
-*/
+
 
         getData();
 

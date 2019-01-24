@@ -112,6 +112,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
                 prefsEditor.remove("other");
                 prefsEditor.apply();
                 prefsEditor.commit();
+                Alarm.stopAlarm();
                 act = new Intent(context, MainActivity.class);
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(act);
