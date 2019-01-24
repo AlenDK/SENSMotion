@@ -61,6 +61,8 @@ public class Patient_setting_Activity extends AppCompatActivity {
                     prefsEditor.putBoolean("NotiGoing", false);
                     Toast.makeText(context, "Notifikationer slået fra", Toast.LENGTH_LONG).show();
                 }
+                prefsEditor.apply();
+                prefsEditor.commit();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

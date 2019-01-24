@@ -61,13 +61,13 @@ public class PostNotifications extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         // For test om hentning af data virker
-       /* System.out.println(TAG + "    onRecieve() modtog hest   " + context);
+        System.out.println(TAG + "    onRecieve() modtog hest   " + context);
         System.out.println("Gå " + PercentWalk + "hest");
         System.out.println("Stå " + PercentStand + "hest");
         System.out.println("cykel " + Percentcycle + "hest");
         System.out.println("Motion " + PercentExecise + "hest");
         System.out.println("andet " + PercentOther + "hest");
-        */
+
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
 
@@ -146,6 +146,10 @@ public class PostNotifications extends BroadcastReceiver {
              ExerciseHalfDone(context);
             editor.putBoolean("trainHalf", true);
         }
+
+        editor.apply();
+        editor.commit();
+        System.out.println("hest: " + prefs.getBoolean("walkHalf", false));
     }
 
     private void getFirebasePatient(Context context) {
@@ -163,7 +167,7 @@ public class PostNotifications extends BroadcastReceiver {
                             List<Sensor> sensorList = new ArrayList<>();
                             Sensor s = snapshotSensor.getValue(Sensor.class);
 
-                            walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
+                            //walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
                             standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
                             cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
                             trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
@@ -184,7 +188,13 @@ public class PostNotifications extends BroadcastReceiver {
 
     public void setPercentage(Context context) {
 
-        getFirebasePatient(context);
+        //getFirebasePatient(context);
+
+        walkAmount = prefs.getFloat("walk", 0.0f);
+        standAmount = prefs.getFloat("stand", 0.0f);
+        cyclingAmount = prefs.getFloat("cycle", 0.0f);
+        trainAmount = prefs.getFloat("exercise", 0.0f);
+        otherAmount = prefs.getFloat("other", 0.0f);
 
         Percentcycle = (int) Math.round(cyclingAmount/totalcycling * 100);
         PercentExecise = (int) Math.round(trainAmount/totalexercise * 100);
