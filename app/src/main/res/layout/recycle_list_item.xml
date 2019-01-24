@@ -15,7 +15,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:focusableInTouchMode="true">
+        android:focusable="true">
 
 
         <ImageView
