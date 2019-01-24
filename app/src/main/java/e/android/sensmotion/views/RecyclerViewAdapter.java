@@ -62,7 +62,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return days.size();
     }
 
-
     @Override
     public int getItemViewType(int position) {
         return position;

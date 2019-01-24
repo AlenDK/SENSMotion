@@ -59,7 +59,7 @@ import e.android.sensmotion.views.ProgressBars.ProgBarAnimation;
 public class Patient_start_frag extends Fragment implements View.OnClickListener, RecyclerViewAdapter.onClickRecycle {
 
     private TextView circleBarText, completeText, titleName, stepsText;
-    private ImageView leftLine, rightLine, info;
+    private ImageView todaySmiley, leftLine, rightLine, info;
     private ProgressBar circlebar;
     private ImageButton profile_button;
     Button infoButton;
@@ -159,6 +159,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             // /Check wether any progress amounts exceeds the goal
             setExpectedAmount(Integer.parseInt(mobility));
             resultsExceeded();
+            updateTodaySmiley();
+
 
             //Save status to SP
             if (tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))) {
@@ -181,6 +183,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         titleName.setText(prefs.getString("name", ""));
         completeText  = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
+        todaySmiley   = view.findViewById(R.id.facetoday_image);
         stepsText = view.findViewById(R.id.stepsText);
         circlebar = view.findViewById(R.id.circlebar);
         leftLine  = view.findViewById(R.id.completedLeft);
@@ -210,6 +213,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         createLists();
         createProgressbar();
         setCirleProgress();
+        updateTodaySmiley();
     }
 
     private void showElements() {
@@ -354,13 +358,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         //Decide which smiley to display
         if (status.equals("0")) {
-            images.add(0, R.drawable.yellow);
+            images.add(0, R.drawable.netural_smiley);
         } else if (status.equals("1")) {
-            images.add(0, R.drawable.yellowgreen);
+            images.add(0, R.drawable.glad_smiley);
         } else if (status.equals("2")) {
-            images.add(0, R.drawable.yellowgreen);
+            images.add(0, R.drawable.glad_smiley);
         } else if (status.equals("3")) {
-            images.add(0, R.drawable.green);
+            images.add(0, R.drawable.happy_smiley);
         }
 
 
@@ -436,6 +440,15 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         .commit();
             }
         }
+    }
+
+    private void updateTodaySmiley() {
+        if(tasksCompleted < 3)
+            todaySmiley.setImageResource(R.drawable.netural_smiley);
+        if(tasksCompleted >= 3)
+            todaySmiley.setImageResource(R.drawable.glad_smiley);
+        if (tasksCompleted == 5)
+            todaySmiley.setImageResource(R.drawable.happy_smiley);
     }
 
     public void setStreak() {
