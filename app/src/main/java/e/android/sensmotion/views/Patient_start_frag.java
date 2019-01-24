@@ -42,6 +42,7 @@ import java.util.Locale;
 
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
+import e.android.sensmotion.adapters.RecyclerViewAdapter;
 import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.entities.sensor.Sensor;
 import e.android.sensmotion.entities.sensor.Values;
