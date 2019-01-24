@@ -125,7 +125,8 @@ public class Values {
             exercise = jsonVALUES1.getString("activity/exercise/time");
             other    = jsonVALUES1.getString("activity/other/time");
             steps    = jsonVALUES1.getString("activity/steps/count");
-
+            String[] stepsFormated = steps.split("\\.");
+            steps = stepsFormated[0];
             values = new Values(date, status, mobility, cycling, exercise, other, rest, stand, steps, walk);
 
             System.out.println("Values from API: "+values);

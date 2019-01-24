@@ -94,7 +94,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     int circleProgress, previousCircleProgress;
     public static int PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     static double dailyProgress, walkAmount, standAmount, exerciseAmount, cyclingAmount, otherAmount;
-    static int totalwalk, totalstand, totalexercise, totalcycling, totalother, totalProgressGoal;
+    static int totalwalk, totalstand, totalexercise, totalcycling, totalother, totalProgressGoal, steps;
 
     private Patient patient;
     Values values;
@@ -116,7 +116,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             alertDialog.setTitle("Tip");
             alertDialog.setCancelable(false);
             alertDialog.setCanceledOnTouchOutside(false);
-
 
             alertDialog.setButton("ok", new DialogInterface.OnClickListener() {
                 @Override
@@ -155,12 +154,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             cyclingAmount = prefs.getFloat("cycle", 0.0f);
             exerciseAmount = prefs.getFloat("exercise", 0.0f);
             otherAmount = prefs.getFloat("other", 0.0f);
+            stepsText.setText(prefs.getInt("steps", 0)+" steps");
 
             // /Check wether any progress amounts exceeds the goal
             setExpectedAmount(Integer.parseInt(mobility));
             resultsExceeded();
             updateTodaySmiley();
-
 
             //Save status to SP
             if (tasksCompleted > Integer.parseInt(prefs.getString("status", "0"))) {
@@ -195,6 +194,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         days = new ArrayList<>();
         images = new ArrayList<>();
 
+
         userID = prefs.getString("userID", "p1");
         mobility = prefs.getString("mobility", "0");
         walkAmount = prefs.getFloat("walk", 0.0f);
@@ -202,13 +202,18 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
         exerciseAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
+        tasksCompleted = Integer.parseInt(prefs.getString("status", "0"));
+        steps = prefs.getInt("steps", 0);
         setExpectedAmount(Integer.parseInt(mobility));
+
         System.out.println("SP walk: " + walkAmount);
         System.out.println("SP stand: " + standAmount);
         System.out.println("SP cycle: " + cyclingAmount);
         System.out.println("SP exercise: " + exerciseAmount);
         System.out.println("SP other: " + otherAmount);
+        System.out.println("SP other: " + steps);
 
+        stepsText.setText(prefs.getInt("steps", 0)+" steps");
         createButtons(view);
         createLists();
         createProgressbar();
@@ -640,6 +645,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         cyclingAmount = Double.parseDouble(values.getCycling());
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
+                                        steps = Integer.parseInt(values.getSteps());
+                                        System.out.println("Hallo: "+steps);
                                         resultsExceeded();
                                         loading.dismiss();
 
@@ -651,13 +658,16 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                                 prefs.getFloat("stand", 0.0f) != standAmount ||
                                                 prefs.getFloat("cycle", 0.0f) != cyclingAmount ||
                                                 prefs.getFloat("exercise", 0.0f) != exerciseAmount ||
-                                                prefs.getFloat("other", 0.0f) != otherAmount) {
+                                                prefs.getFloat("other", 0.0f) != otherAmount ||
+                                                prefs.getInt("steps", 0) != steps) {
 
                                             editor.putFloat("walk", (float) walkAmount);
                                             editor.putFloat("stand", (float) standAmount);
                                             editor.putFloat("cycle", (float) cyclingAmount);
                                             editor.putFloat("exercise", (float) exerciseAmount);
                                             editor.putFloat("other", (float) otherAmount);
+                                            editor.putInt("steps", steps);
+
                                             editor.apply();
                                             editor.commit();
 
