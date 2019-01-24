@@ -32,7 +32,8 @@ public class SaveToFirebase extends BroadcastReceiver {
     private SharedPreferences.Editor editor;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
 
-    DataController dc = new DataController();;
+    DataController dc = new DataController();
+    ;
 
     Patient patient;
     Values values;
@@ -46,7 +47,7 @@ public class SaveToFirebase extends BroadcastReceiver {
         editor = prefs.edit();
         userID = prefs.getString("userID", "p1");
 
-
+        //Bliver ikke brugt, men er lavet så den gemmer en bruger til firebase, dog er der en bug, som tilføjer 300 brugere.
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -87,7 +88,6 @@ public class SaveToFirebase extends BroadcastReceiver {
 
                                             String dayCount = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount()) + "";
                                             database.child(userID).child("sensorer").child("0").child("currentPeriod").child("valuesList").child(dayCount).setValue(values);
-                                            System.out.println("Data saved...");
                                             resetValues();
 
 
@@ -108,16 +108,7 @@ public class SaveToFirebase extends BroadcastReceiver {
         });
     }
 
-    private void resetValues(){
-        System.out.println("SP Test med alarm");
-        System.out.println(prefs.getAll());
-        System.out.println("Før:");
-        System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
-        System.out.println("SP stand: " + prefs.getFloat("stand",0.0f));
-        System.out.println("SP cycle: " + prefs.getFloat("cycle",0.0f));
-        System.out.println("SP exercise: " + prefs.getFloat("exercise",0.0f));
-        System.out.println("SP other: " + prefs.getFloat("other",0.0f));
-
+    private void resetValues() {
         editor.remove("walk");
         editor.remove("stand");
         editor.remove("cycle");
@@ -125,13 +116,5 @@ public class SaveToFirebase extends BroadcastReceiver {
         editor.remove("other");
         editor.apply();
         editor.commit();
-        //System.out.println("Værdier nulstillet");
-
-        System.out.println("SP Efter");
-        System.out.println("SP walk: "+prefs.getFloat("walk",0.0f));
-        System.out.println("SP stand: " + prefs.getFloat("stand",0.0f));
-        System.out.println("SP cycle: " + prefs.getFloat("cycle",0.0f));
-        System.out.println("SP exercise: " + prefs.getFloat("exercise",0.0f));
-        System.out.println("SP other: " + prefs.getFloat("other",0.0f));
     }
 }

@@ -9,10 +9,10 @@ public class ProgBar {
     private Boolean isComplete;
 
 
-    public ProgBar(String name, int progress, int goal){
+    public ProgBar(String name, int progress, int goal) {
 
         this.name = name;
-        if(progress > goal){
+        if (progress > goal) {
             this.progress = goal;
         } else {
             this.progress = progress;
@@ -49,9 +49,9 @@ public class ProgBar {
         return name;
     }
 
-    public double getPercent(){
+    public double getPercent() {
         double percent;
-        percent = ((double) progress/ (double) goal)*100;
+        percent = ((double) progress / (double) goal) * 100;
         return percent;
 
     }

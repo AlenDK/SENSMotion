@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,12 +16,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.share.Share;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,7 +78,7 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
         mobilityBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mobility = i+1 + "";
+                mobility = i + 1 + "";
                 mobilityValue.setText(mobility);
             }
 
@@ -108,33 +103,30 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                 Toast.makeText(view.getContext(), "Indtast venligst et patient ID", Toast.LENGTH_LONG).show();
             } else if (patientName.getText().toString().equals("")) {
                 Toast.makeText(view.getContext(), "Indtast venligst patientens navn", Toast.LENGTH_LONG).show();
-            } else if(ids.contains(patientID.getText().toString())) {
+            } else if (ids.contains(patientID.getText().toString())) {
                 Toast.makeText(view.getContext(), "En patient med dette ID findes allerede. Indtast venligst et gyldtigt ID.",
                         Toast.LENGTH_LONG).show();
+            } else {
+                List<Sensor> list = new ArrayList<>();
+                Sensor s = new Sensor("s1", 0);
+                list.add(s);
+
+                id = patientID.getText().toString();
+                name = patientName.getText().toString();
+
+                p = new Patient(id, name, null, null,
+                        null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
+
+                //Save Patient to firebase
+                savePatientFirebase();
             }
-            else{
-                    List<Sensor> list = new ArrayList<>();
-                    Sensor s = new Sensor("s1", 0);
-                    list.add(s);
-
-                    id = patientID.getText().toString();
-                    name = patientName.getText().toString();
-
-                    p = new Patient(id, name, null, null,
-                            null, list, mobilityValue.getText().toString(), "k5W2uX", "6rT39u");
-
-                    //Save Patient to firebase
-                    savePatientFirebase();
-                }
 
         } else if (view == fortryd) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Patientliste_frag())
-                    .commit();
+            getFragmentManager().popBackStack();
         }
     }
 
-    public void savePatientFirebase(){
+    public void savePatientFirebase() {
         database.child(p.getId()).setValue(p);
 
         AsyncTask atask = new AsyncTask() {
@@ -163,7 +155,6 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                     values.setStatus(prefs.getString("status", "0"));
 
                     database.child(p.getId()).child("sensorer").child("0").child("currentPeriod").child("valuesList").child("0").setValue(values);
-                    System.out.println("Data saved...");
 
                     String myFormat = "ddMM";
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

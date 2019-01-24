@@ -24,6 +24,7 @@ import e.android.sensmotion.R;
 import e.android.sensmotion.entities.user.Patient;
 
 import io.fabric.sdk.android.Fabric;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -80,27 +81,27 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
     public void onClick(View view) {
         userID = brugernavn.getText().toString();
 
-            switch (view.getId()) {
-                case R.id.logIndKnap:
-                    if (pressed == 0) {
-                        if (userID.equals("admin")) {
-                            act = new Intent(getActivity(), Terapuet_activity.class);
-                            pressed++;
-                            getActivity().finish();
-                            startActivity(act);
-                        } else {
-                            getFirebasePatient();
-                        }
-                    } else {
+        switch (view.getId()) {
+            case R.id.logIndKnap:
+                if (pressed == 0) {
+                    if (userID.equals("admin")) {
+                        act = new Intent(getActivity(), Terapuet_activity.class);
                         pressed++;
+                        getActivity().finish();
+                        startActivity(act);
+                    } else {
                         getFirebasePatient();
                     }
-                    break;
+                } else {
+                    pressed++;
+                    getFirebasePatient();
+                }
+                break;
 
-                case R.id.glemtLogin:
-                    Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG).show();
-                    break;
-            }
+            case R.id.glemtLogin:
+                Toast.makeText(getActivity(), "Ikke implementeret endnu", Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 
     private void getFirebasePatient() {
@@ -126,7 +127,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                         prefsEditor.commit();
 
 
-                        if(mPrefs.getInt("confirmation",0) == 1) {
+                        if (mPrefs.getInt("confirmation", 0) == 1) {
                             act = new Intent(getActivity(), PatientActivity.class);
                             getActivity().finish();
                             startActivity(act);
@@ -135,7 +136,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
                             final DialogInterface.OnClickListener dialogListener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    switch (which){
+                                    switch (which) {
                                         case DialogInterface.BUTTON_POSITIVE:
                                             mPrefs.edit().putInt("confirmation", 1).apply();
                                             act = new Intent(getActivity(), PatientActivity.class);
@@ -162,7 +163,7 @@ public class Login_frag extends android.support.v4.app.Fragment implements View.
             }
 
             @Override
-            public void onCancelled (@NonNull DatabaseError databaseError){
+            public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
             }
         });

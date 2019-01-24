@@ -20,8 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import e.android.sensmotion.R;
+import e.android.sensmotion.controller.impl.DataController;
 import e.android.sensmotion.entities.sensor.Sensor;
+import e.android.sensmotion.entities.sensor.Values;
 import e.android.sensmotion.entities.user.Patient;
 import e.android.sensmotion.views.Patient_start_frag;
 
@@ -35,8 +40,10 @@ import static e.android.sensmotion.views.Patient_start_frag.PercentWalk;
 import static e.android.sensmotion.views.Patient_start_frag.Percentcycle;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class PostNotifications extends BroadcastReceiver {
@@ -45,13 +52,16 @@ public class PostNotifications extends BroadcastReceiver {
     NotificationManagerCompat notificationManagerCompat;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
-    private DatabaseReference database;
+    private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
+    private DataController dataController = new DataController();
 
     int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
     double walkAmount, standAmount, trainAmount, cyclingAmount, otherAmount;
     int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
-    private String userID;
+    private String userID, json;
+    private Patient patient;
+    Values values;
     boolean walkHalf, walk75, walkDone;
     boolean cycleHalf, cycle75, cycleDone;
     boolean trainHalf, train75, trainDone;
@@ -59,17 +69,10 @@ public class PostNotifications extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        // For test om hentning af data virker
-       /* System.out.println(TAG + "    onRecieve() modtog hest   " + context);
-        System.out.println("Gå " + PercentWalk + "hest");
-        System.out.println("Stå " + PercentStand + "hest");
-        System.out.println("cykel " + Percentcycle + "hest");
-        System.out.println("Motion " + PercentExecise + "hest");
-        System.out.println("andet " + PercentOther + "hest");
-        */
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
+        setPercentage(context);
+
 
         walkHalf = prefs.getBoolean("walkHalf", false);
         walk75 = prefs.getBoolean("walk75", false);
@@ -86,7 +89,6 @@ public class PostNotifications extends BroadcastReceiver {
         dailyDone = prefs.getBoolean("dailyDone", false);
 
 
-        setPercentage(context);
         if (PercentDaily >= 100 && dailyDone == false) {
             NotifyWhenDone(context);
 
@@ -114,64 +116,75 @@ public class PostNotifications extends BroadcastReceiver {
             Walk75Done(context);
             editor.putBoolean("walk75", true);
             editor.putBoolean("walkHalf", true);
-        } else  if (PercentWalk >= 50 && walkHalf == false) {
+        } else if (PercentWalk >= 50 && walkHalf == false) {
             WalkHalfDone(context);
             editor.putBoolean("walkHalf", true);
         }
 
         if (Percentcycle >= 100 && cycleDone == false) {
-             CycleDone(context);
+            CycleDone(context);
             editor.putBoolean("cycleDone", true);
             editor.putBoolean("cycle75", true);
             editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 75 && cycle75 == false) {
-             Cycle75Done(context);
+            Cycle75Done(context);
             editor.putBoolean("cycle75", true);
             editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 50 && cycleHalf == false) {
-             CycleHalfDone(context);
+            CycleHalfDone(context);
             editor.putBoolean("cycleHalf", true);
         }
 
         if (PercentExecise >= 100 && trainDone == false) {
-             ExerciseDone(context);
+            ExerciseDone(context);
             editor.putBoolean("trainDone", true);
             editor.putBoolean("train75", true);
             editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 75 && train75 == false) {
-             Exercise75Done(context);
+            Exercise75Done(context);
             editor.putBoolean("train75", true);
             editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 50 && trainHalf == false) {
-             ExerciseHalfDone(context);
+            ExerciseHalfDone(context);
             editor.putBoolean("trainHalf", true);
         }
+
+        editor.apply();
+        editor.commit();
     }
 
-    private void getFirebasePatient(Context context) {
-
-        userID = prefs.getString("userID", "p1");
-        database = FirebaseDatabase.getInstance().getReference("Patients");
-
+    private void getData() {
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
+                        patient = snapshot.getValue(Patient.class);
 
-                        for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
-                            List<Sensor> sensorList = new ArrayList<>();
-                            Sensor s = snapshotSensor.getValue(Sensor.class);
+                        //Get API data
+                        String myFormat = "yyyy-MM-dd";
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        // String dato = sdf.format(c.getTime());
+                        String dato = "2018-10-01";
 
-                            walkAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getWalk());
-                            standAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getStand());
-                            cyclingAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getCycling());
-                            trainAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getExercise());
-                            otherAmount = Double.parseDouble(s.getCurrentPeriod().getValuesList().get(0).getOther());
+                        json = dataController.getApiDATA(patient, dato);
+
+                        JSONObject data = null;
+                        try {
+                            data = new JSONObject(json);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        values = new Values();
+                        values.getAPIdata(data);
+
+                        walkAmount = Double.parseDouble(values.getWalk());
+                        standAmount = Double.parseDouble(values.getStand());
+                        cyclingAmount = Double.parseDouble(values.getCycling());
+                        trainAmount = Double.parseDouble(values.getExercise());
+                        otherAmount = Double.parseDouble(values.getOther());
                     }
                 }
-
             }
 
             @Override
@@ -179,19 +192,24 @@ public class PostNotifications extends BroadcastReceiver {
 
             }
         });
-
     }
 
     public void setPercentage(Context context) {
+        walkAmount = prefs.getFloat("walk", 0.0f);
+        standAmount = prefs.getFloat("stand", 0.0f);
+        cyclingAmount = prefs.getFloat("cycle", 0.0f);
+        trainAmount = prefs.getFloat("exercise", 0.0f);
+        otherAmount = prefs.getFloat("other", 0.0f);
 
-        getFirebasePatient(context);
 
-        Percentcycle = (int) Math.round(cyclingAmount/totalcycling * 100);
-        PercentExecise = (int) Math.round(trainAmount/totalexercise * 100);
-        PercentWalk = (int) Math.round(walkAmount/totalwalk * 100);
-        PercentStand = (int) Math.round(standAmount/totalstand * 100);
-        PercentOther = (int) Math.round(otherAmount/totalother * 100);
-        PercentDaily = (Percentcycle + PercentExecise + PercentWalk + PercentStand + PercentOther)/5;
+        getData();
+
+        Percentcycle = (int) Math.round(cyclingAmount / totalcycling * 100);
+        PercentExecise = (int) Math.round(trainAmount / totalexercise * 100);
+        PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
+        PercentStand = (int) Math.round(standAmount / totalstand * 100);
+        PercentOther = (int) Math.round(otherAmount / totalother * 100);
+        PercentDaily = (Percentcycle + PercentExecise + PercentWalk + PercentStand + PercentOther) / 5;
     }
 
     public void NotifyWhenDone(Context context) {

@@ -127,5 +127,5 @@ public class DataController implements IDataController {
         period_name = "&day_count=";
         return Integer.parseInt(periode);
     }
-    }
+}
 

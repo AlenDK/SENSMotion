@@ -61,6 +61,8 @@ public class Patient_setting_Activity extends AppCompatActivity {
                     prefsEditor.putBoolean("NotiGoing", false);
                     Toast.makeText(context, "Notifikationer slået fra", Toast.LENGTH_LONG).show();
                 }
+                prefsEditor.apply();
+                prefsEditor.commit();
             }
         });
         sound_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -100,6 +102,17 @@ public class Patient_setting_Activity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                prefsEditor.remove("dailyDone");
+                prefsEditor.remove("walkDone");
+                prefsEditor.remove("walk75");
+                prefsEditor.remove("walkHalf");
+                prefsEditor.remove("cycleDone");
+                prefsEditor.remove("cycle75");
+                prefsEditor.remove("cycleHalf");
+                prefsEditor.remove("trainDone");
+                prefsEditor.remove("train75");
+                prefsEditor.remove("trainHalf");
+                prefsEditor.remove("NotiGoing");
                 prefsEditor.remove("remember");
                 prefsEditor.remove("userID");
                 prefsEditor.remove("walk");
@@ -109,6 +122,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
                 prefsEditor.remove("other");
                 prefsEditor.apply();
                 prefsEditor.commit();
+                Alarm.stopAlarm();
                 act = new Intent(context, MainActivity.class);
                 act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(act);
@@ -117,7 +131,7 @@ public class Patient_setting_Activity extends AppCompatActivity {
 
     }
 
-    private void createImage(){
+    private void createImage() {
         column1 = (ImageView) findViewById(R.id.column1);
         column2 = (ImageView) findViewById(R.id.column3);
         column3 = (ImageView) findViewById(R.id.column2);
