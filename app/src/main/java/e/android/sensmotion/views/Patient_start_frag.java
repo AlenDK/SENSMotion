@@ -219,6 +219,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         createProgressbar();
         setCirleProgress();
         updateTodaySmiley();
+        checkComplition();
     }
 
     private void showElements() {
@@ -404,42 +405,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     //Popper op for hvilken som helst dag der er completet, skal ige kigges på
     public void checkComplition() {
-        if (tasksCompleted == 1) {
+        if (stand.getComplete() == true) {
             if (prefs.getBoolean("complete1", false) == false) {
                 editor.putBoolean("complete1", true).apply();
+                Bundle bundle = new Bundle();
+                bundle.putInt("stand", R.drawable.standing_gold);
                 android.support.v4.app.Fragment fragment = new Task_complete_frag();
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, fragment)
-                        .commit();
-            }
-        } else if (tasksCompleted == 2) {
-            if (prefs.getBoolean("complete2", false) == false) {
-                editor.putBoolean("complete2", true).apply();
-                android.support.v4.app.Fragment fragment = new Task_complete_frag();
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, fragment)
-                        .commit();
-            }
-        } else if (tasksCompleted == 3) {
-            if (prefs.getBoolean("complete3", false) == false) {
-                editor.putBoolean("complete3", true).apply();
-                android.support.v4.app.Fragment fragment = new Task_complete_frag();
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, fragment)
-                        .commit();
-            }
-        } else if (tasksCompleted == 4) {
-            if (prefs.getBoolean("complete2", false) == false) {
-                editor.putBoolean("complete2", true).apply();
-                android.support.v4.app.Fragment fragment = new Task_complete_frag();
-                getFragmentManager().beginTransaction()
-                        .add(R.id.fragmentindhold, fragment)
-                        .commit();
-            }
-    } else if(tasksCompleted ==5) {
-            if (prefs.getBoolean("complete2", false) == false) {
-                editor.putBoolean("complete2", true).apply();
-                android.support.v4.app.Fragment fragment = new Task_complete_frag();
+                fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction()
                         .add(R.id.fragmentindhold, fragment)
                         .commit();
@@ -726,7 +698,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                loading.setMessage("Henter data..");
+                loading.show();
                 //For each Patient in database
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(userID)) {
@@ -765,12 +738,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             }
                         }
                     }
-                }
+                } loading.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                loading.dismiss();
             }
         });
     }

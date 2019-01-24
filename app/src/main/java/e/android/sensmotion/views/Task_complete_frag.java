@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -16,11 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.github.jinatonic.confetti.CommonConfetti;
 
 import e.android.sensmotion.R;
+import e.android.sensmotion.views.ProgressBars.ProgBar;
 
 public class Task_complete_frag extends android.support.v4.app.Fragment implements View.OnClickListener {
 
@@ -28,6 +31,7 @@ public class Task_complete_frag extends android.support.v4.app.Fragment implemen
     Button del;
     SharedPreferences prefs;
     RelativeLayout RL;
+    ImageView imageView;
 
 
 
@@ -44,6 +48,16 @@ public class Task_complete_frag extends android.support.v4.app.Fragment implemen
         del = view.findViewById(R.id.delKnap);
         ok.setOnClickListener(this);
         del.setOnClickListener(this);
+        imageView = view.findViewById(R.id.imageView4);
+
+        int img;
+
+        Bundle bundle = this.getArguments();
+        if(bundle != null){
+           img = bundle.getInt("stand");
+           imageView.setImageResource(img);
+        }
+
 
         view.getBackground().setAlpha(250);
 
