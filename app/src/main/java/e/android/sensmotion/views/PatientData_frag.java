@@ -357,7 +357,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
+                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG).show();
             }
         });
     }

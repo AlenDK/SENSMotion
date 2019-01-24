@@ -1,4 +1,4 @@
-package e.android.sensmotion.views;
+package e.android.sensmotion.adapters;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;

@@ -1,9 +1,7 @@
 package e.android.sensmotion.views;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
+
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
 import e.android.sensmotion.R;

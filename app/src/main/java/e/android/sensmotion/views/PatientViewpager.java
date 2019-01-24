@@ -24,7 +24,7 @@ public class PatientViewpager extends android.support.v4.app.Fragment {
         verticalViewPager = (VerticalViewPager) view.findViewById(R.id.viewpager);
         adapter = new PageAdapter(getFragmentManager());
         verticalViewPager.setAdapter(adapter);
-        verticalViewPager.setCurrentItem(adapter.getCount()-1);
+        verticalViewPager.setCurrentItem(adapter.getCount() - 1);
 
         return view;
     }

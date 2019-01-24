@@ -40,7 +40,7 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
         conKlient = view.findViewById(R.id.contact);
         conKlient.setOnClickListener(this);
 
-        editUnit =view.findViewById(R.id.editSensor);
+        editUnit = view.findViewById(R.id.editSensor);
         editUnit.setOnClickListener(this);
 
         addUnit = view.findViewById(R.id.addSensor);
@@ -67,7 +67,7 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
             Intent act = new Intent(getContext(), MainActivity.class);
             act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(act);
-        } else if (view == backArrow){
+        } else if (view == backArrow) {
             getFragmentManager().popBackStack();
         } else {
             Toast.makeText(getActivity(), "Denne funktion er ikke implementeret", Toast.LENGTH_SHORT).show();
