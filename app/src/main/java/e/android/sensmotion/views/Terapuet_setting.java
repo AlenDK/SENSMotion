@@ -1,5 +1,6 @@
 package e.android.sensmotion.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.terapuet_setting_frag, container, false);
 
+        //Initializes the various views.
         LogOut = view.findViewById(R.id.logUd);
         LogOut.setOnClickListener(this);
 
@@ -62,10 +64,9 @@ public class Terapuet_setting extends android.support.v4.app.Fragment implements
     @Override
     public void onClick(View view) {
         if (view == LogOut) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Login_frag())
-                    .addToBackStack(null)
-                    .commit();
+            Intent act = new Intent(getContext(), MainActivity.class);
+            act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(act);
         } else if (view == backArrow){
             getFragmentManager().popBackStack();
         } else {

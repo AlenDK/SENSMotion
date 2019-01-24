@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -56,16 +58,13 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     private TextView patientinformation, nameText;
     private HorizontalBarChart barChart;
     private PieChart pieChart;
-    private String dateChosen;
-    private ProgressDialog loading;
-    private AlertDialog.Builder dialogBuilder;
-
-    private String id, name, jsonString;
+    private String dateChosen, id, name, jsonString;
     private int chartType;
     private Patient currentPatient;
     private Values values;
-
-    private DatabaseReference database = FirebaseDatabase.getInstance().getReference("Patients");
+    private ProgressDialog loading;
+    private AlertDialog.Builder dialogBuilder;
+    private DatabaseReference database;
 
     final Calendar calendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -82,14 +81,16 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.patient_data_frag, container, false);
 
+        //Gets arguments from previous fragment.
         if (getArguments() != null) {
             id = getArguments().getString("id");
             name = getArguments().getString("name");
         }
 
+        //Initializes views
+        database = FirebaseDatabase.getInstance().getReference("Patients");
 
         dialogBuilder = new AlertDialog.Builder(view.getContext());
-
         loading = new ProgressDialog(view.getContext());
 
         pieChart = view.findViewById(R.id.pieChart);
@@ -97,6 +98,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
         barChart = view.findViewById(R.id.chart);
         updateChart(0);
+
         periode = view.findViewById(R.id.dato_knap);
         periode.setOnClickListener(this);
 
@@ -124,13 +126,11 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     public void onClick(View view) {
 
         if (view == periode) {
-
             new DatePickerDialog(view.getContext(), date, calendar
                     .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                     calendar.get(Calendar.DAY_OF_MONTH)).show();
 
         } else if (view == graf) {
-
             dialogBuilder.setTitle("Vælg diagram");
 
             final String grafvalg[] = new String[]{"1. Søjlediagram", "2. Cirkeldiagram"};
@@ -138,8 +138,9 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             dialogBuilder.setItems(grafvalg, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    //Shows the correct graph, depending on what was chosen in the dialog.
+                    //Also sets the visibility of the views.
                     switch (which) {
-
                         case 0:
                             pieChart.setVisibility(View.GONE);
                             barChart.setVisibility(View.VISIBLE);
@@ -162,6 +163,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                 }
             });
 
+            //Creates the dialog.
             AlertDialog graphChoice = dialogBuilder.create();
             graphChoice.show();
 
@@ -173,13 +175,11 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                     .commit();
 
         } else if(view == backButton){
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentindhold, new Patientliste_frag())
-                    .addToBackStack(null)
-                    .commit();
+            getFragmentManager().popBackStack();
         }
     }
 
+    //Method to update the date button whenever a date is chosen, and updates the chart.
     private void updateLabel() {
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
@@ -190,6 +190,8 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updateBarChart() {
+        /* Checks if the fragment is still attached to the activity, in order to
+        avoid errors while going back and forth between fragments. */
         if(isAdded()){
             //Initializes lists of BarEntry.
             List<BarEntry> entriesStand = new ArrayList<>();
@@ -207,25 +209,25 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             entriesRest.add(new BarEntry(1f, Float.valueOf(values.getRest())));
             entriesOther.add(new BarEntry(0f, Float.valueOf(values.getOther())));
 
-            //Creates the various datasets and sets their color.
-            //This is done individually as to give every value a unique label.
+            /* Creates the various datasets and sets their color.
+            This is done individually as to give every value a unique label. */
             BarDataSet dataSetStand = new BarDataSet(entriesStand, "Stående");
-            dataSetStand.setColor(getResources().getColor(R.color.colorOrange));
+            dataSetStand.setColor(ContextCompat.getColor(getActivity(), R.color.colorOrange));
 
             BarDataSet dataSetWalk = new BarDataSet(entriesWalk, "Gang");
-            dataSetWalk.setColor(getResources().getColor(R.color.SENScolorBlue));
+            dataSetWalk.setColor(ContextCompat.getColor(getActivity(), R.color.SENScolorBlue));
 
             BarDataSet dataSetCycling = new BarDataSet(entriesCycling, "Cykling");
-            dataSetCycling.setColor(getResources().getColor(R.color.colorGreen));
+            dataSetCycling.setColor(ContextCompat.getColor(getActivity(), R.color.colorGreen));
 
             BarDataSet dataSetExercise = new BarDataSet(entriesExercise, "Træning");
-            dataSetExercise.setColor(getResources().getColor(R.color.SENScolorBlack));
+            dataSetExercise.setColor(ContextCompat.getColor(getActivity(), R.color.SENScolorBlack));
 
             BarDataSet dataSetRest = new BarDataSet(entriesRest, "Hvile");
-            dataSetRest.setColor(getResources().getColor(R.color.SENScolorRed));
+            dataSetRest.setColor(ContextCompat.getColor(getActivity(), R.color.SENScolorRed));
 
             BarDataSet dataSetOther = new BarDataSet(entriesOther, "Andet");
-            dataSetOther.setColor(getResources().getColor(R.color.SENScolorGray));
+            dataSetOther.setColor(ContextCompat.getColor(getActivity(), R.color.SENScolorGray));
 
             //Creates data for the chart based on the different datasets.
             BarData data = new BarData(dataSetStand, dataSetWalk, dataSetExercise, dataSetCycling, dataSetRest, dataSetOther);
@@ -235,7 +237,7 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
             data.setBarWidth(0.9f);
             barChart.setData(data);
             barChart.setFitBars(true);
-            barChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
+            barChart.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.SENScolorWhite));
             barChart.setDrawBorders(true);
             barChart.setTouchEnabled(false);
             barChart.getAxisRight().setEnabled(false);
@@ -252,40 +254,44 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
     }
 
     public void updatePieChart() {
-        //Creates a list of PieEntries
-        List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(Float.valueOf(values.getStand()), "Stående"));
-        entries.add(new PieEntry(Float.valueOf(values.getWalk()), "Gang"));
-        entries.add(new PieEntry(Float.valueOf(values.getCycling()), "Cykling"));
-        entries.add(new PieEntry(Float.valueOf(values.getExercise()), "Træning"));
-        entries.add(new PieEntry(Float.valueOf(values.getRest()), "Hvile"));
-        entries.add(new PieEntry(Float.valueOf(values.getOther()), "Andet"));
+        /* Checks if the fragment is still attached to the activity, in order to
+        avoid errors while going back and forth between fragments. */
+        if(isAdded()){
+            //Creates a list of PieEntries
+            List<PieEntry> entries = new ArrayList<>();
+            entries.add(new PieEntry(Float.valueOf(values.getStand()), "Stående"));
+            entries.add(new PieEntry(Float.valueOf(values.getWalk()), "Gang"));
+            entries.add(new PieEntry(Float.valueOf(values.getCycling()), "Cykling"));
+            entries.add(new PieEntry(Float.valueOf(values.getExercise()), "Træning"));
+            entries.add(new PieEntry(Float.valueOf(values.getRest()), "Hvile"));
+            entries.add(new PieEntry(Float.valueOf(values.getOther()), "Andet"));
 
-        //Creates a dataset with the given entries
-        PieDataSet set = new PieDataSet(entries, "Sensorværdier");
+            //Creates a dataset with the given entries
+            PieDataSet set = new PieDataSet(entries, "Sensorværdier");
 
-        //Sets the colors of the entries
-        set.setColors(new int[]{R.color.colorOrange, R.color.SENScolorBlue, R.color.colorGreen,
-                R.color.SENScolorBlack, R.color.SENScolorRed, R.color.SENScolorGray}, getActivity());
+            //Sets the colors of the entries
+            set.setColors(new int[]{R.color.colorOrange, R.color.SENScolorBlue, R.color.colorGreen,
+                    R.color.SENScolorBlack, R.color.SENScolorRed, R.color.SENScolorGray}, getActivity());
 
-        set.setValueTextColor(R.color.SENScolorBlack);
-        set.setValueTextSize(13);
+            set.setValueTextColor(R.color.SENScolorBlack);
+            set.setValueTextSize(13);
 
-        //General formatting
-        PieData data = new PieData(set);
-        data.setValueFormatter(new PercentFormatter());
-        pieChart.setData(data);
-        pieChart.setBackgroundColor(getResources().getColor(R.color.SENScolorWhite));
-        pieChart.setDrawEntryLabels(false);
-        pieChart.setUsePercentValues(true);
+            //General formatting
+            PieData data = new PieData(set);
+            data.setValueFormatter(new PercentFormatter());
+            pieChart.setData(data);
+            pieChart.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.SENScolorWhite));
+            pieChart.setDrawEntryLabels(false);
+            pieChart.setUsePercentValues(true);
 
-        //Sets chart description
-        Description disc = new Description();
-        disc.setText("Sensordata");
-        pieChart.setDescription(disc);
+            //Sets chart description
+            Description disc = new Description();
+            disc.setText("Sensordata");
+            pieChart.setDescription(disc);
 
-        //Updates the chart
-        pieChart.invalidate();
+            //Updates the chart
+            pieChart.invalidate();
+        }
     }
 
 
@@ -312,15 +318,14 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                                     loading.show();
                                 }
 
-
                                 @Override
                                 protected Object doInBackground(Object[] objects) {
                                     try {
                                         String myFormat = "yyyy-MM-dd";
                                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                                        String dato = sdf.format(calendar.getTime());
+                                        String date = sdf.format(calendar.getTime());
 
-                                        jsonString = ControllerRegistry.getDataController().getApiDATA(currentPatient, dato);
+                                        jsonString = ControllerRegistry.getDataController().getApiDATA(currentPatient, date);
                                         return null;
                                     } catch (Exception e) {
                                         return e;
@@ -329,7 +334,8 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
                                 @Override
                                 protected void onPostExecute(Object titler) {
-                                    JSONObject data = null;
+                                    JSONObject data;
+                                    //Fills the charts with data from the Values class.
                                     try {
                                         data = new JSONObject(jsonString);
                                         values = new Values();
@@ -340,21 +346,18 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                                         } else {
                                             updatePieChart();
                                         }
-
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
                             }.execute();
                         }
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(), "Noget gik galt prøv igen...", Toast.LENGTH_LONG);
             }
         });
     }
@@ -363,12 +366,10 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
 
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-
+            // Formats the data from Values from minutes to both hours and minutes.
             int hours = (int) value / 60;
             int minutes = Math.round(value % 60);
-
             return hours + " t, " + minutes + " min";
         }
     }
 }
-
