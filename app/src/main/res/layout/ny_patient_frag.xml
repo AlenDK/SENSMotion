@@ -13,28 +13,28 @@
     <!-- TODO: Update blank fragment layout -->
 
 
-    <TextView
-        android:id="@+id/nameText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/Fortryd"
+        android:layout_width="27dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="404dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Opret ny patient"
-        android:textColor="@color/SENScolorWhite"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/box"
+        android:background="@drawable/regretnewpatient"
+        android:text="X"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/box"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/box" />
 
     <LinearLayout
         android:id="@+id/box"
-        android:layout_width="357dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/nypatient_baggrund"
         android:gravity="center_horizontal"
         android:orientation="vertical"
@@ -48,14 +48,27 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/nameTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/nameText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="16dp"
+            android:text="Opret ny patient"
+            android:textColor="@color/lightBlack"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/nameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="Navn"
+            android:layout_marginLeft="8dp"
+            android:text="@string/nameTitle"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
 
@@ -63,6 +76,8 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_gravity="left"
             android:backgroundTint="@color/focused_tint"
             android:ems="10"
@@ -72,12 +87,11 @@
 
         <TextView
             android:id="@+id/idTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="Patient ID"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="@string/idTitle"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
 
@@ -85,6 +99,8 @@
             android:id="@+id/patientID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_gravity="left"
             android:backgroundTint="@color/focused_tint"
             android:ems="10"
@@ -97,9 +113,8 @@
             android:id="@+id/mobilityTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
             android:text="@string/mobility"
             android:textColor="@color/lightBlack"
             android:textSize="18sp" />
@@ -118,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:text="3"
             android:textColor="@color/lightBlack"
             android:textSize="16sp" />
@@ -127,6 +142,7 @@
             android:id="@+id/checkBox3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
             android:layout_gravity="left"
             android:text="Start måling nu"
             android:textColor="@color/lightBlack"
@@ -147,20 +163,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/Fortryd"
-        android:layout_width="27dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="336dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/regretnewpatient"
-        android:text="X"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/box"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

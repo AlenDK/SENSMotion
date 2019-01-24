@@ -117,8 +117,8 @@ public class Patient_setting_Activity extends AppCompatActivity {
 
     private void createImage(){
         column1 = (ImageView) findViewById(R.id.column1);
-        column2 = (ImageView) findViewById(R.id.column2);
-        column3 = (ImageView) findViewById(R.id.column3);
+        column2 = (ImageView) findViewById(R.id.column3);
+        column3 = (ImageView) findViewById(R.id.column2);
         column4 = (ImageView) findViewById(R.id.column4);
         column5 = (ImageView) findViewById(R.id.column5);
     }

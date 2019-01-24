@@ -7,9 +7,12 @@
 
     <color name="eggLightwhite">#ffffff</color>
     <color name="eggwhite">#F3F1F1</color>
+    <color name="eggInterwhite">#e1dede</color>
     <color name="eggLightWhiteShadow">#eaeaea</color>
+    <color name="eggInterWhiteShadow">#d1d1d1</color>
     <color name="eggwhiteShadow">#bfbebe</color>
     <color name="darkEggwhite">#847d78</color>
+    <color name="eggWhiteRedish">#dcd1d1</color>
 
     <color name="warmLightGrey">#f5f3f0</color>
     <color name="warmGrey">#e8e3de</color>

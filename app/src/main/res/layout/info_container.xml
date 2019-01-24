@@ -24,7 +24,7 @@
         android:layout_alignStart="@+id/info_walking"
         android:layout_marginTop="42dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/info_seperator" />
+        android:src="@drawable/seperator_info" />
 
     <ImageView
         android:id="@+id/info_walking"
@@ -147,7 +147,7 @@
         android:layout_marginTop="42dp"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/info_seperator" />
+        android:src="@drawable/seperator_info" />
 
     <Button
         android:id="@+id/infoButton"
