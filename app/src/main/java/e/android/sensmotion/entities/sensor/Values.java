@@ -22,24 +22,30 @@ public class Values {
 
     }
 
-    public Values(String date, String status, String mobility, String cycling, String exercise, String other, String rest, String stand, String steps, String walk){
-        this.date     = date;
+    public Values(String date, String status, String mobility, String cycling, String exercise, String other, String rest, String stand, String steps, String walk) {
+        this.date = date;
         this.mobility = mobility;
-        this.cycling  = cycling;
+        this.cycling = cycling;
         this.exercise = exercise;
-        this.other    = other;
-        this.rest     = rest;
-        this.stand    = stand;
-        this.steps    = steps;
-        this.status   = status;
-        this.walk     = walk;
+        this.other = other;
+        this.rest = rest;
+        this.stand = stand;
+        this.steps = steps;
+        this.status = status;
+        this.walk = walk;
     }
 
-    public String getDate(){ return date;}
+    public String getDate() {
+        return date;
+    }
 
-    public String getMobility(){ return mobility; }
+    public String getMobility() {
+        return mobility;
+    }
 
-    public String getStatus(){ return  status; }
+    public String getStatus() {
+        return status;
+    }
 
     public String getRest() {
         return rest;
@@ -69,9 +75,13 @@ public class Values {
         return cycling;
     }
 
-    public void setMobility(String level) { mobility = level; }
+    public void setMobility(String level) {
+        mobility = level;
+    }
 
-    public void setStatus(String level) { status = level; }
+    public void setStatus(String level) {
+        status = level;
+    }
 
     public void populate(JSONObject data1, int count) {
 
@@ -84,16 +94,16 @@ public class Values {
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
             //System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
-            System.out.println("////\n"+jsonVALUES1);
+            System.out.println("////\n" + jsonVALUES1);
 
 
-            rest     = jsonVALUES1.getString("activity/resting/time");
-            stand    = jsonVALUES1.getString("activity/standing/time");
-            walk     = jsonVALUES1.getString("activity/walking/time");
-            cycling  = jsonVALUES1.getString("activity/cycling/time");
+            rest = jsonVALUES1.getString("activity/resting/time");
+            stand = jsonVALUES1.getString("activity/standing/time");
+            walk = jsonVALUES1.getString("activity/walking/time");
+            cycling = jsonVALUES1.getString("activity/cycling/time");
             exercise = jsonVALUES1.getString("activity/exercise/time");
-            other    = jsonVALUES1.getString("activity/other/time");
-            steps    = jsonVALUES1.getString("activity/steps/count");
+            other = jsonVALUES1.getString("activity/other/time");
+            steps = jsonVALUES1.getString("activity/steps/count");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -102,34 +112,34 @@ public class Values {
 
     }
 
-    public Values getAPIdata(JSONObject data1){
+    public Values getAPIdata(JSONObject data1) {
         Values values = null;
         mobility = "0";
         status = "0";
         try {
-            JSONObject jsonVALUE   = data1.getJSONObject("value");
-            JSONArray jsonDATA     = jsonVALUE.getJSONArray("data");
-            JSONObject jsonVALUES  = jsonDATA.getJSONObject(0);
+            JSONObject jsonVALUE = data1.getJSONObject("value");
+            JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
+            JSONObject jsonVALUES = jsonDATA.getJSONObject(0);
 
             //Get formated date
             date = (jsonVALUES.getString("end_time")).substring(8, 10);
-            date += "-"+(jsonVALUES.getString("end_time")).substring(5, 7);
+            date += "-" + (jsonVALUES.getString("end_time")).substring(5, 7);
 
             //Get Values
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
 
-            rest     = jsonVALUES1.getString("activity/resting/time");
-            stand    = jsonVALUES1.getString("activity/standing/time");
-            walk     = jsonVALUES1.getString("activity/walking/time");
-            cycling  = jsonVALUES1.getString("activity/cycling/time");
+            rest = jsonVALUES1.getString("activity/resting/time");
+            stand = jsonVALUES1.getString("activity/standing/time");
+            walk = jsonVALUES1.getString("activity/walking/time");
+            cycling = jsonVALUES1.getString("activity/cycling/time");
             exercise = jsonVALUES1.getString("activity/exercise/time");
-            other    = jsonVALUES1.getString("activity/other/time");
-            steps    = jsonVALUES1.getString("activity/steps/count");
+            other = jsonVALUES1.getString("activity/other/time");
+            steps = jsonVALUES1.getString("activity/steps/count");
             String[] stepsFormated = steps.split("\\.");
             steps = stepsFormated[0];
             values = new Values(date, status, mobility, cycling, exercise, other, rest, stand, steps, walk);
 
-            System.out.println("Values from API: "+values);
+            System.out.println("Values from API: " + values);
 
             return values;
 
@@ -143,14 +153,14 @@ public class Values {
     @Override
     public String toString() {
         return "Values{" +
-                "date: "+date+
-                "rest: "+rest+
-                ", stand: "+stand+
-                ", walk: "+walk+
-                ", exercise: "+exercise+
-                ", other: "+other+
-                ", steps: "+steps+
-                ", cycling: "+cycling+
+                "date: " + date +
+                "rest: " + rest +
+                ", stand: " + stand +
+                ", walk: " + walk +
+                ", exercise: " + exercise +
+                ", other: " + other +
+                ", steps: " + steps +
+                ", cycling: " + cycling +
                 '}';
     }
 }

@@ -25,14 +25,14 @@ public class Alarm {
         }
     }
 
-    public static void startNotifications (Context c) {
+    public static void startNotifications(Context c) {
         System.out.println("hest startalarm kaldt");
 
-        if (alarmMgr == null)  alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        if (alarmMgr == null) alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(c, PostNotifications.class);
 
         intent.setAction("com.alarm.notitest.START_ALARM"); //lille trick som gør at det bliver forskellige intents hvis det er to notifikationer samtidig
-        alarmIntent = PendingIntent.getBroadcast(c, 0, intent,  0);
+        alarmIntent = PendingIntent.getBroadcast(c, 0, intent, 0);
 
         // Set the alarm to start at 8:30 a.m.
         Calendar calendar = Calendar.getInstance();
@@ -50,16 +50,17 @@ public class Alarm {
         }*/
         //For at teste om AlarmManageren virker
 
-        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+100, 60000, alarmIntent);
+        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 100, 60000, alarmIntent);
 
     }
 
     public static void stopNotifications(Context context) {
-        if (stopAlarmMgr == null)  stopAlarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (stopAlarmMgr == null)
+            stopAlarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, PostNotifications.class);
 
         //intent.setAction("com.alarm.notitest.START_ALARM"); //lille trick som gør at det bliver forskellige intents hvis det er to notifikationer samtidig
-        stopAlarmIntent = PendingIntent.getBroadcast(context, 0, intent,  0);
+        stopAlarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
 
         // Set the alarm to go of at 00:00 a.m.
         Calendar calendar = Calendar.getInstance();
@@ -68,18 +69,18 @@ public class Alarm {
         calendar.set(Calendar.MINUTE, 00);
 
         stopAlarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                                            , AlarmManager.INTERVAL_DAY, stopAlarmIntent);
+                , AlarmManager.INTERVAL_DAY, stopAlarmIntent);
 
     }
 
-    public static void alarmSaveData(Context c){
+    public static void alarmSaveData(Context c) {
 
         System.out.println("hest startalarm kaldt");
 
-        if (alarmMng == null)  alarmMng = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+        if (alarmMng == null) alarmMng = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(c, SaveToFirebase.class);
 
-        almIntent = PendingIntent.getBroadcast(c, 0, intent,  0);
+        almIntent = PendingIntent.getBroadcast(c, 0, intent, 0);
 
         // Set the alarm to go of at 23:55 p.m.
         Calendar calendar = Calendar.getInstance();
@@ -89,7 +90,7 @@ public class Alarm {
 
 
         alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
-                                           , AlarmManager.INTERVAL_DAY, almIntent);
+                , AlarmManager.INTERVAL_DAY, almIntent);
     }
 
 }

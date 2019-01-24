@@ -18,7 +18,6 @@ import e.android.sensmotion.entities.user.Patient;
 public class Patientliste_adapter extends ArrayAdapter<Patient> {
 
 
-
     private Activity context;
     private List<Patient> patientList;
 

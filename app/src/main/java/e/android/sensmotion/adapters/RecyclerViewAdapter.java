@@ -57,8 +57,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
     @Override
     public int getItemCount() {
         return days.size();
@@ -69,7 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return position;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv;
         public ImageView iv;
         public ConstraintLayout cl;
@@ -88,11 +86,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         @Override
         public void onClick(View view) {
-           if (selectedItems.get(getAdapterPosition(), false)) {
+            if (selectedItems.get(getAdapterPosition(), false)) {
                 selectedItems.delete(getAdapterPosition());
                 linearLayout.setSelected(false);
-            }
-            else {
+            } else {
                 selectedItems.put(getAdapterPosition(), true);
                 linearLayout.setSelected(true);
             }
@@ -100,7 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    public interface onClickRecycle{
+    public interface onClickRecycle {
         void clickItem(int position);
     }
 }

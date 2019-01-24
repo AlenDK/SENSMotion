@@ -116,7 +116,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    editor.putInt("pop_up",1);
+                    editor.putInt("pop_up", 1);
                     editor.apply();
                 }
             });
@@ -149,7 +149,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
             cyclingAmount = prefs.getFloat("cycle", 0.0f);
             exerciseAmount = prefs.getFloat("exercise", 0.0f);
             otherAmount = prefs.getFloat("other", 0.0f);
-            stepsText.setText(prefs.getInt("steps", 0)+" steps");
+            stepsText.setText(prefs.getInt("steps", 0) + " steps");
 
             // /Check wether any progress amounts exceeds the goal
             setExpectedAmount(Integer.parseInt(mobility));
@@ -175,12 +175,12 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     private void inisializeElements() {
         titleName = view.findViewById(R.id.nameText);
         titleName.setText(prefs.getString("name", ""));
-        completeText  = view.findViewById(R.id.completeText);
+        completeText = view.findViewById(R.id.completeText);
         circleBarText = view.findViewById(R.id.progressBarText);
-        todaySmiley   = view.findViewById(R.id.facetoday_image);
+        todaySmiley = view.findViewById(R.id.facetoday_image);
         stepsText = view.findViewById(R.id.stepsText);
         circlebar = view.findViewById(R.id.circlebar);
-        leftLine  = view.findViewById(R.id.completedLeft);
+        leftLine = view.findViewById(R.id.completedLeft);
         rightLine = view.findViewById(R.id.completedRight);
 
         constraintLayout = view.findViewById(R.id.constraintLayout);
@@ -208,7 +208,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         System.out.println("SP other: " + otherAmount);
         System.out.println("SP other: " + steps);
 
-        stepsText.setText(prefs.getInt("steps", 0)+" steps");
+        stepsText.setText(prefs.getInt("steps", 0) + " steps");
         createButtons(view);
         createLists();
         createProgressbar();
@@ -320,25 +320,13 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
         previousCircleProgress = circleProgress;
 
-
-
-        /*
-        Set<String> prefPrevProgress = new HashSet<String>();
-        List<String> prevString = new ArrayList<>();
-        for(ProgBar pb: progBarsIncom){
-            previousProgress.add((float)pb.getPercent());
-        }
-        for(ProgBar pb: progBarsCom){
-            previousProgress.add((float)pb.getPercent());
-        }
-        */
     }
 
     private void createButtons(View view) {
         profile_button = (ImageButton) view.findViewById(R.id.knap_profil);
         profile_button.setOnClickListener(this);
 
-        info      = view.findViewById(R.id.info);
+        info = view.findViewById(R.id.info);
         info.setOnClickListener(this);
     }
 
@@ -398,7 +386,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
 
-    //Popper op for hvilken som helst dag der er completet, skal ige kigges på
+    //Pop up for compliation comes when only one is done.
     public void checkComplition() {
         if (stand.getComplete() == true) {
             if (prefs.getBoolean("complete1", false) == false) {
@@ -415,34 +403,31 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     }
 
     private void updateTodaySmiley() {
-        if(tasksCompleted < 3)
+        if (tasksCompleted < 3)
             todaySmiley.setImageResource(R.drawable.netural_smiley);
-        if(tasksCompleted >= 3)
+        if (tasksCompleted >= 3)
             todaySmiley.setImageResource(R.drawable.glad_smiley);
         if (tasksCompleted == 5)
             todaySmiley.setImageResource(R.drawable.happy_smiley);
     }
 
     public void setStreak() {
+        //Checking today vs the saved prefs, to check if it a new day.
         yesterday = prefs.getInt("yesterday", 0);
         streakCount = prefs.getInt("streakCounter", 0);
 
         if (today - 1 == yesterday) {
             streakCount++;
-            prefs.edit().putInt("yesterday", today).commit();
-            prefs.edit().putInt("streakCounter", streakCount).commit();
-        } else if (today == yesterday) {
-   /*        if(prefs.getInt("streakCounter", 0) == 0) {
-               prefs.edit().putInt("streakCounter", 1).commit();
-           }
-*/
+            prefs.edit().putInt("yesterday", today).apply();
+            prefs.edit().putInt("streakCounter", streakCount).apply();
         } else {
-            prefs.edit().putInt("yesterday", today).commit();
-            prefs.edit().putInt("streakCounter", 1).commit();
+            prefs.edit().putInt("yesterday", today).apply();
+            prefs.edit().putInt("streakCounter", 1).apply();
         }
     }
 
     private void setExpectedAmount(int m) {
+        //Hardcoded Mobilite
         switch (m) {
             case 0:
                 totalwalk = 10;
@@ -527,22 +512,22 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     }
 
-    private void createAlertdialog(){
+    private void createAlertdialog() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.info_container);
         dialog.setTitle("Daglige mål information");
 
-        TextView infoWalking  = dialog.findViewById(R.id.info_walking_text);
+        TextView infoWalking = dialog.findViewById(R.id.info_walking_text);
         TextView infoStanding = dialog.findViewById(R.id.info_standing_text);
-        TextView infoCycling  = dialog.findViewById(R.id.info_cycling_text);
+        TextView infoCycling = dialog.findViewById(R.id.info_cycling_text);
         TextView infoExercise = dialog.findViewById(R.id.info_exercise_text);
-        TextView infoOther    = dialog.findViewById(R.id.info_other_text);
+        TextView infoOther = dialog.findViewById(R.id.info_other_text);
 
-        ImageView infoWalkingImage  = dialog.findViewById(R.id.info_walking);
+        ImageView infoWalkingImage = dialog.findViewById(R.id.info_walking);
         ImageView infoStandingImage = dialog.findViewById(R.id.info_standing);
-        ImageView infoCyclingImage  = dialog.findViewById(R.id.info_cycling);
+        ImageView infoCyclingImage = dialog.findViewById(R.id.info_cycling);
         ImageView infoExerciseImage = dialog.findViewById(R.id.info_exercise);
-        ImageView infoOtherImage    = dialog.findViewById(R.id.info_other);
+        ImageView infoOtherImage = dialog.findViewById(R.id.info_other);
         ImageView seperator1 = dialog.findViewById(R.id.seperator1);
         ImageView seperator2 = dialog.findViewById(R.id.seperator2);
 
@@ -584,7 +569,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     try {
                                         String myFormat = "yyyy-MM-dd";
                                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                                       // String dato = sdf.format(c.getTime());
+                                        // String dato = sdf.format(c.getTime());
                                         String dato = "2018-10-01";
 
                                         json = dataController.getApiDATA(patient, dato);
@@ -613,7 +598,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
                                         steps = Integer.parseInt(values.getSteps());
-                                        System.out.println("Hallo: "+steps);
+                                        System.out.println("Hallo: " + steps);
                                         resultsExceeded();
                                         loading.dismiss();
 
@@ -708,7 +693,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             for (DataSnapshot snapshotValues : snapshotSensor.child("currentPeriod").child("valuesList").getChildren()) {
 
                                 //This is necessary because we reverse the order of days in the recyclerview's array
-                                String formatedDay = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount())-1 - Integer.parseInt(day)+"";
+                                String formatedDay = Math.round(snapshotSensor.child("currentPeriod").child("valuesList").getChildrenCount()) - 1 - Integer.parseInt(day) + "";
                                 if (snapshotValues.getKey().equals(formatedDay)) {
                                     Values values = snapshotValues.getValue(Values.class);
                                     mobility = values.getMobility();
@@ -733,7 +718,8 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                             }
                         }
                     }
-                } loading.dismiss();
+                }
+                loading.dismiss();
             }
 
             @Override
@@ -774,6 +760,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         });
     }
 
+    //Bliver ikke brugt, men er lavet så den gemmer en bruger til firebase, dog er der en bug, som tilføjer 300 brugere.
     private void saveDataFirebase() {
         database.addValueEventListener(new ValueEventListener() {
             @Override

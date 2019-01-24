@@ -19,24 +19,26 @@ public class UserController implements IUserController {
     private List<Patient> patientList = new ArrayList<>();
     private Patient patient;
 
-    public UserController(){
+    public UserController() {
     }
 
     public void setPatient(Patient p) {
         patient = p;
     }
 
-    public void setPatientList(List<Patient> list){
+    public void setPatientList(List<Patient> list) {
         patientList = list;
     }
 
-    public List<Patient> getPatientList() { return patientList; }
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
 
-    public Patient getPatient(final String id){
+    public Patient getPatient(final String id) {
 
-        for(Patient p: patientList){
+        for (Patient p : patientList) {
             System.out.println(p.getId());
-            if(p.getId().equals(id)){
+            if (p.getId().equals(id)) {
                 System.out.println("id: " + p.getId());
                 return p;
             }
@@ -46,14 +48,14 @@ public class UserController implements IUserController {
     }
 
 
-    public void savePatient(Patient p){
+    public void savePatient(Patient p) {
         FirebaseController fbc = new FirebaseController();
         fbc.newPatient(p);
     }
 
-    public void addSensorToPatient(List<Sensor> sl, String patientId){
-        for(Patient p: patientList){
-            if(p.getId().equals(patientId)){
+    public void addSensorToPatient(List<Sensor> sl, String patientId) {
+        for (Patient p : patientList) {
+            if (p.getId().equals(patientId)) {
                 p.setSensors(sl);
             }
         }

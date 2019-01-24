@@ -81,7 +81,6 @@ public class PostNotifications extends BroadcastReceiver {
         System.out.println("andet " + PercentOther + "hest");
 
 
-
         walkHalf = prefs.getBoolean("walkHalf", false);
         walk75 = prefs.getBoolean("walk75", false);
         walkDone = prefs.getBoolean("walkDone", false);
@@ -95,7 +94,6 @@ public class PostNotifications extends BroadcastReceiver {
         trainDone = prefs.getBoolean("trainDone", false);
 
         dailyDone = prefs.getBoolean("dailyDone", false);
-
 
 
         if (PercentDaily >= 100 && dailyDone == false) {
@@ -125,36 +123,36 @@ public class PostNotifications extends BroadcastReceiver {
             Walk75Done(context);
             editor.putBoolean("walk75", true);
             editor.putBoolean("walkHalf", true);
-        } else  if (PercentWalk >= 50 && walkHalf == false) {
+        } else if (PercentWalk >= 50 && walkHalf == false) {
             WalkHalfDone(context);
             editor.putBoolean("walkHalf", true);
         }
 
         if (Percentcycle >= 100 && cycleDone == false) {
-             CycleDone(context);
+            CycleDone(context);
             editor.putBoolean("cycleDone", true);
             editor.putBoolean("cycle75", true);
             editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 75 && cycle75 == false) {
-             Cycle75Done(context);
+            Cycle75Done(context);
             editor.putBoolean("cycle75", true);
             editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 50 && cycleHalf == false) {
-             CycleHalfDone(context);
+            CycleHalfDone(context);
             editor.putBoolean("cycleHalf", true);
         }
 
         if (PercentExecise >= 100 && trainDone == false) {
-             ExerciseDone(context);
+            ExerciseDone(context);
             editor.putBoolean("trainDone", true);
             editor.putBoolean("train75", true);
             editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 75 && train75 == false) {
-             Exercise75Done(context);
+            Exercise75Done(context);
             editor.putBoolean("train75", true);
             editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 50 && trainHalf == false) {
-             ExerciseHalfDone(context);
+            ExerciseHalfDone(context);
             editor.putBoolean("trainHalf", true);
         }
 
@@ -214,12 +212,12 @@ public class PostNotifications extends BroadcastReceiver {
 
         getData();
 
-        Percentcycle = (int) Math.round(cyclingAmount/totalcycling * 100);
-        PercentExecise = (int) Math.round(trainAmount/totalexercise * 100);
-        PercentWalk = (int) Math.round(walkAmount/totalwalk * 100);
-        PercentStand = (int) Math.round(standAmount/totalstand * 100);
-        PercentOther = (int) Math.round(otherAmount/totalother * 100);
-        PercentDaily = (Percentcycle + PercentExecise + PercentWalk + PercentStand + PercentOther)/5;
+        Percentcycle = (int) Math.round(cyclingAmount / totalcycling * 100);
+        PercentExecise = (int) Math.round(trainAmount / totalexercise * 100);
+        PercentWalk = (int) Math.round(walkAmount / totalwalk * 100);
+        PercentStand = (int) Math.round(standAmount / totalstand * 100);
+        PercentOther = (int) Math.round(otherAmount / totalother * 100);
+        PercentDaily = (Percentcycle + PercentExecise + PercentWalk + PercentStand + PercentOther) / 5;
     }
 
     public void NotifyWhenDone(Context context) {

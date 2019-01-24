@@ -1,23 +1,12 @@
 package e.android.sensmotion.views;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import e.android.sensmotion.Notification.Alarm;
 import e.android.sensmotion.R;
-import e.android.sensmotion.controller.ControllerRegistry;
-import e.android.sensmotion.controller.interfaces.IFirebaseController;
-import e.android.sensmotion.controller.interfaces.IUserController;
-import e.android.sensmotion.controller.interfaces.IDataController;
-import e.android.sensmotion.entities.user.Patient;
 
 
 public class MainActivity extends FragmentActivity {

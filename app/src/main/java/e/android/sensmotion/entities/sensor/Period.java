@@ -12,24 +12,25 @@ public class Period {
     private int day_count;
     private String startingDate;
 
-    public Period(){
+    public Period() {
 
     }
 
-    public Period(int day_count){
+    public Period(int day_count) {
         this.day_count = day_count;
 
         valuesList = new ArrayList<Values>();
     }
 
 
-
-    public List<Values> getValuesList() { return valuesList; }
+    public List<Values> getValuesList() {
+        return valuesList;
+    }
 
     public void populate(JSONObject data) {
 
-        System.out.println("data: "+data);
-        for(int i = 0; i<day_count; i++){
+        System.out.println("data: " + data);
+        for (int i = 0; i < day_count; i++) {
             values = new Values();
             values.populate(data, i);
             valuesList.add(values);
@@ -46,10 +47,10 @@ public class Period {
 
     @Override
     public String toString() {
-        return "Period{"+
-                "valuesList: "+valuesList+
-                ", values: "+values+
-                ", day_count: "+day_count+
+        return "Period{" +
+                "valuesList: " + valuesList +
+                ", values: " + values +
+                ", day_count: " + day_count +
                 '}';
     }
 }

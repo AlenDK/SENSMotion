@@ -11,7 +11,7 @@ public class ProgBarAnimation extends Animation {
     private float from;
     private float to;
 
-    public ProgBarAnimation(ProgressBar progressBar, float from, float to){
+    public ProgBarAnimation(ProgressBar progressBar, float from, float to) {
         super();
         this.progressBar = progressBar;
         this.from = from;
@@ -24,7 +24,6 @@ public class ProgBarAnimation extends Animation {
         float value = from + (to - from) * interpolatedTime;
         progressBar.setProgress((int) value);
     }
-
 
 
 }

@@ -33,7 +33,7 @@ public class FirebaseController implements IFirebaseController {
 
     }
 
-    public void getPatientFirebase(final String id){
+    public void getPatientFirebase(final String id) {
         uc = ControllerRegistry.getUserController();
         sc = ControllerRegistry.getSensorController();
         database.addValueEventListener(new ValueEventListener() {
@@ -42,10 +42,10 @@ public class FirebaseController implements IFirebaseController {
                 Patient p = null;
                 System.out.println("hallo");
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    System.out.println("fiiiiiiisse: "+snapshot.child(id).child(id).getValue(String.class));
+                    System.out.println("fiiiiiiisse: " + snapshot.child(id).child(id).getValue(String.class));
                     if (snapshot.child("id").getValue(String.class).equals(id)) {
                         p = snapshot.getValue(Patient.class);
-                        System.out.println("key: "+dataSnapshot.getKey());
+                        System.out.println("key: " + dataSnapshot.getKey());
 
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                             List<Sensor> sensorList = new ArrayList<>();
@@ -73,14 +73,13 @@ public class FirebaseController implements IFirebaseController {
         sc = ControllerRegistry.getSensorController();
 
 
-
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Patient p = snapshot.getValue(Patient.class);
 
-                    for(DataSnapshot snapshotSensor: dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()){
+                    for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
                         List<Sensor> sensorList = new ArrayList<>();
                         Sensor s = snapshotSensor.getValue(Sensor.class);
                         sensorList.add(s);
@@ -89,7 +88,7 @@ public class FirebaseController implements IFirebaseController {
                     list.add(p);
 
                 }
-                System.out.println("hello: "+list);
+                System.out.println("hello: " + list);
                 uc.setPatientList(list);
             }
 
@@ -99,13 +98,13 @@ public class FirebaseController implements IFirebaseController {
         });
     }
 
-    public void newPatient (Patient p) {
+    public void newPatient(Patient p) {
 
         database.child(p.getId()).setValue(p);
 
     }
 
-    public void updateViews(View view){
+    public void updateViews(View view) {
 
     }
 
