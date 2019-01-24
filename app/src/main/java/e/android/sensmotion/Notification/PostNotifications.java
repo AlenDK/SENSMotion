@@ -44,6 +44,7 @@ public class PostNotifications extends BroadcastReceiver {
     final String TAG = getClass().getName();
     NotificationManagerCompat notificationManagerCompat;
     private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
     private DatabaseReference database;
 
     public static int PercentDaily, PercentWalk, PercentStand, PercentExecise, Percentcycle, PercentOther;
@@ -51,10 +52,10 @@ public class PostNotifications extends BroadcastReceiver {
     static int totalwalk = 100, totalstand = 100, totalexercise = 100, totalcycling = 100, totalother = 100;
 
     private String userID;
-    static boolean walkHalf = false, walk75 = false, walkDone = false;
-    static boolean cycleHalf = false, cycle75 = false, cycleDone = false;
-    static boolean trainHalf = false, train75 = false, trainDone = false;
-    static boolean dailyDone = false;
+    boolean walkHalf, walk75, walkDone;
+    boolean cycleHalf, cycle75, cycleDone;
+    boolean trainHalf, train75, trainDone;
+    boolean dailyDone;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -67,70 +68,88 @@ public class PostNotifications extends BroadcastReceiver {
         System.out.println("Motion " + PercentExecise + "hest");
         System.out.println("andet " + PercentOther + "hest");
         */
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
+
+        walkHalf = prefs.getBoolean("walkHalf", false);
+        walk75 = prefs.getBoolean("walk75", false);
+        walkDone = prefs.getBoolean("walkDone", false);
+
+        cycleHalf = prefs.getBoolean("cycleHalf", false);
+        cycle75 = prefs.getBoolean("cycle75", false);
+        cycleDone = prefs.getBoolean("cycleDone", false);
+
+        trainHalf = prefs.getBoolean("trainHalf", false);
+        train75 = prefs.getBoolean("train75", false);
+        trainDone = prefs.getBoolean("trainDone", false);
+
+        dailyDone = prefs.getBoolean("dailyDone", false);
+
 
         setPercentage(context);
         if (PercentDaily >= 100 && dailyDone == false) {
             NotifyWhenDone(context);
-            dailyDone = true;
 
-            walkDone = true;
-            walk75 = true;
-            walkHalf = true;
+            editor.putBoolean("dailyDone", true);
 
-            cycleDone = true;
-            cycle75 = true;
-            cycleHalf = true;
+            editor.putBoolean("walkDone", true);
+            editor.putBoolean("walk75", true);
+            editor.putBoolean("walkHalf", true);
 
-            trainDone = true;
-            train75 = true;
-            trainHalf = true;
+            editor.putBoolean("cycleDone", true);
+            editor.putBoolean("cycle75", true);
+            editor.putBoolean("cycleHalf", true);
+
+            editor.putBoolean("trainDone", true);
+            editor.putBoolean("train75", true);
+            editor.putBoolean("trainHalf", true);
         }
 
         if (PercentWalk >= 100 && walkDone == false) {
             WalkDone(context);
-            walkDone = true;
-            walk75 = true;
-            walkHalf = true;
+            editor.putBoolean("walkDone", true);
+            editor.putBoolean("walk75", true);
+            editor.putBoolean("walkHalf", true);
         } else if (PercentWalk >= 75 && walk75 == false) {
             Walk75Done(context);
-            walk75 = true;
-            walkHalf = true;
+            editor.putBoolean("walk75", true);
+            editor.putBoolean("walkHalf", true);
         } else  if (PercentWalk >= 50 && walkHalf == false) {
             WalkHalfDone(context);
-            walkHalf = true;
+            editor.putBoolean("walkHalf", true);
         }
 
         if (Percentcycle >= 100 && cycleDone == false) {
              CycleDone(context);
-             cycleDone = true;
-             cycle75 = true;
-             cycleHalf = true;
+            editor.putBoolean("cycleDone", true);
+            editor.putBoolean("cycle75", true);
+            editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 75 && cycle75 == false) {
              Cycle75Done(context);
-             cycle75 = true;
-             cycleHalf = true;
+            editor.putBoolean("cycle75", true);
+            editor.putBoolean("cycleHalf", true);
         } else if (Percentcycle >= 50 && cycleHalf == false) {
              CycleHalfDone(context);
-             cycleHalf = true;
+            editor.putBoolean("cycleHalf", true);
         }
 
         if (PercentExecise >= 100 && trainDone == false) {
              ExerciseDone(context);
-             trainDone = true;
-             train75 = true;
-             trainHalf = true;
+            editor.putBoolean("trainDone", true);
+            editor.putBoolean("train75", true);
+            editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 75 && train75 == false) {
              Exercise75Done(context);
-             train75 = true;
-             trainHalf = true;
+            editor.putBoolean("train75", true);
+            editor.putBoolean("trainHalf", true);
         } else if (PercentExecise >= 50 && trainHalf == false) {
              ExerciseHalfDone(context);
-             trainHalf = true;
+            editor.putBoolean("trainHalf", true);
         }
     }
 
     private void getFirebasePatient(Context context) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
         userID = prefs.getString("userID", "p1");
         database = FirebaseDatabase.getInstance().getReference("Patients");
 

@@ -39,7 +39,7 @@ public class Alarm {
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.HOUR_OF_DAY, 8);
         calendar.set(Calendar.MINUTE, 30);
-
+/*
         //Checks if the time has already passed 8:30 a.m.
         if (System.currentTimeMillis() - 30600000 >= 0) {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()
@@ -47,11 +47,11 @@ public class Alarm {
         } else {
             alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, 1000
                     , AlarmManager.INTERVAL_FIFTEEN_MINUTES, alarmIntent);
-        }
+        }*/
         //For at teste om AlarmManageren virker
-        /*
+
         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+100, 60000, alarmIntent);
-        */
+
     }
 
     public static void stopNotifications(Context context) {
