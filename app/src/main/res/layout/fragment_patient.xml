@@ -7,6 +7,16 @@
     android:background="@color/eggwhite">
 
 
+    <ImageView
+        android:id="@+id/actionbar_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_bar_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/previousList"
         android:layout_width="match_parent"
@@ -27,10 +37,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/categorizer_today_data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/actionbar_image">
 
         <ImageView
             android:id="@+id/facetoday_image"
@@ -54,20 +64,31 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:text="I dag"
+            android:textColor="@color/lightBlack"
             app:layout_constraintEnd_toEndOf="@+id/facetoday_image"
             app:layout_constraintStart_toStartOf="@+id/facetoday_image"
             app:layout_constraintTop_toBottomOf="@+id/facetoday_image" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/actionbar_image"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/header_bar_red"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/stepsImage"
+        android:layout_width="34dp"
+        android:layout_height="37dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/footsteps_silver"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/stepsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="0 steps"
+        app:layout_constraintStart_toEndOf="@+id/stepsImage"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <ImageButton
         android:id="@+id/knap_profil"
@@ -98,89 +119,58 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ProgressBar
+        android:id="@+id/circlebar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="201dp"
+        android:layout_height="170dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/circle_progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/progressBarText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="0%"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/circlebar"
+        app:layout_constraintEnd_toEndOf="@+id/circlebar"
+        app:layout_constraintStart_toStartOf="@+id/circlebar"
+        app:layout_constraintTop_toTopOf="@+id/circlebar" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="183dp"
+        android:layout_marginTop="360dp"
         android:background="@drawable/categorizer_tasks">
-
-        <ProgressBar
-            android:id="@+id/circlebar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="201dp"
-            android:layout_height="170dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:progress="0"
-            android:progressDrawable="@drawable/circle_progress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/progressBarText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="0%"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="@+id/circlebar"
-            app:layout_constraintEnd_toEndOf="@+id/circlebar"
-            app:layout_constraintStart_toStartOf="@+id/circlebar"
-            app:layout_constraintTop_toTopOf="@+id/circlebar" />
-
-        <TextView
-            android:id="@+id/stepsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="0 steps"
-            app:layout_constraintStart_toEndOf="@+id/stepsImage"
-            app:layout_constraintTop_toTopOf="@+id/stepsImage" />
-
-        <ImageView
-            android:id="@+id/stepsImage"
-            android:layout_width="34dp"
-            android:layout_height="37dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/footsteps_silver"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
-            android:background="@drawable/completed_title_background"
-            app:layout_constraintEnd_toEndOf="@+id/circlebar"
-            app:layout_constraintStart_toStartOf="@+id/circlebar"
-            app:layout_constraintTop_toBottomOf="@+id/circlebar"
-            />
 
         <TextView
             android:id="@+id/tasksTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="16dp"
             android:text="Dagens mål"
             android:textColor="@color/SENSfontColor"
-            android:textSize="14sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ListView
             android:id="@+id/incompleteList"
@@ -189,6 +179,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="26dp"
+            android:layout_marginTop="0dp"
             android:divider="@null"
             app:layout_constraintBottom_toTopOf="@+id/completeText"
             app:layout_constraintEnd_toEndOf="parent"
@@ -205,6 +196,7 @@
             android:layout_marginTop="24dp"
             android:gravity="center"
             android:text="Gennemført"
+            android:textColor="@color/lightBlack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/incompleteList" />
@@ -229,11 +221,12 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/completed_title_background"
+            android:rotation="180"
+            android:src="@drawable/categorizer_tasks1"
             app:layout_constraintBottom_toBottomOf="@+id/completeText"
             app:layout_constraintEnd_toStartOf="@+id/completeText"
             app:layout_constraintTop_toTopOf="@+id/completeText"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.45" />
 
         <ImageView
             android:id="@+id/completedRight"
@@ -242,10 +235,23 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@drawable/completed_title_background"
+            android:src="@drawable/categorizer_tasks1"
             app:layout_constraintBottom_toBottomOf="@+id/completeText"
             app:layout_constraintStart_toEndOf="@+id/completeText"
-            app:layout_constraintTop_toTopOf="@+id/completeText" />
+            app:layout_constraintTop_toTopOf="@+id/completeText"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/info"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/info_icon2"
+            app:layout_constraintBottom_toBottomOf="@+id/tasksTitle"
+            app:layout_constraintStart_toEndOf="@+id/tasksTitle"
+            app:layout_constraintTop_toTopOf="@+id/tasksTitle" />
 
     </android.support.constraint.ConstraintLayout>
 

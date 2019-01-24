@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,17 +34,12 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
-import e.android.sensmotion.Notification.Alarm;
 import e.android.sensmotion.R;
 import e.android.sensmotion.adapters.ProgressBar_adapter;
 import e.android.sensmotion.controller.impl.DataController;
@@ -104,7 +98,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient1, container, false);
+        view = (ViewGroup) inflater.inflate(R.layout.fragment_patient, container, false);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         editor = prefs.edit();
 
@@ -844,6 +838,7 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
     public void clickItem(int position) {
         setPreviousProgress();
         getFirebasePatient("" + position);
+
     }
 
 }
