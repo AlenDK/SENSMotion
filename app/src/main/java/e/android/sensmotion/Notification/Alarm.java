@@ -26,7 +26,6 @@ public class Alarm {
     }
 
     public static void startNotifications(Context c) {
-        System.out.println("hest startalarm kaldt");
 
         if (alarmMgr == null) alarmMgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(c, PostNotifications.class);
@@ -75,7 +74,6 @@ public class Alarm {
 
     public static void alarmSaveData(Context c) {
 
-        System.out.println("hest startalarm kaldt");
 
         if (alarmMng == null) alarmMng = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(c, SaveToFirebase.class);

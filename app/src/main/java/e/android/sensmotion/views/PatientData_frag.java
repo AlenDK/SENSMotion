@@ -304,7 +304,6 @@ public class PatientData_frag extends android.support.v4.app.Fragment implements
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.child("id").getValue(String.class).equals(id)) {
                         currentPatient = snapshot.getValue(Patient.class);
-                        System.out.println("patient: "+currentPatient);
 
                         //Get Sensor
                         for (final DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {

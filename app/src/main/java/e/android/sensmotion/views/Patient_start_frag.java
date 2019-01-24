@@ -131,8 +131,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         inisializeElements();
         opdaterData();
 
-        Log.d("burhanee", "" + prefs.getInt("complete", 0));
-
         return view;
     }
 
@@ -200,13 +198,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         tasksCompleted = Integer.parseInt(prefs.getString("status", "0"));
         steps = prefs.getInt("steps", 0);
         setExpectedAmount(Integer.parseInt(mobility));
-
-        System.out.println("SP walk: " + walkAmount);
-        System.out.println("SP stand: " + standAmount);
-        System.out.println("SP cycle: " + cyclingAmount);
-        System.out.println("SP exercise: " + exerciseAmount);
-        System.out.println("SP other: " + otherAmount);
-        System.out.println("SP other: " + steps);
 
         stepsText.setText(prefs.getInt("steps", 0) + " steps");
         createButtons(view);
@@ -337,7 +328,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         String yesterday = dateFormat.format(cal.getTime());
-        System.out.println("format: " + yesterday);
 
         if (date.equals(yesterday)) {
             days.add(0, "i går");
@@ -372,11 +362,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         dailyProgress = walkAmount + standAmount + cyclingAmount + exerciseAmount + otherAmount;
         totalProgressGoal = totalwalk + totalstand + totalcycling + totalexercise + totalother;
         circleProgress = (int) Math.round(dailyProgress / totalProgressGoal * 100);
-
-
-        System.out.println("Daily: " + dailyProgress);
-        System.out.println("Daily goal: " + totalProgressGoal);
-
 
         circleBarText.setText(circleProgress + "%");
         circlebar.setRotation(-90);
@@ -516,21 +501,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.info_container);
         dialog.setTitle("Daglige mål information");
-
-        TextView infoWalking = dialog.findViewById(R.id.info_walking_text);
-        TextView infoStanding = dialog.findViewById(R.id.info_standing_text);
-        TextView infoCycling = dialog.findViewById(R.id.info_cycling_text);
-        TextView infoExercise = dialog.findViewById(R.id.info_exercise_text);
-        TextView infoOther = dialog.findViewById(R.id.info_other_text);
-
-        ImageView infoWalkingImage = dialog.findViewById(R.id.info_walking);
-        ImageView infoStandingImage = dialog.findViewById(R.id.info_standing);
-        ImageView infoCyclingImage = dialog.findViewById(R.id.info_cycling);
-        ImageView infoExerciseImage = dialog.findViewById(R.id.info_exercise);
-        ImageView infoOtherImage = dialog.findViewById(R.id.info_other);
-        ImageView seperator1 = dialog.findViewById(R.id.seperator1);
-        ImageView seperator2 = dialog.findViewById(R.id.seperator2);
-
         infoButton = dialog.findViewById(R.id.infoButton);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -589,7 +559,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
 
                                         values.setMobility(patient.getMobility());
                                         mobility = values.getMobility();
-                                        System.out.println("Mobilitet: " + mobility);
                                         setExpectedAmount(Integer.parseInt(mobility));
 
                                         walkAmount = Double.parseDouble(values.getWalk());
@@ -598,7 +567,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                         exerciseAmount = Double.parseDouble(values.getExercise());
                                         otherAmount = Double.parseDouble(values.getOther());
                                         steps = Integer.parseInt(values.getSteps());
-                                        System.out.println("Hallo: " + steps);
                                         resultsExceeded();
                                         loading.dismiss();
 
@@ -709,7 +677,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                                     String steps = formatedSteps[0];
                                     stepsText.setText(steps + " steps");
 
-                                    System.out.println("mobilitet: " + mobility);
                                     setExpectedAmount(Integer.parseInt(mobility));
                                     resultsExceeded();
 
@@ -743,7 +710,6 @@ public class Patient_start_frag extends Fragment implements View.OnClickListener
                         for (DataSnapshot snapshotSensor : dataSnapshot.child(snapshot.getKey()).child("sensorer").getChildren()) {
 
                             String startingDate = snapshotSensor.child("currentPeriod").child("startingDate").getValue(String.class);
-                            System.out.println("Staring date: " + startingDate);
 
                             editor.putString("startingDate", startingDate);
                             editor.apply();

@@ -155,7 +155,6 @@ public class NyPatient_frag extends android.support.v4.app.Fragment implements V
                     values.setStatus(prefs.getString("status", "0"));
 
                     database.child(p.getId()).child("sensorer").child("0").child("currentPeriod").child("valuesList").child("0").setValue(values);
-                    System.out.println("Data saved...");
 
                     String myFormat = "ddMM";
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);

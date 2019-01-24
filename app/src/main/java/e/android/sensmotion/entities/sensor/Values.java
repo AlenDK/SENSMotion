@@ -88,13 +88,10 @@ public class Values {
         try {
 
             JSONObject jsonVALUE = data1.getJSONObject("value");
-            //System.out.println("////////  \n"+jsonVALUE);
             JSONArray jsonDATA = jsonVALUE.getJSONArray("data");
-            //System.out.println("////\n"+jsonDATA);
             JSONObject jsonVALUES = (JSONObject) jsonDATA.getJSONObject(count);
-            //System.out.println("////\n"+jsonVALUES);
             JSONObject jsonVALUES1 = jsonVALUES.getJSONObject("values");
-            System.out.println("////\n" + jsonVALUES1);
+
 
 
             rest = jsonVALUES1.getString("activity/resting/time");
@@ -139,7 +136,6 @@ public class Values {
             steps = stepsFormated[0];
             values = new Values(date, status, mobility, cycling, exercise, other, rest, stand, steps, walk);
 
-            System.out.println("Values from API: " + values);
 
             return values;
 

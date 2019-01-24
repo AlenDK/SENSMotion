@@ -72,13 +72,6 @@ public class PostNotifications extends BroadcastReceiver {
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
         setPercentage(context);
-        // For test om hentning af data virker
-        System.out.println(TAG + "    onRecieve() modtog hest   " + context);
-        System.out.println("Gå " + PercentWalk + "hest");
-        System.out.println("Stå " + PercentStand + "hest");
-        System.out.println("cykel " + Percentcycle + "hest");
-        System.out.println("Motion " + PercentExecise + "hest");
-        System.out.println("andet " + PercentOther + "hest");
 
 
         walkHalf = prefs.getBoolean("walkHalf", false);
@@ -158,7 +151,6 @@ public class PostNotifications extends BroadcastReceiver {
 
         editor.apply();
         editor.commit();
-        System.out.println("hest: " + prefs.getBoolean("walkHalf", false));
     }
 
     private void getData() {
