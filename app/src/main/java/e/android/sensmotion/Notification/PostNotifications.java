@@ -204,11 +204,12 @@ public class PostNotifications extends BroadcastReceiver {
     }
 
     public void setPercentage(Context context) {
-        walkAmount = prefs.getFloat("walk", 0.0f);
+        /*walkAmount = prefs.getFloat("walk", 0.0f);
         standAmount = prefs.getFloat("stand", 0.0f);
         cyclingAmount = prefs.getFloat("cycle", 0.0f);
         trainAmount = prefs.getFloat("exercise", 0.0f);
         otherAmount = prefs.getFloat("other", 0.0f);
+*/
 
         getData();
 
