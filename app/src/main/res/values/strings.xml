@@ -10,7 +10,7 @@
     <string name="nameTitle"><u>Navn</u></string>
     <string name="idTitle"><u>Patient ID</u></string>
     <string name="mobility"><u>Mobilitet</u></string>
-    <string name="info_walking">Dette ikon repræsenterer dit mål for at\ngå.</string>
+    <string name="info_walking">Dette ikon repræsenterer dit mål for at gå.</string>
     <string name="info_standing">Dette ikon repræsenterer dit mål for at stå.</string>
     <string name="info_cycling">Dette ikon repræsenterer dit mål for at cykle.</string>
     <string name="info_exercise">Dette ikon repræsenterer dit mål for at træne.</string>

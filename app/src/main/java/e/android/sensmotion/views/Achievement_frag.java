@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -37,6 +38,7 @@ public class Achievement_frag extends Fragment  {
 
     boolean EMULATOR = Build.PRODUCT.contains("sdk") || Build.MODEL.contains("Emulator");
     GridView gridView;
+    ImageView seperator;
     Achievement_adapter adapter;
     ArrayList<Achievement> achievements= new ArrayList <>();
     Achievement facebook, stribe,betatester, walking, onegoal, allgoals, halfway;
@@ -57,6 +59,7 @@ public class Achievement_frag extends Fragment  {
 
         ArrayList<Achievement> achievements = getAchievement();
         gridView = (GridView) view.findViewById(R.id.gridview);
+        seperator = view.findViewById(R.id.seperatorAchievements);
 
         adapter = new Achievement_adapter(getActivity(), achievements);
 

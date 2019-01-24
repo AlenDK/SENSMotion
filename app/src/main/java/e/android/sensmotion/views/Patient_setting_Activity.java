@@ -55,9 +55,11 @@ public class Patient_setting_Activity extends AppCompatActivity {
                 if (on) {
                     Alarm.startNotifications(context);
                     prefsEditor.putBoolean("NotiGoing", true);
+                    Toast.makeText(context, "Notifikationer slået til", Toast.LENGTH_LONG).show();
                 } else if (!on) {
                     Alarm.stopAlarm();
                     prefsEditor.putBoolean("NotiGoing", false);
+                    Toast.makeText(context, "Notifikationer slået fra", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -15,29 +15,40 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Trofæer"
-        android:textColor="#EEEEEE"
+        android:textColor="@color/gold1"
         android:fontFamily="serif"
         android:layout_gravity="center"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/seperatorAchievements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/seperator_achievements" />
+
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="16dp"
         android:columnWidth="100dp"
         android:numColumns="3"
-        android:verticalSpacing="30dp"
-
-
         android:stretchMode="columnWidth"
+
+
+        android:verticalSpacing="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trophies" />
+
 
 </LinearLayout>
